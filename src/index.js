@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
@@ -14,19 +14,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-
-root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        {/* <PersistGate loading={null} persistor={Persiststore}> */}
-        <App />
-        {/* </PersistGate> */}
-      </Provider>
-    </BrowserRouter>
-    </React.StrictMode>
-);
+ReactDOM.render(<React.StrictMode>
+  <BrowserRouter>
+    <Provider store={store}>
+      {/* <PersistGate loading={null} persistor={Persiststore}> */}
+      <App />
+      {/* </PersistGate> */}
+    </Provider>
+  </BrowserRouter>
+  </React.StrictMode>, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

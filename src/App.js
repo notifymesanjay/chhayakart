@@ -82,6 +82,23 @@ function App() {
     }
     if (city.city !== null) {
       fetchShop(city.city.id, city.city.latitude, city.city.longitude);
+    }else{
+      let data = {
+        "id": 4,
+        "name": "Maharashtra",
+        "state": "Maharashtra",
+        "formatted_address": "Maharashtra, India",
+        "latitude": "19.7514798",
+        "longitude": "75.7138884",
+        "min_amount_for_free_delivery": "1000",
+        "delivery_charge_method": "fixed_charge",
+        "fixed_charge": "40",
+        "per_km_charge": "0",
+        "time_to_travel": "100",
+        "max_deliverable_distance": "50000",
+        "distance": "992.6918238833864"
+      }
+      dispatch({ type: ActionTypes.SET_CITY, payload: data });
     }
   }, [city])
 
@@ -152,7 +169,7 @@ function App() {
 
               </main>
             </>
-          )}
+          )} 
           <Footer />
 
 
