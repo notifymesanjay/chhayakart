@@ -643,7 +643,7 @@ const removefromFavorite = async (product_id) => {
 
                                                     </div>
                                                     <div className='product_varients_drop'>
-                                                        {related_product.variants.length > 1 ? <>
+                                                        {related_product.variants.length > 1 && (<>
 
                                                             <select style={{ fontSize: "8px !important" }} className='form-select variant_selection select-arrow' id={`select-product${index}-variant-section`} onChange={(e) => {
                                                                 document.getElementById(`price${index}-section`).innerHTML = parseFloat(JSON.parse(e.target.value).price);
@@ -659,13 +659,13 @@ const removefromFavorite = async (product_id) => {
 
                                                                 {getProductVariants(related_product)}
                                                             </select>
-                                                        </>
-                                                            :
+                                                        </>)}
+                                                             {/* :
 
-                                                            <>
-                                                                <span className='variant_value select-arrow'>{related_product.measuemnets[0] + ""  + related_product.variants[0].stock_unit_name}
-                                                                </span>
-                                                            </>}
+                                                             <>
+                                                                 <span className='variant_value select-arrow'>{related_product.measuemnets[0] + ""  + related_product.variants[0].stock_unit_name}
+                                                                 </span>
+                                                            </>} */}
 
 
 
