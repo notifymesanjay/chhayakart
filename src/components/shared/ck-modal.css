@@ -1,0 +1,23 @@
+.dkModal {
+  z-index: 10009;
+}
+
+.dkModal .close {
+  position: absolute;
+  right: 15px;
+  top: 20px;
+  width: 30px;
+  height: 30px;
+  padding: 6px;
+  color: black;
+  border: 2px solid black;
+  opacity: 1;
+  border-radius: 50px;
+  font-size: 16px;
+  z-index: 999;
+  text-shadow: none;
+  float: right;
+  font-weight: 700;
+  line-height: 1;
+  background: white;
+}

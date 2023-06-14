@@ -19,6 +19,7 @@ import { ActionTypes } from '../../model/action-type';
 import QuickViewModal from './QuickViewModal'
 import Offers from '../offer/Offers'
 import { FacebookIcon, FacebookShareButton, TelegramIcon, TelegramShareButton, WhatsappIcon, WhatsappShareButton } from 'react-share';
+import Login from '../login/Login';
 // import Select from 'react-select';
 
 
@@ -97,6 +98,7 @@ const ProductContainer = () => {
     const [selectedProduct, setselectedProduct] = useState({})
     const [productSizes, setproductSizes] = useState(null)
     const [offerConatiner, setOfferContainer] = useState(0)
+    const [isLogin, setIsLogin] = useState(false);
 
     //for product variants dropdown in product card
     const getProductSizeUnit = (variant) => {
@@ -265,6 +267,18 @@ const ProductContainer = () => {
         setOfferContainer(index0);
     };
 
+    const handleAddToCart = (index0, index, product) => {
+        if (cookies.get('jwt_token') !== undefined) {
+            document.getElementById(`Add-to-cart-section${index}${index0}`).classList.remove('active')
+            document.getElementById(`input-cart-section${index}${index0}`).classList.add('active')
+            document.getElementById(`input-section${index}${index0}`).innerHTML = 1
+            addtoCart(product.id, JSON.parse(document.getElementById(`select-product${index}${index0}-variant-section`).value).id, document.getElementById(`input-section${index}${index0}`).innerHTML)
+        }
+        else {
+            setIsLogin(true);
+        }
+    }
+
     return (
         <section id="products">
             <div className="container">
@@ -391,15 +405,7 @@ const ProductContainer = () => {
 
                                                                     <div className='border-end' style={{ flexGrow: "1" }} >
                                                                         <button type="button" id={`Add-to-cart-section${index}${index0}`} className='w-100 h-100 add-to-cart active' onClick={() => {
-                                                                            if (cookies.get('jwt_token') !== undefined) {
-                                                                                document.getElementById(`Add-to-cart-section${index}${index0}`).classList.remove('active')
-                                                                                document.getElementById(`input-cart-section${index}${index0}`).classList.add('active')
-                                                                                document.getElementById(`input-section${index}${index0}`).innerHTML = 1
-                                                                                addtoCart(product.id, JSON.parse(document.getElementById(`select-product${index}${index0}-variant-section`).value).id, document.getElementById(`input-section${index}${index0}`).innerHTML)
-                                                                            }
-                                                                            else {
-                                                                                toast.error("OOps! You need to login first to access the cart!")
-                                                                            }
+                                                                            handleAddToCart(index0, index, product);
 
                                                                         }} >add to cart</button>
 
@@ -489,6 +495,7 @@ const ProductContainer = () => {
                     </div>
                 </div> */}
             </div >
+            {isLogin && (<Login isOpenModal={isLogin} setIsOpenModal={setIsLogin} />)}
 
         </section >
     )
