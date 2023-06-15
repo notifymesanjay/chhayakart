@@ -13,6 +13,7 @@ import { toast } from 'react-toastify'
 import Cookies from 'universal-cookie'
 import { ActionTypes } from '../../model/action-type';
 import Loader from '../loader/Loader';
+import Login from '../login/Login';
 
 
 const Favorite = () => {
@@ -26,6 +27,7 @@ const Favorite = () => {
     const cart = useSelector(state => (state.cart))
     const [isfavoriteEmpty, setisfavoriteEmpty] = useState(false)
     const [isLoader, setisLoader] = useState(false)
+    const [isLogin, setIsLogin] = useState(false);
 
     useEffect(() => {
         if (favorite.favorite === null && favorite.status === 'fulfill') {
@@ -114,6 +116,15 @@ const Favorite = () => {
             })
 
     }
+
+    const handleAddToCart = (product) => {
+        if (cookies.get('jwt_token') !== undefined) {
+            addtoCart(product.id, product.variants[0].id, 1)
+        }
+        else {
+            setIsLogin(true);
+        }
+    }
     return (
         <div tabIndex="-1" className={`cart-sidebar-container offcanvas offcanvas-end`} id="favoriteoffcanvasExample" aria-labelledby="favoriteoffcanvasExampleLabel">
             <div className='cart-sidebar-header'>
@@ -179,24 +190,11 @@ const Favorite = () => {
                                                                     <button type='button' disabled className='add-to-cart btn-seconday btn active'>Item in Cart</button>
                                                                 ) : (
                                                                     <button type='button' id={`Add-to-cart-favoritesidebar${index}`} className='add-to-cart active'
-                                                                        onClick={() => {
-                                                                            if (cookies.get('jwt_token') !== undefined) {
-                                                                                addtoCart(product.id, product.variants[0].id, 1)
-                                                                            }
-                                                                            else {
-                                                                                toast.error("OOps! You need to login first to access the cart!")
-                                                                            }
-
-                                                                        }}
+                                                                        onClick={()=>{handleAddToCart(product)}}
                                                                     >add to cart</button>
                                                                 )) : <><button type='button' id={`Add-to-cart-favoritesidebar${index}`} className='add-to-cart active'
                                                                     onClick={() => {
-                                                                        if (cookies.get('jwt_token') !== undefined) {
-                                                                            addtoCart(product.id, product.variants[0].id, 1)
-                                                                        }
-                                                                        else {
-                                                                            toast.error("OOps! You need to login first to access the cart!")
-                                                                        }
+                                                                        handleAddToCart(product);
 
                                                                     }}
                                                                 >Add to cart</button></>
@@ -232,6 +230,7 @@ const Favorite = () => {
                     </>
 
                 )}
+                {isLogin && <Login isOpenModal={isLogin} setIsOpenModal={setIsLogin} /> }
         </div>
     )
 }

@@ -100,6 +100,8 @@ const Login = ({ isOpenModal, setIsOpenModal = () => {} }) => {
             type: ActionTypes.SET_CURRENT_USER,
             payload: result.user,
           });
+          setIsOpenModal(false);
+          setisLoading(true);
           toast.success("You're successfully Logged In");
         }
       });
@@ -124,6 +126,7 @@ const Login = ({ isOpenModal, setIsOpenModal = () => {} }) => {
       })
       .catch(() => {
         // User couldn't sign in (bad verification code?)
+        setisLoading(false);
         setError("Invalid Code");
       });
 
