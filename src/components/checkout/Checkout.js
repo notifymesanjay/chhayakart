@@ -115,7 +115,7 @@ const Checkout = () => {
             // const name = user.user.name
             // const email = user.user.email
             // const mobile = user.user.mobile
-            const key = "rzp_test_nrzk0huxwp56ro"
+            const key = "rzp_live_t7yOUA2fwGjaEX"
             const options = {
                 key: key,
                 amount: amount * 100,
