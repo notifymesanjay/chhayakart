@@ -194,6 +194,7 @@ const Login = ({ isOpenModal, setIsOpenModal = () => {} }) => {
           <h5 className="header">Login</h5>
           <div className="bodyWrapper">
             <img
+              className="ck-logo"
               src="https://admin.chhayakart.com/storage/logo/1680098508_37047.png"
               alt="logo"
             ></img>
