@@ -9,6 +9,7 @@ import Cookies from 'universal-cookie'
 import { useDispatch, useSelector } from 'react-redux';
 import { ActionTypes } from './model/action-type';
 import api from './api/api';
+import ScrollToTop from './components/shared/ScrollToTop';
 import { BsArrowUpSquareFill } from 'react-icons/bs'
 
 //react-toast
@@ -126,7 +127,7 @@ function App() {
   return (
     <AnimatePresence>
       <div className="h-auto">
-
+      <ScrollToTop/>
         <Header />
 
         {city.city === null || shop.shop === null || setting.setting === null
