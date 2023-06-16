@@ -112,6 +112,7 @@ const Header = () => {
     setActive(true);
   }
   const [counter, setCounter] = useState(1);
+  const [isLogin, setIsLogin] = useState(false);
 
   const handleRemoveDiv = () => {
     setCounter(counter - 1);
@@ -203,6 +204,10 @@ const Header = () => {
   const handleLanguageChange = (e) => {
     dispatch({ type: ActionTypes.SET_LANGUAGE, payload: e.target.value });
   };
+
+  const handleSignUp = () => {
+    setIsLogin(true);
+  }
 
   return (
     <>
@@ -810,10 +815,8 @@ const Header = () => {
                 {user.status === "loading" ? (
                   <div className="hide-mobile-screen px-3">
                     <div
-                      whileTap={{ scale: 0.6 }}
                       className="d-flex flex-row user-profile gap-1"
-                      data-bs-toggle="modal"
-                      data-bs-target="#loginModal"
+                      onClick={handleSignUp}
                     >
                       <div className="d-flex align-items-center user-info my-auto">
                         <span className="btn-success">
@@ -1204,7 +1207,7 @@ const Header = () => {
         </nav>
 
         {/* login modal */}
-        <Login modal_id="loginModal" />
+        {isLogin && (<Login isOpenModal={isLogin} setIsOpenModal={setIsLogin} />)}
 
         {/* location modal */}
         <div
