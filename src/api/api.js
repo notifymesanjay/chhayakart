@@ -520,7 +520,7 @@ const api = {
 
         return fetch(appUrl+appSubUrl+"/settings/time_slots", requestOptions)
     },
-    placeOrder(token, product_variant_id, quantity, total, delivery_charge, final_total, payment_method, address_id, deliveryTime, status = 2) {
+    placeOrder(token, product_variant_id, quantity, total,delivery_charge, final_total, payment_method, address_id, deliveryTime, status = 2) {
         var myHeaders = new Headers();
         myHeaders.append(access_key_param, access_key);
         myHeaders.append("Authorization", token_prefix + token);
@@ -530,6 +530,8 @@ const api = {
         formdata.append("quantity", quantity);
         formdata.append("total", total);
         formdata.append("delivery_charge", delivery_charge);
+        formdata.append("tax_percentage", 5);
+        formdata.append("tax_amount", total*.05);
         formdata.append("final_total", final_total);
         formdata.append("payment_method", payment_method);
         formdata.append("address_id", address_id);
