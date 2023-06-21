@@ -554,24 +554,6 @@ const Checkout = () => {
 								<div className="payment-wrapper checkout-component">
 									<span className="heading">payment-method</span>
 
-									{setting.payment_setting.cod_payment_method === "1" ? (
-										<div>
-											<label className="form-check-label" htmlFor="cod">
-												<img src={cod} alt="cod" />
-												<span>Cash On Delivery</span>
-											</label>
-											<input
-												type="radio"
-												name="payment-method"
-												id="cod"
-												defaultChecked={true}
-												onChange={() => {
-													setpaymentMethod("COD");
-												}}
-											/>
-										</div>
-									) : null}
-
 									{setting.payment_setting.razorpay_payment_method === "1" ? (
 										<div>
 											<label className="form-check-label" htmlFor="razorpay">
@@ -582,8 +564,26 @@ const Checkout = () => {
 												type="radio"
 												name="payment-method"
 												id="razorpay"
+												defaultChecked={true}
 												onChange={() => {
 													setpaymentMethod("Razorpay");
+												}}
+											/>
+										</div>
+									) : null}
+
+									{setting.payment_setting.cod_payment_method === "1" ? (
+										<div>
+											<label className="form-check-label" htmlFor="cod">
+												<img src={cod} alt="cod" />
+												<span>Cash On Delivery</span>
+											</label>
+											<input
+												type="radio"
+												name="payment-method"
+												id="cod"
+												onChange={() => {
+													setpaymentMethod("COD");
 												}}
 											/>
 										</div>

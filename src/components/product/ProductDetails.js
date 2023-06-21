@@ -621,20 +621,22 @@ const ProductDetails = () => {
 											>
 												<FaRupeeSign fill="var(--secondary-color)" />
 												{parseFloat(productdata.variants[0].price)}{" "}
-											</span>
-
-											<span className="not-price gray-text">
+											</span>{" "}
+											<div
+												className="not-price gray-text"
+												style={{ textDecoration: "line-through" }}
+											>
 												<FaRupeeSign
-													fill="var(--sub-text-color)"
+													fill="var(--text-color)"
 													textDecoration="line-through"
 												/>
-												{productdata.variants[0].price}
-											</span>
+												{parseFloat(productdata.variants[0].price) +
+													productdata.variants[0].price * 0.13}
+											</div>
 										</div>
 									</div>
 									<div className="bottom-section">
 										<p>Product Variants</p>
-
 										<div className="d-flex gap-3 bottom-section-content">
 											<select
 												id={`select-product-variant-productdetail`}
@@ -671,7 +673,6 @@ const ProductDetails = () => {
 											>
 												Add to Cart
 											</button>
-
 											<div
 												id={`input-cart-productdetail`}
 												className="input-to-cart visually-hidden"
@@ -750,7 +751,6 @@ const ProductDetails = () => {
 													<BsPlus fill="#fff" />{" "}
 												</button>
 											</div>
-
 											{/* <button type='button' className='wishlist-product' onClick={() => addToFavorite(productdata.id)}><BsHeart /></button> */}
 											{favorite.favorite &&
 											favorite.favorite.data.some(
@@ -774,7 +774,6 @@ const ProductDetails = () => {
 												</button>
 											)}
 										</div>
-
 										<div className="product-overview">
 											<div className="product-seller">
 												{/* <span className='seller-title'>Sold By:</span>
