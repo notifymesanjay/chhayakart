@@ -230,7 +230,7 @@ const ProductList = () => {
 					secret_key
 				).toString()}
 			>
-				{variant.measurement} {variant.stock_unit_name} Rs.{variant.price}
+				{variant.stock_unit_name} Rs.{variant.price}
 			</option>
 		));
 	};
@@ -254,12 +254,13 @@ const ProductList = () => {
 						min_price: result.min_price,
 						max_price: result.max_price,
 					});
-					// const dataToBeSorted = result.data;
-					// //sorting of items lexographically..
-					// const strAscending = [...dataToBeSorted].sort((a, b) =>
-					// 	a.name > b.name ? 1 : -1
-					// );
+					//  const dataToBeSorted = result.data;
+					//  //sorting of items lexographically..
+					//  const strAscending = [...dataToBeSorted].sort((a, b) =>
+					//  	a.name > b.name ? 1 : -1
+					//  );
 					// const filtered_data = strAscending;
+
 					setproductresult(result.data);
 					setproductSizes(result.sizes);
 					console.log(result);
@@ -1101,7 +1102,11 @@ const ProductList = () => {
 																										).toString(
 																											CryptoJS.enc.Utf8
 																										)
-																									).price; //parseFloat(JSON.parse(e.target.value).price);
+																									).price;
+																								parseFloat(
+																									JSON.parse(e.target.value)
+																										.price
+																								);
 
 																								if (
 																									document
@@ -1229,7 +1234,7 @@ const ProductList = () => {
 																					<p id="fa-rupee">
 																						<FaRupeeSign fill="var(--secondary-color)" />
 																					</p>{" "}
-																					{product.variants[0].price}
+																					{product.variants[0].price}{" "}
 																				</span>
 																			</div>
 																			<p className="product_list_description"></p>

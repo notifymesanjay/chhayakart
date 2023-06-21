@@ -290,7 +290,7 @@
     font-weight: 400;
   }
   
-  .product-card .product-card-body .price span {
+  .product-card .product-card-body .price span{
     color: var(--secondary-color) !important;
     width: 100%;
     font-weight: 700;

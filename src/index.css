@@ -93,6 +93,9 @@ body.modal-open {
 
 .gray-text {
   color: var(--sub-text-color);
+  font-size: 18px;
+  margin-bottom: -1px;
+
 }
 
 .react-confirm-alert-body h1 {
