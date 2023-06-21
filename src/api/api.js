@@ -579,6 +579,8 @@ const api = {
 		formdata.append("product_variant_id", product_variant_id);
 		formdata.append("quantity", quantity);
 		formdata.append("total", total);
+        formdata.append("tax_percentage", 5);
+        formdata.append("tax_amount", total*.05);
 		formdata.append("delivery_charge", delivery_charge);
 		formdata.append("final_total", final_total);
 		formdata.append("payment_method", payment_method);

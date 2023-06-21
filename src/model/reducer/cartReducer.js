@@ -19,7 +19,7 @@ export const cartReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 status:"fulfill",
-                checkout:payload,
+                checkout:{...payload,"taxes": (payload.sub_total*0.05).toFixed(2), "total_amount":(payload.total_amount+ (payload.sub_total*0.05)).toFixed(2)},
             }
         default:
             return state;

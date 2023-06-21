@@ -247,6 +247,14 @@ const Cart = () => {
                                                             <span>{parseFloat(cart.checkout.delivery_charge.total_delivery_charge)}</span>
                                                         </div>
                                                     </div>
+ 
+                                                    <div className='d-flex justify-content-between'>
+                                                        <span>Taxes(5%)</span>
+                                                        <div className='d-flex align-items-center'>
+                                                            <FaRupeeSign />
+                                                            <span>{parseFloat(cart.checkout.taxes)}</span>
+                                                        </div>
+                                                    </div>                                                   
 
                                                 </div>
 
@@ -257,7 +265,6 @@ const Cart = () => {
                                                         <span>{parseFloat(cart.checkout.total_amount)}</span>
                                                     </div>
                                                 </div>
-
 
                                                 <div className='button-container'>
                                                     <button type='button' className='view-cart' onClick={() => {
