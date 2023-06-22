@@ -86,7 +86,7 @@ const Checkout = () => {
 	const [selectedAddress, setselectedAddress] = useState(null);
 	const [expectedDate, setexpectedDate] = useState(new Date());
 	const [expectedTime, setexpectedTime] = useState(null);
-	const [paymentMethod, setpaymentMethod] = useState("COD");
+	const [paymentMethod, setpaymentMethod] = useState("Razorpay");
 	const [deliveryTime, setDeliveryTime] = useState("");
 	const [orderID, setOrderID] = useState(null);
 	const [loadingPlaceOrder, setloadingPlaceOrder] = useState(false);
