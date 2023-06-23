@@ -422,7 +422,7 @@ const ProductContainer = () => {
 																			payload: product.id,
 																		});
 																		setSelectedProductId(product.id);
-																		navigate("/product");
+																		navigate("/product/"+product.id);
 																	}}
 																/>
 															</div>

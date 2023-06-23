@@ -785,7 +785,7 @@ const ProductList = () => {
 																			payload: product.id,
 																		});
 																		setSelectedProductId(product.id);
-																		navigate("/product");
+																		navigate("/product/"+product.id);
 																	}}
 																/>
 																{filter.grid_view ? (
@@ -1062,7 +1062,7 @@ const ProductList = () => {
 																			payload: product.id,
 																		});
 																		setSelectedProductId(product.id);
-																		navigate("/product");
+																		navigate("/product/"+product.id);
 																	}}
 																>
 																	{product.name}
