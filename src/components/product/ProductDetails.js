@@ -350,7 +350,7 @@ const ProductDetails = () => {
 	const getProductVariants = (product) => {
 		return product.variants.map((variant, index) => (
 			<option key={index} value={JSON.stringify(variant)}>
-				{variant.measurement} {variant.stock_unit_name} Rs.{variant.price}
+				{variant.stock_unit_name} Rs.{variant.price}
 			</option>
 		));
 	};
@@ -872,7 +872,13 @@ const ProductDetails = () => {
 														data-bs-toggle="modal"
 														data-bs-target="#quickviewModal"
 													>
-														<AiOutlineEye />
+														<AiOutlineEye
+															onClick={() => {
+																setselectedProduct(related_product);
+																}}
+																data-bs-toggle="modal"
+																data-bs-target="#quickviewModal"
+														/>
 													</span>
 													<img
 														src={related_product.image_url}
@@ -884,6 +890,7 @@ const ProductDetails = () => {
 																payload: related_product.id,
 															});
 															setSelectedProductId(related_product.id);
+															navigate("/product/"+related_product.id);
 														}}
 													/>
 												</div>
@@ -898,7 +905,7 @@ const ProductDetails = () => {
 														setSelectedProductId(related_product.id);
 													}}
 												>
-													<h3>{product.name}</h3>
+													<h3>{related_product.name}</h3>
 													<div className="price">
 														<span
 															id={`price${index}-section`}
@@ -909,9 +916,20 @@ const ProductDetails = () => {
 															</p>
 															{related_product.variants[0].price}{" "}
 														</span>
+														<span
+																		id={`price${index}-section`}
+																		className="d-flex align items-center"
+																		style={{ textDecoration: "line-through" }}
+																	>
+																		<p id="fa-rupee" className="m-0">
+																			<FaRupeeSign fill="var(--secondary-color)" />
+																		</p>{" "}
+																		{parseFloat(related_product.variants[0].price) +
+																			related_product.variants[0].price * 0.13}
+																	</span>
 													</div>
 													<div className="product_varients_drop">
-														{related_product.variants.length > 1 && (
+														{related_product.variants.length > 1 ? (
 															<>
 																<select
 																	style={{ fontSize: "8px !important" }}
@@ -950,13 +968,27 @@ const ProductDetails = () => {
 																	{getProductVariants(related_product)}
 																</select>
 															</>
+														) : (
+															<>
+																<input
+																	type="hidden"
+																	name=""
+																	id={`select-product${index}-variant-section`}
+																	value={JSON.stringify(
+																		related_product.variants[0]
+																	)}
+																/>
+																{/* <span className='variant_value select-arrow' id=''>{product.variants[0].measurement + " " + product.variants[0].stock_unit_name}
+																	</span> */}
+																<span
+																	className="variant_value select-arrow"
+																	id=""
+																>
+																	{related_product.variants[0].stock_unit_name}
+																</span>
+															</>
 														)}
-														{/* :
 
-                                                             <>
-                                                                 <span className='variant_value select-arrow'>{related_product.measuemnets[0] + ""  + related_product.variants[0].stock_unit_name}
-                                                                 </span>
-                                                            </>} */}
 													</div>
 												</div>
 

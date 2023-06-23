@@ -1149,9 +1149,7 @@ const ProductList = () => {
 																							value={product.variants[0].id}
 																							className="variant_value select-arrow"
 																						>
-																							{product.variants[0].measurement +
-																								" " +
-																								product.variants[0]
+																							{product.variants[0]
 																									.stock_unit_name}
 																						</p>
 																					</>
@@ -1220,8 +1218,7 @@ const ProductList = () => {
 																							value={product.variants[0].id}
 																							className="variant_value variant_value_a select-arrow"
 																						>
-																							{product.variants[0].measurement +
-																								" " +
+																							{
 																								product.variants[0]
 																									.stock_unit_name}
 																						</p>
