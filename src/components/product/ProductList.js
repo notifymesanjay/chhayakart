@@ -1079,6 +1079,19 @@ const ProductList = () => {
 																				</p>{" "}
 																				{product.variants[0].price}
 																			</span>
+
+																			<span
+																		id={`price${index}-section`}
+																		className="d-flex align items-center"
+																		style={{ textDecoration: "line-through" }}
+																	>
+																		<p id="fa-rupee" className="m-0">
+																			<FaRupeeSign fill="var(--secondary-color)" />
+																		</p>{" "}
+																		{parseFloat(product.variants[0].price) +
+																			product.variants[0].price * 0.13}
+																	</span>
+
 																			<div className="product_varients_drop">
 																				{product.variants.length > 1 ? (
 																					<>
@@ -1233,6 +1246,20 @@ const ProductList = () => {
 																					</p>{" "}
 																					{product.variants[0].price}{" "}
 																				</span>
+
+																				<span
+																		id={`price${index}-section`}
+																		className="d-flex align items-center"
+																		style={{ textDecoration: "line-through" }}
+																	>
+																		<p id="fa-rupee" className="m-0">
+																			<FaRupeeSign fill="var(--secondary-color)" />
+																		</p>{" "}
+																		{parseFloat(product.variants[0].price) +
+																			product.variants[0].price * 0.13}
+																	</span>
+
+
 																			</div>
 																			<p className="product_list_description"></p>
 																		</>
