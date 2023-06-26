@@ -366,14 +366,13 @@ const ProductContainer = () => {
 										setOfferContainer(index0);
 									}}
 								>
-									<div className="d-flex product_title_content justify-content-between align-items-center col-md-12">
+									<div className="rowWrapper product_title_content col-md-12">
 										<div className="">
 											<span className="d-none d-md-block">
 												{section.short_description}
 											</span>
 											<p>{section.title}</p>
 										</div>
-										<div>
 											{/* <Link to='/products'>see all</Link> */}
 											<Link
 												to="/products"
@@ -390,7 +389,6 @@ const ProductContainer = () => {
 											>
 												see all
 											</Link>
-										</div>
 									</div>
 
 									<div className="product_section_content p-0">
