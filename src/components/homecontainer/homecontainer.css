@@ -53,14 +53,13 @@
 }
 
 .category_section_header a {
+    width: 85px;
     font-size: 14px;
     text-transform: capitalize;
     font-weight: 400 !important;
     letter-spacing: 1px;
     color: var(--secondary-color);
     text-decoration: none;
-    margin-left: 10px;
-
 }
 
 .prev-arrow-category {
