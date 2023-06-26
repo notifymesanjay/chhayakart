@@ -19,8 +19,8 @@ import { ActionTypes } from "../../model/action-type";
 import "./checkout.css";
 
 const stripePromise = loadStripe(
-	"pk_test_51MKxDESEKxefYE6MZCHxEw4cFKiiLn2mV3Ek4Nx1UfcuNfE1Z6jgQrZrKpqTLju3n5SBjYJcwt1Jkw1bEoPXWRHB00XZ7D2f2F"
-  );
+  "pk_test_51MKxDESEKxefYE6MZCHxEw4cFKiiLn2mV3Ek4Nx1UfcuNfE1Z6jgQrZrKpqTLju3n5SBjYJcwt1Jkw1bEoPXWRHB00XZ7D2f2F"
+);
 
 const Checkout = () => {
   const cart = useSelector((state) => state.cart);
@@ -72,6 +72,30 @@ const Checkout = () => {
       .catch((error) => console.log(error));
   };
 
+  const addRazorPayTransaction = (res, order_id) => {
+    api
+      .addRazorpayTransaction(
+        cookies.get("jwt_token"),
+        order_id,
+        res.razorpay_payment_id,
+        res.razorpay_order_id,
+        res.razorpay_payment_id,
+        res.razorpay_signature
+      )
+      .then((response) => response.json())
+      .then((result) => {
+        setLoadingPlaceOrder(false);
+        if (result.status === 1) {
+          toast.success(result.message);
+          setIsOrderPlaced(true);
+          setShow(true);
+        } else {
+          toast.error(result.message);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
   const handleRozarpayPayment = useCallback(
     (
       order_id,
@@ -96,27 +120,7 @@ const Checkout = () => {
           handler: async (res) => {
             if (res.razorpay_payment_id) {
               setLoadingPlaceOrder(true);
-              await api
-                .addRazorpayTransaction(
-                  cookies.get("jwt_token"),
-                  order_id,
-                  res.razorpay_payment_id,
-                  res.razorpay_order_id,
-                  res.razorpay_payment_id,
-                  res.razorpay_signature
-                )
-                .then((response) => response.json())
-                .then((result) => {
-                  setLoadingPlaceOrder(false);
-                  if (result.status === 1) {
-                    toast.success(result.message);
-                    setIsOrderPlaced(true);
-                    setShow(true);
-                  } else {
-                    toast.error(result.message);
-                  }
-                })
-                .catch((error) => console.log(error));
+              await addRazorPayTransaction(res, order_id);
               //Add Transaction
             }
           },
@@ -143,6 +147,28 @@ const Checkout = () => {
     [Razorpay]
   );
 
+  const addTransaction = (response) => {
+    api
+      .addTransaction(
+        cookies.get("jwt_token"),
+        orderID,
+        response.reference,
+        paymentMethod
+      )
+      .then((response) => response.json())
+      .then((result) => {
+        setLoadingPlaceOrder(false);
+        if (result.status === 1) {
+          toast.success(result.message);
+          setIsOrderPlaced(true);
+          setShow(true);
+        } else {
+          toast.error(result.message);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
   const handlePayStackPayment = (email, amount, currency, support_email) => {
     let handler = PaystackPop.setup({
       key: "pk_test_05ee04d1597f21a3b1a2f8fe3b59ec657454c1c0",
@@ -156,29 +182,94 @@ const Checkout = () => {
       },
       callback: async function (response) {
         setLoadingPlaceOrder(true);
-        await api
-          .addTransaction(
-            cookies.get("jwt_token"),
-            orderID,
-            response.reference,
-            paymentMethod
-          )
-          .then((response) => response.json())
-          .then((result) => {
-            setLoadingPlaceOrder(false);
-            if (result.status === 1) {
-              toast.success(result.message);
-              setIsOrderPlaced(true);
-              setShow(true);
-            } else {
-              toast.error(result.message);
-            }
-          })
-          .catch((error) => console.log(error));
+        await addTransaction(response);
       },
     });
 
     handler.openIframe();
+  };
+
+  const placeOrder = (delivery_time) => {
+    api
+      .placeOrder(
+        cookies.get("jwt_token"),
+        cart.checkout.product_variant_id,
+        cart.checkout.quantity,
+        cart.checkout.sub_total,
+        cart.checkout.delivery_charge.total_delivery_charge,
+        cart.checkout.total_amount,
+        paymentMethod,
+        selectedAddress.id,
+        delivery_time
+      )
+      .then((response) => response.json())
+      .then(async (result) => {
+        if (result.status === 1) {
+          if (paymentMethod === "COD") {
+            toast.success("Order Successfully Placed!");
+            setLoadingPlaceOrder(false);
+            setIsOrderPlaced(true);
+            setShow(true);
+          } else if (paymentMethod === "Razorpay") {
+            await api
+              .initiate_transaction(
+                cookies.get("jwt_token"),
+                result.data.order_id,
+                "Razorpay"
+              )
+              .then((resp) => resp.json())
+              .then((res) => {
+                if (res.status === 1) {
+                  setLoadingPlaceOrder(false);
+                  handleRozarpayPayment(
+                    result.data.order_id,
+                    res.data.transaction_id,
+                    cart.checkout.total_amount,
+                    user.user.name,
+                    user.user.email,
+                    user.user.mobile,
+                    setting.setting.app_name
+                  );
+                } else {
+                  toast.error(res.message);
+                  setLoadingPlaceOrder(false);
+                }
+              })
+              .catch((error) => console.error(error));
+          } else if (paymentMethod === "Paystack") {
+            setLoadingPlaceOrder(false);
+
+            handlePayStackPayment(
+              user.user.email,
+              cart.checkout.total_amount,
+              setting.payment_setting.paystack_currency_code,
+              setting.setting.support_email
+            );
+          } else if (paymentMethod === "Stripe") {
+            const order_id = result.data.order_id;
+
+            await api
+              .initiate_transaction(
+                cookies.get("jwt_token"),
+                result.data.order_id,
+                "Stripe"
+              )
+              .then((resp) => resp.json())
+              .then((res) => {
+                console.log(res);
+                setLoadingPlaceOrder(false);
+                setStripeOrderId(result.data.order_id);
+                setStripeClientSecret(res.data.client_secret);
+                setStripeTransactionId(res.data.id);
+              })
+              .catch((error) => console.log(error));
+          }
+        } else {
+          toast.error(result.message);
+          setLoadingPlaceOrder(false);
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   const handlePlaceOrder = async (e) => {
@@ -187,166 +278,14 @@ const Checkout = () => {
         expectedDate.getMonth() + 1
       }-${expectedDate.getFullYear()} ${expectedTime.title}`;
 
-      //place order
-
       if (selectedAddress === null) {
         toast.error("Please Select Delivery Address");
       } else if (delivery_time === null) {
         toast.error("Please Select Preffered Delivery Time");
       } else {
         setLoadingPlaceOrder(true);
-
-        if (paymentMethod === "COD") {
-          // place order
-
-          await api
-            .placeOrder(
-              cookies.get("jwt_token"),
-              cart.checkout.product_variant_id,
-              cart.checkout.quantity,
-              cart.checkout.sub_total,
-              cart.checkout.delivery_charge.total_delivery_charge,
-              cart.checkout.total_amount,
-              paymentMethod,
-              selectedAddress.id,
-              delivery_time
-            )
-            .then((response) => response.json())
-            .then((result) => {
-              if (result.status === 1) {
-                toast.success("Order Successfully Placed!");
-                setLoadingPlaceOrder(false);
-                setIsOrderPlaced(true);
-                setShow(true);
-              } else {
-                toast.error(result.message);
-                setLoadingPlaceOrder(false);
-              }
-            })
-            .catch((error) => console.log(error));
-        } else if (paymentMethod === "Razorpay") {
-          await api
-            .placeOrder(
-              cookies.get("jwt_token"),
-              cart.checkout.product_variant_id,
-              cart.checkout.quantity,
-              cart.checkout.sub_total,
-              cart.checkout.delivery_charge.total_delivery_charge,
-              cart.checkout.total_amount,
-              paymentMethod,
-              selectedAddress.id,
-              delivery_time
-            )
-            .then((response) => response.json())
-            .then(async (result) => {
-              // fetchOrders();
-              if (result.status === 1) {
-                await api
-                  .initiate_transaction(
-                    cookies.get("jwt_token"),
-                    result.data.order_id,
-                    "Razorpay"
-                  )
-                  .then((resp) => resp.json())
-                  .then((res) => {
-                    if (res.status === 1) {
-                      setLoadingPlaceOrder(false);
-                      handleRozarpayPayment(
-                        result.data.order_id,
-                        res.data.transaction_id,
-                        cart.checkout.total_amount,
-                        user.user.name,
-                        user.user.email,
-                        user.user.mobile,
-                        setting.setting.app_name
-                      );
-                    } else {
-                      toast.error(res.message);
-                      setLoadingPlaceOrder(false);
-                    }
-                  })
-                  .catch((error) => console.error(error));
-              } else {
-                toast.error(result.message);
-                setLoadingPlaceOrder(false);
-              }
-            })
-            .catch((error) => console.log(error));
-        } else if (paymentMethod === "Paystack") {
-          await api
-            .placeOrder(
-              cookies.get("jwt_token"),
-              cart.checkout.product_variant_id,
-              cart.checkout.quantity,
-              cart.checkout.sub_total,
-              cart.checkout.delivery_charge.total_delivery_charge,
-              cart.checkout.total_amount,
-              paymentMethod,
-              selectedAddress.id,
-              delivery_time
-            )
-            .then((response) => response.json())
-            .then((result) => {
-              // fetchOrders();
-              if (result.status === 1) {
-                setLoadingPlaceOrder(false);
-
-                handlePayStackPayment(
-                  user.user.email,
-                  cart.checkout.total_amount,
-                  setting.payment_setting.paystack_currency_code,
-                  setting.setting.support_email
-                );
-              } else {
-                toast.error(result.message);
-                setLoadingPlaceOrder(false);
-              }
-            })
-            .catch((error) => console.log(error));
-        } else if (paymentMethod === "Stripe") {
-          await api
-            .placeOrder(
-              cookies.get("jwt_token"),
-              cart.checkout.product_variant_id,
-              cart.checkout.quantity,
-              cart.checkout.sub_total,
-              cart.checkout.delivery_charge.total_delivery_charge,
-              cart.checkout.total_amount,
-              paymentMethod,
-              selectedAddress.id,
-              delivery_time
-            )
-            .then((response) => response.json())
-            .then(async (result) => {
-              if (result.status === 1) {
-                const order_id = result.data.order_id;
-
-                await api
-                  .initiate_transaction(
-                    cookies.get("jwt_token"),
-                    result.data.order_id,
-                    "Stripe"
-                  )
-                  .then((resp) => resp.json())
-                  .then((res) => {
-                    console.log(res);
-                    setLoadingPlaceOrder(false);
-                    setStripeOrderId(result.data.order_id);
-                    setStripeClientSecret(res.data.client_secret);
-                    setStripeTransactionId(res.data.id);
-                  })
-                  .catch((error) => console.log(error));
-                // fetchOrders();
-              } else {
-                toast.error(result.message);
-                setLoadingPlaceOrder(false);
-              }
-            })
-            .catch((error) => console.log(error));
-
-          // setstripeOrderId(400)
-
-          setLoadingPlaceOrder(false);
+        if (paymentMethod) {
+          await placeOrder(delivery_time);
         }
       }
     }
@@ -378,7 +317,7 @@ const Checkout = () => {
 
   useEffect(() => {
     fetchTimeSlot();
-	fetchOrders();
+    fetchOrders();
   }, []);
 
   useEffect(() => {
@@ -391,8 +330,8 @@ const Checkout = () => {
   }, [isOrderPlaced]);
 
   useEffect(() => {
-	console.log('xyz', setting);
-  }, [setting])
+    console.log("xyz", setting);
+  }, [setting]);
 
   return (
     <div>
@@ -400,47 +339,47 @@ const Checkout = () => {
         {isOrderPlaced && (
           <OrderPlaced city={city} show={show} setShow={setShow} />
         )}
-		<div className="cover">
-        <img src={coverImg} className="img-fluid" alt="cover"></img>
-        <div className="title">
-          <h3>Checkout</h3>
-          <span>home / </span>
-          <span className="active">checkout</span>
-        </div>
-      </div>
-
-      {setting.payment_setting === null ? (
-        <Loader />
-      ) : (
-        <>
-          <div className="checkout-container container">
-            <BillingAddress
-              timeSlots={timeSlots}
-              setTimeSlots={setTimeSlots}
-              setSelectedAddress={setSelectedAddress}
-              expectedDate={expectedDate}
-              setExpectedDate={setExpectedDate}
-              setExpectedTime={setExpectedTime}
-            />
-            <div className="order-container">
-              <PaymentMethod
-                setting={setting}
-                setPaymentMethod={setPaymentMethod}
-              />
-              <OrderSummary
-                cart={cart}
-                user={user}
-                paymentMethod={paymentMethod}
-                handlePlaceOrder={handlePlaceOrder}
-                loadingPlaceOrder={loadingPlaceOrder}
-              />
-            </div>
+        <div className="cover">
+          <img src={coverImg} className="img-fluid" alt="cover"></img>
+          <div className="title">
+            <h3>Checkout</h3>
+            <span>home / </span>
+            <span className="active">checkout</span>
           </div>
-        </>
-      )}
+        </div>
+
+        {setting.payment_setting === null ? (
+          <Loader />
+        ) : (
+          <>
+            <div className="checkout-container container">
+              <BillingAddress
+                timeSlots={timeSlots}
+                setTimeSlots={setTimeSlots}
+                setSelectedAddress={setSelectedAddress}
+                expectedDate={expectedDate}
+                setExpectedDate={setExpectedDate}
+                setExpectedTime={setExpectedTime}
+              />
+              <div className="order-container">
+                <PaymentMethod
+                  setting={setting}
+                  setPaymentMethod={setPaymentMethod}
+                />
+                <OrderSummary
+                  cart={cart}
+                  user={user}
+                  paymentMethod={paymentMethod}
+                  handlePlaceOrder={handlePlaceOrder}
+                  loadingPlaceOrder={loadingPlaceOrder}
+                />
+              </div>
+            </div>
+          </>
+        )}
       </div>
 
-	  <div
+      <div
         className="modal fade"
         id="stripeModal"
         data-bs-backdrop="static"
@@ -473,7 +412,6 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-      
     </div>
   );
 };
