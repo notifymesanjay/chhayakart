@@ -169,11 +169,11 @@ function App() {
 									path="/products"
 									element={<ProductList />}
 								></Route>
-								<Route
+								{/* <Route
 									exact={true}
 									path="/product"
 									element={<ProductDetails />}
-								></Route>
+								></Route> */}
 								<Route
 									exact={true}
 									path="/product/:slug"

@@ -1179,6 +1179,10 @@
     justify-content: space-between;
   }
 
+  .product_description{
+    text-align: left;
+  }
+
   @media only screen and (max-width: 575px){
     .product_title_content p{
       font-size: 14px;

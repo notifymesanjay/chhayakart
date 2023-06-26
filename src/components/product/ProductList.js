@@ -785,7 +785,7 @@ const ProductList = () => {
 																			payload: product.id,
 																		});
 																		setSelectedProductId(product.id);
-																		navigate("/product");
+																		navigate("/product/"+product.id);
 																	}}
 																/>
 																{filter.grid_view ? (
@@ -1062,7 +1062,7 @@ const ProductList = () => {
 																			payload: product.id,
 																		});
 																		setSelectedProductId(product.id);
-																		navigate("/product");
+																		navigate("/product/"+product.id);
 																	}}
 																>
 																	{product.name}
@@ -1079,6 +1079,19 @@ const ProductList = () => {
 																				</p>{" "}
 																				{product.variants[0].price}
 																			</span>
+
+																			<span
+																		id={`price${index}-section`}
+																		className="d-flex align items-center"
+																		style={{ textDecoration: "line-through" }}
+																	>
+																		<p id="fa-rupee" className="m-0">
+																			<FaRupeeSign fill="var(--secondary-color)" />
+																		</p>{" "}
+																		{parseFloat(product.variants[0].price) +
+																			product.variants[0].price * 0.13}
+																	</span>
+
 																			<div className="product_varients_drop">
 																				{product.variants.length > 1 ? (
 																					<>
@@ -1149,9 +1162,7 @@ const ProductList = () => {
 																							value={product.variants[0].id}
 																							className="variant_value select-arrow"
 																						>
-																							{product.variants[0].measurement +
-																								" " +
-																								product.variants[0]
+																							{product.variants[0]
 																									.stock_unit_name}
 																						</p>
 																					</>
@@ -1220,8 +1231,7 @@ const ProductList = () => {
 																							value={product.variants[0].id}
 																							className="variant_value variant_value_a select-arrow"
 																						>
-																							{product.variants[0].measurement +
-																								" " +
+																							{
 																								product.variants[0]
 																									.stock_unit_name}
 																						</p>
@@ -1236,6 +1246,20 @@ const ProductList = () => {
 																					</p>{" "}
 																					{product.variants[0].price}{" "}
 																				</span>
+
+																				<span
+																		id={`price${index}-section`}
+																		className="d-flex align items-center"
+																		style={{ textDecoration: "line-through" }}
+																	>
+																		<p id="fa-rupee" className="m-0">
+																			<FaRupeeSign fill="var(--secondary-color)" />
+																		</p>{" "}
+																		{parseFloat(product.variants[0].price) +
+																			product.variants[0].price * 0.13}
+																	</span>
+
+
 																			</div>
 																			<p className="product_list_description"></p>
 																		</>
