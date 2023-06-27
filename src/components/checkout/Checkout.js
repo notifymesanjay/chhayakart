@@ -19,7 +19,7 @@ import { ActionTypes } from "../../model/action-type";
 import "./checkout.css";
 
 const stripePromise = loadStripe(
-	"pk_test_51MKxDESEKxefYE6MZCHxEw4cFKiiLn2mV3Ek4Nx1UfcuNfE1Z6jgQrZrKpqTLju3n5SBjYJcwt1Jkw1bEoPXWRHB00XZ7D2f2F"
+  "pk_test_51MKxDESEKxefYE6MZCHxEw4cFKiiLn2mV3Ek4Nx1UfcuNfE1Z6jgQrZrKpqTLju3n5SBjYJcwt1Jkw1bEoPXWRHB00XZ7D2f2F"
 );
 
 const Checkout = () => {
@@ -72,32 +72,70 @@ const Checkout = () => {
 			.catch((error) => console.log(error));
 	};
 
-	const addRazorPayTransaction = (res, order_id) => {
-		api
-			.addRazorpayTransaction(
-				cookies.get("jwt_token"),
-				order_id,
-				res.razorpay_payment_id,
-				res.razorpay_order_id,
-				res.razorpay_payment_id,
-				res.razorpay_signature
-			)
-			.then((response) => response.json())
-			.then((result) => {
-				setLoadingPlaceOrder(false);
-				if (result.status === 1) {
-					//popup commented
-					//  toast.success(result.message);
-					setIsOrderPlaced(true);
-					setShow(true);
-				}
-				//popup commented
-				//else {
-				//toast.error(result.message);
-				// }
-			})
-			.catch((error) => console.log(error));
-	};
+  const addRazorPayTransaction = (res, order_id) => {
+    api
+      .addRazorpayTransaction(
+        cookies.get("jwt_token"),
+        order_id,
+        res.razorpay_payment_id,
+        res.razorpay_order_id,
+        res.razorpay_payment_id,
+        res.razorpay_signature
+      )
+      .then((response) => response.json())
+      .then((result) => {
+        setLoadingPlaceOrder(false);
+        if (result.status === 1) {
+          toast.success(result.message);
+          setIsOrderPlaced(true);
+          setShow(true);
+        } else {
+          toast.error(result.message);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const handleRozarpayPayment = useCallback(
+    (
+      order_id,
+      razorpay_transaction_id,
+      amount,
+      name,
+      email,
+      mobile,
+      app_name
+    ) => {
+      if (cookies.get("jwt_token")) {
+        const key = "rzp_live_t7yOUA2fwGjaEX";
+        const options = {
+          key: key,
+          amount: amount * 100,
+          // currency: "INR",
+          name: name,
+          description: app_name,
+          image:
+            "https://admin.chhayakart.com/storage/logo/1680098508_37047.png",
+          order_id: razorpay_transaction_id,
+          handler: async (res) => {
+            if (res.razorpay_payment_id) {
+              setLoadingPlaceOrder(true);
+              await addRazorPayTransaction(res, order_id);
+              //Add Transaction
+            }
+          },
+          prefill: {
+            name: name,
+            email: email,
+            contact: mobile,
+          },
+          notes: {
+            address: "Razorpay Corporate Office",
+          },
+          theme: {
+            color: "#51BD88",
+          },
+        };
 
 	const handleRozarpayPayment = useCallback(
 		(
@@ -140,15 +178,44 @@ const Checkout = () => {
 					},
 				};
 
-				const rzpay = new Razorpay(options);
-				rzpay.on("payment.failed", function (response) {
-					console.log(response.error);
-				});
-				rzpay.open();
-			}
-		},
-		[Razorpay]
-	);
+  const addTransaction = (response) => {
+    api
+      .addTransaction(
+        cookies.get("jwt_token"),
+        orderID,
+        response.reference,
+        paymentMethod
+      )
+      .then((response) => response.json())
+      .then((result) => {
+        setLoadingPlaceOrder(false);
+        if (result.status === 1) {
+          toast.success(result.message);
+          setIsOrderPlaced(true);
+          setShow(true);
+        } else {
+          toast.error(result.message);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const handlePayStackPayment = (email, amount, currency, support_email) => {
+    let handler = PaystackPop.setup({
+      key: "pk_test_05ee04d1597f21a3b1a2f8fe3b59ec657454c1c0",
+      email: email,
+      amount: parseFloat(amount) * 100,
+      currency: currency === "ZAR" ? currency : "ZAR",
+      ref: new Date().getTime().toString(),
+      label: support_email,
+      onClose: function () {
+        alert("Window closed.");
+      },
+      callback: async function (response) {
+        setLoadingPlaceOrder(true);
+        await addTransaction(response);
+      },
+    });
 
 	const addTransaction = (response) => {
 		api
@@ -175,156 +242,107 @@ const Checkout = () => {
 			.catch((error) => console.log(error));
 	};
 
-	const handlePayStackPayment = (email, amount, currency, support_email) => {
-		let handler = PaystackPop.setup({
-			key: "pk_test_05ee04d1597f21a3b1a2f8fe3b59ec657454c1c0",
-			email: email,
-			amount: parseFloat(amount) * 100,
-			currency: currency === "ZAR" ? currency : "ZAR",
-			ref: new Date().getTime().toString(),
-			label: support_email,
-			onClose: function () {
-				alert("Window closed.");
-			},
-			callback: async function (response) {
-				setLoadingPlaceOrder(true);
-				await addTransaction(response);
-			},
-		});
+  const placeOrder = (delivery_time) => {
+    api
+      .placeOrder(
+        cookies.get("jwt_token"),
+        cart.checkout.product_variant_id,
+        cart.checkout.quantity,
+        cart.checkout.sub_total,
+        cart.checkout.delivery_charge.total_delivery_charge,
+        cart.checkout.total_amount,
+        paymentMethod,
+        selectedAddress.id,
+        delivery_time
+      )
+      .then((response) => response.json())
+      .then(async (result) => {
+        if (result.status === 1) {
+          if (paymentMethod === "COD") {
+            toast.success("Order Successfully Placed!");
+            setLoadingPlaceOrder(false);
+            setIsOrderPlaced(true);
+            setShow(true);
+          } else if (paymentMethod === "Razorpay") {
+            await api
+              .initiate_transaction(
+                cookies.get("jwt_token"),
+                result.data.order_id,
+                "Razorpay"
+              )
+              .then((resp) => resp.json())
+              .then((res) => {
+                if (res.status === 1) {
+                  setLoadingPlaceOrder(false);
+                  handleRozarpayPayment(
+                    result.data.order_id,
+                    res.data.transaction_id,
+                    cart.checkout.total_amount,
+                    user.user.name,
+                    user.user.email,
+                    user.user.mobile,
+                    setting.setting.app_name
+                  );
+                } else {
+                  toast.error(res.message);
+                  setLoadingPlaceOrder(false);
+                }
+              })
+              .catch((error) => console.error(error));
+          } else if (paymentMethod === "Paystack") {
+            setLoadingPlaceOrder(false);
 
-		handler.openIframe();
-	};
+            handlePayStackPayment(
+              user.user.email,
+              cart.checkout.total_amount,
+              setting.payment_setting.paystack_currency_code,
+              setting.setting.support_email
+            );
+          } else if (paymentMethod === "Stripe") {
+            const order_id = result.data.order_id;
 
-	const placeOrder = (delivery_time) => {
-		api
-			.placeOrder(
-				cookies.get("jwt_token"),
-				cart.checkout.product_variant_id,
-				cart.checkout.quantity,
-				cart.checkout.sub_total,
-				cart.checkout.delivery_charge.total_delivery_charge,
-				cart.checkout.total_amount,
-				paymentMethod,
-				selectedAddress.id,
-				delivery_time
-			)
-			.then((response) => response.json())
-			.then(async (result) => {
-				if (result.status === 1) {
-					if (paymentMethod === "COD") {
-						toast.success("Order Successfully Placed!");
-						setLoadingPlaceOrder(false);
-						setIsOrderPlaced(true);
-						setShow(true);
-					} else if (paymentMethod === "Razorpay") {
-						await api
-							.initiate_transaction(
-								cookies.get("jwt_token"),
-								result.data.order_id,
-								"Razorpay"
-							)
-							.then((resp) => resp.json())
-							.then((res) => {
-								if (res.status === 1) {
-									setLoadingPlaceOrder(false);
-									handleRozarpayPayment(
-										result.data.order_id,
-										res.data.transaction_id,
-										cart.checkout.total_amount,
-										user.user.name,
-										user.user.email,
-										user.user.mobile,
-										setting.setting.app_name
-									);
-								} else {
-									toast.error(res.message);
-									setLoadingPlaceOrder(false);
-								}
-							})
-							.catch((error) => console.error(error));
-					} else if (paymentMethod === "Paystack") {
-						setLoadingPlaceOrder(false);
+            await api
+              .initiate_transaction(
+                cookies.get("jwt_token"),
+                result.data.order_id,
+                "Stripe"
+              )
+              .then((resp) => resp.json())
+              .then((res) => {
+                console.log(res);
+                setLoadingPlaceOrder(false);
+                setStripeOrderId(result.data.order_id);
+                setStripeClientSecret(res.data.client_secret);
+                setStripeTransactionId(res.data.id);
+              })
+              .catch((error) => console.log(error));
+          }
+        } else {
+          toast.error(result.message);
+          setLoadingPlaceOrder(false);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
 
-						handlePayStackPayment(
-							user.user.email,
-							cart.checkout.total_amount,
-							setting.payment_setting.paystack_currency_code,
-							setting.setting.support_email
-						);
-					} else if (paymentMethod === "Stripe") {
-						const order_id = result.data.order_id;
+  const handlePlaceOrder = async (e) => {
+    if (cookies.get("jwt_token")) {
+      const delivery_time = `${expectedDate.getDate()}-${
+        expectedDate.getMonth() + 1
+      }-${expectedDate.getFullYear()} ${expectedTime.title}`;
 
-						await api
-							.initiate_transaction(
-								cookies.get("jwt_token"),
-								result.data.order_id,
-								"Stripe"
-							)
-							.then((resp) => resp.json())
-							.then((res) => {
-								console.log(res);
-								setLoadingPlaceOrder(false);
-								setStripeOrderId(result.data.order_id);
-								setStripeClientSecret(res.data.client_secret);
-								setStripeTransactionId(res.data.id);
-							})
-							.catch((error) => console.log(error));
-					}
-				} else {
-					toast.error(result.message);
-					setLoadingPlaceOrder(false);
-				}
-			})
-			.catch((error) => console.log(error));
-	};
-
-	const handlePlaceOrder = async (e) => {
-		if (cookies.get("jwt_token")) {
-			const delivery_time = `${expectedDate.getDate()}-${
-				expectedDate.getMonth() + 1
-			}-${expectedDate.getFullYear()} ${expectedTime.title}`;
-
-			if (selectedAddress === null) {
-				toast.error("Please Select Delivery Address");
-			} else if (delivery_time === null) {
-				toast.error("Please Select Preffered Delivery Time");
-			} else {
-				setLoadingPlaceOrder(true);
-				if (paymentMethod) {
-					await placeOrder(delivery_time);
-				}
-			}
-		}
-	};
-
-	const handleClose = async () => {
-		if (cookies.get("jwt_token")) {
-			await api
-				.removeCart(cookies.get("jwt_token"))
-				.then((response) => response.json())
-				.then(async (result) => {
-					if (result.status === 1) {
-						await api
-							.getCart(
-								cookies.get("jwt_token"),
-								city.city.latitude,
-								city.city.longitude
-							)
-							.then((resp) => resp.json())
-							.then((res) => {
-								dispatch({ type: ActionTypes.SET_CART, payload: null });
-							});
-					}
-				});
-			setShow(false);
-			navigate("/");
-		}
-	};
-
-	useEffect(() => {
-		fetchTimeSlot();
-		fetchOrders();
-	}, []);
+      if (selectedAddress === null) {
+        toast.error("Please Select Delivery Address");
+      } else if (delivery_time === null) {
+        toast.error("Please Select Preffered Delivery Time");
+      } else {
+        setLoadingPlaceOrder(true);
+        if (paymentMethod) {
+          await placeOrder(delivery_time);
+        }
+      }
+    }
+  };
 
 	useEffect(() => {
 		if (isOrderPlaced) {
@@ -335,9 +353,10 @@ const Checkout = () => {
 		}
 	}, [isOrderPlaced]);
 
-	useEffect(() => {
-		console.log("xyz", setting);
-	}, [setting]);
+  useEffect(() => {
+    fetchTimeSlot();
+    fetchOrders();
+  }, []);
 
 	return (
 		<div>
@@ -354,72 +373,91 @@ const Checkout = () => {
 					</div>
 				</div>
 
-				{setting.payment_setting === null ? (
-					<Loader />
-				) : (
-					<>
-						<div className="checkout-container container">
-							<BillingAddress
-								timeSlots={timeSlots}
-								setTimeSlots={setTimeSlots}
-								setSelectedAddress={setSelectedAddress}
-								expectedDate={expectedDate}
-								setExpectedDate={setExpectedDate}
-								setExpectedTime={setExpectedTime}
-							/>
-							<div className="order-container">
-								<PaymentMethod
-									setting={setting}
-									setPaymentMethod={setPaymentMethod}
-								/>
-								<OrderSummary
-									cart={cart}
-									user={user}
-									paymentMethod={paymentMethod}
-									handlePlaceOrder={handlePlaceOrder}
-									loadingPlaceOrder={loadingPlaceOrder}
-								/>
-							</div>
-						</div>
-					</>
-				)}
-			</div>
+  useEffect(() => {
+    console.log("xyz", setting);
+  }, [setting]);
 
-			<div
-				className="modal fade"
-				id="stripeModal"
-				data-bs-backdrop="static"
-				tabIndex="-1"
-				aria-labelledby="stripeModalLabel"
-				aria-hidden="true"
-			>
-				<div className="modal-dialog modal-dialog-centered modal-lg">
-					<div className="modal-content" style={{ minWidth: "100%" }}>
-						{stripeOrderId === null ||
-						stripeClientSecret === null ||
-						stripeTransactionId === null ? (
-							<Loader width="100%" height="100%" />
-						) : (
-							<Elements
-								stripe={stripePromise}
-								orderID={stripeOrderId}
-								client_secret={stripeClientSecret}
-								transaction_id={stripeTransactionId}
-								amount={cart.checkout.total_amount}
-							>
-								<InjectCheckout
-									orderID={stripeOrderId}
-									client_secret={stripeClientSecret}
-									transaction_id={stripeTransactionId}
-									amount={cart.checkout.total_amount}
-								/>
-							</Elements>
-						)}
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+  return (
+    <div>
+      <div id="checkout">
+        {isOrderPlaced && (
+          <OrderPlaced city={city} show={show} setShow={setShow} />
+        )}
+        <div className="cover">
+          <img src={coverImg} className="img-fluid" alt="cover"></img>
+          <div className="title">
+            <h3>Checkout</h3>
+            <span>home / </span>
+            <span className="active">checkout</span>
+          </div>
+        </div>
+
+        {setting.payment_setting === null ? (
+          <Loader />
+        ) : (
+          <>
+            <div className="checkout-container container">
+              <BillingAddress
+                timeSlots={timeSlots}
+                setTimeSlots={setTimeSlots}
+                setSelectedAddress={setSelectedAddress}
+                expectedDate={expectedDate}
+                setExpectedDate={setExpectedDate}
+                setExpectedTime={setExpectedTime}
+              />
+              <div className="order-container">
+                <PaymentMethod
+                  setting={setting}
+                  setPaymentMethod={setPaymentMethod}
+                />
+                <OrderSummary
+                  cart={cart}
+                  user={user}
+                  paymentMethod={paymentMethod}
+                  handlePlaceOrder={handlePlaceOrder}
+                  loadingPlaceOrder={loadingPlaceOrder}
+                />
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+
+      <div
+        className="modal fade"
+        id="stripeModal"
+        data-bs-backdrop="static"
+        tabIndex="-1"
+        aria-labelledby="stripeModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered modal-lg">
+          <div className="modal-content" style={{ minWidth: "100%" }}>
+            {stripeOrderId === null ||
+            stripeClientSecret === null ||
+            stripeTransactionId === null ? (
+              <Loader width="100%" height="100%" />
+            ) : (
+              <Elements
+                stripe={stripePromise}
+                orderID={stripeOrderId}
+                client_secret={stripeClientSecret}
+                transaction_id={stripeTransactionId}
+                amount={cart.checkout.total_amount}
+              >
+                <InjectCheckout
+                  orderID={stripeOrderId}
+                  client_secret={stripeClientSecret}
+                  transaction_id={stripeTransactionId}
+                  amount={cart.checkout.total_amount}
+                />
+              </Elements>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Checkout;
