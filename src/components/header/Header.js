@@ -4,11 +4,11 @@ import { BsShopWindow } from "react-icons/bs";
 import { BiUserCircle } from "react-icons/bi";
 import { MdSearch, MdGTranslate, MdOutlineAccountCircle } from "react-icons/md";
 import {
-  IoContrast,
-  IoNotificationsOutline,
-  IoHeartOutline,
-  IoCartOutline,
-  IoPersonOutline,
+	IoContrast,
+	IoNotificationsOutline,
+	IoHeartOutline,
+	IoCartOutline,
+	IoPersonOutline,
 } from "react-icons/io5";
 import { IoMdArrowDropdown, IoIosArrowDown } from "react-icons/io";
 import { GoLocation } from "react-icons/go";
@@ -35,438 +35,438 @@ import $ from "jquery";
 // import { Modal } from 'bootstrap/dist/js/bootstrap.bundle.js';
 
 const Header = () => {
-  // const [islocationclick, setislocationclick] = useState(false);
-  // const [issearchClick, setissearchClick] = useState(false);
-  const [isLocationPresent, setisLocationPresent] = useState(false);
-  const [totalNotification, settotalNotification] = useState(null);
-  const [search, setsearch] = useState("");
-  const [active, setActive] = useState(false);
+	// const [islocationclick, setislocationclick] = useState(false);
+	// const [issearchClick, setissearchClick] = useState(false);
+	const [isLocationPresent, setisLocationPresent] = useState(false);
+	const [totalNotification, settotalNotification] = useState(null);
+	const [search, setsearch] = useState("");
+	const [active, setActive] = useState(false);
 
-  const locationModalTrigger = useRef();
-  const closeSidebarRef = useRef();
-  const searchNavTrigger = useRef();
+	const locationModalTrigger = useRef();
+	const closeSidebarRef = useRef();
+	const searchNavTrigger = useRef();
 
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-  const city = useSelector((state) => state.city);
-  const cssmode = useSelector((state) => state.cssmode);
-  const user = useSelector((state) => state.user);
-  const cart = useSelector((state) => state.cart);
-  const favorite = useSelector((state) => state.favorite);
-  const [isSticky, setIsSticky] = useState(false);
-  // const categories = useSelector(state => (state.category))
+	const city = useSelector((state) => state.city);
+	const cssmode = useSelector((state) => state.cssmode);
+	const user = useSelector((state) => state.user);
+	const cart = useSelector((state) => state.cart);
+	const favorite = useSelector((state) => state.favorite);
+	const [isSticky, setIsSticky] = useState(false);
+	// const categories = useSelector(state => (state.category))
 
-  //initialize cookies
-  const cookies = new Cookies();
+	//initialize cookies
+	const cookies = new Cookies();
 
-  const curr_url = useLocation();
+	const curr_url = useLocation();
 
-  useEffect(() => {
-    let location = getLocation();
-    if (location !== null) {
-      if (Object.keys(location).length !== 0) {
-        api
-          .getCity(location.city, location.lat, location.lng)
-          .then((response) => response.json())
-          .then((result) => {
-            if (result.status === 1) {
-              dispatch({ type: ActionTypes.SET_CITY, payload: result.data });
-            }
-          });
-        setisLocationPresent(true);
-      }
-    } else {
-      locationModalTrigger.current.click();
-    }
-  }, [dispatch]);
+	useEffect(() => {
+		let location = getLocation();
+		if (location !== null) {
+			if (Object.keys(location).length !== 0) {
+				api
+					.getCity(location.city, location.lat, location.lng)
+					.then((response) => response.json())
+					.then((result) => {
+						if (result.status === 1) {
+							dispatch({ type: ActionTypes.SET_CITY, payload: result.data });
+						}
+					});
+				setisLocationPresent(true);
+			}
+		} else {
+			locationModalTrigger.current.click();
+		}
+	}, [dispatch]);
 
-  const fetchCart = async (token, latitude, longitude) => {
-    await api
-      .getCart(token, latitude, longitude)
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.status === 1) {
-          dispatch({ type: ActionTypes.SET_CART, payload: result });
-        } else {
-          dispatch({ type: ActionTypes.SET_CART, payload: null });
-        }
-      })
-      .catch((error) => console.log(error));
-    await api
-      .getCart(token, latitude, longitude, 1)
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.status === 1) {
-          dispatch({
-            type: ActionTypes.SET_CART_CHECKOUT,
-            payload: result.data,
-          });
-        }
-      })
-      .catch((error) => console.log(error));
-  };
+	const fetchCart = async (token, latitude, longitude) => {
+		await api
+			.getCart(token, latitude, longitude)
+			.then((response) => response.json())
+			.then((result) => {
+				if (result.status === 1) {
+					dispatch({ type: ActionTypes.SET_CART, payload: result });
+				} else {
+					dispatch({ type: ActionTypes.SET_CART, payload: null });
+				}
+			})
+			.catch((error) => console.log(error));
+		await api
+			.getCart(token, latitude, longitude, 1)
+			.then((response) => response.json())
+			.then((result) => {
+				if (result.status === 1) {
+					dispatch({
+						type: ActionTypes.SET_CART_CHECKOUT,
+						payload: result.data,
+					});
+				}
+			})
+			.catch((error) => console.log(error));
+	};
 
-  function closeItem() {
-    setActive(true);
-  }
-  const [counter, setCounter] = useState(1);
-  const [isLogin, setIsLogin] = useState(false);
+	function closeItem() {
+		setActive(true);
+	}
+	const [counter, setCounter] = useState(1);
+	const [isLogin, setIsLogin] = useState(false);
 
-  const handleRemoveDiv = () => {
-    setCounter(counter - 1);
-  };
-  const fetchFavorite = async (token, latitude, longitude) => {
-    await api
-      .getFavorite(token, latitude, longitude)
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.status === 1) {
-          dispatch({ type: ActionTypes.SET_FAVORITE, payload: result });
-        } else {
-          dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
-        }
-      })
-      .catch((error) => console.log(error));
-  };
+	const handleRemoveDiv = () => {
+		setCounter(counter - 1);
+	};
+	const fetchFavorite = async (token, latitude, longitude) => {
+		await api
+			.getFavorite(token, latitude, longitude)
+			.then((response) => response.json())
+			.then((result) => {
+				if (result.status === 1) {
+					dispatch({ type: ActionTypes.SET_FAVORITE, payload: result });
+				} else {
+					dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
+				}
+			})
+			.catch((error) => console.log(error));
+	};
 
-  const fetchNotification = async (token) => {
-    await api
-      .getNotification(token)
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.status === 1) {
-          settotalNotification(result.total);
-        }
-      })
-      .catch((error) => console.log(error));
-  };
+	const fetchNotification = async (token) => {
+		await api
+			.getNotification(token)
+			.then((response) => response.json())
+			.then((result) => {
+				if (result.status === 1) {
+					settotalNotification(result.total);
+				}
+			})
+			.catch((error) => console.log(error));
+	};
 
-  useEffect(() => {
-    if (
-      city.city !== null &&
-      cookies.get("jwt_token") !== undefined &&
-      user.user !== null
-    ) {
-      fetchCart(
-        cookies.get("jwt_token"),
-        city.city.latitude,
-        city.city.longitude
-      );
-      fetchFavorite(
-        cookies.get("jwt_token"),
-        city.city.latitude,
-        city.city.longitude
-      );
-      fetchNotification(cookies.get("jwt_token"));
-    }
-  }, [city, user]);
+	useEffect(() => {
+		if (
+			city.city !== null &&
+			cookies.get("jwt_token") !== undefined &&
+			user.user !== null
+		) {
+			fetchCart(
+				cookies.get("jwt_token"),
+				city.city.latitude,
+				city.city.longitude
+			);
+			fetchFavorite(
+				cookies.get("jwt_token"),
+				city.city.latitude,
+				city.city.longitude
+			);
+			fetchNotification(cookies.get("jwt_token"));
+		}
+	}, [city, user]);
 
-  const fetchPaymentSetting = async () => {
-    await api
-      .getPaymentSettings(cookies.get("jwt_token"))
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.status === 1) {
-          // window.razorpay_key = result.data.razorpay_key
-          // window.stripe_publishable_key = result.data.stripe_publishable_key
-          // window.paystack_public_key = result.data.paystack_public_key
+	const fetchPaymentSetting = async () => {
+		await api
+			.getPaymentSettings(cookies.get("jwt_token"))
+			.then((response) => response.json())
+			.then((result) => {
+				if (result.status === 1) {
+					// window.razorpay_key = result.data.razorpay_key
+					// window.stripe_publishable_key = result.data.stripe_publishable_key
+					// window.paystack_public_key = result.data.paystack_public_key
 
-          dispatch({
-            type: ActionTypes.SET_PAYMENT_SETTING,
-            payload: result.data,
-          });
-        }
-      })
-      .catch((error) => console.log(error));
-  };
+					dispatch({
+						type: ActionTypes.SET_PAYMENT_SETTING,
+						payload: result.data,
+					});
+				}
+			})
+			.catch((error) => console.log(error));
+	};
 
-  useEffect(() => {
-    fetchPaymentSetting();
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-  const handleScroll = () => {
-    if (window.pageYOffset > 0) {
-      setIsSticky(true);
-    } else {
-      setIsSticky(false);
-    }
-  };
+	useEffect(() => {
+		fetchPaymentSetting();
+		window.addEventListener("scroll", handleScroll);
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, []);
+	const handleScroll = () => {
+		if (window.pageYOffset > 0) {
+			setIsSticky(true);
+		} else {
+			setIsSticky(false);
+		}
+	};
 
-  const handleCssModeChange = (e) => {
-    dispatch({ type: ActionTypes.SET_CSSMODE, payload: e.target.value });
-  };
+	const handleCssModeChange = (e) => {
+		dispatch({ type: ActionTypes.SET_CSSMODE, payload: e.target.value });
+	};
 
-  const handleLanguageChange = (e) => {
-    dispatch({ type: ActionTypes.SET_LANGUAGE, payload: e.target.value });
-  };
+	const handleLanguageChange = (e) => {
+		dispatch({ type: ActionTypes.SET_LANGUAGE, payload: e.target.value });
+	};
 
-  const handleSignUp = () => {
-    setIsLogin(true);
-  }
+	const handleSignUp = () => {
+		setIsLogin(true);
+	};
 
-  return (
-    <>
-      {/* sidebar */}
+	return (
+		<>
+			{/* sidebar */}
 
-      {Array.from(Array(counter)).map((item, idx) => (
-        <div
-          className="d-flex justify-content-between w-100 d-block d-sm-none"
-          id="chaiclose"
-        >
-          <div className="text-center">
-            <button
-              id="chaibutton"
-              onClick={handleRemoveDiv}
-              type="button"
-              className="btn-close mt-4 px-4"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div>
-            <img src={logoPath} height="50px" alt="logo"></img>
-          </div>
-          <div style={{ textAlign: "left" }}>
-            <b>
-              Use app for best <br /> experience!
-            </b>
-            <br />
-            Avialable for android & ios
-          </div>
-          <div>
-            <button
-              className="btn mt-4"
-              style={{ backgroundColor: "pink", color: "white" }}
-            >
-              <a
-                style={{ textDecoration: "none" }}
-                href="https://play.google.com/store/apps/details?id=com.chayakart"
-              >
-                {" "}
-                Use App
-              </a>
-            </button>
-          </div>
-        </div>
-      ))}
-      <div
-        className="hide-desktop offcanvas offcanvas-start"
-        tabIndex="-1"
-        id="sidebaroffcanvasExample"
-        aria-labelledby="sidebaroffcanvasExampleLabel"
-      >
-        <div className="site-scroll ps">
-          <div className="canvas-header">
-            <div className="site-brand">
-              <img src={logoPath} height="50px" alt="logo"></img>
-            </div>
+			{Array.from(Array(counter)).map((item, idx) => (
+				<div
+					className="d-flex justify-content-between w-100 d-block d-sm-none"
+					id="chaiclose"
+				>
+					<div className="text-center">
+						<button
+							id="chaibutton"
+							onClick={handleRemoveDiv}
+							type="button"
+							className="btn-close mt-4 px-4"
+							aria-label="Close"
+						></button>
+					</div>
+					<div>
+						<img src={logoPath} height="50px" alt="logo"></img>
+					</div>
+					<div style={{ textAlign: "left" }}>
+						<b>
+							Use app for best <br /> experience!
+						</b>
+						<br />
+						Avialable for android & ios
+					</div>
+					<div>
+						<button
+							className="btn mt-4"
+							style={{ backgroundColor: "pink", color: "white" }}
+						>
+							<a
+								style={{ textDecoration: "none" }}
+								href="https://play.google.com/store/apps/details?id=com.chayakart"
+							>
+								{" "}
+								Use App
+							</a>
+						</button>
+					</div>
+				</div>
+			))}
+			<div
+				className="hide-desktop offcanvas offcanvas-start"
+				tabIndex="-1"
+				id="sidebaroffcanvasExample"
+				aria-labelledby="sidebaroffcanvasExampleLabel"
+			>
+				<div className="site-scroll ps">
+					<div className="canvas-header">
+						<div className="site-brand">
+							<img src={logoPath} height="50px" alt="logo"></img>
+						</div>
 
-            <button
-              type="button"
-              className="close-canvas"
-              data-bs-dismiss="offcanvas"
-              aria-label="Close"
-              ref={closeSidebarRef}
-            >
-              <AiOutlineCloseCircle />
-            </button>
-          </div>
-          <div className="canvas-main">
-            <div className="site-location">
-              <button
-                whileTap={{ scale: 0.8 }}
-                type="buton"
-                data-bs-toggle="modal"
-                data-bs-target="#locationModal"
-                ref={locationModalTrigger}
-              >
-                <div className="d-flex flex-row gap-2">
-                  <div className="icon location p-1 m-auto">
-                    <GoLocation />
-                  </div>
-                  <div className="d-flex flex-column flex-grow-1">
-                    <span className="location-description">
-                      Deliver to <IoMdArrowDropdown />
-                    </span>
-                    <span className="current-location">
-                      {isLocationPresent ? (
-                        <>
-                          {city.status === "fulfill" ? (
-                            city.city.formatted_address
-                          ) : (
-                            <div className="d-flex justify-content-center">
-                              <div className="spinner-border" role="status">
-                                <span className="visually-hidden">
-                                  Loading...
-                                </span>
-                              </div>
-                            </div>
-                          )}
-                        </>
-                      ) : (
-                        "Please select location"
-                      )}
-                    </span>
-                  </div>
-                </div>
-              </button>
-            </div>
+						<button
+							type="button"
+							className="close-canvas"
+							data-bs-dismiss="offcanvas"
+							aria-label="Close"
+							ref={closeSidebarRef}
+						>
+							<AiOutlineCloseCircle />
+						</button>
+					</div>
+					<div className="canvas-main">
+						<div className="site-location">
+							<button
+								whileTap={{ scale: 0.8 }}
+								type="buton"
+								data-bs-toggle="modal"
+								data-bs-target="#locationModal"
+								ref={locationModalTrigger}
+							>
+								<div className="d-flex flex-row gap-2">
+									<div className="icon location p-1 m-auto">
+										<GoLocation />
+									</div>
+									<div className="d-flex flex-column flex-grow-1">
+										<span className="location-description">
+											Deliver to <IoMdArrowDropdown />
+										</span>
+										<span className="current-location">
+											{isLocationPresent ? (
+												<>
+													{city.status === "fulfill" ? (
+														city.city.formatted_address
+													) : (
+														<div className="d-flex justify-content-center">
+															<div className="spinner-border" role="status">
+																<span className="visually-hidden">
+																	Loading...
+																</span>
+															</div>
+														</div>
+													)}
+												</>
+											) : (
+												"Please select location"
+											)}
+										</span>
+									</div>
+								</div>
+							</button>
+						</div>
 
-            <div className="canvas-title">
-              <h6 className="entry-title">Site Navigation</h6>
-            </div>
+						<div className="canvas-title">
+							<h6 className="entry-title">Site Navigation</h6>
+						</div>
 
-            <nav className="canvas-menu canvas-primary vertical">
-              <ul id="menu-menu-1" className="menu">
-                <li className=" menu-item menu-item-type-post_type menu-item-object-page">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      closeSidebarRef.current.click();
-                      navigate("/");
-                    }}
-                  >
-                    Home
-                  </button>
-                </li>
+						<nav className="canvas-menu canvas-primary vertical">
+							<ul id="menu-menu-1" className="menu">
+								<li className=" menu-item menu-item-type-post_type menu-item-object-page">
+									<button
+										type="button"
+										onClick={() => {
+											closeSidebarRef.current.click();
+											navigate("/");
+										}}
+									>
+										Home
+									</button>
+								</li>
 
-                <li className="dropdown mega-menu menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
-                  <button type="button">Shop</button>
-                  <ul
-                    className="sub-menu dropdown-menu"
-                    aria-labelledby="ShopDropDown"
-                  >
-                    <li className="dropdown-item menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          closeSidebarRef.current.click();
-                          navigate("/cart");
-                        }}
-                      >
-                        Cart
-                      </button>
-                    </li>
+								<li className="dropdown mega-menu menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
+									<button type="button">Shop</button>
+									<ul
+										className="sub-menu dropdown-menu"
+										aria-labelledby="ShopDropDown"
+									>
+										<li className="dropdown-item menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
+											<button
+												type="button"
+												onClick={() => {
+													closeSidebarRef.current.click();
+													navigate("/cart");
+												}}
+											>
+												Cart
+											</button>
+										</li>
 
-                    <li className="dropdown-item menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          closeSidebarRef.current.click();
-                          navigate("/checkout");
-                        }}
-                      >
-                        Checkout
-                      </button>
-                    </li>
+										<li className="dropdown-item menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
+											<button
+												type="button"
+												onClick={() => {
+													closeSidebarRef.current.click();
+													navigate("/checkout");
+												}}
+											>
+												Checkout
+											</button>
+										</li>
 
-                    <li className="dropdown-item menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          closeSidebarRef.current.click();
-                          navigate("/profile");
-                        }}
-                      >
-                        My Account
-                      </button>
-                    </li>
+										<li className="dropdown-item menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
+											<button
+												type="button"
+												onClick={() => {
+													closeSidebarRef.current.click();
+													navigate("/profile");
+												}}
+											>
+												My Account
+											</button>
+										</li>
 
-                    <li className="dropdown-item menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          closeSidebarRef.current.click();
-                          navigate("/wishlist");
-                        }}
-                      >
-                        wishlist
-                      </button>
-                    </li>
+										<li className="dropdown-item menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
+											<button
+												type="button"
+												onClick={() => {
+													closeSidebarRef.current.click();
+													navigate("/wishlist");
+												}}
+											>
+												wishlist
+											</button>
+										</li>
 
-                    {/* <li className='dropdown-item menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children'>
+										{/* <li className='dropdown-item menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children'>
                                             <button type='button'>Order Tracking</button>
                                         </li> */}
-                  </ul>
-                  <button
-                    className="menu-dropdown"
-                    id="ShopDropDown"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <IoIosArrowDown />
-                  </button>
-                </li>
+									</ul>
+									<button
+										className="menu-dropdown"
+										id="ShopDropDown"
+										type="button"
+										data-bs-toggle="dropdown"
+										aria-expanded="false"
+									>
+										<IoIosArrowDown />
+									</button>
+								</li>
 
-                <li className=" menu-item menu-item-type-post_type menu-item-object-page">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      closeSidebarRef.current.click();
-                      navigate("/about");
-                    }}
-                  >
-                    About Us
-                  </button>
-                </li>
-                <li className=" menu-item menu-item-type-post_type menu-item-object-page">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      closeSidebarRef.current.click();
-                      navigate("/contact");
-                    }}
-                  >
-                    Contact Us
-                  </button>
-                </li>
-                <li className=" menu-item menu-item-type-post_type menu-item-object-page">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      closeSidebarRef.current.click();
-                      navigate("/terms");
-                    }}
-                  >
-                    Terms
-                  </button>
-                </li>
-                <li className=" menu-item menu-item-type-post_type menu-item-object-page">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      closeSidebarRef.current.click();
-                      navigate("/policy/Privacy_Policy");
-                    }}
-                  >
-                    Policy
-                  </button>
-                </li>
-                {/* <li className=' menu-item menu-item-type-post_type menu-item-object-page'>
+								<li className=" menu-item menu-item-type-post_type menu-item-object-page">
+									<button
+										type="button"
+										onClick={() => {
+											closeSidebarRef.current.click();
+											navigate("/about");
+										}}
+									>
+										About Us
+									</button>
+								</li>
+								<li className=" menu-item menu-item-type-post_type menu-item-object-page">
+									<button
+										type="button"
+										onClick={() => {
+											closeSidebarRef.current.click();
+											navigate("/contact");
+										}}
+									>
+										Contact Us
+									</button>
+								</li>
+								<li className=" menu-item menu-item-type-post_type menu-item-object-page">
+									<button
+										type="button"
+										onClick={() => {
+											closeSidebarRef.current.click();
+											navigate("/terms");
+										}}
+									>
+										Terms
+									</button>
+								</li>
+								<li className=" menu-item menu-item-type-post_type menu-item-object-page">
+									<button
+										type="button"
+										onClick={() => {
+											closeSidebarRef.current.click();
+											navigate("/policy/Privacy_Policy");
+										}}
+									>
+										Policy
+									</button>
+								</li>
+								{/* <li className=' menu-item menu-item-type-post_type menu-item-object-page'>
                                     <button type='button' onClick={() => {
                                         closeSidebarRef.current.click()
                                         navigate('/faq')
                                     }}>FAQ</button>
                                 </li> */}
-                <li className="dropdown-item menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      closeSidebarRef.current.click();
-                      navigate("/notification");
-                    }}
-                  >
-                    Notification
-                  </button>
-                </li>
-              </ul>
+								<li className="dropdown-item menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
+									<button
+										type="button"
+										onClick={() => {
+											closeSidebarRef.current.click();
+											navigate("/notification");
+										}}
+									>
+										Notification
+									</button>
+								</li>
+							</ul>
 
-              {/* <div className='lang-mode-utils'>
+							{/* <div className='lang-mode-utils'>
                                 <div className='util'>
                                     <span>Select Language</span>
                                     <select className='' onChange={handleLanguageChange}>
@@ -484,49 +484,49 @@ const Header = () => {
                                 </div>
 
                             </div> */}
-            </nav>
-          </div>
-        </div>
-      </div>
+						</nav>
+					</div>
+				</div>
+			</div>
 
-      {/* header */}
-      <header className="site-header  desktop-shadow-disable mobile-shadow-enable bg-white  mobile-nav-enable border-bottom">
-        {/* top header */}
-        <div
-          className={`header-top  hide-mobile ${
-            cssmode.cssmode === "dark" ? "dark-header-top" : ""
-          }`}
-        >
-          <div className="container">
-            <div className={`row justify-content-between`}>
-              <div className="col-md-6 d-flex justify-content-start align-items-center">
-                <Link
-                  to="/about"
-                  className={`borderPad ${
-                    cssmode.cssmode === "dark" ? "dark-header-1" : ""
-                  }`}
-                >
-                  {" "}
-                  About us
-                </Link>
-                <Link to="/contact" className={`borderPad`}>
-                  {" "}
-                  Contact us
-                </Link>
+			{/* header */}
+			<header className="site-header  desktop-shadow-disable mobile-shadow-enable bg-white  mobile-nav-enable border-bottom">
+				{/* top header */}
+				<div
+					className={`header-top  hide-mobile ${
+						cssmode.cssmode === "dark" ? "dark-header-top" : ""
+					}`}
+				>
+					<div className="container">
+						<div className={`row justify-content-between`}>
+							<div className="col-md-6 d-flex justify-content-start align-items-center">
+								<Link
+									to="/about"
+									className={`borderPad ${
+										cssmode.cssmode === "dark" ? "dark-header-1" : ""
+									}`}
+								>
+									{" "}
+									About us
+								</Link>
+								<Link to="/contact" className={`borderPad`}>
+									{" "}
+									Contact us
+								</Link>
 
-                <Link to="/terms" className={`borderPad`}>
-                  {" "}
-                  Terms
-                </Link>
-                <Link to="/policy/Privacy_Policy" className={`borderPad`}>
-                  {" "}
-                  Policy
-                </Link>
-                {/* <Link to='/faq' className={`borderPad`} > faq</Link> */}
-              </div>
-              <div className="col-md-6 d-flex justify-content-end">
-                {/* 2nd Phase feature */}
-                {/* <div className='d-flex px-2 border-start'>
+								<Link to="/terms" className={`borderPad`}>
+									{" "}
+									Terms
+								</Link>
+								<Link to="/policy/Privacy_Policy" className={`borderPad`}>
+									{" "}
+									Policy
+								</Link>
+								{/* <Link to='/faq' className={`borderPad`} > faq</Link> */}
+							</div>
+							<div className="col-md-6 d-flex justify-content-end">
+								{/* 2nd Phase feature */}
+								{/* <div className='d-flex px-2 border-start'>
                                     <div>
                                         <IoContrast className='fs-3' />
                                     </div>
@@ -536,7 +536,7 @@ const Header = () => {
                                     </select>
                                 </div> */}
 
-                {/* <div className='d-flex'>
+								{/* <div className='d-flex'>
                                     <div className='p-4 bg-white' >
                                         <MdGTranslate className='fs-3' />
                                         <select className='bg-white' onChange={handleLanguageChange}>
@@ -546,695 +546,709 @@ const Header = () => {
                                         </select>
                                     </div>
                                 </div> */}
-              </div>
-            </div>
-          </div>
-        </div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-        {/* bottom header */}
-        <div
-          className={
-            isSticky ? "sticky header-main  w-100" : "header-main  w-100"
-          }
-        >
-          <div className="container">
-            <div className="d-flex row-reverse justify-content-lg-between justify-content-center">
-              <div className="d-flex w-auto align-items-center justify-content-start col-md-2 order-1 column-left ">
-                <div
-                  className="header-buttons hide-desktop"
-                  style={
-                    curr_url.pathname === "/profile"
-                      ? { display: "none" }
-                      : null
-                  }
-                >
-                  <button
-                    className="header-canvas button-item"
-                    type="button"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#sidebaroffcanvasExample"
-                    aria-controls="sidebaroffcanvasExample"
-                  >
-                    <div className="button-menu">
-                      <FiMenu />
-                    </div>
-                  </button>
-                </div>
+				{/* bottom header */}
+				<div
+					className={
+						isSticky ? "sticky header-main  w-100" : "header-main  w-100"
+					}
+				>
+					<div className="container">
+						<div className="d-flex row-reverse justify-content-lg-between justify-content-center">
+							<div className="d-flex w-auto align-items-center justify-content-start col-md-2 order-1 column-left ">
+								<div
+									className="header-buttons hide-desktop"
+									style={
+										curr_url.pathname === "/profile"
+											? { display: "none" }
+											: null
+									}
+								>
+									<button
+										className="header-canvas button-item"
+										type="button"
+										data-bs-toggle="offcanvas"
+										data-bs-target="#sidebaroffcanvasExample"
+										aria-controls="sidebaroffcanvasExample"
+									>
+										<div className="button-menu">
+											<FiMenu />
+										</div>
+									</button>
+								</div>
 
-                <Link
-                  to="/"
-                  className="site-brand"
-                  style={
-                    curr_url.pathname === "/profile"
-                      ? { marginLeft: "4px" }
-                      : null
-                  }
-                >
-                  <img
-                    src={logoPath}
-                    height="50px"
-                    alt="logo"
-                    className="desktop-logo hide-mobile"
-                  />
-                  <img
-                    src={logoPath}
-                    height="50px"
-                    alt="logo"
-                    className="mobile-logo hide-desktop"
-                  />
-                </Link>
-              </div>
+								<Link
+									to="/"
+									className="site-brand"
+									style={
+										curr_url.pathname === "/profile"
+											? { marginLeft: "4px" }
+											: null
+									}
+								>
+									<img
+										src={logoPath}
+										height="50px"
+										alt="logo"
+										className="desktop-logo hide-mobile"
+									/>
+									<img
+										src={logoPath}
+										height="50px"
+										alt="logo"
+										className="mobile-logo hide-desktop"
+									/>
+								</Link>
+							</div>
 
-              <div className="d-flex  w-lg-100 col-md-6 order-2 justify-content-center align-items-center ">
-                {/* location modal trigger button */}
-                <button
-                  whileTap={{ scale: 0.6 }}
-                  type="buton"
-                  className="header-location site-location hide-mobile"
-                  data-bs-toggle="modal"
-                  data-bs-target="#locationModal"
-                  ref={locationModalTrigger}
-                >
-                  <div className="d-flex flex-row gap-2">
-                    <div className="icon location p-1 m-auto">
-                      <GoLocation />
-                    </div>
-                    <div className="d-flex flex-column flex-grow-1 align-items-start">
-                      <span className="location-description">
-                        Deliver to <IoMdArrowDropdown />
-                      </span>
-                      <span className="current-location">
-                        {isLocationPresent ? (
-                          <>
-                            {city.status === "fulfill" ? (
-                              city.city.formatted_address
-                            ) : (
-                              <div className="d-flex justify-content-center">
-                                <div className="spinner-border" role="status">
-                                  <span className="visually-hidden">
-                                    Loading...
-                                  </span>
-                                </div>
-                              </div>
-                            )}
-                          </>
-                        ) : (
-                          "Please select location"
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                </button>
+							<div className="d-flex  w-lg-100 col-md-6 order-2 justify-content-center align-items-center ">
+								{/* location modal trigger button */}
+								<button
+									whileTap={{ scale: 0.6 }}
+									type="buton"
+									className="header-location site-location hide-mobile"
+									data-bs-toggle="modal"
+									data-bs-target="#locationModal"
+									ref={locationModalTrigger}
+								>
+									<div className="d-flex flex-row gap-2">
+										<div className="icon location p-1 m-auto">
+											{/* GuestLogin fuctionality need to be done */}
+											{/* <GoLocation /> */}
+										</div>
+										<div className="d-flex flex-column flex-grow-1 align-items-start">
+											<span className="location-description">
+												Deliver to <IoMdArrowDropdown />
+											</span>
+											<span className="current-location">
+												{isLocationPresent ? (
+													<>
+														{city.status === "fulfill" ? (
+															city.city.formatted_address
+														) : (
+															<div className="d-flex justify-content-center">
+																<div className="spinner-border" role="status">
+																	<span className="visually-hidden">
+																		Loading...
+																	</span>
+																</div>
+															</div>
+														)}
+													</>
+												) : (
+													"Please select location"
+												)}
+											</span>
+										</div>
+									</div>
+								</button>
 
-                <></>
-                <div className="header-search rounded-3 ">
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
+								<></>
+								<div className="header-search rounded-3 ">
+									<form
+										onSubmit={(e) => {
+											e.preventDefault();
 
-                      if (search !== "") {
-                        dispatch({
-                          type: ActionTypes.SET_FILTER_SEARCH,
-                          payload: search,
-                        });
-                        if (curr_url.pathname !== "/products") {
-                          navigate("/products");
-                        }
-                        searchNavTrigger.current.click();
-                      }
-                    }}
-                    className="search-form"
-                  >
-                    <input
-                      type="search"
-                      id="search-box"
-                      placeholder="What are you looking for..."
-                      className="rounded-5"
-                      onChange={(e) => {
-                        if (e.target.value === "") {
-                          dispatch({
-                            type: ActionTypes.SET_FILTER_SEARCH,
-                            payload: null,
-                          });
-                        }
-                        setsearch(e.target.value);
-                      }}
-                    />
+											if (search !== "") {
+												dispatch({
+													type: ActionTypes.SET_FILTER_SEARCH,
+													payload: search,
+												});
+												if (curr_url.pathname !== "/products") {
+													navigate("/products");
+												}
+												searchNavTrigger.current.click();
+											}
+										}}
+										className="search-form"
+									>
+										<input
+											type="search"
+											id="search-box"
+											placeholder="What are you looking for..."
+											className="rounded-5"
+											onChange={(e) => {
+												if (e.target.value === "") {
+													dispatch({
+														type: ActionTypes.SET_FILTER_SEARCH,
+														payload: null,
+													});
+												}
+												setsearch(e.target.value);
+											}}
+										/>
 
-                    <button type="submit">
-                      <MdSearch fill="white" />
-                    </button>
-                  </form>
-                </div>
-              </div>
+										<button type="submit">
+											<MdSearch fill="white" />
+										</button>
+									</form>
+								</div>
+							</div>
 
-              <div className="d-flex col-md-3 w-auto order-3  justify-content-end align-items-center">
-                <button
-                  type="button"
-                  whileTap={{ scale: 0.6 }}
-                  className="icon position-relative hide-mobile mx-sm-4"
-                  onClick={() => {
-                    if (cookies.get("jwt_token") === undefined) {
-                      toast.error(
-                        "OOPS! You have to login first to see notification!"
-                      );
-                    } else {
-                      navigate("/notification");
-                    }
-                  }}
-                >
-                  <IoNotificationsOutline />
-                  {totalNotification === null ? null : (
-                    <span className="position-absolute start-100 translate-middle badge rounded-pill fs-5 ">
-                      {totalNotification}
-                      <span className="visually-hidden">unread messages</span>
-                    </span>
-                  )}
-                </button>
+							<div className="d-flex col-md-3 w-auto order-3  justify-content-end align-items-center">
+								<button
+									type="button"
+									whileTap={{ scale: 0.6 }}
+									className="icon position-relative hide-mobile mx-sm-4"
+									onClick={() => {
+										//GuestLogin fuctionality need to be done
 
-                {city.city === null ||
-                cookies.get("jwt_token") === undefined ? (
-                  <button
-                    whileTap={{ scale: 0.6 }}
-                    className="icon mx-sm-4 position-relative hide-mobile-screen"
-                    onClick={() => {
-                      if (cookies.get("jwt_token") === undefined) {
-                        toast.error(
-                          "OOPS! You have to login first to see your cart!"
-                        );
-                      } else if (city.city === null) {
-                        toast.error(
-                          "Please Select you delivery location first!"
-                        );
-                      }
-                    }}
-                  >
-                    <IoHeartOutline className="" />
-                  </button>
-                ) : (
-                  <button
-                    whileTap={{ scale: 0.6 }}
-                    className="icon mx-4 position-relative hide-mobile-screen"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#favoriteoffcanvasExample"
-                    aria-controls="favoriteoffcanvasExample"
-                    onClick={() => {
-                      if (cookies.get("jwt_token") === undefined) {
-                        toast.error(
-                          "OOPS! You have to login first to see your cart!"
-                        );
-                      } else if (city.city === null) {
-                        toast.error(
-                          "Please Select you delivery location first!"
-                        );
-                      }
-                    }}
-                  >
-                    <IoHeartOutline className="" />
+										// if (cookies.get("jwt_token") === undefined) {
+										// 	toast.error(
+										// 		"OOPS! You have to login first to see notification!"
+										// 	);
+										// } else {
+										// 	navigate("/notification");
+										// }
+										navigate("/notification");
+									}}
+								>
+									<IoNotificationsOutline />
+									{totalNotification === null ? null : (
+										<span className="position-absolute start-100 translate-middle badge rounded-pill fs-5 ">
+											{totalNotification}
+											<span className="visually-hidden">unread messages</span>
+										</span>
+									)}
+								</button>
 
-                    {favorite.favorite !== null ? (
-                      <span className="position-absolute start-100 translate-middle badge rounded-pill fs-5 ">
-                        {favorite.favorite.total}
-                        <span className="visually-hidden">unread messages</span>
-                      </span>
-                    ) : null}
-                  </button>
-                )}
+								{city.city === null ||
+								cookies.get("jwt_token") === undefined ? (
+									<button
+										whileTap={{ scale: 0.6 }}
+										className="icon mx-sm-4 position-relative hide-mobile-screen"
+										onClick={() => {
+											//GuestLogin fuctionality need to be done
+											// if (cookies.get("jwt_token") === undefined) {
+											// 	toast.error(
+											// 		"OOPS! You have to login first to see your cart!"
+											// 	);
+											// } else if (city.city === null) {
+											// 	toast.error(
+											// 		"Please Select you delivery location first!"
+											// 	);
+											// }
+										}}
+									>
+										<IoHeartOutline className="" />
+									</button>
+								) : (
+									<button
+										whileTap={{ scale: 0.6 }}
+										className="icon mx-4 position-relative hide-mobile-screen"
+										data-bs-toggle="offcanvas"
+										data-bs-target="#favoriteoffcanvasExample"
+										aria-controls="favoriteoffcanvasExample"
+										onClick={() => {
+											//GuestLogin fuctionality need to be done
+											// if (cookies.get("jwt_token") === undefined) {
+											// 	toast.error(
+											// 		"OOPS! You have to login first to see your cart!"
+											// 	);
+											// } else if (city.city === null) {
+											// 	toast.error(
+											// 		"Please Select you delivery location first!"
+											// 	);
+											// }
+										}}
+									>
+										<IoHeartOutline className="" />
 
-                {city.city === null ||
-                cookies.get("jwt_token") === undefined ? (
-                  <button
-                    type="button"
-                    whileTap={{ scale: 0.6 }}
-                    className="icon mx-4 me-sm-5 position-relative"
-                    onClick={() => {
-                      if (cookies.get("jwt_token") === undefined) {
-                        toast.error(
-                          "OOPS! You have to login first to see your cart!"
-                        );
-                      } else if (city.city === null) {
-                        toast.error(
-                          "Please Select you delivery location first!"
-                        );
-                      }
-                    }}
-                  >
-                    <IoCartOutline />
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    whileTap={{ scale: 0.6 }}
-                    className="icon mx-4 me-sm-5 position-relative"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#cartoffcanvasExample"
-                    aria-controls="cartoffcanvasExample"
-                    onClick={() => {
-                      if (cookies.get("jwt_token") === undefined) {
-                        toast.error(
-                          "OOPS! You have to login first to see your cart!"
-                        );
-                      } else if (city.city === null) {
-                        toast.error(
-                          "Please Select you delivery location first!"
-                        );
-                      }
-                    }}
-                  >
-                    <IoCartOutline />
+										{favorite.favorite !== null ? (
+											<span className="position-absolute start-100 translate-middle badge rounded-pill fs-5 ">
+												{favorite.favorite.total}
+												<span className="visually-hidden">unread messages</span>
+											</span>
+										) : null}
+									</button>
+								)}
 
-                    {cart.cart !== null ? (
-                      <span className="position-absolute start-100 translate-middle badge rounded-pill fs-5">
-                        {cart.cart.total}
-                        <span className="visually-hidden">unread messages</span>
-                      </span>
-                    ) : null}
-                  </button>
-                )}
+								{city.city === null ||
+								cookies.get("jwt_token") === undefined ? (
+									<button
+										type="button"
+										whileTap={{ scale: 0.6 }}
+										className="icon mx-4 me-sm-5 position-relative"
+										onClick={() => {
+											//GuestLogin fuctionality need to be done
+											// if (cookies.get("jwt_token") === undefined) {
+											// 	toast.error(
+											// 		"OOPS! You have to login first to see your cart!"
+											// 	);
+											// } else if (city.city === null) {
+											// 	toast.error(
+											// 		"Please Select you delivery location first!"
+											// 	);
+											// }
+										}}
+									>
+										<IoCartOutline />
+									</button>
+								) : (
+									<button
+										type="button"
+										whileTap={{ scale: 0.6 }}
+										className="icon mx-4 me-sm-5 position-relative"
+										data-bs-toggle="offcanvas"
+										data-bs-target="#cartoffcanvasExample"
+										aria-controls="cartoffcanvasExample"
+										onClick={() => {
+											//GuestLogin fuctionality need to be done
+											// if (cookies.get("jwt_token") === undefined) {
+											// 	toast.error(
+											// 		"OOPS! You have to login first to see your cart!"
+											// 	);
+											// } else if (city.city === null) {
+											// 	toast.error(
+											// 		"Please Select you delivery location first!"
+											// 	);
+											// }
+										}}
+									>
+										<IoCartOutline />
 
-                {user.status === "loading" ? (
-                  <div className="hide-mobile-screen px-3">
-                    <div
-                      className="d-flex flex-row user-profile gap-1"
-                      onClick={handleSignUp}
-                    >
-                      <div className="d-flex align-items-center user-info my-auto">
-                        <span className="btn-success">
-                          <IoPersonOutline className="user_icon" />
-                        </span>
-                        <span className="pe-3">Sign Up</span>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="hide-mobile-screen ms-5">
-                    <Link
-                      to="/profile"
-                      className="d-flex align-items-center flex-row user-profile gap-1"
-                    >
-                      <div className="d-flex flex-column user-info my-auto">
-                        <span className="number"> Welcome</span>
-                        <span className="name"> {user.user.name}</span>
-                      </div>
-                      <img src={user.user.profile} alt="user"></img>
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
+										{cart.cart !== null ? (
+											<span className="position-absolute start-100 translate-middle badge rounded-pill fs-5">
+												{cart.cart.total}
+												<span className="visually-hidden">unread messages</span>
+											</span>
+										) : null}
+									</button>
+								)}
 
-        {/* Mobile bottom Nav */}
-        <nav className="header-mobile-nav">
-          <div className="mobile-nav-wrapper">
-            <ul>
-              <li className="menu-item">
-                <Link
-                  to="/products"
-                  className={`shop ${
-                    curr_url.pathname === "/products" ? "active" : ""
-                  }`}
-                  onClick={() => {
-                    document
-                      .getElementsByClassName("shop")[0]
-                      .classList.add("active");
-                    if (curr_url.pathname !== "/products") {
-                      if (curr_url.pathname === "/products") {
-                        document
-                          .getElementsByClassName("filter")[0]
-                          .classList.remove("active");
-                      }
-                      if (curr_url.pathname === "/profile") {
-                        document
-                          .getElementsByClassName("profile-account")[0]
-                          .classList.remove("active");
-                      }
-                      document
-                        .getElementsByClassName("wishlist")[0]
-                        .classList.remove("active");
-                      document
-                        .getElementsByClassName("search")[0]
-                        .classList.remove("active");
-                      document
-                        .getElementsByClassName("header-search")[0]
-                        .classList.remove("active");
-                    }
-                  }}
-                >
-                  <div>
-                    <BsShopWindow />
-                  </div>
-                  <span>Shop</span>
-                </Link>
-              </li>
+								{user.status === "loading" ? (
+									<div className="hide-mobile-screen px-3">
+										<div
+											className="d-flex flex-row user-profile gap-1"
+											onClick={handleSignUp}
+										>
+											<div className="d-flex align-items-center user-info my-auto">
+												<span className="btn-success">
+													<IoPersonOutline className="user_icon" />
+												</span>
+												<span className="pe-3">Sign Up</span>
+											</div>
+										</div>
+									</div>
+								) : (
+									<div className="hide-mobile-screen ms-5">
+										<Link
+											to="/profile"
+											className="d-flex align-items-center flex-row user-profile gap-1"
+										>
+											<div className="d-flex flex-column user-info my-auto">
+												<span className="number"> Welcome</span>
+												<span className="name"> {user.user.name}</span>
+											</div>
+											<img src={user.user.profile} alt="user"></img>
+										</Link>
+									</div>
+								)}
+							</div>
+						</div>
+					</div>
+				</div>
 
-              <li className="menu-item">
-                <button
-                  type="button"
-                  className="search"
-                  ref={searchNavTrigger}
-                  onClick={() => {
-                    document
-                      .getElementsByClassName("search")[0]
-                      .classList.toggle("active");
-                    if (curr_url.pathname === "/products") {
-                      document
-                        .getElementsByClassName("filter")[0]
-                        .classList.remove("active");
-                    }
-                    if (curr_url.pathname === "/profile") {
-                      document
-                        .getElementsByClassName("profile-account")[0]
-                        .classList.remove("active");
-                    }
-                    document
-                      .getElementsByClassName("wishlist")[0]
-                      .classList.remove("active");
-                    if (curr_url.pathname !== "/products") {
-                      document
-                        .getElementsByClassName("shop")[0]
-                        .classList.remove("active");
-                    }
-                    document
-                      .getElementsByClassName("header-search")[0]
-                      .classList.toggle("active");
-                  }}
-                >
-                  <div>
-                    <MdSearch />
-                  </div>
-                  <span>Search</span>
-                </button>
-              </li>
+				{/* Mobile bottom Nav */}
+				<nav className="header-mobile-nav">
+					<div className="mobile-nav-wrapper">
+						<ul>
+							<li className="menu-item">
+								<Link
+									to="/products"
+									className={`shop ${
+										curr_url.pathname === "/products" ? "active" : ""
+									}`}
+									onClick={() => {
+										document
+											.getElementsByClassName("shop")[0]
+											.classList.add("active");
+										if (curr_url.pathname !== "/products") {
+											if (curr_url.pathname === "/products") {
+												document
+													.getElementsByClassName("filter")[0]
+													.classList.remove("active");
+											}
+											if (curr_url.pathname === "/profile") {
+												document
+													.getElementsByClassName("profile-account")[0]
+													.classList.remove("active");
+											}
+											document
+												.getElementsByClassName("wishlist")[0]
+												.classList.remove("active");
+											document
+												.getElementsByClassName("search")[0]
+												.classList.remove("active");
+											document
+												.getElementsByClassName("header-search")[0]
+												.classList.remove("active");
+										}
+									}}
+								>
+									<div>
+										<BsShopWindow />
+									</div>
+									<span>Shop</span>
+								</Link>
+							</li>
 
-              {curr_url.pathname === "/products" ? (
-                <li className="menu-item">
-                  <button
-                    type="button"
-                    className="filter"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#filteroffcanvasExample"
-                    aria-controls="filteroffcanvasExample"
-                    onClick={() => {
-                      if (curr_url.pathname === "/profile") {
-                        document
-                          .getElementsByClassName("profile-account")[0]
-                          .classList.remove("active");
-                      }
-                      document
-                        .getElementsByClassName("filter")[0]
-                        .classList.toggle("active");
-                      document
-                        .getElementsByClassName("search")[0]
-                        .classList.remove("active");
-                      document
-                        .getElementsByClassName("wishlist")[0]
-                        .classList.remove("active");
-                      if (curr_url.pathname !== "/products") {
-                        document
-                          .getElementsByClassName("shop")[0]
-                          .classList.remove("active");
-                      }
-                      document
-                        .getElementsByClassName("header-search")[0]
-                        .classList.remove("active");
-                    }}
-                  >
-                    <div>
-                      <FiFilter />
-                    </div>
-                    <span>Filter</span>
-                  </button>
-                </li>
-              ) : (
-                ""
-              )}
+							<li className="menu-item">
+								<button
+									type="button"
+									className="search"
+									ref={searchNavTrigger}
+									onClick={() => {
+										document
+											.getElementsByClassName("search")[0]
+											.classList.toggle("active");
+										if (curr_url.pathname === "/products") {
+											document
+												.getElementsByClassName("filter")[0]
+												.classList.remove("active");
+										}
+										if (curr_url.pathname === "/profile") {
+											document
+												.getElementsByClassName("profile-account")[0]
+												.classList.remove("active");
+										}
+										document
+											.getElementsByClassName("wishlist")[0]
+											.classList.remove("active");
+										if (curr_url.pathname !== "/products") {
+											document
+												.getElementsByClassName("shop")[0]
+												.classList.remove("active");
+										}
+										document
+											.getElementsByClassName("header-search")[0]
+											.classList.toggle("active");
+									}}
+								>
+									<div>
+										<MdSearch />
+									</div>
+									<span>Search</span>
+								</button>
+							</li>
 
-              <li className="menu-item">
-                {city.city === null ||
-                cookies.get("jwt_token") === undefined ? (
-                  <button
-                    type="button"
-                    className="wishlist"
-                    onClick={() => {
-                      if (cookies.get("jwt_token") === undefined) {
-                        toast.error(
-                          "OOPS! You have to login first to see your cart!"
-                        );
-                      } else if (city.city === null) {
-                        toast.error(
-                          "Please Select you delivery location first!"
-                        );
-                      } else {
-                        document
-                          .getElementsByClassName("wishlist")[0]
-                          .classList.toggle("active");
-                        if (curr_url.pathname === "/products") {
-                          document
-                            .getElementsByClassName("filter")[0]
-                            .classList.remove("active");
-                        }
-                        if (curr_url.pathname === "/profile") {
-                          document
-                            .getElementsByClassName("profile-account")[0]
-                            .classList.remove("active");
-                        }
-                        if (curr_url.pathname !== "/products") {
-                          document
-                            .getElementsByClassName("shop")[0]
-                            .classList.remove("active");
-                        }
-                        document
-                          .getElementsByClassName("search")[0]
-                          .classList.remove("active");
-                        document
-                          .getElementsByClassName("header-search")[0]
-                          .classList.remove("active");
-                      }
-                    }}
-                  >
-                    <div>
-                      <IoHeartOutline />
-                    </div>
-                    <span>Wishlist</span>
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    className="wishlist"
-                    onClick={() => {
-                      if (cookies.get("jwt_token") === undefined) {
-                        toast.error(
-                          "OOPS! You have to login first to see your cart!"
-                        );
-                      } else if (city.city === null) {
-                        toast.error(
-                          "Please Select you delivery location first!"
-                        );
-                      } else {
-                        document
-                          .getElementsByClassName("wishlist")[0]
-                          .classList.toggle("active");
-                        if (curr_url.pathname === "/products") {
-                          document
-                            .getElementsByClassName("filter")[0]
-                            .classList.remove("active");
-                        }
-                        if (curr_url.pathname === "/profile") {
-                          document
-                            .getElementsByClassName("profile-account")[0]
-                            .classList.remove("active");
-                        }
-                        if (curr_url.pathname !== "/products") {
-                          document
-                            .getElementsByClassName("shop")[0]
-                            .classList.remove("active");
-                        }
-                        document
-                          .getElementsByClassName("search")[0]
-                          .classList.remove("active");
-                        document
-                          .getElementsByClassName("header-search")[0]
-                          .classList.remove("active");
-                      }
-                    }}
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#favoriteoffcanvasExample"
-                    aria-controls="favoriteoffcanvasExample"
-                  >
-                    <div>
-                      <IoHeartOutline />
+							{curr_url.pathname === "/products" ? (
+								<li className="menu-item">
+									<button
+										type="button"
+										className="filter"
+										data-bs-toggle="offcanvas"
+										data-bs-target="#filteroffcanvasExample"
+										aria-controls="filteroffcanvasExample"
+										onClick={() => {
+											if (curr_url.pathname === "/profile") {
+												document
+													.getElementsByClassName("profile-account")[0]
+													.classList.remove("active");
+											}
+											document
+												.getElementsByClassName("filter")[0]
+												.classList.toggle("active");
+											document
+												.getElementsByClassName("search")[0]
+												.classList.remove("active");
+											document
+												.getElementsByClassName("wishlist")[0]
+												.classList.remove("active");
+											if (curr_url.pathname !== "/products") {
+												document
+													.getElementsByClassName("shop")[0]
+													.classList.remove("active");
+											}
+											document
+												.getElementsByClassName("header-search")[0]
+												.classList.remove("active");
+										}}
+									>
+										<div>
+											<FiFilter />
+										</div>
+										<span>Filter</span>
+									</button>
+								</li>
+							) : (
+								""
+							)}
 
-                      {favorite.favorite !== null ? (
-                        <span
-                          className="translate-middle badge rounded-pill fs-5"
-                          style={{
-                            background: "var(--secondary-color)",
-                            borderRadius: "50%",
-                            color: "#fff",
-                            top: "1px",
-                            right: "-9px",
-                          }}
-                        >
-                          {favorite.favorite.total}
-                          <span className="visually-hidden">
-                            unread messages
-                          </span>
-                        </span>
-                      ) : null}
-                    </div>
-                    <span>Wishlist</span>
-                  </button>
-                )}
-              </li>
+							<li className="menu-item">
+								{city.city === null ||
+								cookies.get("jwt_token") === undefined ? (
+									<button
+										type="button"
+										className="wishlist"
+										onClick={() => {
+											//GuestLogin fuctionality need to be done
 
-              {curr_url.pathname === "/profile" ? (
-                <li className="menu-item">
-                  <button
-                    type="button"
-                    className="profile-account"
-                    onClick={() => {
-                      document
-                        .getElementsByClassName("profile-account")[0]
-                        .classList.toggle("active");
-                      document
-                        .getElementsByClassName("wishlist")[0]
-                        .classList.remove("active");
-                      if (curr_url.pathname === "/products") {
-                        document
-                          .getElementsByClassName("filter")[0]
-                          .classList.remove("active");
-                      }
-                      if (curr_url.pathname !== "/products") {
-                        document
-                          .getElementsByClassName("shop")[0]
-                          .classList.remove("active");
-                      }
-                      document
-                        .getElementsByClassName("search")[0]
-                        .classList.remove("active");
-                      document
-                        .getElementsByClassName("header-search")[0]
-                        .classList.remove("active");
-                    }}
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#profilenavoffcanvasExample"
-                    aria-controls="profilenavoffcanvasExample"
-                  >
-                    <div>
-                      <MdOutlineAccountCircle />
-                    </div>
-                    <span>Account</span>
-                  </button>
-                </li>
-              ) : (
-                <li className="menu-item">
-                  {user.status === "loading" ? (
-                    <>
-                      <button
-                        type="button"
-                        className="account"
-                        data-bs-toggle="modal"
-                        data-bs-target="#loginModal"
-                        onClick={() => {
-                          document
-                            .getElementsByClassName("wishlist")[0]
-                            .classList.remove("active");
-                          if (curr_url.pathname === "/products") {
-                            document
-                              .getElementsByClassName("filter")[0]
-                              .classList.remove("active");
-                          }
-                          if (curr_url.pathname !== "/products") {
-                            document
-                              .getElementsByClassName("shop")[0]
-                              .classList.remove("active");
-                          }
-                          document
-                            .getElementsByClassName("search")[0]
-                            .classList.remove("active");
-                          document
-                            .getElementsByClassName("header-search")[0]
-                            .classList.remove("active");
-                        }}
-                      >
-                        <div>
-                          <BiUserCircle />
-                        </div>
-                        <span>Login</span>
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <Link
-                        to="/profile"
-                        className="d-flex user-profile gap-1 account"
-                        onClick={() => {
-                          document
-                            .getElementsByClassName("wishlist")[0]
-                            .classList.remove("active");
-                          if (curr_url.pathname === "/products") {
-                            document
-                              .getElementsByClassName("filter")[0]
-                              .classList.remove("active");
-                          }
-                          if (curr_url.pathname !== "/products") {
-                            document
-                              .getElementsByClassName("shop")[0]
-                              .classList.remove("active");
-                          }
-                          document
-                            .getElementsByClassName("search")[0]
-                            .classList.remove("active");
-                          document
-                            .getElementsByClassName("header-search")[0]
-                            .classList.remove("active");
-                        }}
-                      >
-                        <div className="d-flex flex-column user-info my-auto">
-                          <span className="name"> {user.user.name}</span>
-                        </div>
-                        <img src={user.user.profile} alt="user"></img>
-                        <span>Profile</span>
-                      </Link>
-                    </>
-                  )}
-                </li>
-              )}
-            </ul>
-          </div>
-        </nav>
+											// if (cookies.get("jwt_token") === undefined) {
+											// 	toast.error(
+											// 		"OOPS! You have to login first to see your cart!"
+											// 	);
+											// } else if (city.city === null) {
+											// 	toast.error(
+											// 		"Please Select you delivery location first!"
+											// 	);
+											// }
+											// else
+											{
+												document
+													.getElementsByClassName("wishlist")[0]
+													.classList.toggle("active");
+												if (curr_url.pathname === "/products") {
+													document
+														.getElementsByClassName("filter")[0]
+														.classList.remove("active");
+												}
+												if (curr_url.pathname === "/profile") {
+													document
+														.getElementsByClassName("profile-account")[0]
+														.classList.remove("active");
+												}
+												if (curr_url.pathname !== "/products") {
+													document
+														.getElementsByClassName("shop")[0]
+														.classList.remove("active");
+												}
+												document
+													.getElementsByClassName("search")[0]
+													.classList.remove("active");
+												document
+													.getElementsByClassName("header-search")[0]
+													.classList.remove("active");
+											}
+										}}
+									>
+										<div>
+											<IoHeartOutline />
+										</div>
+										<span>Wishlist</span>
+									</button>
+								) : (
+									<button
+										type="button"
+										className="wishlist"
+										onClick={() => {
+											//GuestLogin fuctionality need to be done
+											// if (cookies.get("jwt_token") === undefined) {
+											// 	toast.error(
+											// 		"OOPS! You have to login first to see your cart!"
+											// 	);
+											// } else if (city.city === null) {
+											// 	toast.error(
+											// 		"Please Select you delivery location first!"
+											// 	);
+											// } else
+											{
+												document
+													.getElementsByClassName("wishlist")[0]
+													.classList.toggle("active");
+												if (curr_url.pathname === "/products") {
+													document
+														.getElementsByClassName("filter")[0]
+														.classList.remove("active");
+												}
+												if (curr_url.pathname === "/profile") {
+													document
+														.getElementsByClassName("profile-account")[0]
+														.classList.remove("active");
+												}
+												if (curr_url.pathname !== "/products") {
+													document
+														.getElementsByClassName("shop")[0]
+														.classList.remove("active");
+												}
+												document
+													.getElementsByClassName("search")[0]
+													.classList.remove("active");
+												document
+													.getElementsByClassName("header-search")[0]
+													.classList.remove("active");
+											}
+										}}
+										data-bs-toggle="offcanvas"
+										data-bs-target="#favoriteoffcanvasExample"
+										aria-controls="favoriteoffcanvasExample"
+									>
+										<div>
+											<IoHeartOutline />
 
-        {/* login modal */}
-        {isLogin && (<Login isOpenModal={isLogin} setIsOpenModal={setIsLogin} />)}
+											{favorite.favorite !== null ? (
+												<span
+													className="translate-middle badge rounded-pill fs-5"
+													style={{
+														background: "var(--secondary-color)",
+														borderRadius: "50%",
+														color: "#fff",
+														top: "1px",
+														right: "-9px",
+													}}
+												>
+													{favorite.favorite.total}
+													<span className="visually-hidden">
+														unread messages
+													</span>
+												</span>
+											) : null}
+										</div>
+										<span>Wishlist</span>
+									</button>
+								)}
+							</li>
 
-        {/* location modal */}
-        <div
-          className="modal fade location"
-          id="locationModal"
-          data-bs-backdrop="static"
-          aria-labelledby="locationModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content" style={{ borderRadius: "10px" }}>
-              <Location
-                isLocationPresent={isLocationPresent}
-                setisLocationPresent={setisLocationPresent}
-              />
-            </div>
-          </div>
-        </div>
+							{curr_url.pathname === "/profile" ? (
+								<li className="menu-item">
+									<button
+										type="button"
+										className="profile-account"
+										onClick={() => {
+											document
+												.getElementsByClassName("profile-account")[0]
+												.classList.toggle("active");
+											document
+												.getElementsByClassName("wishlist")[0]
+												.classList.remove("active");
+											if (curr_url.pathname === "/products") {
+												document
+													.getElementsByClassName("filter")[0]
+													.classList.remove("active");
+											}
+											if (curr_url.pathname !== "/products") {
+												document
+													.getElementsByClassName("shop")[0]
+													.classList.remove("active");
+											}
+											document
+												.getElementsByClassName("search")[0]
+												.classList.remove("active");
+											document
+												.getElementsByClassName("header-search")[0]
+												.classList.remove("active");
+										}}
+										data-bs-toggle="offcanvas"
+										data-bs-target="#profilenavoffcanvasExample"
+										aria-controls="profilenavoffcanvasExample"
+									>
+										<div>
+											<MdOutlineAccountCircle />
+										</div>
+										<span>Account</span>
+									</button>
+								</li>
+							) : (
+								<li className="menu-item">
+									{user.status === "loading" ? (
+										<>
+											<button
+												type="button"
+												className="account"
+												data-bs-toggle="modal"
+												data-bs-target="#loginModal"
+												onClick={() => {
+													document
+														.getElementsByClassName("wishlist")[0]
+														.classList.remove("active");
+													if (curr_url.pathname === "/products") {
+														document
+															.getElementsByClassName("filter")[0]
+															.classList.remove("active");
+													}
+													if (curr_url.pathname !== "/products") {
+														document
+															.getElementsByClassName("shop")[0]
+															.classList.remove("active");
+													}
+													document
+														.getElementsByClassName("search")[0]
+														.classList.remove("active");
+													document
+														.getElementsByClassName("header-search")[0]
+														.classList.remove("active");
+												}}
+											>
+												<div>
+													<BiUserCircle />
+												</div>
+												<span>Login</span>
+											</button>
+										</>
+									) : (
+										<>
+											<Link
+												to="/profile"
+												className="d-flex user-profile gap-1 account"
+												onClick={() => {
+													document
+														.getElementsByClassName("wishlist")[0]
+														.classList.remove("active");
+													if (curr_url.pathname === "/products") {
+														document
+															.getElementsByClassName("filter")[0]
+															.classList.remove("active");
+													}
+													if (curr_url.pathname !== "/products") {
+														document
+															.getElementsByClassName("shop")[0]
+															.classList.remove("active");
+													}
+													document
+														.getElementsByClassName("search")[0]
+														.classList.remove("active");
+													document
+														.getElementsByClassName("header-search")[0]
+														.classList.remove("active");
+												}}
+											>
+												<div className="d-flex flex-column user-info my-auto">
+													<span className="name"> {user.user.name}</span>
+												</div>
+												<img src={user.user.profile} alt="user"></img>
+												<span>Profile</span>
+											</Link>
+										</>
+									)}
+								</li>
+							)}
+						</ul>
+					</div>
+				</nav>
 
-        {/* Cart Sidebar */}
-        <Cart />
+				{/* login modal */}
+				{isLogin && <Login isOpenModal={isLogin} setIsOpenModal={setIsLogin} />}
 
-        {/* favorite sidebar */}
-        <Favorite />
-      </header>
-    </>
-  );
+				{/* location modal */}
+				<div
+					className="modal fade location"
+					id="locationModal"
+					data-bs-backdrop="static"
+					aria-labelledby="locationModalLabel"
+					aria-hidden="true"
+				>
+					<div className="modal-dialog modal-dialog-centered">
+						<div className="modal-content" style={{ borderRadius: "10px" }}>
+							<Location
+								isLocationPresent={isLocationPresent}
+								setisLocationPresent={setisLocationPresent}
+							/>
+						</div>
+					</div>
+				</div>
+
+				{/* Cart Sidebar */}
+				<Cart />
+
+				{/* favorite sidebar */}
+				<Favorite />
+			</header>
+		</>
+	);
 };
 
 export default Header;

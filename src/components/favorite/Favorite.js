@@ -1,177 +1,213 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import '../cart/cart.css'
-import './favorite.css'
-import { AiOutlineCloseCircle } from 'react-icons/ai'
-import EmptyCart from '../../utils/zero-state-screens/Empty_Cart.svg'
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import "../cart/cart.css";
+import "./favorite.css";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import EmptyCart from "../../utils/zero-state-screens/Empty_Cart.svg";
+import { useNavigate, Link } from "react-router-dom";
 import { FaRupeeSign } from "react-icons/fa";
 import { BsPlus } from "react-icons/bs";
-import { BiMinus } from 'react-icons/bi'
-import api from '../../api/api';
-import { toast } from 'react-toastify'
-import Cookies from 'universal-cookie'
-import { ActionTypes } from '../../model/action-type';
-import Loader from '../loader/Loader';
-import Login from '../login/Login';
-
+import { BiMinus } from "react-icons/bi";
+import api from "../../api/api";
+import { toast } from "react-toastify";
+import Cookies from "universal-cookie";
+import { ActionTypes } from "../../model/action-type";
+import Loader from "../loader/Loader";
+import Login from "../login/Login";
 
 const Favorite = () => {
-    const closeCanvas = useRef();
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const cookies = new Cookies();
+	const closeCanvas = useRef();
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const cookies = new Cookies();
 
-    const favorite = useSelector(state => (state.favorite))
-    const city = useSelector(state => (state.city))
-    const cart = useSelector(state => (state.cart))
-    const [isfavoriteEmpty, setisfavoriteEmpty] = useState(false)
-    const [isLoader, setisLoader] = useState(false)
-    const [isLogin, setIsLogin] = useState(false);
+	const favorite = useSelector((state) => state.favorite);
+	const city = useSelector((state) => state.city);
+	const cart = useSelector((state) => state.cart);
+	const [isfavoriteEmpty, setisfavoriteEmpty] = useState(false);
+	const [isLoader, setisLoader] = useState(false);
+	const [isLogin, setIsLogin] = useState(false);
 
-    useEffect(() => {
-        if (favorite.favorite === null && favorite.status === 'fulfill') {
-            setisfavoriteEmpty(true)
-        }
-        else {
-            setisfavoriteEmpty(false)
-        }
+	useEffect(() => {
+		if (favorite.favorite === null && favorite.status === "fulfill") {
+			setisfavoriteEmpty(true);
+		} else {
+			setisfavoriteEmpty(false);
+		}
+	}, [favorite]);
 
-    }, [favorite])
+	//Add to Cart
+	const addtoCart = async (product_id, product_variant_id, qty) => {
+		setisLoader(true);
+		await api
+			.addToCart(cookies.get("jwt_token"), product_id, product_variant_id, qty)
+			.then((response) => response.json())
+			.then(async (result) => {
+				if (result.status === 1) {
+					//popup commented
+					// toast.success(result.message);
+					await api
+						.getCart(
+							cookies.get("jwt_token"),
+							city.city.latitude,
+							city.city.longitude
+						)
+						.then((resp) => resp.json())
+						.then((res) => {
+							setisLoader(false);
 
+							if (res.status === 1)
+								dispatch({ type: ActionTypes.SET_CART, payload: res });
+						});
+				} else {
+					setisLoader(false);
+					toast.error(result.message);
+				}
+			});
+	};
 
-    //Add to Cart
-    const addtoCart = async (product_id, product_variant_id, qty) => {
-        setisLoader(true)
-        await api.addToCart(cookies.get('jwt_token'), product_id, product_variant_id, qty)
-            .then(response => response.json())
-            .then(async (result) => {
-                if (result.status === 1) {
-                    toast.success(result.message)
-                    await api.getCart(cookies.get('jwt_token'), city.city.latitude, city.city.longitude)
-                        .then(resp => resp.json())
-                        .then(res => {
-                            setisLoader(false)
+	//remove from Cart
+	const removefromCart = async (product_id, product_variant_id) => {
+		setisLoader(true);
+		await api
+			.removeFromCart(cookies.get("jwt_token"), product_id, product_variant_id)
+			.then((response) => response.json())
+			.then(async (result) => {
+				if (result.status === 1) {
+					//popup commented
+					//	toast.success(result.message);
+					await api
+						.getCart(
+							cookies.get("jwt_token"),
+							city.city.latitude,
+							city.city.longitude
+						)
+						.then((resp) => resp.json())
+						.then((res) => {
+							setisLoader(false);
+							if (res.status === 1)
+								dispatch({ type: ActionTypes.SET_CART, payload: res });
+							else dispatch({ type: ActionTypes.SET_CART, payload: null });
+						})
+						.catch((error) => console.log(error));
+				} else {
+					setisLoader(false);
+					toast.error(result.message);
+				}
+			})
+			.catch((error) => console.log(error));
+	};
 
-                            if (res.status === 1)
-                                dispatch({ type: ActionTypes.SET_CART, payload: res })
-                        })
-                }
-                else {
-                    setisLoader(false)
-                    toast.error(result.message)
-                }
-            })
-    }
+	//remove from favorite
+	const removefromFavorite = async (product_id) => {
+		setisLoader(true);
+		await api
+			.removeFromFavorite(cookies.get("jwt_token"), product_id)
+			.then((response) => response.json())
+			.then(async (result) => {
+				if (result.status === 1) {
+					//popup commented
+					// toast.success(result.message);
+					await api
+						.getFavorite(
+							cookies.get("jwt_token"),
+							city.city.latitude,
+							city.city.longitude
+						)
+						.then((resp) => resp.json())
+						.then((res) => {
+							setisLoader(false);
+							if (res.status === 1)
+								dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
+							else dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
+						});
+				} else {
+					setisLoader(false);
+					toast.error(result.message);
+				}
+			});
+	};
 
-    //remove from Cart
-    const removefromCart = async (product_id, product_variant_id) => {
-        setisLoader(true)
-        await api.removeFromCart(cookies.get('jwt_token'), product_id, product_variant_id)
-            .then(response => response.json())
-            .then(async (result) => {
-                if (result.status === 1) {
-                    toast.success(result.message)
-                    await api.getCart(cookies.get('jwt_token'), city.city.latitude, city.city.longitude)
-                        .then(resp => resp.json())
-                        .then(res => {
-                            setisLoader(false)
-                            if (res.status === 1)
-                                dispatch({ type: ActionTypes.SET_CART, payload: res })
-                            else
-                                dispatch({ type: ActionTypes.SET_CART, payload: null })
-                        })
-                        .catch(error => console.log(error))
-                }
-                else {
-                    setisLoader(false)
-                    toast.error(result.message)
-                }
-            })
-            .catch(error => console.log(error))
-    }
+	//GuestLogin fuctionality need to be done
 
-    //remove from favorite
-    const removefromFavorite = async (product_id) => {
-        setisLoader(true)
-        await api.removeFromFavorite(cookies.get('jwt_token'), product_id)
-            .then(response => response.json())
-            .then(async (result) => {
-                if (result.status === 1) {
-                    toast.success(result.message)
-                    await api.getFavorite(cookies.get('jwt_token'), city.city.latitude, city.city.longitude)
-                        .then(resp => resp.json())
-                        .then(res => {
-                            setisLoader(false)
-                            if (res.status === 1)
-                                dispatch({ type: ActionTypes.SET_FAVORITE, payload: res })
-                            else
-                                dispatch({ type: ActionTypes.SET_FAVORITE, payload: null })
-                        })
-                }
-                else {
-                    setisLoader(false)
-                    toast.error(result.message)
-                }
-            })
+	// const handleAddToCart = (product) => {
+	//     if (cookies.get('jwt_token') !== undefined) {
+	//         addtoCart(product.id, product.variants[0].id, 1)
+	//     }
+	//     else {
+	//         setIsLogin(true);
+	//     }
+	// }
+	return (
+		<div
+			tabIndex="-1"
+			className={`cart-sidebar-container offcanvas offcanvas-end`}
+			id="favoriteoffcanvasExample"
+			aria-labelledby="favoriteoffcanvasExampleLabel"
+		>
+			<div className="cart-sidebar-header">
+				<h5>saved</h5>
+				<button
+					type="button"
+					className="close-canvas"
+					data-bs-dismiss="offcanvas"
+					aria-label="Close"
+					ref={closeCanvas}
+				>
+					<AiOutlineCloseCircle />
+				</button>
+			</div>
 
-    }
+			{isfavoriteEmpty ? (
+				<div className="empty-cart">
+					<img src={EmptyCart} alt="empty-cart"></img>
+					<p>Your Cart is empty</p>
+					<span>You have no items in your shopping cart.</span>
+					<span>Let's go buy something!</span>
+					<button
+						type="button"
+						className="close-canvas"
+						data-bs-dismiss="offcanvas"
+						aria-label="Close"
+						onClick={() => {
+							navigate("/products");
+						}}
+					>
+						start shopping
+					</button>
+				</div>
+			) : (
+				<>
+					{favorite.favorite === null ? (
+						<Loader width="100%" height="100%" />
+					) : (
+						<>
+							{isLoader ? <Loader screen="full" background="none" /> : null}
+							<div className="cart-sidebar-product">
+								<div className="products-header">
+									<span>Product</span>
+									<span>Price</span>
+								</div>
 
-    const handleAddToCart = (product) => {
-        if (cookies.get('jwt_token') !== undefined) {
-            addtoCart(product.id, product.variants[0].id, 1)
-        }
-        else {
-            setIsLogin(true);
-        }
-    }
-    return (
-        <div tabIndex="-1" className={`cart-sidebar-container offcanvas offcanvas-end`} id="favoriteoffcanvasExample" aria-labelledby="favoriteoffcanvasExampleLabel">
-            <div className='cart-sidebar-header'>
-                <h5>saved</h5>
-                <button type="button" className="close-canvas" data-bs-dismiss="offcanvas" aria-label="Close" ref={closeCanvas}><AiOutlineCloseCircle /></button>
-            </div>
+								<div className="products-container">
+									{/* { console.log(favorite.favorite)} */}
+									{favorite.favorite.data.map((product, index) => (
+										<div key={index} className="cart-card">
+											<div className="left-wrapper">
+												<div className="image-container">
+													<img src={product.image_url} alt="product"></img>
+												</div>
 
-            {isfavoriteEmpty
-                ? (
-                    <div className='empty-cart'>
-                        <img src={EmptyCart} alt='empty-cart'></img>
-                        <p>Your Cart is empty</p>
-                        <span>You have no items in your shopping cart.</span>
-                        <span>Let's go buy something!</span>
-                        <button type='button' className="close-canvas" data-bs-dismiss="offcanvas" aria-label="Close" onClick={() => {
-                            navigate('/products')
-                        }}>start shopping</button>
-                    </div>)
-                : (
-                    <>
-                        {favorite.favorite === null
-                            ? (
-                                <Loader width='100%' height='100%' />
-
-                            ) : (
-                                <>
-                                    {isLoader ? <Loader screen='full' background='none' /> : null}
-                                    <div className='cart-sidebar-product'>
-                                        <div className='products-header'>
-                                            <span>Product</span>
-                                            <span>Price</span>
-                                        </div>
-
-                                        <div className='products-container'>
-                                            {/* { console.log(favorite.favorite)} */}
-                                            {favorite.favorite.data.map((product, index) => (
-                                                <div key={index} className='cart-card'>
-                                                    <div className='left-wrapper'>
-                                                        <div className='image-container'>
-                                                            <img src={product.image_url} alt='product'></img>
-                                                        </div>
-
-                                                        <div className='product-details'>
-
-                                                            <span>{product.name}</span>
-                                                            <span>{product.variants[0] && cart.cart && product.variants[0].measurement + ` ` + product.variants[0].stock_unit_name}</span>
-                                                            {/* <button type='button' id={`Add-to-cart-favoritesidebar${index}`} className='add-to-cart active'
+												<div className="product-details">
+													<span>{product.name}</span>
+													<span>
+														{product.variants[0] &&
+															cart.cart &&
+															product.variants[0].measurement +
+																` ` +
+																product.variants[0].stock_unit_name}
+													</span>
+													{/* <button type='button' id={`Add-to-cart-favoritesidebar${index}`} className='add-to-cart active'
                                                                 onClick={() => {
                                                                     if (cookies.get('jwt_token') !== undefined) {      
                                                                         document.getElementById(`Add-to-cart-favoritesidebar${index}`).classList.add('disabled')                                                                  
@@ -185,54 +221,100 @@ const Favorite = () => {
                                                                 }}
                                                             >add to cart</button> */}
 
-                                                            {cart.cart !== null ?
-                                                                (cart.cart.data.cart.some(element => element.product_id === product.id) ? (
-                                                                    <button type='button' disabled className='add-to-cart btn-seconday btn active'>Item in Cart</button>
-                                                                ) : (
-                                                                    <button type='button' id={`Add-to-cart-favoritesidebar${index}`} className='add-to-cart active'
-                                                                        onClick={()=>{handleAddToCart(product)}}
-                                                                    >add to cart</button>
-                                                                )) : <><button type='button' id={`Add-to-cart-favoritesidebar${index}`} className='add-to-cart active'
-                                                                    onClick={() => {
-                                                                        handleAddToCart(product);
+													{cart.cart !== null ? (
+														cart.cart.data.cart.some(
+															(element) => element.product_id === product.id
+														) ? (
+															<button
+																type="button"
+																disabled
+																className="add-to-cart btn-seconday btn active"
+															>
+																Item in Cart
+															</button>
+														) : (
+															<button
+																type="button"
+																id={`Add-to-cart-favoritesidebar${index}`}
+																className="add-to-cart active"
+																onClick={() => {
+																	//GuestLogin fuctionality need to be done
+																	// handleAddToCart(product);
+																}}
+															>
+																add to cart
+															</button>
+														)
+													) : (
+														<>
+															<button
+																type="button"
+																id={`Add-to-cart-favoritesidebar${index}`}
+																className="add-to-cart active"
+																onClick={() => {
+																	//GuestLogin fuctionality need to be done
+																	// handleAddToCart(
+																	// 	product
+																	// );
+																}}
+															>
+																Add to cart
+															</button>
+														</>
+													)}
+												</div>
+											</div>
 
-                                                                    }}
-                                                                >Add to cart</button></>
-                                                            }
+											<div className="cart-card-end">
+												<div
+													className="d-flex align-items-center"
+													style={{ fontSize: "1.855rem" }}
+												>
+													<FaRupeeSign fill="var(--secondary-color)" />{" "}
+													<span id={`price${index}-cart-sidebar`}>
+														{" "}
+														{parseFloat(
+															product.variants.length > 0
+																? product.variants[0].price
+																: 0
+														)}
+													</span>
+												</div>
 
+												<button
+													type="button"
+													className="remove-product"
+													onClick={() => removefromFavorite(product.id)}
+												>
+													delete
+												</button>
+											</div>
+										</div>
+									))}
+								</div>
+							</div>
 
-                                                        </div>
-                                                    </div>
+							<div className="cart-sidebar-footer">
+								<div className="button-container">
+									<button
+										type="button"
+										className="view-cart"
+										onClick={() => {
+											closeCanvas.current.click();
+											navigate("/wishlist");
+										}}
+									>
+										view saved
+									</button>
+								</div>
+							</div>
+						</>
+					)}
+				</>
+			)}
+			{isLogin && <Login isOpenModal={isLogin} setIsOpenModal={setIsLogin} />}
+		</div>
+	);
+};
 
-                                                    <div className='cart-card-end'>
-                                                        <div className='d-flex align-items-center' style={{ fontSize: "1.855rem" }}>
-                                                            <FaRupeeSign fill='var(--secondary-color)' /> <span id={`price${index}-cart-sidebar`}> {parseFloat(product.variants.length > 0 ? product.variants[0].price : 0)}</span>
-                                                        </div>
-
-                                                        <button type='button' className='remove-product' onClick={() => removefromFavorite(product.id)}>delete</button>
-
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    <div className='cart-sidebar-footer'>
-                                        <div className='button-container'>
-                                            <button type='button' className='view-cart' onClick={() => {
-                                                closeCanvas.current.click()
-                                                navigate('/wishlist')
-                                            }}>view saved</button>
-                                        </div>
-                                    </div>
-                                </>
-                            )}
-                    </>
-
-                )}
-                {isLogin && <Login isOpenModal={isLogin} setIsOpenModal={setIsLogin} /> }
-        </div>
-    )
-}
-
-export default Favorite
+export default Favorite;

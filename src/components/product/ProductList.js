@@ -504,7 +504,8 @@ const ProductList = () => {
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
-					toast.success(result.message);
+					//popup commented
+					// toast.success(result.message);
 					await api
 						.getCart(
 							cookies.get("jwt_token"),
@@ -548,7 +549,8 @@ const ProductList = () => {
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
-					toast.success(result.message);
+					//popup commented
+					//	toast.success(result.message);
 					await api
 						.getCart(
 							cookies.get("jwt_token"),
@@ -593,7 +595,8 @@ const ProductList = () => {
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
-					toast.success(result.message);
+					//popup commented
+					//	toast.success(result.message);
 					await api
 						.getFavorite(
 							cookies.get("jwt_token"),
@@ -622,7 +625,8 @@ const ProductList = () => {
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
-					toast.success(result.message);
+					//popup commented
+					// toast.success(result.message);
 					await api
 						.getFavorite(
 							cookies.get("jwt_token"),
@@ -785,7 +789,7 @@ const ProductList = () => {
 																			payload: product.id,
 																		});
 																		setSelectedProductId(product.id);
-																		navigate("/product/"+product.id);
+																		navigate("/product/" + product.id);
 																	}}
 																/>
 																{filter.grid_view ? (
@@ -802,16 +806,17 @@ const ProductList = () => {
 																						type="button"
 																						className="w-100 h-100"
 																						onClick={() => {
-																							if (
-																								cookies.get("jwt_token") !==
-																								undefined
-																							) {
-																								removefromFavorite(product.id);
-																							} else {
-																								toast.error(
-																									"OOps! You need to login first to add to favourites"
-																								);
-																							}
+																							//GuestLogin fuctionality need to be done
+																							// if (
+																							// 	cookies.get("jwt_token") !==
+																							// 	undefined
+																							// ) {
+																							// 	removefromFavorite(product.id);
+																							// } else {
+																							// 	toast.error(
+																							// 		"OOps! You need to login first to add to favourites"
+																							// 	);
+																							// }
 																						}}
 																					>
 																						<BsHeartFill fill="green" />
@@ -822,16 +827,17 @@ const ProductList = () => {
 																						type="button"
 																						className="w-100 h-100"
 																						onClick={() => {
-																							if (
-																								cookies.get("jwt_token") !==
-																								undefined
-																							) {
-																								addToFavorite(product.id);
-																							} else {
-																								toast.error(
-																									"OOps! You need to login first to add to favourites"
-																								);
-																							}
+																							//GuestLogin fuctionality need to be done
+																							//if (
+																							// 	cookies.get("jwt_token") !==
+																							// 	undefined
+																							// ) {
+																							// 	addToFavorite(product.id);
+																							// } else {
+																							// 	toast.error(
+																							// 		"OOps! You need to login first to add to favourites"
+																							// 	);
+																							// }
 																						}}
 																					>
 																						<BsHeart />
@@ -882,11 +888,13 @@ const ProductList = () => {
 																									`input-section${index}`
 																								).innerHTML
 																							);
-																						} else {
-																							toast.error(
-																								"OOps! You need to login first to access the cart!"
-																							);
 																						}
+																						// popup commented
+																						//else {
+																						//	toast.error(
+																						//</div>		"OOps! You need to login first to access the cart!"
+																						//	);
+																						//	}
 																					}}
 																				>
 																					add to cart
@@ -1032,9 +1040,10 @@ const ProductList = () => {
 																								navigator.clipboard.writeText(
 																									`https://chhayakart.com/product/${product.slug}`
 																								);
-																								toast.success(
-																									"Copied Succesfully!!"
-																								);
+																								//popup commented
+																								// toast.success(
+																								// 	"Copied Succesfully!!"
+																								// );
 																							}}
 																							className="react-share__ShareButton"
 																						>
@@ -1062,7 +1071,7 @@ const ProductList = () => {
 																			payload: product.id,
 																		});
 																		setSelectedProductId(product.id);
-																		navigate("/product/"+product.id);
+																		navigate("/product/" + product.id);
 																	}}
 																>
 																	{product.name}
@@ -1081,16 +1090,18 @@ const ProductList = () => {
 																			</span>
 
 																			<span
-																		id={`price${index}-section`}
-																		className="d-flex align items-center"
-																		style={{ textDecoration: "line-through" }}
-																	>
-																		<p id="fa-rupee" className="m-0">
-																			<FaRupeeSign fill="var(--secondary-color)" />
-																		</p>{" "}
-																		{parseFloat(product.variants[0].price) +
-																			product.variants[0].price * 0.13}
-																	</span>
+																				id={`price${index}-section`}
+																				className="d-flex align items-center"
+																				style={{
+																					textDecoration: "line-through",
+																				}}
+																			>
+																				<p id="fa-rupee" className="m-0">
+																					<FaRupeeSign fill="var(--secondary-color)" />
+																				</p>{" "}
+																				{parseFloat(product.variants[0].price) +
+																					product.variants[0].price * 0.13}
+																			</span>
 
 																			<div className="product_varients_drop">
 																				{product.variants.length > 1 ? (
@@ -1162,8 +1173,10 @@ const ProductList = () => {
 																							value={product.variants[0].id}
 																							className="variant_value select-arrow"
 																						>
-																							{product.variants[0]
-																									.stock_unit_name}
+																							{
+																								product.variants[0]
+																									.stock_unit_name
+																							}
 																						</p>
 																					</>
 																				)}
@@ -1233,7 +1246,8 @@ const ProductList = () => {
 																						>
 																							{
 																								product.variants[0]
-																									.stock_unit_name}
+																									.stock_unit_name
+																							}
 																						</p>
 																					</>
 																				)}
@@ -1248,18 +1262,20 @@ const ProductList = () => {
 																				</span>
 
 																				<span
-																		id={`price${index}-section`}
-																		className="d-flex align items-center"
-																		style={{ textDecoration: "line-through" }}
-																	>
-																		<p id="fa-rupee" className="m-0">
-																			<FaRupeeSign fill="var(--secondary-color)" />
-																		</p>{" "}
-																		{parseFloat(product.variants[0].price) +
-																			product.variants[0].price * 0.13}
-																	</span>
-
-
+																					id={`price${index}-section`}
+																					className="d-flex align items-center"
+																					style={{
+																						textDecoration: "line-through",
+																					}}
+																				>
+																					<p id="fa-rupee" className="m-0">
+																						<FaRupeeSign fill="var(--secondary-color)" />
+																					</p>{" "}
+																					{parseFloat(
+																						product.variants[0].price
+																					) +
+																						product.variants[0].price * 0.13}
+																				</span>
 																			</div>
 																			<p className="product_list_description"></p>
 																		</>
@@ -1278,16 +1294,17 @@ const ProductList = () => {
 																					type="button"
 																					className="w-100 h-100"
 																					onClick={() => {
-																						if (
-																							cookies.get("jwt_token") !==
-																							undefined
-																						) {
-																							removefromFavorite(product.id);
-																						} else {
-																							toast.error(
-																								"OOps! You need to login first to add to favourites"
-																							);
-																						}
+																						//GuestLogin fuctionality need to be done
+																						//if (
+																						// 	cookies.get("jwt_token") !==
+																						// 	undefined
+																						// ) {
+																						// 	removefromFavorite(product.id);
+																						// } else {
+																						// 	toast.error(
+																						// 		"OOps! You need to login first to add to favourites"
+																						// 	);
+																						// }
 																					}}
 																				>
 																					<BsHeartFill fill="green" />
@@ -1298,16 +1315,17 @@ const ProductList = () => {
 																					type="button"
 																					className="w-100 h-100"
 																					onClick={() => {
-																						if (
-																							cookies.get("jwt_token") !==
-																							undefined
-																						) {
-																							addToFavorite(product.id);
-																						} else {
-																							toast.error(
-																								"OOps! You need to login first to add to favourites"
-																							);
-																						}
+																						//GuestLogin fuctionality need to be done
+																						//if (
+																						// 	cookies.get("jwt_token") !==
+																						// 	undefined
+																						// ) {
+																						// 	addToFavorite(product.id);
+																						// } else {
+																						// 	toast.error(
+																						// 		"OOps! You need to login first to add to favourites"
+																						// 	);
+																						// }
 																					}}
 																				>
 																					<BsHeart />
@@ -1361,11 +1379,13 @@ const ProductList = () => {
 																								`input-section${index}`
 																							).innerHTML
 																						);
-																					} else {
-																						toast.error(
-																							"OOps! You need to login first to access the cart!"
-																						);
 																					}
+																					//popup commented
+																					//else {
+																					//	toast.error(
+																					//</div>		"OOps! You need to login first to access the cart!"
+																					//	);
+																					//	}
 																				}}
 																			>
 																				add to cart
@@ -1538,9 +1558,10 @@ const ProductList = () => {
 																							navigator.clipboard.writeText(
 																								`${share_parent_url}/${product.slug}`
 																							);
-																							toast.success(
-																								"Copied Succesfully!!"
-																							);
+																							//popup commented
+																							//toast.success(
+																							//	"Copied Succesfully!!"
+																							//	);
 																						}}
 																						className="react-share__ShareButton"
 																					>

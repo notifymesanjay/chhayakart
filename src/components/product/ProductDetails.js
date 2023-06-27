@@ -103,7 +103,7 @@ const ProductDetails = () => {
 	const [productbrand, setproductbrand] = useState({});
 	const [relatedProducts, setrelatedProducts] = useState(null);
 	const [selectedProduct, setselectedProduct] = useState({});
-	const [isLogin, setIsLogin] = useState(false);
+	// const [isLogin, setIsLogin] = useState(false);
 
 	const getCategoryDetails = (id) => {
 		api
@@ -362,7 +362,8 @@ const ProductDetails = () => {
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
-					toast.success(result.message);
+					//popup commented
+					// toast.success(result.message);
 					await api
 						.getCart(
 							cookies.get("jwt_token"),
@@ -390,9 +391,11 @@ const ProductDetails = () => {
 								});
 						})
 						.catch((error) => console.log(error));
-				} else {
-					toast.error(result.message);
 				}
+				//popup commented
+				// else {
+				// 	toast.error(result.message);
+				// }
 			});
 	};
 
@@ -403,7 +406,8 @@ const ProductDetails = () => {
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
-					toast.success(result.message);
+					//popup commented
+					// toast.success(result.message);
 					await api
 						.getCart(
 							cookies.get("jwt_token"),
@@ -432,9 +436,11 @@ const ProductDetails = () => {
 								});
 						})
 						.catch((error) => console.log(error));
-				} else {
-					toast.error(result.message);
 				}
+				//popup commented
+				// else {
+				// 	toast.error(result.message);
+				// }
 			});
 	};
 
@@ -445,7 +451,8 @@ const ProductDetails = () => {
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
-					toast.success(result.message);
+					//popup commented
+					// toast.success(result.message);
 					await api
 						.getFavorite(
 							cookies.get("jwt_token"),
@@ -457,9 +464,11 @@ const ProductDetails = () => {
 							if (res.status === 1)
 								dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
 						});
-				} else {
-					toast.error(result.message);
 				}
+				//popup commented
+				// else {
+				// 	toast.error(result.message);
+				// }
 			});
 	};
 	const favorite = useSelector((state) => state.favorite);
@@ -469,7 +478,8 @@ const ProductDetails = () => {
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
-					toast.success(result.message);
+					//popup commented
+					// toast.success(result.message);
 					await api
 						.getFavorite(
 							cookies.get("jwt_token"),
@@ -504,9 +514,12 @@ const ProductDetails = () => {
 				).id,
 				document.getElementById(`input-productdetail`).innerHTML
 			);
-		} else {
-			setIsLogin(true);
 		}
+
+		//GuestLogin fuctionality need to be done
+		//else {
+		// 	setIsLogin(true);
+		// }
 	};
 
 	const handleAddToCart = (index, related_product) => {
@@ -526,9 +539,12 @@ const ProductDetails = () => {
 				).id,
 				document.getElementById(`input-section${index}`).innerHTML
 			);
-		} else {
-			setIsLogin(true);
 		}
+		//GuestLogin fuctionality need to be done
+
+		// else {
+		// 	setIsLogin(true);
+		// }
 	};
 
 	return (
@@ -821,7 +837,8 @@ const ProductDetails = () => {
 															navigator.clipboard.writeText(
 																`https://chhayakart.com/product/${productdata.slug}`
 															);
-															toast.success("Copied Succesfully!!");
+															//popup commented
+															// toast.success("Copied Succesfully!!");
 														}}
 													>
 														{" "}
@@ -875,9 +892,9 @@ const ProductDetails = () => {
 														<AiOutlineEye
 															onClick={() => {
 																setselectedProduct(related_product);
-																}}
-																data-bs-toggle="modal"
-																data-bs-target="#quickviewModal"
+															}}
+															data-bs-toggle="modal"
+															data-bs-target="#quickviewModal"
 														/>
 													</span>
 													<img
@@ -890,7 +907,7 @@ const ProductDetails = () => {
 																payload: related_product.id,
 															});
 															setSelectedProductId(related_product.id);
-															navigate("/product/"+related_product.id);
+															navigate("/product/" + related_product.id);
 														}}
 													/>
 												</div>
@@ -917,16 +934,16 @@ const ProductDetails = () => {
 															{related_product.variants[0].price}{" "}
 														</span>
 														<span
-																		id={`price${index}-section`}
-																		className="d-flex align items-center"
-																		style={{ textDecoration: "line-through" }}
-																	>
-																		<p id="fa-rupee" className="m-0">
-																			<FaRupeeSign fill="var(--secondary-color)" />
-																		</p>{" "}
-																		{parseFloat(related_product.variants[0].price) +
-																			related_product.variants[0].price * 0.13}
-																	</span>
+															id={`price${index}-section`}
+															className="d-flex align items-center"
+															style={{ textDecoration: "line-through" }}
+														>
+															<p id="fa-rupee" className="m-0">
+																<FaRupeeSign fill="var(--secondary-color)" />
+															</p>{" "}
+															{parseFloat(related_product.variants[0].price) +
+																related_product.variants[0].price * 0.13}
+														</span>
 													</div>
 													<div className="product_varients_drop">
 														{related_product.variants.length > 1 ? (
@@ -988,7 +1005,6 @@ const ProductDetails = () => {
 																</span>
 															</>
 														)}
-
 													</div>
 												</div>
 
@@ -1161,7 +1177,8 @@ const ProductDetails = () => {
 																		navigator.clipboard.writeText(
 																			`https://chhayakart.com/product/${related_product.slug}`
 																		);
-																		toast.success("Copied Succesfully!!");
+																		//popup commented
+																		//toast.success("Copied Succesfully!!");
 																	}}
 																	className="react-share__ShareButton"
 																>
@@ -1185,8 +1202,8 @@ const ProductDetails = () => {
 					setselectedProduct={setselectedProduct}
 				/>
 			</div>
-
-			{isLogin && <Login isOpenModal={isLogin} setIsOpenModal={setIsLogin} />}
+			//GuestLogin fuctionality need to be done
+			{/* {isLogin && <Login isOpenModal={isLogin} setIsOpenModal={setIsLogin} />} */}
 		</div>
 	);
 };

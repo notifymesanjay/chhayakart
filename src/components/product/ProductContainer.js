@@ -151,7 +151,8 @@ const ProductContainer = () => {
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
-					toast.success(result.message);
+					//popup commented
+					// toast.success(result.message);
 					await api
 						.getCart(
 							cookies.get("jwt_token"),
@@ -179,9 +180,11 @@ const ProductContainer = () => {
 								});
 						})
 						.catch((error) => console.log(error));
-				} else {
-					toast.error(result.message);
 				}
+				//popup commented
+				// else {
+				// 	toast.error(result.message);
+				// }
 			});
 	};
 
@@ -192,7 +195,8 @@ const ProductContainer = () => {
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
-					toast.success(result.message);
+					//popup commented
+					// toast.success(result.message);
 					await api
 						.getCart(
 							cookies.get("jwt_token"),
@@ -221,9 +225,11 @@ const ProductContainer = () => {
 								});
 						})
 						.catch((error) => console.log(error));
-				} else {
-					toast.error(result.message);
 				}
+				//popup commented
+				// else {
+				// 	toast.error(result.message);
+				// }
 			});
 	};
 
@@ -234,7 +240,8 @@ const ProductContainer = () => {
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
-					toast.success(result.message);
+					//popup commented
+					//toast.success(result.message);
 					await api
 						.getFavorite(
 							cookies.get("jwt_token"),
@@ -246,9 +253,11 @@ const ProductContainer = () => {
 							if (res.status === 1)
 								dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
 						});
-				} else {
-					toast.error(result.message);
 				}
+				//popup commented
+				// else {
+				// 	toast.error(result.message);
+				// }
 			});
 	};
 	const removefromFavorite = async (product_id) => {
@@ -257,7 +266,8 @@ const ProductContainer = () => {
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
-					toast.success(result.message);
+					//popup commented
+					// toast.success(result.message);
 					await api
 						.getFavorite(
 							cookies.get("jwt_token"),
@@ -270,9 +280,11 @@ const ProductContainer = () => {
 								dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
 							else dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
 						});
-				} else {
-					toast.error(result.message);
 				}
+				//popup commented
+				// else {
+				// 	toast.error(result.message);
+				// }
 			});
 	};
 
@@ -339,9 +351,11 @@ const ProductContainer = () => {
 				).id,
 				document.getElementById(`input-section${index}${index0}`).innerHTML
 			);
-		} else {
-			setIsLogin(true);
 		}
+		//GuestLogin fuctionality need to be done
+		// else {
+		// 	setIsLogin(true);
+		// }
 	};
 
 	return (
@@ -422,7 +436,7 @@ const ProductContainer = () => {
 																			payload: product.id,
 																		});
 																		setSelectedProductId(product.id);
-																		navigate("/product/"+product.id);
+																		navigate("/product/" + product.id);
 																	}}
 																/>
 															</div>
@@ -529,15 +543,16 @@ const ProductContainer = () => {
 																			type="button"
 																			className="w-100 h-100"
 																			onClick={() => {
-																				if (
-																					cookies.get("jwt_token") !== undefined
-																				) {
-																					removefromFavorite(product.id);
-																				} else {
-																					toast.error(
-																						"OOps! You need to login first to add to favourites"
-																					);
-																				}
+																				//GuestLogin fuctionality need to be done
+																				// if (
+																				// 	cookies.get("jwt_token") !== undefined
+																				// ) {
+																				// 	removefromFavorite(product.id);
+																				// } else {
+																				// 	toast.error(
+																				// 		"OOps! You need to login first to add to favourites"
+																				// 	);
+																				// }
 																			}}
 																		>
 																			<BsHeartFill fill="green" />
@@ -552,11 +567,13 @@ const ProductContainer = () => {
 																					cookies.get("jwt_token") !== undefined
 																				) {
 																					addToFavorite(product.id);
-																				} else {
-																					toast.error(
-																						"OOps! You need to login First"
-																					);
 																				}
+																				//popup commented
+																				// else {
+																				// 	toast.error(
+																				// 		"OOps! You need to login First"
+																				// 	);
+																				// }
 																			}}
 																		>
 																			<BsHeart />
@@ -709,7 +726,8 @@ const ProductContainer = () => {
 																					navigator.clipboard.writeText(
 																						`${share_url}/product/${product.slug}`
 																					);
-																					toast.success("Copied Succesfully!!");
+																					// //popup commented
+																					// toast.success("Copied Succesfully!!");
 																				}}
 																				className="react-share__ShareButton"
 																			>
