@@ -651,13 +651,13 @@ const Checkout = () => {
 													</div>
 												</div>
 
-                                                <div className='d-flex justify-content-between'>
-                                                                <span>Taxes(5%)</span>
-                                                                <div className='d-flex align-items-center'>
-                                                                    <FaRupeeSign />
-                                                                    <span>{parseFloat(cart.checkout.taxes)}</span>
-                                                                </div>
-                                                </div>
+												<div className="d-flex justify-content-between">
+													<span> GST </span>
+													<div className="d-flex align-items-center">
+														<FaRupeeSign />
+														<span>{parseFloat(cart.checkout.taxes)}</span>
+													</div>
+												</div>
 
 												<div className="d-flex justify-content-between">
 													<span>Delivery Charges</span>

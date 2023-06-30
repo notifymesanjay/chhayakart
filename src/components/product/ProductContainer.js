@@ -373,22 +373,22 @@ const ProductContainer = () => {
 											</span>
 											<p>{section.title}</p>
 										</div>
-											{/* <Link to='/products'>see all</Link> */}
-											<Link
-												to="/products"
-												onClick={() => {
-													dispatch({
-														type: ActionTypes.SET_FILTER_CATEGORY,
-														payload:
-															section.title == "All Products"
-																? section.category_ids
-																: section.products[0].category_id,
-													});
-													navigate("/products");
-												}}
-											>
-												see all
-											</Link>
+										{/* <Link to='/products'>see all</Link> */}
+										<Link
+											to="/products"
+											onClick={() => {
+												dispatch({
+													type: ActionTypes.SET_FILTER_CATEGORY,
+													payload:
+														section.title == "All Products"
+															? section.category_ids
+															: section.products[0].category_id,
+												});
+												navigate("/products");
+											}}
+										>
+											see all
+										</Link>
 									</div>
 
 									<div className="product_section_content p-0">
@@ -420,7 +420,7 @@ const ProductContainer = () => {
 																			payload: product.id,
 																		});
 																		setSelectedProductId(product.id);
-																		navigate("/product/"+product.id);
+																		navigate("/product/" + product.id);
 																	}}
 																/>
 															</div>
