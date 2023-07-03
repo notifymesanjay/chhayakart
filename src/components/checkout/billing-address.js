@@ -21,7 +21,7 @@ const BillingAddress = ({
         <Address setselectedAddress={setSelectedAddress} />
       </div>
 
-      {timeSlots && timeSlots.time_slots_is_enabled && (
+      {/* {timeSlots && timeSlots.time_slots_is_enabled && (
         <>
           <div className="delivery-day-wrapper checkout-component">
             <span className="heading">preferred delivery day</span>
@@ -73,7 +73,7 @@ const BillingAddress = ({
             </div>
           </div>
         </>
-      )}
+      )} */}
     </div>
   );
 };

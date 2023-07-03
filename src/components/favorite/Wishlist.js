@@ -14,7 +14,7 @@ import Cookies from "universal-cookie";
 import { ActionTypes } from "../../model/action-type";
 import { RiDeleteBinLine } from "react-icons/ri";
 import Loader from "../loader/Loader";
-import Login from "../login/Login";
+import LoginUser from "../login/login-user";
 
 const Wishlist = () => {
   const closeCanvas = useRef();
@@ -438,7 +438,7 @@ const Wishlist = () => {
         )}
       </div>
       
-      {isLogin && <Login isOpenModal={isLogin} setIsOpenModal={setIsLogin} /> }
+      {isLogin && <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} /> }
     </section>
   );
 };

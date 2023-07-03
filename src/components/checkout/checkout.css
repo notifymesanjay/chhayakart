@@ -284,3 +284,12 @@
     border: 0;
     font-weight: 700;
 }
+
+.guestInputWrapper{
+    margin: 0px 0 15px;
+}
+
+.login-summary{
+    padding: 20px;
+    font-size: 1.555rem;
+}

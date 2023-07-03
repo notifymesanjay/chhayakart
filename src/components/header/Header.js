@@ -22,13 +22,13 @@ import { getLocation } from "../../utils/manageLocalStorage";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../api/api";
 import { ActionTypes } from "../../model/action-type";
-import Login from "../login/Login";
 import Category from "../category/Category";
 import Cookies from "universal-cookie";
 import Cart from "../cart/Cart";
 import { toast } from "react-toastify";
 import Favorite from "../favorite/Favorite";
 import $ from "jquery";
+import LoginUser from "../login/login-user";
 // import { FaRegUserCircle } from 'react-icons/fa';
 
 // import 'bootstrap/dist/js/bootstrap.bundle.js'
@@ -113,6 +113,7 @@ const Header = () => {
   }
   const [counter, setCounter] = useState(1);
   const [isLogin, setIsLogin] = useState(false);
+  const [productsInCart, setProductsInCart] = useState(0);
 
   const handleRemoveDiv = () => {
     setCounter(counter - 1);
@@ -207,7 +208,20 @@ const Header = () => {
 
   const handleSignUp = () => {
     setIsLogin(true);
-  }
+  };
+
+  useEffect(() => {
+    if (cookies.get("jwt_token") === undefined) {
+      if (localStorage.getItem("cart")) {
+        const cartVal = JSON.parse(localStorage.getItem("cart"));
+        setProductsInCart(cartVal.length);
+      }
+    } else {
+      if (cart.cart !== null) {
+        setProductsInCart(cart.cart.total);
+      }
+    }
+  }, [cart]);
 
   return (
     <>
@@ -761,23 +775,11 @@ const Header = () => {
                   </button>
                 )}
 
-                {city.city === null ||
-                cookies.get("jwt_token") === undefined ? (
+                {city.city === null ? (
                   <button
                     type="button"
                     whileTap={{ scale: 0.6 }}
                     className="icon mx-4 me-sm-5 position-relative"
-                    onClick={() => {
-                      if (cookies.get("jwt_token") === undefined) {
-                        toast.error(
-                          "OOPS! You have to login first to see your cart!"
-                        );
-                      } else if (city.city === null) {
-                        toast.error(
-                          "Please Select you delivery location first!"
-                        );
-                      }
-                    }}
                   >
                     <IoCartOutline />
                   </button>
@@ -789,23 +791,12 @@ const Header = () => {
                     data-bs-toggle="offcanvas"
                     data-bs-target="#cartoffcanvasExample"
                     aria-controls="cartoffcanvasExample"
-                    onClick={() => {
-                      if (cookies.get("jwt_token") === undefined) {
-                        toast.error(
-                          "OOPS! You have to login first to see your cart!"
-                        );
-                      } else if (city.city === null) {
-                        toast.error(
-                          "Please Select you delivery location first!"
-                        );
-                      }
-                    }}
                   >
                     <IoCartOutline />
 
-                    {cart.cart !== null ? (
+                    {productsInCart > 0 ? (
                       <span className="position-absolute start-100 translate-middle badge rounded-pill fs-5">
-                        {cart.cart.total}
+                        {productsInCart}
                         <span className="visually-hidden">unread messages</span>
                       </span>
                     ) : null}
@@ -1207,7 +1198,9 @@ const Header = () => {
         </nav>
 
         {/* login modal */}
-        {isLogin && (<Login isOpenModal={isLogin} setIsOpenModal={setIsLogin} />)}
+        {isLogin && (
+          <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
+        )}
 
         {/* location modal */}
         <div

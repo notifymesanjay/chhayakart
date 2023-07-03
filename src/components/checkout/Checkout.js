@@ -17,6 +17,7 @@ import InjectCheckout from "./StripeModal";
 import { useNavigate } from "react-router-dom";
 import { ActionTypes } from "../../model/action-type";
 import "./checkout.css";
+import GuestLogin from "./guest-login";
 
 const stripePromise = loadStripe(
   "pk_test_51MKxDESEKxefYE6MZCHxEw4cFKiiLn2mV3Ek4Nx1UfcuNfE1Z6jgQrZrKpqTLju3n5SBjYJcwt1Jkw1bEoPXWRHB00XZ7D2f2F"
@@ -45,6 +46,12 @@ const Checkout = () => {
   const [stripeOrderId, setStripeOrderId] = useState(null);
   const [stripeClientSecret, setStripeClientSecret] = useState(null);
   const [stripeTransactionId, setStripeTransactionId] = useState(null);
+  const [orderSummary, setOrderSummary] = useState({});
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(
+    cookies.get("jwt_token")
+  );
+  const [isLoader, setIsLoader] = useState(false);
+  const [productsAddedToCart, setProductsAddedToCart] = useState(false);
 
   const fetchOrders = () => {
     if (cookies.get("jwt_token")) {
@@ -193,11 +200,11 @@ const Checkout = () => {
     api
       .placeOrder(
         cookies.get("jwt_token"),
-        cart.checkout.product_variant_id,
-        cart.checkout.quantity,
-        cart.checkout.sub_total,
-        cart.checkout.delivery_charge.total_delivery_charge,
-        cart.checkout.total_amount,
+        orderSummary.product_variant_id,
+        orderSummary.quantity,
+        orderSummary.sub_total,
+        orderSummary.delivery_charge.total_delivery_charge,
+        orderSummary.total_amount,
         paymentMethod,
         selectedAddress.id,
         delivery_time
@@ -315,10 +322,81 @@ const Checkout = () => {
     }
   };
 
+  const handleOrderSummary = () => {
+    if (cookies.get("jwt_token") === undefined) {
+      if (localStorage.getItem("cart")) {
+        const cartVal = JSON.parse(localStorage.getItem("cart"));
+        if (cartVal.length > 0) {
+          let allProductVariantId = "",
+            allQuantity = "",
+            subTotal = 0;
+
+          for (let i = 0; i < cartVal.length - 1; i++) {
+            allProductVariantId +=
+              cartVal[i].product_variant_id.toString() + ",";
+            allQuantity += cartVal[i].qty.toString() + ",";
+            subTotal += parseInt(cartVal[i].qty) * parseInt(cartVal[i].price);
+          }
+
+          allProductVariantId +=
+            cartVal[cartVal.length - 1].product_variant_id.toString();
+          allQuantity += cartVal[cartVal.length - 1].qty.toString();
+          subTotal +=
+            parseInt(cartVal[cartVal.length - 1].qty) *
+            parseInt(cartVal[cartVal.length - 1].price);
+
+          let orderVal = {
+            product_variant_id: allProductVariantId,
+            quantity: allQuantity,
+            sub_total: subTotal,
+            taxes: Math.ceil(0.05 * subTotal),
+            delivery_charge: { total_delivery_charge: 40 },
+            total_amount: Math.ceil(subTotal + 0.05 * subTotal + 40),
+            cod_allowed: 1,
+          };
+          setOrderSummary(orderVal);
+        }
+      }
+    } else {
+      api
+        .getCart(
+          cookies.get("jwt_token"),
+          city.city.latitude,
+          city.city.longitude
+        )
+        .then((resp) => resp.json())
+        .then((res) => {
+          if (res.status === 1) {
+            setIsLoader(false);
+            dispatch({ type: ActionTypes.SET_CART, payload: res });
+          }
+        });
+      if (cart.checkout !== null) {
+        let orderVal = {
+          product_variant_id: cart.checkout.product_variant_id,
+          quantity: cart.checkout.quantity,
+          sub_total: cart.checkout.sub_total,
+          taxes: Math.ceil(0.05 * cart.checkout.sub_total),
+          delivery_charge: {
+            total_delivery_charge:
+              cart.checkout.delivery_charge.total_delivery_charge,
+          },
+          total_amount: Math.ceil(cart.checkout.total_amount),
+          cod_allowed: 1,
+        };
+        setOrderSummary(orderVal);
+      }
+    }
+  };
+
   useEffect(() => {
     fetchTimeSlot();
     fetchOrders();
   }, []);
+
+  useEffect(() => {
+    handleOrderSummary();
+  }, [cart, productsAddedToCart]);
 
   useEffect(() => {
     if (isOrderPlaced) {
@@ -330,8 +408,28 @@ const Checkout = () => {
   }, [isOrderPlaced]);
 
   useEffect(() => {
-    console.log("xyz", setting);
-  }, [setting]);
+    if (isUserLoggedIn) {
+      const cartVal = JSON.parse(localStorage.getItem("cart"));
+      setIsLoader(true);
+      for (let i = 0; i < cartVal.length; i++) {
+        api
+          .addToCart(
+            cookies.get("jwt_token"),
+            cartVal[i].product_id,
+            cartVal[i].product_variant_id,
+            cartVal[i].qty
+          )
+          .then((response) => response.json())
+          .then((result) => {
+            if (result.status === 1 && i === cartVal.length - 1) {
+              setProductsAddedToCart(true);
+            }
+          });
+      }
+    } else {
+      setIsLoader(false);
+    }
+  }, [isUserLoggedIn]);
 
   return (
     <div>
@@ -348,31 +446,39 @@ const Checkout = () => {
           </div>
         </div>
 
-        {setting.payment_setting === null ? (
+        {setting.payment_setting === null && isLoader ? (
           <Loader />
         ) : (
           <>
             <div className="checkout-container container">
-              <BillingAddress
-                timeSlots={timeSlots}
-                setTimeSlots={setTimeSlots}
-                setSelectedAddress={setSelectedAddress}
-                expectedDate={expectedDate}
-                setExpectedDate={setExpectedDate}
-                setExpectedTime={setExpectedTime}
-              />
+              {isUserLoggedIn ? (
+                <BillingAddress
+                  timeSlots={timeSlots}
+                  setTimeSlots={setTimeSlots}
+                  setSelectedAddress={setSelectedAddress}
+                  expectedDate={expectedDate}
+                  setExpectedDate={setExpectedDate}
+                  setExpectedTime={setExpectedTime}
+                />
+              ) : (
+                <GuestLogin setIsUserLoggedIn={setIsUserLoggedIn} />
+              )}
+
               <div className="order-container">
                 <PaymentMethod
                   setting={setting}
                   setPaymentMethod={setPaymentMethod}
                 />
-                <OrderSummary
-                  cart={cart}
-                  user={user}
-                  paymentMethod={paymentMethod}
-                  handlePlaceOrder={handlePlaceOrder}
-                  loadingPlaceOrder={loadingPlaceOrder}
-                />
+                {Object.keys(orderSummary).length > 0 && (
+                  <OrderSummary
+                    cart={orderSummary}
+                    isUserLoggedIn={isUserLoggedIn}
+                    user={user}
+                    paymentMethod={paymentMethod}
+                    handlePlaceOrder={handlePlaceOrder}
+                    loadingPlaceOrder={loadingPlaceOrder}
+                  />
+                )}
               </div>
             </div>
           </>

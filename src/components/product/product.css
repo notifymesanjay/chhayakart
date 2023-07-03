@@ -4,6 +4,10 @@
     padding: 0 !important;
     padding-left: -2px;
   }
+
+  .productDescription{
+    text-transform: uppercase;
+  }
   
   .css-b62m3t-container {
     width: 100%;

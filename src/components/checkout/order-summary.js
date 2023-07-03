@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaRupeeSign } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Loader from "../loader/Loader";
 import "./checkout.css";
+import GuestLogin from "./guest-login";
 
 const OrderSummary = ({
+  isUserLoggedIn,
   cart,
   user,
   paymentMethod,
@@ -16,7 +18,7 @@ const OrderSummary = ({
       <span className="heading">order summary</span>
 
       <div className="order-details">
-        {cart.checkout === null || user.user === null ? (
+        {cart === null ? (
           <Loader screen="full" />
         ) : (
           <div className="summary">
@@ -24,7 +26,7 @@ const OrderSummary = ({
               <span>Subtotal</span>
               <div className="d-flex align-items-center">
                 <FaRupeeSign />
-                <span>{parseFloat(cart.checkout.sub_total)}</span>
+                <span>{parseFloat(cart.sub_total)}</span>
               </div>
             </div>
 
@@ -32,7 +34,7 @@ const OrderSummary = ({
               <span>Taxes(5%)</span>
               <div className="d-flex align-items-center">
                 <FaRupeeSign />
-                <span>{parseFloat(cart.checkout.taxes)}</span>
+                <span>{parseFloat(cart.taxes)}</span>
               </div>
             </div>
 
@@ -42,7 +44,7 @@ const OrderSummary = ({
                 <FaRupeeSign />
                 <span>
                   {parseFloat(
-                    cart.checkout.delivery_charge.total_delivery_charge
+                    cart.delivery_charge.total_delivery_charge
                   )}
                 </span>
               </div>
@@ -52,11 +54,14 @@ const OrderSummary = ({
               <span>Total</span>
               <div className="d-flex align-items-center total-amount">
                 <FaRupeeSign fill="var(--secondary-color)" />
-                <span>{parseFloat(cart.checkout.total_amount)}</span>
+                <span>{parseFloat(cart.total_amount)}</span>
               </div>
             </div>
 
-            {loadingPlaceOrder ? (
+            {isUserLoggedIn && (
+              
+              <>
+              {loadingPlaceOrder ? (
               <Loader screen="full" background="none" />
             ) : (
               <>
@@ -89,6 +94,8 @@ const OrderSummary = ({
                     </motion.button>
                   )}
                 </div>
+              </>
+            )}
               </>
             )}
           </div>

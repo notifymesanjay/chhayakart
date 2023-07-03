@@ -20,7 +20,12 @@ import {
 import Loader from "../loader/Loader";
 import CryptoJS from "crypto-js";
 import Slider from "react-slick";
-import Login from "../login/Login";
+import {
+  addProductToCart,
+  decrementProduct,
+  incrementProduct,
+} from "../../services/cartService";
+import LoginUser from "../login/login-user";
 
 const QuickViewModal = (props) => {
   const cookies = new Cookies();
@@ -359,7 +364,80 @@ const QuickViewModal = (props) => {
         document.getElementById(`input-quickview`).innerHTML
       );
     } else {
-      setIsLogin(true);
+      addProductToCart(product);
+      document
+        .getElementById(`Add-to-cart-quickview`)
+        .classList.toggle("visually-hidden");
+      document
+        .getElementById(`input-cart-quickview`)
+        .classList.toggle("visually-hidden");
+      document.getElementById(`input-quickview`).innerHTML = 1;
+    }
+  };
+
+  const handleIncrement = () => {
+    var val = document.getElementById(`input-quickview`).innerHTML;
+    if (cookies.get("jwt_token") !== undefined) {
+      if (val < product.total_allowed_quantity) {
+        document.getElementById(`input-quickview`).innerHTML =
+          parseInt(val) + 1;
+        addtoCart(
+          product.id,
+          JSON.parse(
+            document.getElementById(`select-product-variant-quickview`).value
+          ).id,
+          document.getElementById(`input-quickview`).innerHTML
+        );
+      }
+    } else {
+      const isIncremented = incrementProduct(product.id, product);
+      if (isIncremented) {
+        document.getElementById(`input-quickview`).innerHTML =
+          parseInt(val) + 1;
+      }
+    }
+  };
+
+  const handleDecrement = () => {
+    var val = parseInt(document.getElementById(`input-quickview`).innerHTML);
+    if (cookies.get("jwt_token") !== undefined) {
+      if (val === 1) {
+        document.getElementById(`input-quickview`).innerHTML = 0;
+        document
+          .getElementById(`input-cart-quickview`)
+          .classList.toggle("visually-hidden");
+        document
+          .getElementById(`Add-to-cart-quickview`)
+          .classList.toggle("visually-hidden");
+        removefromCart(
+          product.id,
+          JSON.parse(
+            document.getElementById(`select-product-variant-quickview`).value
+          ).id
+        );
+      } else {
+        document.getElementById(`input-quickview`).innerHTML = val - 1;
+        addtoCart(
+          product.id,
+          JSON.parse(
+            document.getElementById(`select-product-variant-quickview`).value
+          ).id,
+          document.getElementById(`input-quickview`).innerHTML
+        );
+      }
+    } else {
+      const isDecremented = decrementProduct(product.id, product);
+      if (isDecremented) {
+        document.getElementById(`input-quickview`).innerHTML = val - 1;
+      } else {
+        document.getElementById(`input-quickview`).innerHTML = 0;
+        document
+          .getElementById(`input-cart-quickview`)
+          .classList.toggle("visually-hidden");
+        document
+          .getElementById(`Add-to-cart-quickview`)
+          .classList.toggle("visually-hidden");
+      }
     }
   };
 
@@ -559,43 +637,7 @@ const QuickViewModal = (props) => {
                               <button
                                 type="button"
                                 onClick={() => {
-                                  var val = parseInt(
-                                    document.getElementById(`input-quickview`)
-                                      .innerHTML
-                                  );
-                                  if (val === 1) {
-                                    document.getElementById(
-                                      `input-quickview`
-                                    ).innerHTML = 0;
-                                    document
-                                      .getElementById(`input-cart-quickview`)
-                                      .classList.toggle("visually-hidden");
-                                    document
-                                      .getElementById(`Add-to-cart-quickview`)
-                                      .classList.toggle("visually-hidden");
-                                    removefromCart(
-                                      product.id,
-                                      JSON.parse(
-                                        document.getElementById(
-                                          `select-product-variant-quickview`
-                                        ).value
-                                      ).id
-                                    );
-                                  } else {
-                                    document.getElementById(
-                                      `input-quickview`
-                                    ).innerHTML = val - 1;
-                                    addtoCart(
-                                      product.id,
-                                      JSON.parse(
-                                        document.getElementById(
-                                          `select-product-variant-quickview`
-                                        ).value
-                                      ).id,
-                                      document.getElementById(`input-quickview`)
-                                        .innerHTML
-                                    );
-                                  }
+                                  handleDecrement();
                                 }}
                                 className="wishlist-button"
                               >
@@ -605,25 +647,7 @@ const QuickViewModal = (props) => {
                               <button
                                 type="button"
                                 onClick={() => {
-                                  var val =
-                                    document.getElementById(
-                                      `input-quickview`
-                                    ).innerHTML;
-                                  if (val < product.total_allowed_quantity) {
-                                    document.getElementById(
-                                      `input-quickview`
-                                    ).innerHTML = parseInt(val) + 1;
-                                    addtoCart(
-                                      product.id,
-                                      JSON.parse(
-                                        document.getElementById(
-                                          `select-product-variant-quickview`
-                                        ).value
-                                      ).id,
-                                      document.getElementById(`input-quickview`)
-                                        .innerHTML
-                                    );
-                                  }
+                                  handleIncrement();
                                 }}
                                 className="wishlist-button"
                               >
@@ -746,8 +770,10 @@ const QuickViewModal = (props) => {
           </div>
         </div>
       </div>
-      
-      {isLogin && <Login isOpenModal={isLogin} setIsOpenModal={setIsLogin} /> }
+
+      {isLogin && (
+        <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
+      )}
     </div>
   );
 };
