@@ -83,7 +83,10 @@ function SampleNextArrow(props) {
   );
 }
 
-const ProductDetails = ({productTriggered, setProductTriggered = () => {}}) => {
+const ProductDetails = ({
+  productTriggered,
+  setProductTriggered = () => {},
+}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cookies = new Cookies();
@@ -510,15 +513,17 @@ const ProductDetails = ({productTriggered, setProductTriggered = () => {}}) => {
         document.getElementById(`input-productdetail`).innerHTML
       );
     } else {
-      addProductToCart(productdata);
-      document
-        .getElementById(`Add-to-cart-productdetail`)
-        .classList.toggle("visually-hidden");
-      document
-        .getElementById(`input-cart-productdetail`)
-        .classList.toggle("visually-hidden");
-      document.getElementById(`input-productdetail`).innerHTML = 1;
-	  setProductTriggered(!productTriggered)
+      const isAdded = addProductToCart(productdata);
+      if (isAdded) {
+        document
+          .getElementById(`Add-to-cart-productdetail`)
+          .classList.toggle("visually-hidden");
+        document
+          .getElementById(`input-cart-productdetail`)
+          .classList.toggle("visually-hidden");
+        document.getElementById(`input-productdetail`).innerHTML = 1;
+        setProductTriggered(!productTriggered);
+      }
     }
   };
 
@@ -548,7 +553,7 @@ const ProductDetails = ({productTriggered, setProductTriggered = () => {}}) => {
         .getElementById(`input-cart-section${index}`)
         .classList.add("active");
       document.getElementById(`input-section${index}`).innerHTML = 1;
-	  setProductTriggered(!productTriggered)
+      setProductTriggered(!productTriggered);
     }
   };
 
@@ -596,7 +601,7 @@ const ProductDetails = ({productTriggered, setProductTriggered = () => {}}) => {
           .getElementById(`input-cart-productdetail`)
           .classList.toggle("visually-hidden");
       }
-	  setProductTriggered(!productTriggered)
+      setProductTriggered(!productTriggered);
     }
   };
 
@@ -647,7 +652,7 @@ const ProductDetails = ({productTriggered, setProductTriggered = () => {}}) => {
           .getElementById(`Add-to-cart-section${index}`)
           .classList.add("active");
       }
-	  setProductTriggered(!productTriggered)
+      setProductTriggered(!productTriggered);
     }
   };
 
@@ -672,7 +677,7 @@ const ProductDetails = ({productTriggered, setProductTriggered = () => {}}) => {
         document.getElementById(`input-productdetail`).innerHTML =
           parseInt(val) + 1;
       }
-	  setProductTriggered(!productTriggered)
+      setProductTriggered(!productTriggered);
     }
   };
 
@@ -700,7 +705,7 @@ const ProductDetails = ({productTriggered, setProductTriggered = () => {}}) => {
         document.getElementById(`input-section${index}`).innerHTML =
           parseInt(val) + 1;
       }
-	  setProductTriggered(!productTriggered)
+      setProductTriggered(!productTriggered);
     }
   };
 
@@ -1154,59 +1159,58 @@ const ProductDetails = ({productTriggered, setProductTriggered = () => {}}) => {
                               </div>
                             </div>
 
-                          <div className="dropup share">
-                            <button
-                              type="button"
-                              className="w-100 h-100 "
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              <BsShare />
-                            </button>
+                            <div className="dropup share">
+                              <button
+                                type="button"
+                                className="w-100 h-100 "
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <BsShare />
+                              </button>
 
-                            <ul className="dropdown-menu">
-                              <li className="dropDownLi">
-                                <WhatsappShareButton
-                                  url={`https://chhayakart.com/product/${related_product.slug}`}
-                                >
-                                  <WhatsappIcon size={32} round={true} />{" "}
-                                  <span>WhatsApp</span>
-                                </WhatsappShareButton>
-                              </li>
-                              <li className="dropDownLi">
-                                <TelegramShareButton
-                                  url={`https://chhayakart.com/product/${related_product.slug}`}
-                                >
-                                  <TelegramIcon size={32} round={true} />{" "}
-                                  <span>Telegram</span>
-                                </TelegramShareButton>
-                              </li>
-                              <li className="dropDownLi">
-                                <FacebookShareButton
-                                  url={`https://chhayakart.com/product/${related_product.slug}`}
-                                >
-                                  <FacebookIcon size={32} round={true} />{" "}
-                                  <span>Facebook</span>
-                                </FacebookShareButton>
-                              </li>
-                              <li>
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    navigator.clipboard.writeText(
-                                      `https://chhayakart.com/product/${related_product.slug}`
-                                    );
-                                    toast.success("Copied Succesfully!!");
-                                  }}
-                                  className="react-share__ShareButton"
-                                >
-                                  {" "}
-                                  <BiLink size={30} /> <span>Copy Link</span>
-                                </button>
-                              </li>
-                            </ul>
-                          </div>
-						  
+                              <ul className="dropdown-menu">
+                                <li className="dropDownLi">
+                                  <WhatsappShareButton
+                                    url={`https://chhayakart.com/product/${related_product.slug}`}
+                                  >
+                                    <WhatsappIcon size={32} round={true} />{" "}
+                                    <span>WhatsApp</span>
+                                  </WhatsappShareButton>
+                                </li>
+                                <li className="dropDownLi">
+                                  <TelegramShareButton
+                                    url={`https://chhayakart.com/product/${related_product.slug}`}
+                                  >
+                                    <TelegramIcon size={32} round={true} />{" "}
+                                    <span>Telegram</span>
+                                  </TelegramShareButton>
+                                </li>
+                                <li className="dropDownLi">
+                                  <FacebookShareButton
+                                    url={`https://chhayakart.com/product/${related_product.slug}`}
+                                  >
+                                    <FacebookIcon size={32} round={true} />{" "}
+                                    <span>Facebook</span>
+                                  </FacebookShareButton>
+                                </li>
+                                <li>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      navigator.clipboard.writeText(
+                                        `https://chhayakart.com/product/${related_product.slug}`
+                                      );
+                                      toast.success("Copied Succesfully!!");
+                                    }}
+                                    className="react-share__ShareButton"
+                                  >
+                                    {" "}
+                                    <BiLink size={30} /> <span>Copy Link</span>
+                                  </button>
+                                </li>
+                              </ul>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -1219,8 +1223,8 @@ const ProductDetails = ({productTriggered, setProductTriggered = () => {}}) => {
           <QuickViewModal
             selectedProduct={selectedProduct}
             setselectedProduct={setselectedProduct}
-			productTriggered={productTriggered}
-			setProductTriggered={setProductTriggered}
+            productTriggered={productTriggered}
+            setProductTriggered={setProductTriggered}
           />
         </div>
 

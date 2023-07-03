@@ -368,15 +368,17 @@ const QuickViewModal = (props) => {
         document.getElementById(`input-quickview`).innerHTML
       );
     } else {
-      addProductToCart(product);
-      document
-        .getElementById(`Add-to-cart-quickview`)
-        .classList.toggle("visually-hidden");
-      document
-        .getElementById(`input-cart-quickview`)
-        .classList.toggle("visually-hidden");
-      document.getElementById(`input-quickview`).innerHTML = 1;
-      props.setProductTriggered(!props.productTriggered)
+      const isAdded = addProductToCart(product);
+      if (isAdded) {
+        document
+          .getElementById(`Add-to-cart-quickview`)
+          .classList.toggle("visually-hidden");
+        document
+          .getElementById(`input-cart-quickview`)
+          .classList.toggle("visually-hidden");
+        document.getElementById(`input-quickview`).innerHTML = 1;
+        props.setProductTriggered(!props.productTriggered);
+      }
     }
   };
 
@@ -400,7 +402,7 @@ const QuickViewModal = (props) => {
         document.getElementById(`input-quickview`).innerHTML =
           parseInt(val) + 1;
       }
-      props.setProductTriggered(!props.productTriggered)
+      props.setProductTriggered(!props.productTriggered);
     }
   };
 
@@ -444,7 +446,7 @@ const QuickViewModal = (props) => {
           .getElementById(`Add-to-cart-quickview`)
           .classList.toggle("visually-hidden");
       }
-      props.setProductTriggered(!props.productTriggered)
+      props.setProductTriggered(!props.productTriggered);
     }
   };
 

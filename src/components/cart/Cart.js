@@ -290,6 +290,7 @@ const Cart = ({productTriggered, setProductTriggered = () => {}}) => {
             };
             setCartProducts(allProducts);
             setOrderSummary(orderVal);
+            setiscartEmpty(false);
           }else{
               setiscartEmpty(true);
           }
@@ -333,6 +334,7 @@ const Cart = ({productTriggered, setProductTriggered = () => {}}) => {
           };
           setCartProducts(allProducts);
           setOrderSummary(orderVal);
+          setiscartEmpty(false);
         }
       }
   }

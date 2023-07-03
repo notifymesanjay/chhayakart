@@ -23,12 +23,17 @@ export const addProductToCart = (product) => {
       },
     ];
     localStorage.setItem("cart", JSON.stringify(updatedProductList));
+    return true;
   } else {
     const existingproduct = cart.find((prod) => prod.product_id === product.id);
     if (existingproduct) {
       for (let prod of cart) {
-        if (prod.product_id === product.id) {
+        if (prod.product_id === product.id && prod.qty + 1 <= parseInt(prod.total_allowed_quantity)) {
           prod.qty += 1;
+          return true;
+        }else if(prod.product_id === product.id && prod.qty + 1 > parseInt(prod.total_allowed_quantity)){
+          toast.error("Maximum Quantity Exceeded");
+          return false;
         }
       }
       localStorage.setItem("cart", JSON.stringify(cart));
@@ -52,6 +57,7 @@ export const addProductToCart = (product) => {
         unit: product.variants[0].stock_unit,
       });
       localStorage.setItem("cart", JSON.stringify(updatedProductList));
+      return true;
     }
   }
 };

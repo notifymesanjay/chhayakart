@@ -33,7 +33,7 @@ import {
   incrementProduct,
 } from "../../services/cartService";
 
-const ProductList = ({productTriggered, setProductTriggered = () => {}}) => {
+const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
   const total_products_per_page = 12;
   const secret_key = "Xyredg$5g";
   const share_parent_url = "https://chhayakart.com/product";
@@ -669,15 +669,17 @@ const ProductList = ({productTriggered, setProductTriggered = () => {}}) => {
         document.getElementById(`input-section${index}`).innerHTML
       );
     } else {
-      addProductToCart(product);
-      document
-        .getElementById(`Add-to-cart-section${index}`)
-        .classList.remove("active");
-      document
-        .getElementById(`input-cart-section${index}`)
-        .classList.add("active");
-      document.getElementById(`input-section${index}`).innerHTML = 1;
-	  setProductTriggered(!productTriggered)
+      const isAdded = addProductToCart(product);
+      if (isAdded) {
+        document
+          .getElementById(`Add-to-cart-section${index}`)
+          .classList.remove("active");
+        document
+          .getElementById(`input-cart-section${index}`)
+          .classList.add("active");
+        document.getElementById(`input-section${index}`).innerHTML = 1;
+        setProductTriggered(!productTriggered);
+      }
     }
   };
 
@@ -705,15 +707,17 @@ const ProductList = ({productTriggered, setProductTriggered = () => {}}) => {
         document.getElementById(`input-section${index}`).innerHTML
       );
     } else {
-      addProductToCart(product);
-      document
-        .getElementById(`Add-to-cart-section${index}`)
-        .classList.remove("active");
-      document
-        .getElementById(`input-cart-section${index}`)
-        .classList.add("active");
-      document.getElementById(`input-section${index}`).innerHTML = 1;
-	  setProductTriggered(!productTriggered)
+      const isAdded = addProductToCart(product);
+      if (isAdded) {
+        document
+          .getElementById(`Add-to-cart-section${index}`)
+          .classList.remove("active");
+        document
+          .getElementById(`input-cart-section${index}`)
+          .classList.add("active");
+        document.getElementById(`input-section${index}`).innerHTML = 1;
+        setProductTriggered(!productTriggered);
+      }
     }
   };
 
@@ -761,7 +765,7 @@ const ProductList = ({productTriggered, setProductTriggered = () => {}}) => {
           .getElementById(`Add-to-cart-productlist${index}`)
           .classList.add("active");
       }
-	  setProductTriggered(!productTriggered)
+      setProductTriggered(!productTriggered);
     }
   };
 
@@ -823,7 +827,7 @@ const ProductList = ({productTriggered, setProductTriggered = () => {}}) => {
           .getElementById(`Add-to-cart-section${index}`)
           .classList.add("active");
       }
-	  setProductTriggered(!productTriggered)
+      setProductTriggered(!productTriggered);
     }
   };
 
@@ -847,7 +851,7 @@ const ProductList = ({productTriggered, setProductTriggered = () => {}}) => {
         document.getElementById(`input-productlist${index}`).innerHTML =
           parseInt(val) + 1;
       }
-	  setProductTriggered(!productTriggered)
+      setProductTriggered(!productTriggered);
     }
   };
 
@@ -879,7 +883,7 @@ const ProductList = ({productTriggered, setProductTriggered = () => {}}) => {
         document.getElementById(`input-section${index}`).innerHTML =
           parseInt(val) + 1;
       }
-	  setProductTriggered(!productTriggered)
+      setProductTriggered(!productTriggered);
     }
   };
 
@@ -1589,8 +1593,8 @@ const ProductList = ({productTriggered, setProductTriggered = () => {}}) => {
                       <QuickViewModal
                         selectedProduct={selectedProduct}
                         setselectedProduct={setselectedProduct}
-						productTriggered={productTriggered}
-						setProductTriggered={setProductTriggered}
+                        productTriggered={productTriggered}
+                        setProductTriggered={setProductTriggered}
                       />
                     </div>
                   ) : (
