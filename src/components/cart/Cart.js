@@ -14,7 +14,7 @@ import { useNavigate, Link } from "react-router-dom";
 import Loader from "../loader/Loader";
 import { decrementProduct, deleteProductFromCart, incrementProduct } from "../../services/cartService";
 
-const Cart = ({productTriggered}) => {
+const Cart = ({productTriggered, setProductTriggered = () => {}}) => {
   const closeCanvas = useRef();
   const cookies = new Cookies();
   const dispatch = useDispatch();
@@ -29,7 +29,6 @@ const Cart = ({productTriggered}) => {
   const [isLoader, setisLoader] = useState(false);
   const [orderSummary, setOrderSummary] = useState(false);
   const [cartProducts, setCartProducts] = useState([]);
-  const [cartUpdated, setCartUpdated] = useState(false);
 
   useEffect(() => {
     if (sizes.sizes === null || sizes.status === "loading") {
@@ -126,7 +125,7 @@ const Cart = ({productTriggered}) => {
         document.getElementById(`input-cart-sidebar${index}`).innerHTML =
           val - 1;
       }
-      setCartUpdated(!cartUpdated);
+      setProductTriggered(!productTriggered);
     }
   };
 
@@ -150,7 +149,7 @@ const Cart = ({productTriggered}) => {
         document.getElementById(`input-cart-sidebar${index}`).innerHTML =
           val + 1;
       }
-      setCartUpdated(!cartUpdated);
+      setProductTriggered(!productTriggered);
     }
   };
 
@@ -163,7 +162,7 @@ const Cart = ({productTriggered}) => {
     }else{
         let isDeleted = deleteProductFromCart(product.product_id);
         if(isDeleted){
-            setCartUpdated(!cartUpdated);
+            setProductTriggered(!productTriggered);
         }
     }
   }
@@ -340,7 +339,7 @@ const Cart = ({productTriggered}) => {
 
   useEffect(() => {
     handleOrderSummary();
-  }, [cart, cartUpdated, productTriggered]);
+  }, [cart, productTriggered]);
 
   return (
     <div

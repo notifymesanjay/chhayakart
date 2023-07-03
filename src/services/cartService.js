@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 export const addProductToCart = (product) => {
   let cart = JSON.parse(localStorage.getItem("cart"));
-  if (cart === undefined) {
+  if (!cart) {
     let updatedProductList = [
       {
         cod_allowed: "1",
