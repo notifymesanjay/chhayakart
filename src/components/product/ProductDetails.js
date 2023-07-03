@@ -952,185 +952,160 @@ const ProductDetails = () => {
 
         <div className="description-wrapper">
           <h5 className="title">Product Description</h5>
+          <div>
+            <div
+              className="description product_description"
+              style={{ overflow: "hidden" }}
+              dangerouslySetInnerHTML={{ __html: productdata.description }}
+            ></div>
+          </div>
 
-          <div
-            className="description"
-            style={{ overflow: "hidden" }}
-            dangerouslySetInnerHTML={{ __html: productdata.description }}
-          ></div>
-        </div>
-
-        <div className="related-product-wrapper">
-          <h5>related product</h5>
-          <div className="related-product-container">
-            {relatedProducts === null ? (
-              <div className="d-flex justify-content-center">
-                <div className="spinner-border" role="status">
-                  <span className="visually-hidden">Loading...</span>
+          <div className="related-product-wrapper">
+            <h5>related product</h5>
+            <div className="related-product-container">
+              {relatedProducts === null ? (
+                <div className="d-flex justify-content-center">
+                  <div className="spinner-border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="row">
-                <Slider {...settings}>
-                  {relatedProducts.map((related_product, index) => (
-                    <div className="col-md-3 col-lg-4">
-                      <div className="product-card">
-                        <div className="image-container">
-                          <span
-                            className="border border-light rounded-circle p-2 px-3"
-                            id="aiEye"
-                            onClick={() => {
-                              setselectedProduct(related_product);
-                            }}
-                            data-bs-toggle="modal"
-                            data-bs-target="#quickviewModal"
-                          >
-                            <AiOutlineEye
+              ) : (
+                <div className="row">
+                  <Slider {...settings}>
+                    {relatedProducts.map((related_product, index) => (
+                      <div className="col-md-3 col-lg-4">
+                        <div className="product-card">
+                          <div className="image-container">
+                            <span
+                              className="border border-light rounded-circle p-2 px-3"
+                              id="aiEye"
                               onClick={() => {
                                 setselectedProduct(related_product);
                               }}
                               data-bs-toggle="modal"
                               data-bs-target="#quickviewModal"
+                            >
+                              <AiOutlineEye
+                                onClick={() => {
+                                  setselectedProduct(related_product);
+                                }}
+                                data-bs-toggle="modal"
+                                data-bs-target="#quickviewModal"
+                              />
+                            </span>
+                            <img
+                              src={related_product.image_url}
+                              alt={related_product.slug}
+                              className="card-img-top"
+                              onClick={() => {
+                                dispatch({
+                                  type: ActionTypes.SET_SELECTED_PRODUCT,
+                                  payload: related_product.id,
+                                });
+                                setSelectedProductId(related_product.id);
+                                navigate("/product/" + related_product.id);
+                                window.scrollTo(0, 0);
+                              }}
                             />
-                          </span>
-                          <img
-                            src={related_product.image_url}
-                            alt={related_product.slug}
-                            className="card-img-top"
+                          </div>
+
+                          <div
+                            className="card-body product-card-body p-3"
                             onClick={() => {
                               dispatch({
                                 type: ActionTypes.SET_SELECTED_PRODUCT,
                                 payload: related_product.id,
                               });
                               setSelectedProductId(related_product.id);
-                              navigate("/product/" + related_product.id);
                             }}
-                          />
-                        </div>
+                          >
+                            <h3>{related_product.name}</h3>
+                            <div className="price">
+                              <span
+                                id={`price${index}-section`}
+                                className="d-flex align-items-center"
+                              >
+                                <p id="fa-rupee" className="m-0">
+                                  <FaRupeeSign fill="var(--secondary-color)" />
+                                </p>
+                                {related_product.variants[0].price}{" "}
+                              </span>
+                              <span
+                                id={`price${index}-section`}
+                                className="d-flex align items-center"
+                                style={{ textDecoration: "line-through" }}
+                              >
+                                <p id="fa-rupee" className="m-0">
+                                  <FaRupeeSign fill="var(--secondary-color)" />
+                                </p>{" "}
+                                {parseFloat(related_product.variants[0].price) +
+                                  related_product.variants[0].price * 0.13}
+                              </span>
+                            </div>
+                            <div className="product_varients_drop">
+                              {related_product.variants.length > 1 ? (
+                                <>
+                                  <select
+                                    style={{ fontSize: "8px !important" }}
+                                    className="form-select variant_selection select-arrow"
+                                    id={`select-product${index}-variant-section`}
+                                    onChange={(e) => {
+                                      document.getElementById(
+                                        `price${index}-section`
+                                      ).innerHTML = parseFloat(
+                                        JSON.parse(e.target.value).price
+                                      );
 
-                        <div
-                          className="card-body product-card-body p-3"
-                          onClick={() => {
-                            dispatch({
-                              type: ActionTypes.SET_SELECTED_PRODUCT,
-                              payload: related_product.id,
-                            });
-                            setSelectedProductId(related_product.id);
-                          }}
-                        >
-                          <h3>{related_product.name}</h3>
-                          <div className="price">
-                            <span
-                              id={`price${index}-section`}
-                              className="d-flex align-items-center"
-                            >
-                              <p id="fa-rupee" className="m-0">
-                                <FaRupeeSign fill="var(--secondary-color)" />
-                              </p>
-                              {related_product.variants[0].price}{" "}
-                            </span>
-                            <span
-                              id={`price${index}-section`}
-                              className="d-flex align items-center"
-                              style={{ textDecoration: "line-through" }}
-                            >
-                              <p id="fa-rupee" className="m-0">
-                                <FaRupeeSign fill="var(--secondary-color)" />
-                              </p>{" "}
-                              {parseFloat(related_product.variants[0].price) +
-                                related_product.variants[0].price * 0.13}
-                            </span>
-                          </div>
-                          <div className="product_varients_drop">
-                            {related_product.variants.length > 1 ? (
-                              <>
-                                <select
-                                  style={{ fontSize: "8px !important" }}
-                                  className="form-select variant_selection select-arrow"
-                                  id={`select-product${index}-variant-section`}
-                                  onChange={(e) => {
-                                    document.getElementById(
-                                      `price${index}-section`
-                                    ).innerHTML = parseFloat(
-                                      JSON.parse(e.target.value).price
-                                    );
-
-                                    if (
-                                      document
-                                        .getElementById(
-                                          `input-cart-section${index}`
-                                        )
-                                        .classList.contains("active")
-                                    ) {
-                                      document
-                                        .getElementById(
-                                          `input-cart-section${index}`
-                                        )
-                                        .classList.remove("active");
-                                      document
-                                        .getElementById(
-                                          `Add-to-cart-section${index}`
-                                        )
-                                        .classList.add("active");
-                                    }
-                                  }}
-                                  defaultValue={JSON.stringify(
-                                    related_product.variants[0]
-                                  )}
-                                >
-                                  {getProductVariants(related_product)}
-                                </select>
-                              </>
-                            ) : (
-                              <>
-                                <input
-                                  type="hidden"
-                                  name=""
-                                  id={`select-product${index}-variant-section`}
-                                  value={JSON.stringify(
-                                    related_product.variants[0]
-                                  )}
-                                />
-                                {/* <span className='variant_value select-arrow' id=''>{product.variants[0].measurement + " " + product.variants[0].stock_unit_name}
+                                      if (
+                                        document
+                                          .getElementById(
+                                            `input-cart-section${index}`
+                                          )
+                                          .classList.contains("active")
+                                      ) {
+                                        document
+                                          .getElementById(
+                                            `input-cart-section${index}`
+                                          )
+                                          .classList.remove("active");
+                                        document
+                                          .getElementById(
+                                            `Add-to-cart-section${index}`
+                                          )
+                                          .classList.add("active");
+                                      }
+                                    }}
+                                    defaultValue={JSON.stringify(
+                                      related_product.variants[0]
+                                    )}
+                                  >
+                                    {getProductVariants(related_product)}
+                                  </select>
+                                </>
+                              ) : (
+                                <>
+                                  <input
+                                    type="hidden"
+                                    name=""
+                                    id={`select-product${index}-variant-section`}
+                                    value={JSON.stringify(
+                                      related_product.variants[0]
+                                    )}
+                                  />
+                                  {/* <span className='variant_value select-arrow' id=''>{product.variants[0].measurement + " " + product.variants[0].stock_unit_name}
 																	</span> */}
-                                <span
-                                  className="variant_value select-arrow"
-                                  id=""
-                                >
-                                  {related_product.variants[0].stock_unit_name}
-                                </span>
-                              </>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="d-flex flex-row border-top product-card-footer">
-                          <div className="border-end ">
-                            {favorite.favorite &&
-                            favorite.favorite.data.some(
-                              (element) => element.id === related_product.id
-                            ) ? (
-                              <button
-                                type="button"
-                                className="wishlist-product"
-                                onClick={() =>
-                                  removefromFavorite(related_product.id)
-                                }
-                              >
-                                <BsHeartFill fill="green" />
-                              </button>
-                            ) : (
-                              <button
-                                key={related_product.id}
-                                type="button"
-                                className="wishlist-product"
-                                onClick={() =>
-                                  addToFavorite(related_product.id)
-                                }
-                              >
-                                <BsHeart />
-                              </button>
-                            )}
+                                  <span
+                                    className="variant_value select-arrow"
+                                    id=""
+                                  >
+                                    {
+                                      related_product.variants[0]
+                                        .stock_unit_name
+                                    }
+                                  </span>
+                                </>
+                              )}
+                            </div>
                           </div>
 
                           <div className="border-end" style={{ flexGrow: "1" }}>
@@ -1223,22 +1198,22 @@ const ProductDetails = () => {
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </Slider>
-              </div>
-            )}
+                    ))}
+                  </Slider>
+                </div>
+              )}
+            </div>
           </div>
+          <QuickViewModal
+            selectedProduct={selectedProduct}
+            setselectedProduct={setselectedProduct}
+          />
         </div>
-        <QuickViewModal
-          selectedProduct={selectedProduct}
-          setselectedProduct={setselectedProduct}
-        />
-      </div>
 
-      {isLogin && (
-        <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
-      )}
+        {isLogin && (
+          <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
+        )}
+      </div>
     </div>
   );
 };

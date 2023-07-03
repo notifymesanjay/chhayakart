@@ -222,6 +222,21 @@ const Header = () => {
       }
     }
   }, [cart]);
+  
+  const handleMobLogin = () => {
+    setIsLogin(true);
+    document.getElementsByClassName("wishlist")[0].classList.remove("active");
+    if (curr_url.pathname === "/products") {
+      document.getElementsByClassName("filter")[0].classList.remove("active");
+    }
+    if (curr_url.pathname !== "/products") {
+      document.getElementsByClassName("shop")[0].classList.remove("active");
+    }
+    document.getElementsByClassName("search")[0].classList.remove("active");
+    document
+      .getElementsByClassName("header-search")[0]
+      .classList.remove("active");
+  };
 
   return (
     <>
@@ -1126,28 +1141,8 @@ const Header = () => {
                       <button
                         type="button"
                         className="account"
-                        data-bs-toggle="modal"
-                        data-bs-target="#loginModal"
                         onClick={() => {
-                          document
-                            .getElementsByClassName("wishlist")[0]
-                            .classList.remove("active");
-                          if (curr_url.pathname === "/products") {
-                            document
-                              .getElementsByClassName("filter")[0]
-                              .classList.remove("active");
-                          }
-                          if (curr_url.pathname !== "/products") {
-                            document
-                              .getElementsByClassName("shop")[0]
-                              .classList.remove("active");
-                          }
-                          document
-                            .getElementsByClassName("search")[0]
-                            .classList.remove("active");
-                          document
-                            .getElementsByClassName("header-search")[0]
-                            .classList.remove("active");
+                          handleMobLogin();
                         }}
                       >
                         <div>

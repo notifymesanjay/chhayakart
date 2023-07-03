@@ -123,7 +123,7 @@ const QuickViewModal = (props) => {
   const getProductVariants = (product) => {
     return product.variants.map((variant, ind) => (
       <option key={ind} value={JSON.stringify(variant)}>
-        {variant.measurement} {variant.stock_unit_name} Rs.{variant.price}
+        {variant.stock_unit_name} Rs.{variant.price}
       </option>
     ));
   };
