@@ -83,7 +83,7 @@ function SampleNextArrow(props) {
   );
 }
 
-const ProductDetails = () => {
+const ProductDetails = ({productTriggered, setProductTriggered = () => {}}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cookies = new Cookies();
@@ -518,6 +518,7 @@ const ProductDetails = () => {
         .getElementById(`input-cart-productdetail`)
         .classList.toggle("visually-hidden");
       document.getElementById(`input-productdetail`).innerHTML = 1;
+	  setProductTriggered(!productTriggered)
     }
   };
 
@@ -547,6 +548,7 @@ const ProductDetails = () => {
         .getElementById(`input-cart-section${index}`)
         .classList.add("active");
       document.getElementById(`input-section${index}`).innerHTML = 1;
+	  setProductTriggered(!productTriggered)
     }
   };
 
@@ -594,6 +596,7 @@ const ProductDetails = () => {
           .getElementById(`input-cart-productdetail`)
           .classList.toggle("visually-hidden");
       }
+	  setProductTriggered(!productTriggered)
     }
   };
 
@@ -644,6 +647,7 @@ const ProductDetails = () => {
           .getElementById(`Add-to-cart-section${index}`)
           .classList.add("active");
       }
+	  setProductTriggered(!productTriggered)
     }
   };
 
@@ -668,6 +672,7 @@ const ProductDetails = () => {
         document.getElementById(`input-productdetail`).innerHTML =
           parseInt(val) + 1;
       }
+	  setProductTriggered(!productTriggered)
     }
   };
 
@@ -695,6 +700,7 @@ const ProductDetails = () => {
         document.getElementById(`input-section${index}`).innerHTML =
           parseInt(val) + 1;
       }
+	  setProductTriggered(!productTriggered)
     }
   };
 
@@ -1213,6 +1219,8 @@ const ProductDetails = () => {
           <QuickViewModal
             selectedProduct={selectedProduct}
             setselectedProduct={setselectedProduct}
+			productTriggered={productTriggered}
+			setProductTriggered={setProductTriggered}
           />
         </div>
 

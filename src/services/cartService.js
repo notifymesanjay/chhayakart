@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 export const addProductToCart = (product) => {
   let cart = JSON.parse(localStorage.getItem("cart"));
-  if (!cart) {
+  if (cart === undefined) {
     let updatedProductList = [
       {
         cod_allowed: "1",
@@ -89,3 +89,16 @@ export const decrementProduct = (product_id, product) => {
   localStorage.setItem("cart", JSON.stringify(cart));
   return flag === 1;
 };
+
+export const deleteProductFromCart = (product_id) => {
+  let cart = JSON.parse(localStorage.getItem("cart"));
+  let i=0;
+  while(i<cart.length){
+    if(cart[i].product_id === product_id){
+      cart.splice(i, 1);
+    }
+    i++;
+  }
+  localStorage.setItem('cart',JSON.stringify(cart));
+  return 1;
+}

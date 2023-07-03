@@ -12,9 +12,9 @@ import { ActionTypes } from "../../model/action-type";
 import EmptyCart from "../../utils/zero-state-screens/Empty_Cart.svg";
 import { useNavigate, Link } from "react-router-dom";
 import Loader from "../loader/Loader";
-import { decrementProduct, incrementProduct } from "../../services/cartService";
+import { decrementProduct, deleteProductFromCart, incrementProduct } from "../../services/cartService";
 
-const Cart = () => {
+const Cart = ({productTriggered}) => {
   const closeCanvas = useRef();
   const cookies = new Cookies();
   const dispatch = useDispatch();
@@ -154,6 +154,20 @@ const Cart = () => {
     }
   };
 
+  const deleteProduct = (product) => {
+    if(cookies.get('jwt_token') !== undefined){
+        removefromCart(
+            product.product_id,
+            product.product_variant_id
+          )
+    }else{
+        let isDeleted = deleteProductFromCart(product.product_id);
+        if(isDeleted){
+            setCartUpdated(!cartUpdated);
+        }
+    }
+  }
+
   //remove from Cart
   const removefromCart = async (product_id, product_variant_id) => {
     setisLoader(true);
@@ -201,128 +215,132 @@ const Cart = () => {
       .catch((error) => console.log(error));
   };
 
-  useEffect(() => {
+  const handleOrderSummary = () => {
     if (cookies.get("jwt_token") === undefined) {
-      if (localStorage.getItem("cart")) {
-        const cartVal = JSON.parse(localStorage.getItem("cart"));
-        if (cartVal.length > 0) {
-          let allProductVariantId = "",
-            allQuantity = "",
-            subTotal = 0,
-            allProducts = [];
-
-          for (let i = 0; i < cartVal.length - 1; i++) {
-            let product = {};
+        if (localStorage.getItem("cart")) {
+          const cartVal = JSON.parse(localStorage.getItem("cart"));
+          if (cartVal.length > 0) {
+            let allProductVariantId = "",
+              allQuantity = "",
+              subTotal = 0,
+              allProducts = [];
+  
+            for (let i = 0; i < cartVal.length - 1; i++) {
+              let product = {};
+              allProductVariantId +=
+                cartVal[i].product_variant_id.toString() + ",";
+              allQuantity += cartVal[i].qty.toString() + ",";
+              subTotal += parseInt(cartVal[i].qty) * parseInt(cartVal[i].price);
+              product["cod_allowed"] = cartVal[i].cod_allowed;
+              product["discounted_price"] = cartVal[i].discounted_price;
+              product["image_url"] = cartVal[i].image_url;
+              product["is_deliverable"] = cartVal[i].is_deliverable;
+              product["is_unlimited_stock"] = cartVal[i].is_unlimited_stock;
+              product["name"] = cartVal[i].name;
+              product["price"] = cartVal[i].price;
+              product["product_id"] = cartVal[i].product_id;
+              product["product_variant_id"] = cartVal[i].product_variant_id;
+              product["qty"] = cartVal[i].qty;
+              product["status"] = cartVal[i].status;
+              product["stock"] = cartVal[i].stock;
+              product["taxable_amount"] = cartVal[i].taxable_amount;
+              product["total_allowed_quantity"] =
+                cartVal[i].total_allowed_quantity;
+              product["unit"] = cartVal[i].unit;
+              allProducts.push(product);
+            }
+  
             allProductVariantId +=
-              cartVal[i].product_variant_id.toString() + ",";
-            allQuantity += cartVal[i].qty.toString() + ",";
-            subTotal += parseInt(cartVal[i].qty) * parseInt(cartVal[i].price);
-            product["cod_allowed"] = cartVal[i].cod_allowed;
-            product["discounted_price"] = cartVal[i].discounted_price;
-            product["image_url"] = cartVal[i].image_url;
-            product["is_deliverable"] = cartVal[i].is_deliverable;
-            product["is_unlimited_stock"] = cartVal[i].is_unlimited_stock;
-            product["name"] = cartVal[i].name;
-            product["price"] = cartVal[i].price;
-            product["product_id"] = cartVal[i].product_id;
-            product["product_variant_id"] = cartVal[i].product_variant_id;
-            product["qty"] = cartVal[i].qty;
-            product["status"] = cartVal[i].status;
-            product["stock"] = cartVal[i].stock;
-            product["taxable_amount"] = cartVal[i].taxable_amount;
+              cartVal[cartVal.length - 1].product_variant_id.toString();
+            allQuantity += cartVal[cartVal.length - 1].qty.toString();
+            subTotal +=
+              parseInt(cartVal[cartVal.length - 1].qty) *
+              parseInt(cartVal[cartVal.length - 1].price);
+            let product = {};
+            product["cod_allowed"] = cartVal[cartVal.length - 1].cod_allowed;
+            product["discounted_price"] =
+              cartVal[cartVal.length - 1].discounted_price;
+            product["image_url"] = cartVal[cartVal.length - 1].image_url;
+            product["is_deliverable"] =
+              cartVal[cartVal.length - 1].is_deliverable;
+            product["is_unlimited_stock"] =
+              cartVal[cartVal.length - 1].is_unlimited_stock;
+            product["name"] = cartVal[cartVal.length - 1].name;
+            product["price"] = cartVal[cartVal.length - 1].price;
+            product["product_id"] = cartVal[cartVal.length - 1].product_id;
+            product["product_variant_id"] =
+              cartVal[cartVal.length - 1].product_variant_id;
+            product["qty"] = cartVal[cartVal.length - 1].qty;
+            product["status"] = cartVal[cartVal.length - 1].status;
+            product["stock"] = cartVal[cartVal.length - 1].stock;
+            product["taxable_amount"] =
+              cartVal[cartVal.length - 1].taxable_amount;
             product["total_allowed_quantity"] =
-              cartVal[i].total_allowed_quantity;
-            product["unit"] = cartVal[i].unit;
+              cartVal[cartVal.length - 1].total_allowed_quantity;
+            product["unit"] = cartVal[cartVal.length - 1].unit;
+            allProducts.push(product);
+  
+            let orderVal = {
+              product_variant_id: allProductVariantId,
+              quantity: allQuantity,
+              sub_total: subTotal,
+              taxes: Math.ceil(0.05 * subTotal),
+              delivery_charge: { total_delivery_charge: 40 },
+              total_amount: Math.ceil(subTotal + 0.05 * subTotal + 40),
+              cod_allowed: 1,
+            };
+            setCartProducts(allProducts);
+            setOrderSummary(orderVal);
+          }else{
+              setiscartEmpty(true);
+          }
+        }
+      } else {
+        if (cart.cart !== null && cart.checkout !== null) {
+          let allProducts = [];
+          for (let i = 0; i < cart.cart.data.cart.length; i++) {
+            let product = {};
+            product["cod_allowed"] = cart.cart.data.cart[i].cod_allowed;
+            product["discounted_price"] = cart.cart.data.cart[i].discounted_price;
+            product["image_url"] = cart.cart.data.cart[i].image_url;
+            product["is_deliverable"] = cart.cart.data.cart[i].is_deliverable;
+            product["is_unlimited_stock"] =
+              cart.cart.data.cart[i].is_unlimited_stock;
+            product["name"] = cart.cart.data.cart[i].name;
+            product["price"] = cart.cart.data.cart[i].price;
+            product["product_id"] = cart.cart.data.cart[i].product_id;
+            product["product_variant_id"] =
+              cart.cart.data.cart[i].product_variant_id;
+            product["qty"] = cart.cart.data.cart[i].qty;
+            product["status"] = cart.cart.data.cart[i].status;
+            product["stock"] = cart.cart.data.cart[i].stock;
+            product["taxable_amount"] = cart.cart.data.cart[i].taxable_amount;
+            product["total_allowed_quantity"] =
+              cart.cart.data.cart[i].total_allowed_quantity;
+            product["unit"] = cart.cart.data.cart[i].unit;
             allProducts.push(product);
           }
-
-          allProductVariantId +=
-            cartVal[cartVal.length - 1].product_variant_id.toString();
-          allQuantity += cartVal[cartVal.length - 1].qty.toString();
-          subTotal +=
-            parseInt(cartVal[cartVal.length - 1].qty) *
-            parseInt(cartVal[cartVal.length - 1].price);
-          let product = {};
-          product["cod_allowed"] = cartVal[cartVal.length - 1].cod_allowed;
-          product["discounted_price"] =
-            cartVal[cartVal.length - 1].discounted_price;
-          product["image_url"] = cartVal[cartVal.length - 1].image_url;
-          product["is_deliverable"] =
-            cartVal[cartVal.length - 1].is_deliverable;
-          product["is_unlimited_stock"] =
-            cartVal[cartVal.length - 1].is_unlimited_stock;
-          product["name"] = cartVal[cartVal.length - 1].name;
-          product["price"] = cartVal[cartVal.length - 1].price;
-          product["product_id"] = cartVal[cartVal.length - 1].product_id;
-          product["product_variant_id"] =
-            cartVal[cartVal.length - 1].product_variant_id;
-          product["qty"] = cartVal[cartVal.length - 1].qty;
-          product["status"] = cartVal[cartVal.length - 1].status;
-          product["stock"] = cartVal[cartVal.length - 1].stock;
-          product["taxable_amount"] =
-            cartVal[cartVal.length - 1].taxable_amount;
-          product["total_allowed_quantity"] =
-            cartVal[cartVal.length - 1].total_allowed_quantity;
-          product["unit"] = cartVal[cartVal.length - 1].unit;
-          allProducts.push(product);
-
           let orderVal = {
-            product_variant_id: allProductVariantId,
-            quantity: allQuantity,
-            sub_total: subTotal,
-            taxes: Math.ceil(0.05 * subTotal),
-            delivery_charge: { total_delivery_charge: 40 },
-            total_amount: Math.ceil(subTotal + 0.05 * subTotal + 40),
+            product_variant_id: cart.checkout.product_variant_id,
+            quantity: cart.checkout.quantity,
+            sub_total: cart.checkout.sub_total,
+            taxes: Math.ceil(0.05 * cart.checkout.sub_total),
+            delivery_charge: {
+              total_delivery_charge:
+                cart.checkout.delivery_charge.total_delivery_charge,
+            },
+            total_amount: Math.ceil(cart.checkout.total_amount),
             cod_allowed: 1,
           };
           setCartProducts(allProducts);
           setOrderSummary(orderVal);
-        }else{
-            setiscartEmpty(true);
         }
       }
-    } else {
-      if (cart.cart !== null && cart.checkout !== null) {
-        let allProducts = [];
-        for (let i = 0; i < cart.cart.data.cart.length; i++) {
-          let product = {};
-          product["cod_allowed"] = cart.cart.data.cart[i].cod_allowed;
-          product["discounted_price"] = cart.cart.data.cart[i].discounted_price;
-          product["image_url"] = cart.cart.data.cart[i].image_url;
-          product["is_deliverable"] = cart.cart.data.cart[i].is_deliverable;
-          product["is_unlimited_stock"] =
-            cart.cart.data.cart[i].is_unlimited_stock;
-          product["name"] = cart.cart.data.cart[i].name;
-          product["price"] = cart.cart.data.cart[i].price;
-          product["product_id"] = cart.cart.data.cart[i].product_id;
-          product["product_variant_id"] =
-            cart.cart.data.cart[i].product_variant_id;
-          product["qty"] = cart.cart.data.cart[i].qty;
-          product["status"] = cart.cart.data.cart[i].status;
-          product["stock"] = cart.cart.data.cart[i].stock;
-          product["taxable_amount"] = cart.cart.data.cart[i].taxable_amount;
-          product["total_allowed_quantity"] =
-            cart.cart.data.cart[i].total_allowed_quantity;
-          product["unit"] = cart.cart.data.cart[i].unit;
-          allProducts.push(product);
-        }
-        let orderVal = {
-          product_variant_id: cart.checkout.product_variant_id,
-          quantity: cart.checkout.quantity,
-          sub_total: cart.checkout.sub_total,
-          taxes: Math.ceil(0.05 * cart.checkout.sub_total),
-          delivery_charge: {
-            total_delivery_charge:
-              cart.checkout.delivery_charge.total_delivery_charge,
-          },
-          total_amount: Math.ceil(cart.checkout.total_amount),
-          cod_allowed: 1,
-        };
-        setCartProducts(allProducts);
-        setOrderSummary(orderVal);
-      }
-    }
-  }, [cart, cartUpdated]);
+  }
+
+  useEffect(() => {
+    handleOrderSummary();
+  }, [cart, cartUpdated, productTriggered]);
 
   return (
     <div
@@ -432,12 +450,9 @@ const Cart = () => {
                       <button
                         type="button"
                         className="remove-product"
-                        onClick={() =>
-                          removefromCart(
-                            product.product_id,
-                            product.product_variant_id
-                          )
-                        }
+                        onClick={() =>{
+                          deleteProduct(product);
+                        }}
                       >
                         delete
                       </button>

@@ -39,6 +39,7 @@ function App() {
 	const city = useSelector((state) => state.city);
 	const shop = useSelector((state) => state.shop);
 	const setting = useSelector((state) => state.setting);
+	const [productTriggered, setProductTriggered] = useState(false);
 
 	const getCurrentUser = (token) => {
 		api
@@ -127,7 +128,7 @@ function App() {
 		<AnimatePresence>
 			<div className="h-auto">
 				<ScrollToTop />
-				<Header />
+				<Header productTriggered={productTriggered} setProductTriggered={setProductTriggered} />
 				{city.city === null ||
 				shop.shop === null ||
 				setting.setting === null ? (
@@ -167,7 +168,7 @@ function App() {
 								<Route
 									exact={true}
 									path="/products"
-									element={<ProductList />}
+									element={<ProductList productTriggered={productTriggered} setProductTriggered={setProductTriggered}  />}
 								></Route>
 								{/* <Route
 									exact={true}
@@ -177,7 +178,7 @@ function App() {
 								<Route
 									exact={true}
 									path="/product/:slug"
-									element={<ProductDetails />}
+									element={<ProductDetails productTriggered={productTriggered} setProductTriggered={setProductTriggered} />}
 								></Route>
 								<Route
 									exact={true}
@@ -200,7 +201,7 @@ function App() {
 								<Route
 									exact={true}
 									path="/"
-									element={<MainContainer />}
+									element={<MainContainer productTriggered={productTriggered} setProductTriggered={setProductTriggered} />}
 								></Route>
 
 								<Route exact={true} path="*" element={<NotFound />}></Route>

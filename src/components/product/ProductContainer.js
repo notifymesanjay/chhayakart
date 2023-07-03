@@ -79,7 +79,7 @@ function SampleNextArrow(props) {
   );
 }
 
-const ProductContainer = () => {
+const ProductContainer = ({productTriggered, setProductTriggered = () => {}}) => {
   //initialize cookies
   const cookies = new Cookies();
   const dispatch = useDispatch();
@@ -353,6 +353,7 @@ const ProductContainer = () => {
         .getElementById(`input-cart-section${index}${index0}`)
         .classList.add("active");
       document.getElementById(`input-section${index}${index0}`).innerHTML = 1;
+      setProductTriggered(!productTriggered)
     }
   };
 
@@ -403,6 +404,7 @@ const ProductContainer = () => {
           .getElementById(`Add-to-cart-section${index}${index0}`)
           .classList.add("active");
       }
+      setProductTriggered(!productTriggered)
     }
   };
 
@@ -430,6 +432,7 @@ const ProductContainer = () => {
         document.getElementById(`input-section${index}${index0}`).innerHTML =
           parseInt(val) + 1;
       }
+      setProductTriggered(!productTriggered)
     }
   };
 
@@ -766,6 +769,8 @@ const ProductContainer = () => {
             <QuickViewModal
               selectedProduct={selectedProduct}
               setselectedProduct={setselectedProduct}
+              productTriggered={productTriggered}
+              setProductTriggered={setProductTriggered}
             />
           </>
         )}

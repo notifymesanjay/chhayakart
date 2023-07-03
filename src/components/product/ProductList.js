@@ -33,7 +33,7 @@ import {
   incrementProduct,
 } from "../../services/cartService";
 
-const ProductList = () => {
+const ProductList = ({productTriggered, setProductTriggered = () => {}}) => {
   const total_products_per_page = 12;
   const secret_key = "Xyredg$5g";
   const share_parent_url = "https://chhayakart.com/product";
@@ -677,6 +677,7 @@ const ProductList = () => {
         .getElementById(`input-cart-section${index}`)
         .classList.add("active");
       document.getElementById(`input-section${index}`).innerHTML = 1;
+	  setProductTriggered(!productTriggered)
     }
   };
 
@@ -712,6 +713,7 @@ const ProductList = () => {
         .getElementById(`input-cart-section${index}`)
         .classList.add("active");
       document.getElementById(`input-section${index}`).innerHTML = 1;
+	  setProductTriggered(!productTriggered)
     }
   };
 
@@ -759,6 +761,7 @@ const ProductList = () => {
           .getElementById(`Add-to-cart-productlist${index}`)
           .classList.add("active");
       }
+	  setProductTriggered(!productTriggered)
     }
   };
 
@@ -820,6 +823,7 @@ const ProductList = () => {
           .getElementById(`Add-to-cart-section${index}`)
           .classList.add("active");
       }
+	  setProductTriggered(!productTriggered)
     }
   };
 
@@ -843,6 +847,7 @@ const ProductList = () => {
         document.getElementById(`input-productlist${index}`).innerHTML =
           parseInt(val) + 1;
       }
+	  setProductTriggered(!productTriggered)
     }
   };
 
@@ -874,6 +879,7 @@ const ProductList = () => {
         document.getElementById(`input-section${index}`).innerHTML =
           parseInt(val) + 1;
       }
+	  setProductTriggered(!productTriggered)
     }
   };
 
@@ -1583,6 +1589,8 @@ const ProductList = () => {
                       <QuickViewModal
                         selectedProduct={selectedProduct}
                         setselectedProduct={setselectedProduct}
+						productTriggered={productTriggered}
+						setProductTriggered={setProductTriggered}
                       />
                     </div>
                   ) : (

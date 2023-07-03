@@ -34,7 +34,7 @@ import LoginUser from "../login/login-user";
 // import 'bootstrap/dist/js/bootstrap.bundle.js'
 // import { Modal } from 'bootstrap/dist/js/bootstrap.bundle.js';
 
-const Header = () => {
+const Header = ({productTriggered, setProductTriggered = () => {}}) => {
   // const [islocationclick, setislocationclick] = useState(false);
   // const [issearchClick, setissearchClick] = useState(false);
   const [isLocationPresent, setisLocationPresent] = useState(false);
@@ -221,7 +221,7 @@ const Header = () => {
         setProductsInCart(cart.cart.total);
       }
     }
-  }, [cart]);
+  }, [cart, productTriggered]);
 
   const handleMobLogin = () => {
     setIsLogin(true);
@@ -1224,7 +1224,7 @@ const Header = () => {
         </div>
 
         {/* Cart Sidebar */}
-        <Cart />
+        <Cart productTriggered={productTriggered} setProductTriggered={setProductTriggered} />
 
         {/* favorite sidebar */}
         <Favorite />
