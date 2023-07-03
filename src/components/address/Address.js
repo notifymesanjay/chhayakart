@@ -35,6 +35,8 @@ const Address = (props) => {
     useEffect(() => {
         if (cookies.get('jwt_token') !== undefined && user.user !== null) {
             fetchAddress(cookies.get('jwt_token'))
+        }else{
+            setaddresses([]);
         }
     }, [user])
 

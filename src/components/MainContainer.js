@@ -8,7 +8,7 @@ import api from "../api/api";
 import { ActionTypes } from "../model/action-type";
 import { AiOutlineClose, AiOutlineCloseCircle } from "react-icons/ai";
 
-const MainContainer = () => {
+const MainContainer = ({productTriggered, setProductTriggered = () => {}}) => {
 	const dispatch = useDispatch();
 
 	const modalRef = useRef();
@@ -59,7 +59,7 @@ const MainContainer = () => {
 						style={{ paddingBottom: "5px", minHeight: "75vh" }}
 					>
 						<HomeContainer />
-						<ProductContainer />
+						<ProductContainer productTriggered={productTriggered} setProductTriggered={setProductTriggered} />
 					</div>
 
 					{parseInt(setting.setting.popup_enabled) === 1 ? (
