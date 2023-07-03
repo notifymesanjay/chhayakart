@@ -63,24 +63,24 @@ const Header = ({productTriggered, setProductTriggered = () => {}}) => {
 
   const curr_url = useLocation();
 
-  useEffect(() => {
-    let location = getLocation();
-    if (location !== null) {
-      if (Object.keys(location).length !== 0) {
-        api
-          .getCity(location.city, location.lat, location.lng)
-          .then((response) => response.json())
-          .then((result) => {
-            if (result.status === 1) {
-              dispatch({ type: ActionTypes.SET_CITY, payload: result.data });
-            }
-          });
-        setisLocationPresent(true);
-      }
-    } else {
-      locationModalTrigger.current.click();
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   let location = getLocation();
+  //   if (location !== null) {
+  //     if (Object.keys(location).length !== 0) {
+  //       api
+  //         .getCity(location.city, location.lat, location.lng)
+  //         .then((response) => response.json())
+  //         .then((result) => {
+  //           if (result.status === 1) {
+  //             dispatch({ type: ActionTypes.SET_CITY, payload: result.data });
+  //           }
+  //         });
+  //       setisLocationPresent(true);
+  //     }
+  //   } else {
+  //     locationModalTrigger.current.click();
+  //   }
+  // }, [dispatch]);
 
   const fetchCart = async (token, latitude, longitude) => {
     await api
@@ -306,7 +306,7 @@ const Header = ({productTriggered, setProductTriggered = () => {}}) => {
           </div>
           <div className="canvas-main">
             <div className="site-location">
-              <button
+              {/* <button
                 whileTap={{ scale: 0.8 }}
                 type="buton"
                 data-bs-toggle="modal"
@@ -342,7 +342,7 @@ const Header = ({productTriggered, setProductTriggered = () => {}}) => {
                     </span>
                   </div>
                 </div>
-              </button>
+              </button> */}
             </div>
 
             <div className="canvas-title">
@@ -636,7 +636,7 @@ const Header = ({productTriggered, setProductTriggered = () => {}}) => {
 
               <div className="d-flex  w-lg-100 col-md-6 order-2 justify-content-center align-items-center ">
                 {/* location modal trigger button */}
-                <button
+                {/* <button
                   whileTap={{ scale: 0.6 }}
                   type="buton"
                   className="header-location site-location hide-mobile"
@@ -646,8 +646,7 @@ const Header = ({productTriggered, setProductTriggered = () => {}}) => {
                 >
                   <div className="d-flex flex-row gap-2">
                     <div className="icon location p-1 m-auto">
-                      {/* GuestLogin fuctionality need to be done */}
-                      {/* <GoLocation /> */}
+                      <GoLocation />
                     </div>
                     <div className="d-flex flex-column flex-grow-1 align-items-start">
                       <span className="location-description">
@@ -674,7 +673,7 @@ const Header = ({productTriggered, setProductTriggered = () => {}}) => {
                       </span>
                     </div>
                   </div>
-                </button>
+                </button> */}
 
                 <></>
                 <div className="header-search rounded-3 ">
@@ -1206,7 +1205,7 @@ const Header = ({productTriggered, setProductTriggered = () => {}}) => {
         )}
 
         {/* location modal */}
-        <div
+        {/* <div
           className="modal fade location"
           id="locationModal"
           data-bs-backdrop="static"
@@ -1221,7 +1220,7 @@ const Header = ({productTriggered, setProductTriggered = () => {}}) => {
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Cart Sidebar */}
         <Cart productTriggered={productTriggered} setProductTriggered={setProductTriggered} />
