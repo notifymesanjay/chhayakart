@@ -1108,41 +1108,45 @@ const ProductDetails = () => {
                             </div>
                           </div>
 
-                          <div className="border-end" style={{ flexGrow: "1" }}>
-                            <button
-                              type="button"
-                              id={`Add-to-cart-section${index}`}
-                              className="w-100 h-100 add-to-cart active"
-                              onClick={() => {
-                                handleAddToCart(index, related_product);
-                              }}
-                            >
-                              add to cart
-                            </button>
-
+                          <div className="d-flex flex-row border-top product-card-footer">
                             <div
-                              id={`input-cart-section${index}`}
-                              className="w-100 h-100 input-to-cart"
+                              className="border-end"
+                              style={{ flexGrow: "1" }}
                             >
                               <button
                                 type="button"
+                                id={`Add-to-cart-section${index}`}
+                                className="w-100 h-100 add-to-cart active"
                                 onClick={() => {
-                                  handleDecrement1(related_product, index);
+                                  handleAddToCart(index, related_product);
                                 }}
                               >
-                                <BiMinus />
+                                add to cart
                               </button>
-                              <span id={`input-section${index}`}></span>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  handleIncrement1(related_product, index);
-                                }}
+
+                              <div
+                                id={`input-cart-section${index}`}
+                                className="w-100 h-100 input-to-cart"
                               >
-                                <BsPlus />{" "}
-                              </button>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    handleDecrement1(related_product, index);
+                                  }}
+                                >
+                                  <BiMinus />
+                                </button>
+                                <span id={`input-section${index}`}></span>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    handleIncrement1(related_product, index);
+                                  }}
+                                >
+                                  <BsPlus />{" "}
+                                </button>
+                              </div>
                             </div>
-                          </div>
 
                           <div className="dropup share">
                             <button
@@ -1195,6 +1199,8 @@ const ProductDetails = () => {
                                 </button>
                               </li>
                             </ul>
+                          </div>
+						  
                           </div>
                         </div>
                       </div>

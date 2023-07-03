@@ -776,7 +776,9 @@ const ProductContainer = () => {
                     </div>
                 </div> */}
       </div>
-      {isLogin && <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />}
+      {isLogin && (
+        <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
+      )}
     </section>
   );
 };

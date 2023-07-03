@@ -222,7 +222,7 @@ const Header = () => {
       }
     }
   }, [cart]);
-  
+
   const handleMobLogin = () => {
     setIsLogin(true);
     document.getElementsByClassName("wishlist")[0].classList.remove("active");
@@ -646,7 +646,8 @@ const Header = () => {
                 >
                   <div className="d-flex flex-row gap-2">
                     <div className="icon location p-1 m-auto">
-                      <GoLocation />
+                      {/* GuestLogin fuctionality need to be done */}
+                      {/* <GoLocation /> */}
                     </div>
                     <div className="d-flex flex-column flex-grow-1 align-items-start">
                       <span className="location-description">
@@ -730,6 +731,7 @@ const Header = () => {
                     } else {
                       navigate("/notification");
                     }
+                    navigate("/notification");
                   }}
                 >
                   <IoNotificationsOutline />
@@ -780,7 +782,6 @@ const Header = () => {
                     }}
                   >
                     <IoHeartOutline className="" />
-
                     {favorite.favorite !== null ? (
                       <span className="position-absolute start-100 translate-middle badge rounded-pill fs-5 ">
                         {favorite.favorite.total}
@@ -790,33 +791,38 @@ const Header = () => {
                   </button>
                 )}
 
-                {city.city === null ? (
-                  <button
-                    type="button"
-                    whileTap={{ scale: 0.6 }}
-                    className="icon mx-4 me-sm-5 position-relative"
-                  >
-                    <IoCartOutline />
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    whileTap={{ scale: 0.6 }}
-                    className="icon mx-4 me-sm-5 position-relative"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#cartoffcanvasExample"
-                    aria-controls="cartoffcanvasExample"
-                  >
-                    <IoCartOutline />
+                    
 
-                    {productsInCart > 0 ? (
-                      <span className="position-absolute start-100 translate-middle badge rounded-pill fs-5">
-                        {productsInCart}
-                        <span className="visually-hidden">unread messages</span>
-                      </span>
-                    ) : null}
-                  </button>
-                )}
+                    
+                {city.city === null ? (
+                      <button
+                        type="button"
+                        whileTap={{ scale: 0.6 }}
+                        className="icon mx-4 me-sm-5 position-relative"
+                      >
+                        <IoCartOutline />
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        whileTap={{ scale: 0.6 }}
+                        className="icon mx-4 me-sm-5 position-relative"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#cartoffcanvasExample"
+                        aria-controls="cartoffcanvasExample"
+                      >
+                        <IoCartOutline />
+
+                        {productsInCart > 0 ? (
+                          <span className="position-absolute start-100 translate-middle badge rounded-pill fs-5">
+                            {productsInCart}
+                            <span className="visually-hidden">
+                              unread messages
+                            </span>
+                          </span>
+                        ) : null}
+                      </button>
+                    )}
 
                 {user.status === "loading" ? (
                   <div className="hide-mobile-screen px-3">
@@ -984,15 +990,17 @@ const Header = () => {
                     type="button"
                     className="wishlist"
                     onClick={() => {
-                      if (cookies.get("jwt_token") === undefined) {
-                        toast.error(
-                          "OOPS! You have to login first to see your cart!"
-                        );
-                      } else if (city.city === null) {
-                        toast.error(
-                          "Please Select you delivery location first!"
-                        );
-                      } else {
+                      // if (cookies.get("jwt_token") === undefined) {
+                      // 	toast.error(
+                      // 		"OOPS! You have to login first to see your cart!"
+                      // 	);
+                      // } else if (city.city === null) {
+                      // 	toast.error(
+                      // 		"Please Select you delivery location first!"
+                      // 	);
+                      // }
+                      // else
+                      {
                         document
                           .getElementsByClassName("wishlist")[0]
                           .classList.toggle("active");
