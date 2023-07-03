@@ -6,45 +6,41 @@ import { useDispatch } from "react-redux";
 import { ActionTypes } from "../../model/action-type";
 import { toast } from "react-toastify";
 import Loader from "../loader/Loader";
-
-//phone number input
 import PhoneInput from "react-phone-number-input";
 import { parsePhoneNumber } from "react-phone-number-input";
 import validator from "validator";
-
-//otp
 import OTPInput from "otp-input-react";
-
-//firebase
 import { authentication } from "../../utils/firebase/firebase-config";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-
 import Cookies from "universal-cookie";
 import jwt from "jwt-decode";
 import { setlocalstorageOTP } from "../../utils/manageLocalStorage";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import CkModal from "../shared/ck-modal";
 
-const Login = ({ isOpenModal, setIsOpenModal = () => {} }) => {
+const Login = ({
+  setIsOpenModal = () => {},
+  checkboxSelected = false,
+  setError = () => {},
+  setIsOTP = () => {},
+  setisLoading = () => {},
+  setOTP = () => {},
+  setcheckboxSelected = () => {},
+  OTP = "",
+  isLoading = false,
+  isOTP = false,
+  error,
+  setIsUserLoggedIn = () => {},
+  isCheckout = false,
+}) => {
   //initialize Cookies
   const cookies = new Cookies();
   const Navigate = useNavigate();
   const closeModalRef = useRef();
-
   const dispatch = useDispatch();
 
   const [phonenum, setPhonenum] = useState();
-  const [checkboxSelected, setcheckboxSelected] = useState(false);
-  const [error, setError] = useState(
-    "",
-    setTimeout(() => {
-      if (error !== "") setError("");
-    }, 5000)
-  );
-  const [isOTP, setIsOTP] = useState(false);
   const [Uid, setUid] = useState("");
-  const [OTP, setOTP] = useState("");
-  const [isLoading, setisLoading] = useState(false);
 
   const generateRecaptcha = () => {
     if (!window.recaptchaVerifier) {
@@ -100,7 +96,11 @@ const Login = ({ isOpenModal, setIsOpenModal = () => {} }) => {
             type: ActionTypes.SET_CURRENT_USER,
             payload: result.user,
           });
-          setIsOpenModal(false);
+          if (!isCheckout) {
+            setIsOpenModal(false);
+          }else{
+            setIsUserLoggedIn(true);
+          }
           setisLoading(true);
           toast.success("You're successfully Logged In");
         }
@@ -175,125 +175,113 @@ const Login = ({ isOpenModal, setIsOpenModal = () => {} }) => {
     }
   };
 
-  const closeLogin = () => {
-    setError("");
-        setOTP("");
-        setcheckboxSelected(false);
-        setisLoading(false);
-        setIsOTP(false);
-        setIsOpenModal(false);
-  }
-
   return (
-    <CkModal
-      show={isOpenModal}
-      onHide={closeLogin}
-    >
+    <div>
       <div>
-        <div>
-          <h5 className="header">Login</h5>
-          <div className="bodyWrapper">
+        {!isCheckout && <h5 className="header">Login</h5>}
+        <div className="bodyWrapper">
+          {!isCheckout && (
             <img
               className="ck-logo"
               src="https://admin.chhayakart.com/storage/logo/1680098508_37047.png"
               alt="logo"
             ></img>
+          )}
 
-            {isOTP ? (
-              <>
-                <h5 className="header">enter verification code</h5>
-                <span className="description">
-                  we have sent verification code to{" "}
-                  <p className="phoneNumber">{phonenum}</p>
-                </span>
-              </>
-            ) : (
-              <>
-                <h5 className="header">Welcome!</h5>
-                <span className="description">
-                  Enter phone number to continue and we will send a verification
-                  code to this number.
-                </span>
-              </>
-            )}
+          {isOTP ? (
+            <>
+              <h5 className="header">enter verification code</h5>
+              <span className="description">
+                we have sent verification code to{" "}
+                <p className="phoneNumber">{phonenum}</p>
+              </span>
+            </>
+          ) : (
+            <>
+              <h5 className="header">Welcome!</h5>
+              <span className="description">
+                Enter phone number to continue and we will send a verification
+                code to this number.
+              </span>
+            </>
+          )}
 
-            {error === "" ? "" : <span className="error-msg">{error}</span>}
+          {error === "" ? "" : <span className="error-msg">{error}</span>}
 
-            {isOTP ? (
-              <form className="formWrapper" onSubmit={verifyOTP}>
-                {isLoading ? <Loader width="100%" height="auto" /> : null}
-                <OTPInput
-                  className="otp-container"
-                  value={OTP}
-                  onChange={setOTP}
-                  autoFocus
-                  OTPLength={6}
-                  otpType="number"
-                  disabled={false}
-                  secure
+          {isOTP ? (
+            <form className="formWrapper" onSubmit={verifyOTP}>
+              {isLoading ? <Loader width="100%" height="auto" /> : null}
+              <OTPInput
+                className="otp-container"
+                value={OTP}
+                onChange={setOTP}
+                autoFocus
+                OTPLength={6}
+                otpType="number"
+                disabled={false}
+                secure
+              />
+              <span className="description">
+                <input
+                  type="checkbox"
+                  className="mx-2"
+                  checked={checkboxSelected}
+                  required
+                  onChange={() => {
+                    setcheckboxSelected(!checkboxSelected);
+                  }}
                 />
-                <span className="description">
-                  <input
-                    type="checkbox"
-                    className="mx-2"
-                    checked={checkboxSelected}
-                    required
-                    onChange={() => {
-                      setcheckboxSelected(!checkboxSelected);
-                    }}
-                  />
-                  I Agree to the <a onClick={handleTerms}>terms & condition</a>{" "}
-                  and <a onClick={handlePolicy}>Privacy & policy</a>
-                </span>
-                <button
-                  whileTap={{ scale: 0.6 }}
-                  type="submit"
-                  className="login-btn"
-                >
-                  Verify
-                </button>
-              </form>
-            ) : (
-              <form className="formWrapper" onSubmit={handleLogin}>
-                <div className="inputWrapper">
-                  <PhoneInput
-                    value={phonenum}
-                    defaultCountry="IN"
-                    onChange={setPhonenum}
-                  />
-                </div>
+                I Agree to the <a onClick={handleTerms}>terms & condition</a>{" "}
+                and <a onClick={handlePolicy}>Privacy & policy</a>
+              </span>
+              <button
+                whileTap={{ scale: 0.6 }}
+                type="submit"
+                className="login-btn"
+              >
+                Verify
+              </button>
+            </form>
+          ) : (
+            <form className="formWrapper" onSubmit={handleLogin}>
+              <div className="inputWrapper">
+                <PhoneInput
+                  value={phonenum}
+                  defaultCountry="IN"
+                  onChange={setPhonenum}
+                />
+              </div>
 
-                <span className="description">
-                  <input
-                    type="checkbox"
-                    className="mx-2"
-                    required
-                    checked={checkboxSelected}
-                    onChange={() => {
-                      setcheckboxSelected(!checkboxSelected);
-                    }}
-                  />
-                  {/* I Agree to the <Link to={'/terms'}>terms & condition</Link> and <Link to={'/policy/Privacy_Policy'}>Privacy & policy</Link> */}
-                  I Agree to the{" "}
-                  <span className="terms-and-policy" onClick={handleTerms}>
-                    terms & condition
-                  </span>{" "}
-                  and{" "}
-                  <span className="terms-and-policy" onClick={handlePolicy}>
-                    Privacy & policy
-                  </span>
+              <span className="description">
+                <input
+                  type="checkbox"
+                  className="mx-2"
+                  required
+                  checked={checkboxSelected}
+                  onChange={() => {
+                    setcheckboxSelected(!checkboxSelected);
+                  }}
+                />
+                {/* I Agree to the <Link to={'/terms'}>terms & condition</Link> and <Link to={'/policy/Privacy_Policy'}>Privacy & policy</Link> */}
+                I Agree to the{" "}
+                <span className="terms-and-policy" onClick={handleTerms}>
+                  terms & condition
+                </span>{" "}
+                and{" "}
+                <span className="terms-and-policy" onClick={handlePolicy}>
+                  Privacy & policy
                 </span>
-                <button whileTap={{ scale: 0.6 }} type="submit">
-                  {" "}
-                  Login to Continue
-                </button>
-              </form>
-            )}
-          </div>
+              </span>
+              <button whileTap={{ scale: 0.6 }} type="submit">
+                {" "}
+                Login to Continue
+              </button>
+            </form>
+          )}
         </div>
-        <div id="recaptcha-container" style={{ display: "none" }}></div>
       </div>
-    </CkModal>
+      <div id="recaptcha-container" style={{ display: "none" }}></div>
+    </div>
   );
 };
 
