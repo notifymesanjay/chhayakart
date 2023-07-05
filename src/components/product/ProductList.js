@@ -1394,7 +1394,7 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
                                           <p id="fa-rupee">
                                             <FaRupeeSign fill="var(--secondary-color)" />
                                           </p>{" "}
-                                          {product.variants[0].price}{" "}
+                                          {product.variants[0].discounted_price}{" "}
                                         </span>
 
                                         <span
@@ -1409,8 +1409,7 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
                                           </p>{" "}
                                           {parseFloat(
                                             product.variants[0].price
-                                          ) +
-                                            product.variants[0].price * 0.13}
+                                          )}
                                         </span>
                                       </div>
                                       <p className="product_list_description"></p>

@@ -798,7 +798,7 @@ const ProductDetails = ({
                         id={`price-productdetail`}
                       >
                         <FaRupeeSign fill="var(--secondary-color)" />
-                        {parseFloat(productdata.variants[0].price)}{" "}
+                        {parseFloat(productdata.variants[0].discounted_price)}{" "}
                       </span>{" "}
                       <div
                         className="not-price gray-text"
@@ -808,8 +808,7 @@ const ProductDetails = ({
                           fill="var(--text-color)"
                           textDecoration="line-through"
                         />
-                        {parseFloat(productdata.variants[0].price) +
-                          productdata.variants[0].price * 0.13}
+                        {parseFloat(productdata.variants[0].price)}
                       </div>
                     </div>
                   </div>
@@ -1039,7 +1038,7 @@ const ProductDetails = ({
                                 <p id="fa-rupee" className="m-0">
                                   <FaRupeeSign fill="var(--secondary-color)" />
                                 </p>
-                                {related_product.variants[0].price}{" "}
+                                {related_product.variants[0].discounted_price}{" "}
                               </span>
                               <span
                                 id={`price${index}-section`}
@@ -1049,8 +1048,7 @@ const ProductDetails = ({
                                 <p id="fa-rupee" className="m-0">
                                   <FaRupeeSign fill="var(--secondary-color)" />
                                 </p>{" "}
-                                {parseFloat(related_product.variants[0].price) +
-                                  related_product.variants[0].price * 0.13}
+                                {parseFloat(related_product.variants[0].price)}
                               </span>
                             </div>
                             <div className="product_varients_drop">
@@ -1064,7 +1062,7 @@ const ProductDetails = ({
                                       document.getElementById(
                                         `price${index}-section`
                                       ).innerHTML = parseFloat(
-                                        JSON.parse(e.target.value).price
+                                        JSON.parse(e.target.value).discounted_price
                                       );
 
                                       if (
