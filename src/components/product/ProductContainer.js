@@ -547,8 +547,9 @@ const ProductContainer = ({
                                       <FaRupeeSign fill="var(--secondary-color)" />
                                     </p>{" "}
                                     {parseFloat(product.variants[0].price) +
-                                      product.variants[0].price * 0.13}
+                                      product.variants[0].price * 0.13} 
                                   </span>
+                                  <span>(13%)</span>
                                 </div>
                                 <div className="product_varients_drop">
                                   {product.variants.length > 1 ? (

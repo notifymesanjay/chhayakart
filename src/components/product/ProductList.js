@@ -1238,7 +1238,7 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
                                         {parseFloat(product.variants[0].price) +
                                           product.variants[0].price * 0.13}
                                       </span>
-
+                                      <span>(13%)</span>
                                       <div className="product_varients_drop">
                                         {product.variants.length > 1 ? (
                                           <>
@@ -1412,6 +1412,7 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
                                           ) +
                                             product.variants[0].price * 0.13}
                                         </span>
+                                        <span>(13%)</span>
                                       </div>
                                       <p className="product_list_description"></p>
                                     </>
