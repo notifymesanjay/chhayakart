@@ -811,6 +811,7 @@ const ProductDetails = ({
                         {parseFloat(productdata.variants[0].price) +
                           productdata.variants[0].price * 0.13}
                       </div>
+                      <div>(13%)</div>
                     </div>
                   </div>
                   <div className="bottom-section">
@@ -1052,6 +1053,7 @@ const ProductDetails = ({
                                 {parseFloat(related_product.variants[0].price) +
                                   related_product.variants[0].price * 0.13}
                               </span>
+                              <span>(13%)</span>
                             </div>
                             <div className="product_varients_drop">
                               {related_product.variants.length > 1 ? (
