@@ -1237,7 +1237,7 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
                                         </p>{" "}
                                         {parseFloat(product.variants[0].price)}
                                       </span>
-                                      <span>({parseFloat(product.variants[0].price-product.variants[0].discounted_price)/100}% off)</span>
+                                      <span>({Math.round(parseFloat((product.variants[0].price-product.variants[0].discounted_price)*100/product.variants[0].price))}% off)</span>
                                       <div className="product_varients_drop">
                                         {product.variants.length > 1 ? (
                                           <>
@@ -1406,11 +1406,9 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
                                           <p id="fa-rupee" className="m-0">
                                             <FaRupeeSign fill="var(--secondary-color)" />
                                           </p>{" "}
-                                          {parseFloat(
-                                            product.variants[0].price
-                                          )}
+                                          {parseFloat(product.variants[0].price)}
                                         </span>
-                                        <span>({parseFloat(product.variants[0].price-product.variants[0].discounted_price)/100}% off)</span>
+                                        <span>({Math.round(parseFloat((product.variants[0].price-product.variants[0].discounted_price)*100/product.variants[0].price))}% off)</span>
                                       </div>
                                       <p className="product_list_description"></p>
                                     </>

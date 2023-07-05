@@ -548,7 +548,7 @@ const ProductContainer = ({
                                     </p>{" "}
                                     {parseFloat(product.variants[0].price)}
                                   </span>
-                                  <span>({parseFloat(product.variants[0].price-product.variants[0].discounted_price)/100}% off)</span>
+                                  <span>({Math.round(parseFloat((product.variants[0].price-product.variants[0].discounted_price)*100/product.variants[0].price))}% off)</span>
                                 </div>
                                 <div className="product_varients_drop">
                                   {product.variants.length > 1 ? (
