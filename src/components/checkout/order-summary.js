@@ -31,7 +31,7 @@ const OrderSummary = ({
             </div>
 
             <div className="d-flex justify-content-between">
-              <span>Taxes(5%)</span>
+              <span>GST</span>
               <div className="d-flex align-items-center">
                 <FaRupeeSign />
                 <span>{parseFloat(cart.taxes)}</span>
