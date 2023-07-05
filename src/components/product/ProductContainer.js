@@ -147,7 +147,7 @@ const ProductContainer = ({
         value={JSON.stringify(variant)}
         className="options_class"
       >
-        {variant.measurement} {variant.stock_unit_name} Rs.{variant.price}
+        {variant.measurement} {variant.stock_unit_name} Rs.{variant.discounted_price}
       </option>
     ));
   };
@@ -534,7 +534,7 @@ const ProductContainer = ({
                                     <p id="fa-rupee" className="m-0">
                                       <FaRupeeSign fill="var(--secondary-color)" />
                                     </p>{" "}
-                                    {product.variants[0].price}
+                                    {product.variants[0].discounted_price}
                                   </span>
                                   {/* actual price of product displaying on home page  */}
 
@@ -546,9 +546,9 @@ const ProductContainer = ({
                                     <p id="fa-rupee" className="m-0">
                                       <FaRupeeSign fill="var(--secondary-color)" />
                                     </p>{" "}
-                                    {parseFloat(product.variants[0].price) +
-                                      product.variants[0].price * 0.13}
+                                    {parseFloat(product.variants[0].price)}
                                   </span>
+                                  <span>({Math.round(parseFloat((product.variants[0].price-product.variants[0].discounted_price)*100/product.variants[0].price))}% off)</span>
                                 </div>
                                 <div className="product_varients_drop">
                                   {product.variants.length > 1 ? (
@@ -564,7 +564,7 @@ const ProductContainer = ({
                                             document.getElementById("fa-rupee")
                                               .outerHTML +
                                             parseFloat(
-                                              JSON.parse(e.target.value).price
+                                              JSON.parse(e.target.value).discounted_price
                                             );
 
                                           if (

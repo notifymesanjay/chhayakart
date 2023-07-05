@@ -591,7 +591,7 @@ const QuickViewModal = (props) => {
                                 className="green-text"
                                 id="price-productdetail"
                               >
-                                {parseFloat(product.variants[0].price)}
+                                {parseFloat(product.variants[0].discounted_price)}
                               </span>{" "}
                             </span>
                           </div>
@@ -606,7 +606,7 @@ const QuickViewModal = (props) => {
                                 document.getElementById(
                                   `price-productdetail`
                                 ).innerHTML = parseFloat(
-                                  JSON.parse(e.target.value).price
+                                  JSON.parse(e.target.value).discounted_price
                                 );
                                 if (
                                   document
