@@ -34,6 +34,7 @@ const Wishlist = () => {
 	useEffect(() => {
 		if (sizes.sizes === null || sizes.status === "loading") {
 			if (city.city !== null && favorite.favorite !== null) {
+				console.log('wishlist');
 				api
 					.getProductbyFilter(
 						city.city.id,

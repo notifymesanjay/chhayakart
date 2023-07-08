@@ -43,8 +43,6 @@ const Category = () => {
     slidesToShow: 5,
     slidesPerRow: 1,
     initialSlide: 0,
-
-    // Add custom navigation buttons using Font Awesome icons
     responsive: [
       {
         breakpoint: 1200,
@@ -81,16 +79,7 @@ const Category = () => {
       {shop.shop === null ? (
         <></>
       ) : (
-        // <Shimmer height={360} width={400}></Shimmer>
         <>
-          {/* <div whileTap={{ scale: 0.9 }} type='button' className='expand-category'
-                            data-bs-toggle="" data-bs-target="#expandCategory" aria-expanded="false" aria-controls="collapseExample"
-                        >
-                            <div>
-                                <BsGrid3X3GapFill fill='white' fontSize={"3rem"} />
-                            </div>
-                            <span>browse all categories</span>
-                        </div> */}
           <div className="category_section_header">
             <div className="rowWrapper">
               <div>
@@ -127,7 +116,6 @@ const Category = () => {
           </div>
           <div className="caegory_section_content">
             <div className="row " id="expandCategory">
-              {/* <div className="col-md-12"> */}
               <Slider {...settings} ref={sliderRef}>
                 {shop.shop.category.map((ctg, index) => (
                   <div className="col-md-12" key={index}>
@@ -150,14 +138,6 @@ const Category = () => {
                           </Card.Body>
                         </Card>
                       ) : (
-                        // <Card onClick={() => selectCategory(ctg)}>
-                        //     <Card.Img variant="top" className="img-fluid" src={ctg.image_url} alt={ctg.subtitle} className="card-img-top category_image"/>
-                        //     <Card.Body className="card-body">
-                        //         <Card.Title className="card-title">{ctg.name}</Card.Title>
-
-                        //     </Card.Body>
-                        // </Card>
-
                         <Card onClick={() => selectCategory(ctg)}>
                           <Card.Img
                             variant="top"
@@ -175,8 +155,6 @@ const Category = () => {
                     </div>
                   </div>
                 ))}
-
-                {/* </div> */}
               </Slider>
             </div>
           </div>

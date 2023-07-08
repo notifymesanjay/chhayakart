@@ -31,6 +31,7 @@ const ViewCart = () => {
 	useEffect(() => {
 		if (sizes.sizes === null || sizes.status === "loading") {
 			if (city.city !== null && cart.cart !== null) {
+				console.log('viewcart');
 				api
 					.getProductbyFilter(
 						city.city.id,

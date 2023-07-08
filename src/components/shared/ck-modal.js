@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import styles from './ck-modal.css';
+import './ck-modal.css';
 
 const CkModal = (props) => {
   return (

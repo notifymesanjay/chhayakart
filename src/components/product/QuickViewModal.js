@@ -26,13 +26,13 @@ import {
   incrementProduct,
 } from "../../services/cartService";
 import LoginUser from "../login/login-user";
+import CkModal from "../shared/ck-modal";
 
 const QuickViewModal = (props) => {
   const cookies = new Cookies();
   const dispatch = useDispatch();
 
   const city = useSelector((state) => state.city);
-  const sizes = useSelector((state) => state.productSizes);
   const favorite = useSelector((state) => state.favorite);
   const setting = useSelector((state) => state.setting);
 
@@ -75,50 +75,12 @@ const QuickViewModal = (props) => {
     }
   }, [props.selectedProduct, city]);
 
-  useEffect(() => {
-    if (sizes.sizes === null || sizes.status === "loading") {
-      if (city.city !== null) {
-        api
-          .getProductbyFilter(
-            city.city.id,
-            city.city.latitude,
-            city.city.longitude
-          )
-          .then((response) => response.json())
-          .then((result) => {
-            if (result.status === 1) {
-              setproductSizes(result.sizes);
-              dispatch({
-                type: ActionTypes.SET_PRODUCT_SIZES,
-                payload: result.sizes,
-              });
-            }
-          });
-      }
-    } else {
-      setproductSizes(sizes.sizes);
-    }
-  }, [city, sizes]);
-
   const [mainimage, setmainimage] = useState("");
   const [productcategory, setproductcategory] = useState({});
   const [productbrand, setproductbrand] = useState({});
   const [product, setproduct] = useState({});
-  const [productSizes, setproductSizes] = useState(null);
   const [isLoader, setisLoader] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-
-  //for product variants dropdown in product card
-  const getProductSizeUnit = (variant) => {
-    return productSizes.map((psize) => {
-      if (
-        parseInt(psize.size) === parseInt(variant.measurement) &&
-        psize.short_code === variant.stock_unit_name
-      ) {
-        return psize.unit_id;
-      }
-    });
-  };
 
   const getProductVariants = (product) => {
     return product.variants.map((variant, ind) => (
@@ -450,336 +412,299 @@ const QuickViewModal = (props) => {
     }
   };
 
+  const closeQuickModal = () => {
+    props.setIsOpenModal(false);
+    props.setselectedProduct({});
+    setproductcategory({});
+    setproductbrand({});
+    setproduct({});
+  };
+
   return (
-    <div className="product-details-view">
-      <div
-        className="modal fade"
-        id="quickviewModal"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabIndex="-1"
-        aria-labelledby="loginLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div
-            className="modal-content"
-            style={{ borderRadius: "10px", minWidth: "80vw" }}
-          >
-            <div className="d-flex flex-row justify-content-end header">
-              <button
-                type="button"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                onClick={() => {
-                  props.setselectedProduct({});
-                  setproductcategory({});
-                  setproductbrand({});
-                  setproduct({});
-                }}
-                className="bg-white"
-              >
-                <AiOutlineCloseCircle size={30} />
-              </button>
-            </div>
+    <div>
+      <CkModal show={props.isOpenModal} onHide={closeQuickModal}>
+        <div className="product-details-view">
+          {Object.keys(product).length === 0 ? (
+            <Loader />
+          ) : (
+            <div className="top-wrapper">
+              <div className="row body-wrapper">
+                <div className="col-xl-4 col-lg-6 col-md-12 col-12">
+                  <div className="image-wrapper">
+                    <div className="main-image col-12 border">
+                      <img
+                        src={mainimage}
+                        alt="main-product"
+                        className="col-12"
+                        style={{ width: "85%" }}
+                      />
+                    </div>
 
-            <div className="modal-body">
-              {Object.keys(product).length === 0 || productSizes === null ? (
-                <Loader />
-              ) : (
-                <div className="top-wrapper">
-                  <div className="row body-wrapper">
-                    <div className="col-xl-4 col-lg-6 col-md-12 col-12">
-                      <div className="image-wrapper">
-                        <div className="main-image col-12 border">
-                          <img
-                            src={mainimage}
-                            alt="main-product"
-                            className="col-12"
-                            style={{ width: "85%" }}
-                          />
-                        </div>
-
-                        <div className="sub-images-container row">
-                          {/* {product.images.map((image, index) => (
-                                                                <div key={index} className={`col-4 col-lg-3 m-3 sub-image border ${mainimage === image ? 'active' : ''}`}>
-                                                                    <img src={image} alt="product" onClick={() => {
-                                                                        setmainimage(image)
-                                                                    }} className="col-12" />
-                                                                </div>
-                                                            ))} */}
-
-                          {product.images.length >= 4 ? (
-                            <>
-                              <Slider {...settings_subImage}>
-                                {product.images.map((image, index) => (
-                                  <div key={index}>
-                                    <div
-                                      className={`sub-image border ${
-                                        mainimage === image ? "active" : ""
-                                      }`}
-                                    >
-                                      <img
-                                        src={image}
-                                        className="col-12"
-                                        alt="product"
-                                        onClick={() => {
-                                          setmainimage(image);
-                                        }}
-                                      ></img>
-                                    </div>
-                                  </div>
-                                ))}
-                              </Slider>
-                            </>
-                          ) : (
-                            <>
-                              {product.images.map((image, index) => (
+                    <div className="sub-images-container row">
+                      {product.images.length >= 4 ? (
+                        <>
+                          <Slider {...settings_subImage}>
+                            {product.images.map((image, index) => (
+                              <div key={index}>
                                 <div
-                                  key={index}
                                   className={`sub-image border ${
                                     mainimage === image ? "active" : ""
                                   }`}
                                 >
                                   <img
                                     src={image}
-                                    className="col-12 "
+                                    className="col-12"
                                     alt="product"
                                     onClick={() => {
                                       setmainimage(image);
                                     }}
                                   ></img>
                                 </div>
-                              ))}
-                            </>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-xl-8 col-lg-6 col-md-12 col-12">
-                      <div className="detail-wrapper">
-                        <div className="top-section">
-                          <p className="product_name">{product.name}</p>
-                          <div className="product-brand">
-                            {/* <span className='price green-text' id={`price-quickview`}>
-                                                                {setting.setting.currency_code === "INR" ? <FaRupeeSign fill='var(--secondary-color)' fontSize={"18px"} /> : <BiDollar fill='var(--secondary-color)' fontSize={"18px"} />}
-                                                                {parseFloat(product.variants[0].price)} 
-                                                                </span> */}
-                            {Object.keys(productbrand).length === 0 ? null : (
-                              <div className="product-brand">
-                                <span className="brand-title">Brand:</span>
-                                <span className="brand-name">
-                                  {productbrand.name}
-                                </span>
                               </div>
-                            )}
-                          </div>
-                          <div className="d-flex flex-row gap-2 align-items-center my-1">
-                            <span className="price green-text">
-                              {setting.setting.currency_code === "INR" ? (
-                                <FaRupeeSign
-                                  fill="var(--secondary-color)"
-                                  fontSize={"18px"}
-                                />
-                              ) : (
-                                <BiDollar
-                                  fill="var(--secondary-color)"
-                                  fontSize={"18px"}
-                                />
-                              )}{" "}
-                              <span
-                                className="green-text"
-                                id="price-productdetail"
-                              >
-                                {parseFloat(product.variants[0].price)}
-                              </span>{" "}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bottom-section">
-                          <p>Product Variants</p>
-
-                          <div className="d-flex gap-3 bottom-section-content ">
-                            <select
-                              id={`select-product-variant-quickview`}
-                              onChange={(e) => {
-                                document.getElementById(
-                                  `price-productdetail`
-                                ).innerHTML = parseFloat(
-                                  JSON.parse(e.target.value).price
-                                );
-                                if (
-                                  document
-                                    .getElementById(`input-cart-quickview`)
-                                    .classList.contains("active")
-                                ) {
-                                  document
-                                    .getElementById(`input-cart-quickview`)
-                                    .classList.remove("active");
-                                  document
-                                    .getElementById(`Add-to-cart-quickview`)
-                                    .classList.add("active");
-                                }
-                              }}
-                              defaultValue={JSON.stringify(product.variants[0])}
-                            >
-                              {getProductVariants(product)}
-                            </select>
-
-                            <button
-                              type="button"
-                              id={`Add-to-cart-quickview`}
-                              className="add-to-cart active"
-                              onClick={handleAddToCart}
-                            >
-                              Add to Cart
-                            </button>
-
-                            {isLoader ? (
-                              <Loader screen="full" background="none" />
-                            ) : null}
-
+                            ))}
+                          </Slider>
+                        </>
+                      ) : (
+                        <>
+                          {product.images.map((image, index) => (
                             <div
-                              id={`input-cart-quickview`}
-                              className="input-to-cart visually-hidden"
+                              key={index}
+                              className={`sub-image border ${
+                                mainimage === image ? "active" : ""
+                              }`}
                             >
-                              <button
-                                type="button"
+                              <img
+                                src={image}
+                                className="col-12 "
+                                alt="product"
                                 onClick={() => {
-                                  handleDecrement();
+                                  setmainimage(image);
                                 }}
-                                className="wishlist-button"
-                              >
-                                <BiMinus fill="#fff" />
-                              </button>
-                              <span id={`input-quickview`}></span>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  handleIncrement();
-                                }}
-                                className="wishlist-button"
-                              >
-                                <BsPlus fill="#fff" />{" "}
-                              </button>
+                              ></img>
                             </div>
-
-                            {favorite.favorite &&
-                            favorite.favorite.data.some(
-                              (element) => element.id === product.id
-                            ) ? (
-                              <button
-                                type="button"
-                                className="wishlist-product"
-                                onClick={() => {
-                                  if (cookies.get("jwt_token") !== undefined) {
-                                    removefromFavorite(product.id);
-                                  } else {
-                                    toast.error(
-                                      "OOps! You need to login first to add to favourites"
-                                    );
-                                  }
-                                }}
-                              >
-                                <BsHeartFill fill="green" />
-                              </button>
-                            ) : (
-                              <button
-                                key={product.id}
-                                type="button"
-                                className="wishlist-product"
-                                onClick={() => {
-                                  if (cookies.get("jwt_token") !== undefined) {
-                                    removefromFavorite(product.id);
-                                  } else {
-                                    toast.error(
-                                      "OOps! You need to login first to add to favourites"
-                                    );
-                                  }
-                                }}
-                              >
-                                <BsHeart />
-                              </button>
-                            )}
-                          </div>
-                          <div className="product-overview">
-                            {productbrand !== "" ? (
-                              <div className="product-tags">
-                                <span className="tag-title">Brand :</span>
-                                <span className="tag-name">
-                                  {productbrand.name}{" "}
-                                </span>
-                              </div>
-                            ) : (
-                              ""
-                            )}
-                            {product.tags !== "" ? (
-                              <div className="product-tags">
-                                <span className="tag-title">Product Tags:</span>
-                                <span className="tag-name">
-                                  {product.tags}{" "}
-                                </span>
-                              </div>
-                            ) : (
-                              ""
-                            )}
-                          </div>
-                          <div className="share-product-container">
-                            <span>Share Product :</span>
-
-                            <ul className="share-product">
-                              <li className="share-product-icon">
-                                <WhatsappShareButton
-                                  url={`${share_parent_url}/${product.slug}`}
-                                >
-                                  <WhatsappIcon size={32} round={true} />
-                                </WhatsappShareButton>
-                              </li>
-                              <li className="share-product-icon">
-                                <TelegramShareButton
-                                  url={`${share_parent_url}/${product.slug}`}
-                                >
-                                  <TelegramIcon size={32} round={true} />
-                                </TelegramShareButton>
-                              </li>
-                              <li className="share-product-icon">
-                                <FacebookShareButton
-                                  url={`${share_parent_url}/${product.slug}`}
-                                >
-                                  <FacebookIcon size={32} round={true} />
-                                </FacebookShareButton>
-                              </li>
-                              <li className="share-product-icon">
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    navigator.clipboard.writeText(
-                                      `${share_parent_url}/${product.slug}`
-                                    );
-                                    //popup commented
-                                    //	toast.success("Copied Succesfully!!");
-                                  }}
-                                >
-                                  {" "}
-                                  <BiLink size={30} />
-                                </button>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-
-                        {/* <div className='key-feature'>
-                                                <p>Key Features</p>
-                                            </div> */}
-                      </div>
+                          ))}
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
-              )}
+                <div className="col-xl-8 col-lg-6 col-md-12 col-12">
+                  <div className="detail-wrapper">
+                    <div className="top-section">
+                      <p className="product_name">{product.name}</p>
+                      <div className="product-brand">
+                        {/* <span className='price green-text' id={`price-quickview`}>
+                                                                {setting.setting.currency_code === "INR" ? <FaRupeeSign fill='var(--secondary-color)' fontSize={"18px"} /> : <BiDollar fill='var(--secondary-color)' fontSize={"18px"} />}
+                                                                {parseFloat(product.variants[0].price)} 
+                                                                </span> */}
+                        {Object.keys(productbrand).length === 0 ? null : (
+                          <div className="product-brand">
+                            <span className="brand-title">Brand:</span>
+                            <span className="brand-name">
+                              {productbrand.name}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="d-flex flex-row gap-2 align-items-center my-1">
+                        <span className="price green-text">
+                          {setting.setting.currency_code === "INR" ? (
+                            <FaRupeeSign
+                              fill="var(--secondary-color)"
+                              fontSize={"18px"}
+                            />
+                          ) : (
+                            <BiDollar
+                              fill="var(--secondary-color)"
+                              fontSize={"18px"}
+                            />
+                          )}{" "}
+                          <span className="green-text" id="price-productdetail">
+                            {parseFloat(product.variants[0].price)}
+                          </span>{" "}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="bottom-section">
+                      <p>Product Variants</p>
+
+                      <div className="d-flex gap-3 bottom-section-content ">
+                        <select
+                          id={`select-product-variant-quickview`}
+                          onChange={(e) => {
+                            document.getElementById(
+                              `price-productdetail`
+                            ).innerHTML = parseFloat(
+                              JSON.parse(e.target.value).price
+                            );
+                            if (
+                              document
+                                .getElementById(`input-cart-quickview`)
+                                .classList.contains("active")
+                            ) {
+                              document
+                                .getElementById(`input-cart-quickview`)
+                                .classList.remove("active");
+                              document
+                                .getElementById(`Add-to-cart-quickview`)
+                                .classList.add("active");
+                            }
+                          }}
+                          defaultValue={JSON.stringify(product.variants[0])}
+                        >
+                          {getProductVariants(product)}
+                        </select>
+
+                        <button
+                          type="button"
+                          id={`Add-to-cart-quickview`}
+                          className="add-to-cart active"
+                          onClick={handleAddToCart}
+                        >
+                          Add to Cart
+                        </button>
+
+                        {isLoader ? (
+                          <Loader screen="full" background="none" />
+                        ) : null}
+
+                        <div
+                          id={`input-cart-quickview`}
+                          className="input-to-cart visually-hidden"
+                        >
+                          <button
+                            type="button"
+                            onClick={() => {
+                              handleDecrement();
+                            }}
+                            className="wishlist-button"
+                          >
+                            <BiMinus fill="#fff" />
+                          </button>
+                          <span id={`input-quickview`}></span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              handleIncrement();
+                            }}
+                            className="wishlist-button"
+                          >
+                            <BsPlus fill="#fff" />{" "}
+                          </button>
+                        </div>
+
+                        {favorite.favorite &&
+                        favorite.favorite.data.some(
+                          (element) => element.id === product.id
+                        ) ? (
+                          <button
+                            type="button"
+                            className="wishlist-product"
+                            onClick={() => {
+                              if (cookies.get("jwt_token") !== undefined) {
+                                removefromFavorite(product.id);
+                              } else {
+                                toast.error(
+                                  "OOps! You need to login first to add to favourites"
+                                );
+                              }
+                            }}
+                          >
+                            <BsHeartFill fill="green" />
+                          </button>
+                        ) : (
+                          <button
+                            key={product.id}
+                            type="button"
+                            className="wishlist-product"
+                            onClick={() => {
+                              if (cookies.get("jwt_token") !== undefined) {
+                                removefromFavorite(product.id);
+                              } else {
+                                toast.error(
+                                  "OOps! You need to login first to add to favourites"
+                                );
+                              }
+                            }}
+                          >
+                            <BsHeart />
+                          </button>
+                        )}
+                      </div>
+                      <div className="product-overview">
+                        {productbrand !== "" ? (
+                          <div className="product-tags">
+                            <span className="tag-title">Brand :</span>
+                            <span className="tag-name">
+                              {productbrand.name}{" "}
+                            </span>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                        {product.tags !== "" ? (
+                          <div className="product-tags">
+                            <span className="tag-title">Product Tags:</span>
+                            <span className="tag-name">{product.tags} </span>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                      <div className="share-product-container">
+                        <span>Share Product :</span>
+
+                        <ul className="share-product">
+                          <li className="share-product-icon">
+                            <WhatsappShareButton
+                              url={`${share_parent_url}/${product.slug}`}
+                            >
+                              <WhatsappIcon size={32} round={true} />
+                            </WhatsappShareButton>
+                          </li>
+                          <li className="share-product-icon">
+                            <TelegramShareButton
+                              url={`${share_parent_url}/${product.slug}`}
+                            >
+                              <TelegramIcon size={32} round={true} />
+                            </TelegramShareButton>
+                          </li>
+                          <li className="share-product-icon">
+                            <FacebookShareButton
+                              url={`${share_parent_url}/${product.slug}`}
+                            >
+                              <FacebookIcon size={32} round={true} />
+                            </FacebookShareButton>
+                          </li>
+                          <li className="share-product-icon">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                navigator.clipboard.writeText(
+                                  `${share_parent_url}/${product.slug}`
+                                );
+                                //popup commented
+                                //	toast.success("Copied Succesfully!!");
+                              }}
+                            >
+                              {" "}
+                              <BiLink size={30} />
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    {/* <div className='key-feature'>
+                                                <p>Key Features</p>
+                                            </div> */}
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
-      </div>
+      </CkModal>
 
       {isLogin && (
         <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />

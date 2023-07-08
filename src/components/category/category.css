@@ -1,3 +1,8 @@
+.imageWrapper{
+    height: 180px;
+    width: auto;
+}
+
 .category_section {
     margin: 50px auto;
     /* padding: 0 !important; */
