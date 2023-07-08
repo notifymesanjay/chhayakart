@@ -264,7 +264,7 @@ const Favorite = () => {
 														{" "}
 														{parseFloat(
 															product.variants.length > 0
-																? product.variants[0].price
+																? product.variants[0].discounted_price
 																: 0
 														)}
 													</span>

@@ -102,7 +102,7 @@ const ViewCart = () => {
 								unit_id = psize.unit_id;
 							}
 						});
-						opt.innerHTML = `${unit_id} ${variant.stock_unit_name} Rs.${variant.price}`;
+						opt.innerHTML = `${unit_id} ${variant.stock_unit_name} Rs.${variant.discounted_price}`;
 						select.appendChild(opt);
 					});
 
@@ -257,7 +257,7 @@ const ViewCart = () => {
 
 													<th className="price">
 														<FaRupeeSign fill="var(--secondary-color)" />
-														{parseFloat(product.price)}
+														{parseFloat(product.discounted_price)}
 													</th>
 
 													<th className="quantity">

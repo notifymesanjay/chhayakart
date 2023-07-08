@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { ActionTypes } from "../../model/action-type";
 import { useNavigate } from "react-router-dom";
 import { FaRupeeSign } from "react-icons/fa";
 import { BiLink, BiMinus } from "react-icons/bi";
@@ -16,6 +15,7 @@ import {
 } from "react-share";
 import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
+import { ActionTypes } from "../../model/action-type";
 import {
   addProductToCart,
   decrementProduct,
@@ -65,7 +65,7 @@ const RelateProduct = ({
     var val = productInCartCount;
     if (cookies.get("jwt_token") !== undefined) {
       if (val === 1) {
-        setProductInCartCount(0)
+        setProductInCartCount(0);
         setIsCart(false);
         removefromCart(
           related_product.id,
@@ -75,14 +75,14 @@ const RelateProduct = ({
           ).id
         );
       } else {
-        setProductInCartCount(val-1);
+        setProductInCartCount(val - 1);
         addtoCart(
           related_product.id,
           JSON.parse(
             document.getElementById(`select-product${index}-variant-section`)
               .value
           ).id,
-          val-1
+          val - 1
         );
       }
     } else {
@@ -91,7 +91,7 @@ const RelateProduct = ({
         related_product
       );
       if (isDecremented) {
-        setProductInCartCount(val-1)
+        setProductInCartCount(val - 1);
       } else {
         setProductInCartCount(0);
         setIsCart(false);
@@ -104,14 +104,14 @@ const RelateProduct = ({
     var val = productInCartCount;
     if (cookies.get("jwt_token") !== undefined) {
       if (val < related_product.total_allowed_quantity) {
-        setProductInCartCount(val+1);
+        setProductInCartCount(val + 1);
         addtoCart(
           related_product.id,
           JSON.parse(
             document.getElementById(`select-product${index}-variant-section`)
               .value
           ).id,
-          val+1
+          val + 1
         );
       }
     } else {
@@ -120,7 +120,7 @@ const RelateProduct = ({
         related_product
       );
       if (isIncremented) {
-        setProductInCartCount(val+1);
+        setProductInCartCount(val + 1);
       }
       setProductTriggered(!productTriggered);
     }
@@ -143,20 +143,22 @@ const RelateProduct = ({
             }}
           />
         </span>
-        <img
-          src={related_product.image_url}
-          alt={related_product.slug}
-          className="card-img-top"
-          onClick={() => {
-            dispatch({
-              type: ActionTypes.SET_SELECTED_PRODUCT,
-              payload: related_product.id,
-            });
-            setSelectedProductId(related_product.id);
-            navigate("/product/" + related_product.id);
-            window.scrollTo(0, 0);
-          }}
-        />
+        <div className="imageWrapper">
+          <img
+            src={related_product.image_url}
+            alt={related_product.slug}
+            className="card-img-top"
+            onClick={() => {
+              dispatch({
+                type: ActionTypes.SET_SELECTED_PRODUCT,
+                payload: related_product.id,
+              });
+              setSelectedProductId(related_product.id);
+              navigate("/product/" + related_product.id);
+              window.scrollTo(0, 0);
+            }}
+          />
+        </div>
       </div>
 
       <div

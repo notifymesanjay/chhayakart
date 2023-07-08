@@ -231,7 +231,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
             allProductVariantId +=
               cartVal[i].product_variant_id.toString() + ",";
             allQuantity += cartVal[i].qty.toString() + ",";
-            subTotal += parseInt(cartVal[i].qty) * parseInt(cartVal[i].price);
+            subTotal += parseInt(cartVal[i].qty) * parseInt(cartVal[i].discounted_price);
             product["cod_allowed"] = cartVal[i].cod_allowed;
             product["discounted_price"] = cartVal[i].discounted_price;
             product["image_url"] = cartVal[i].image_url;
@@ -256,7 +256,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
           allQuantity += cartVal[cartVal.length - 1].qty.toString();
           subTotal +=
             parseInt(cartVal[cartVal.length - 1].qty) *
-            parseInt(cartVal[cartVal.length - 1].price);
+            parseInt(cartVal[cartVal.length - 1].discounted_price);
           let product = {};
           product["cod_allowed"] = cartVal[cartVal.length - 1].cod_allowed;
           product["discounted_price"] =
@@ -448,7 +448,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
                         <FaRupeeSign fill="var(--secondary-color)" />{" "}
                         <span id={`price${index}-cart-sidebar`}>
                           {" "}
-                          {parseFloat(product.price)}
+                          {parseFloat(product.discounted_price)}
                         </span>
                       </div>
 
@@ -498,7 +498,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
                     </div>
 
                     <div className="d-flex justify-content-between">
-                      <span>Taxes(5%)</span>
+                      <span>GST</span>
                       <div className="d-flex align-items-center">
                         <FaRupeeSign />
                         <span>{parseFloat(orderSummary.taxes)}</span>

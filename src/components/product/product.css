@@ -177,6 +177,7 @@
   
   .product-card .image-container {
     position: relative;
+    width: 100%;
   }
   
   .product-card .image-container span {

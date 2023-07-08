@@ -335,7 +335,7 @@ const Checkout = () => {
             allProductVariantId +=
               cartVal[i].product_variant_id.toString() + ",";
             allQuantity += cartVal[i].qty.toString() + ",";
-            subTotal += parseInt(cartVal[i].qty) * parseInt(cartVal[i].price);
+            subTotal += parseInt(cartVal[i].qty) * parseInt(cartVal[i].discounted_price);
           }
 
           allProductVariantId +=
@@ -343,7 +343,7 @@ const Checkout = () => {
           allQuantity += cartVal[cartVal.length - 1].qty.toString();
           subTotal +=
             parseInt(cartVal[cartVal.length - 1].qty) *
-            parseInt(cartVal[cartVal.length - 1].price);
+            parseInt(cartVal[cartVal.length - 1].discounted_price);
 
           let orderVal = {
             product_variant_id: allProductVariantId,
