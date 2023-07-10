@@ -13,21 +13,24 @@ const ShowAllCategories = () => {
 	const category = useSelector((state) => state.category);
 	const city = useSelector((state) => state.city);
 
-	const getProductfromApi = async (ctg) => {
-		await api
-			.getProductbyFilter(
-				city.city.id,
-				city.city.latitude,
-				city.city.longitude,
-				{ category_id: ctg.id }
-			)
-			.then((response) => response.json())
-			.then((result) => {
-				if (result.status === 1) {
-					setMap(new Map(map.set(`category${ctg.id}`, result.total)));
-				}
-			});
-	};
+	const [map, setMap] = useState(new Map());
+
+	// const getProductfromApi = async (ctg) => {
+	//     console.log('showAllCategories');
+	// 	await api
+	// 		.getProductbyFilter(
+	// 			city.city.id,
+	// 			city.city.latitude,
+	// 			city.city.longitude,
+	// 			{ category_id: ctg.id }
+	// 		)
+	// 		.then((response) => response.json())
+	// 		.then((result) => {
+	// 			if (result.status === 1) {
+	// 				setMap(new Map(map.set(`category${ctg.id}`, result.total)));
+	// 			}
+	// 		});
+	// };
 
 	//fetch Category
 	const fetchCategory = () => {
@@ -51,15 +54,8 @@ const ShowAllCategories = () => {
 	useEffect(() => {
 		if (category.status === "loading" && category.category === null) {
 			fetchCategory();
-		} else if (category.status !== "loading" || city.city !== null) {
-			category.category.forEach((ctg) => {
-				getProductfromApi(ctg);
-			});
 		}
 	}, [category]);
-
-	//categories and their product count map
-	const [map, setMap] = useState(new Map());
 
 	const selectCategory = (category) => {
 		dispatch({ type: ActionTypes.SET_FILTER_CATEGORY, payload: category.id });
@@ -94,18 +90,23 @@ const ShowAllCategories = () => {
 								key={index}
 							>
 								<div className="card">
-									<img className="card-img-top" src={ctg.image_url} alt="" />
+									<div className="imageWrapper">
+										<img
+											className="card-img-top lazyload"
+											data-src={ctg.image_url}
+											alt=""
+										/>
+									</div>
 									<div
 										className="card-body"
 										style={{ cursor: "pointer" }}
 										onClick={() => selectCategory(ctg)}
 									>
 										<p>
-											{ctg.name} (
-											{map.get(`category${ctg.id}`) !== undefined
-												? map.get(`category${ctg.id}`)
-												: 0}
-											)
+											{ctg.name}
+											{/* (
+						{map.get(`category${ctg.id}`) !== undefined? map.get(`category${ctg.id}`): 0}
+						) */}
 										</p>
 									</div>
 								</div>

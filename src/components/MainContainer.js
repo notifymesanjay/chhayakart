@@ -1,14 +1,16 @@
 import React, { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import HomeContainer from "./homecontainer/HomeContainer";
-import Loader from "./loader/Loader";
-import ProductContainer from "./product/ProductContainer";
-import api from "../api/api";
+import { AiOutlineClose } from "react-icons/ai";
 import { ActionTypes } from "../model/action-type";
-import { AiOutlineClose, AiOutlineCloseCircle } from "react-icons/ai";
+import api from "../api/api";
+import HomeContainer from "./homecontainer/HomeContainer";
+import ProductContainer from "./product/ProductContainer";
+import Loader from "./loader/Loader";
 
-const MainContainer = ({productTriggered, setProductTriggered = () => {}}) => {
+const MainContainer = ({
+	productTriggered,
+	setProductTriggered = () => {},
+}) => {
 	const dispatch = useDispatch();
 
 	const modalRef = useRef();
@@ -44,10 +46,6 @@ const MainContainer = ({productTriggered, setProductTriggered = () => {}}) => {
 			modalRef.current.click();
 		}
 	}, [setting]);
-
-	// setTimeout(() => {
-	//     modalRef.current.click()
-	// }, 6000);
 	return (
 		<>
 			{setting.setting === null ? (
@@ -59,7 +57,10 @@ const MainContainer = ({productTriggered, setProductTriggered = () => {}}) => {
 						style={{ paddingBottom: "5px", minHeight: "75vh" }}
 					>
 						<HomeContainer />
-						<ProductContainer productTriggered={productTriggered} setProductTriggered={setProductTriggered} />
+						<ProductContainer
+							productTriggered={productTriggered}
+							setProductTriggered={setProductTriggered}
+						/>
 					</div>
 
 					{parseInt(setting.setting.popup_enabled) === 1 ? (
