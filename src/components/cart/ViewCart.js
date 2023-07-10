@@ -31,6 +31,7 @@ const ViewCart = () => {
 	useEffect(() => {
 		if (sizes.sizes === null || sizes.status === "loading") {
 			if (city.city !== null && cart.cart !== null) {
+				console.log("viewcart");
 				api
 					.getProductbyFilter(
 						city.city.id,
@@ -233,8 +234,12 @@ const ViewCart = () => {
 											{cart.cart.data.cart.map((product, index) => (
 												<tr key={index}>
 													<th className="products-image-container first-column">
-														<div className="image-container">
-															<img src={product.image_url} alt="product"></img>
+														<div className="image-container ">
+															<img
+																data-src={product.image_url}
+																alt="product"
+																className="lazyload"
+															></img>
 														</div>
 
 														<div className="">
