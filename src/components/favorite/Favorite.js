@@ -7,14 +7,13 @@ import EmptyCart from "../../utils/zero-state-screens/Empty_Cart.svg";
 import { useNavigate, Link } from "react-router-dom";
 import { FaRupeeSign } from "react-icons/fa";
 import { BsPlus } from "react-icons/bs";
-import { BiMinus } from 'react-icons/bi'
-import api from '../../api/api';
-import { toast } from 'react-toastify'
-import Cookies from 'universal-cookie'
-import { ActionTypes } from '../../model/action-type';
-import Loader from '../loader/Loader';
-import LoginUser from '../login/login-user';
-
+import { BiMinus } from "react-icons/bi";
+import api from "../../api/api";
+import { toast } from "react-toastify";
+import Cookies from "universal-cookie";
+import { ActionTypes } from "../../model/action-type";
+import Loader from "../loader/Loader";
+import LoginUser from "../login/login-user";
 
 const Favorite = () => {
 	const closeCanvas = useRef();
@@ -190,7 +189,11 @@ const Favorite = () => {
 										<div key={index} className="cart-card">
 											<div className="left-wrapper">
 												<div className="image-container">
-													<img src={product.image_url} alt="product"></img>
+													<img
+														data-src={product.image_url}
+														alt="product"
+														className="lazyload"
+													></img>
 												</div>
 
 												<div className="product-details">
@@ -301,7 +304,9 @@ const Favorite = () => {
 					)}
 				</>
 			)}
-			{isLogin && <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />}
+			{isLogin && (
+				<LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
+			)}
 		</div>
 	);
 };

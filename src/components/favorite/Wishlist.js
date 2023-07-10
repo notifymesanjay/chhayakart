@@ -34,7 +34,7 @@ const Wishlist = () => {
 	useEffect(() => {
 		if (sizes.sizes === null || sizes.status === "loading") {
 			if (city.city !== null && favorite.favorite !== null) {
-				console.log('wishlist');
+				console.log("wishlist");
 				api
 					.getProductbyFilter(
 						city.city.id,
@@ -295,7 +295,11 @@ const Wishlist = () => {
 												<tr key={index} className="">
 													<th className="products-image-container first-column">
 														<div className="image-container">
-															<img src={product.image_url} alt="product"></img>
+															<img
+																data-src={product.image_url}
+																alt="product"
+																className="lazyload"
+															></img>
 														</div>
 
 														<div className="">
@@ -420,31 +424,33 @@ const Wishlist = () => {
 														</div>
 													</th>
 
-                          <th className="remove last-column">
-                            <button
-                              type="button"
-                              onClick={() => removefromFavorite(product.id)}
-                            >
-                              <RiDeleteBinLine
-                                fill="red"
-                                fontSize={"2.985rem"}
-                              />
-                            </button>
-                          </th>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </>
-            )}
-          </>
-        )}
-      </div>
-      
-      {isLogin && <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} /> }
-    </section>
-  );
+													<th className="remove last-column">
+														<button
+															type="button"
+															onClick={() => removefromFavorite(product.id)}
+														>
+															<RiDeleteBinLine
+																fill="red"
+																fontSize={"2.985rem"}
+															/>
+														</button>
+													</th>
+												</tr>
+											))}
+										</tbody>
+									</table>
+								</div>
+							</>
+						)}
+					</>
+				)}
+			</div>
+
+			{isLogin && (
+				<LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
+			)}
+		</section>
+	);
 };
 
 export default Wishlist;
