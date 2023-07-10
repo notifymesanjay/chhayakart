@@ -370,11 +370,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 
 			{iscartEmpty ? (
 				<div className="empty-cart">
-					<img
-						data-src={EmptyCart}
-						alt="empty-cart"
-						className="empty-cart lazyload"
-					></img>
+					<img data-src={EmptyCart} alt="empty-cart" className="lazyload"></img>
 					<p>Your Cart is empty</p>
 					<span>You have no items in your shopping cart.</span>
 					<span>Let's go buy something!</span>
@@ -408,11 +404,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 									<div key={index} className="cart-card">
 										<div className="left-wrapper">
 											<div className="image-container">
-												<img
-													data-src={product.image_url}
-													alt="product"
-													className="lazyload"
-												></img>
+												<img src={product.image_url} alt="product"></img>
 											</div>
 
 											<div className="product-details">
