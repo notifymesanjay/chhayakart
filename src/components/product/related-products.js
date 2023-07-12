@@ -180,7 +180,7 @@ const RelateProduct = ({
             <p id="fa-rupee" className="m-0">
               <FaRupeeSign fill="var(--secondary-color)" />
             </p>
-            {related_product.variants[0].discounted_price}{" "} ({Math.round(parseFloat((product.variants[0].price-product.variants[0].discounted_price)*100/product.variants[0].price))}% off)
+            {related_product.variants[0].discounted_price}{" "} ({Math.round(parseFloat((related_product.variants[0].price-related_product.variants[0].discounted_price)*100/related_product.variants[0].price))}% off)
           </span>
           <span
             id={`price${index}-section`}
