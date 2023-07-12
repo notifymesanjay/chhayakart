@@ -291,7 +291,7 @@ const Product = ({
             <div className="d-flex flex-row gap-2 align-items-center my-1">
               <span className="price green-text" id={`price-productdetail`}>
                 <FaRupeeSign fill="var(--secondary-color)" />
-                {parseFloat(productdata.variants[0].price)}{" "}
+                {parseFloat(productdata.variants[0].discounted_price)}{" "}
               </span>{" "}
               <div
                 className="not-price gray-text"
@@ -301,8 +301,7 @@ const Product = ({
                   fill="var(--text-color)"
                   textDecoration="line-through"
                 />
-                {parseFloat(productdata.variants[0].price) +
-                  productdata.variants[0].price * 0.13}
+                {parseFloat(productdata.variants[0].price)}
               </div>
             </div>
           </div>
