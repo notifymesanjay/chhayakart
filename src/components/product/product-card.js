@@ -308,7 +308,7 @@ const ProductCard = ({
                   <p id="fa-rupee" className="m-0">
                     <FaRupeeSign fill="var(--secondary-color)" />
                   </p>{" "}
-                  {product.variants[0].discounted_price}
+                  {product.variants[0].discounted_price} ({Math.round(parseFloat((product.variants[0].price-product.variants[0].discounted_price)*100/product.variants[0].price))}% off)
                 </span>
                 {/* actual price of product displaying on home page  */}
 

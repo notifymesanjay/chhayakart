@@ -653,9 +653,8 @@ const ListCard = ({
                   <p id="fa-rupee">
                     <FaRupeeSign fill="var(--secondary-color)" />
                   </p>{" "}
-                  {product.variants[0].discounted_price}
-                </span>
-
+                  {product.variants[0].discounted_price} ({Math.round(parseFloat((product.variants[0].price-product.variants[0].discounted_price)*100/product.variants[0].price))}% off)
+                </span>                              
                 <span
                   id={`price${index}-section`}
                   className="d-flex align items-center"
