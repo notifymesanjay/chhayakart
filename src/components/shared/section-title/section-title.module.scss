@@ -12,14 +12,24 @@ $color-black: #111;
   text-transform: uppercase;
 }
 
+.heading{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .link {
   color: $color-green;
   text-align: right;
   padding-left: 16px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 0;
+  cursor: pointer;
+}
 
-  svg {
-    font-size: 12px;
-  }
+.link:hover{
+    text-decoration: underline;
 }
 
 .headingWrapper {
