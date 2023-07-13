@@ -1,0 +1,64 @@
+// @use '../../../public/css/colorPalette';
+
+.sliderContainer {
+  position: relative;
+}
+
+.slider {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  gap: 16px;
+  width: 100%;
+  overflow-x: auto;
+  overflow-x: overlay;
+  transition: all .5s;
+}
+
+.slider::-webkit-scrollbar {
+  height: 4px;
+  cursor: grab;
+}
+
+.slider.mobView::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+}
+
+.slider::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 2px;
+}
+
+.slider:hover::-webkit-scrollbar-thumb {
+  background: transparent;
+  background: #d2d2d2;
+}
+
+.slide {
+  flex-shrink: 0;
+}
+
+.dotWrapper {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid #ff7400;
+  border-radius: 50px;
+  padding: 3px;
+}
+
+.dot.active {
+  background: linear-gradient(45deg, orange, red);
+  width: 32px;
+}

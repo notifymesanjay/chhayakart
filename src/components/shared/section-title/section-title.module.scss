@@ -1,0 +1,27 @@
+$color-green: #51bd88;
+$color-black: #111;
+
+.header {
+  color: #111;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: none;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+  text-transform: uppercase;
+}
+
+.link {
+  color: $color-green;
+  text-align: right;
+  padding-left: 16px;
+
+  svg {
+    font-size: 12px;
+  }
+}
+
+.headingWrapper {
+  position: relative;
+}

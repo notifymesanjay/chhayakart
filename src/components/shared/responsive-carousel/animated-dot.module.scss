@@ -1,0 +1,49 @@
+$orange-graient: linear-gradient(45deg, orange, red);
+
+.backgroundBar {
+  background: $orange-graient;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0 4px;
+}
+
+.backgroundBar:first-child {
+  margin-left: 0;
+}
+
+.backgroundBar:last-child {
+  margin-right: 0;
+}
+
+.bg {
+  height: 6px;
+  margin: 1px;
+  width: calc(100% - 2px);
+  background-color: #f5f6fa;
+  border-radius: 4px;
+}
+
+.backgroundBar.active {
+  border: 0;
+
+  .progressBar {
+    height: 100%;
+    border-radius: 4px;
+    max-width: 100%;
+    background: $orange-graient;
+    animation: progress 4s ease-in-out;
+    animation-fill-mode: both;
+  }
+}
+
+@keyframes progress {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
+}

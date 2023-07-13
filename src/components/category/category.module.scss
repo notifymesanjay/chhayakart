@@ -1,0 +1,47 @@
+.categoryWrapper {
+  padding: 0 15px;
+}
+
+.cardWrapper {
+  display: inline-block;
+  background: white;
+  width: 200px;
+  margin: 15px;
+  border-radius: 8px;
+  position: relative;
+  user-select: none;
+  padding: 25px;
+  text-align: center;
+  border: 1px solid #cccccc;
+  min-height: 212px;
+  cursor: pointer;
+}
+
+.categoryImg {
+  width: 120px;
+  min-height: 120px;
+  min-width: 120px;
+  object-fit: cover;
+  border-radius: 100%;
+  margin: 0 auto;
+  padding: 8px;
+  border: 1px solid #ddd;
+  height: 120px;
+  margin: 0 auto 15px;
+  transition: transform 0.7s ease-in-out;
+}
+
+.cardWrapper:hover .categoryImg {
+  transform: scale(1.07);
+}
+
+.categoryName {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+  margin-bottom: 0;
+}

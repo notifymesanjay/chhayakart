@@ -1,0 +1,16 @@
+.thumbnail {
+  padding: 6px;
+  max-width: 80px;
+  cursor: pointer;
+
+  .img {
+    border-radius: 4px;
+    opacity: 0.4;
+  }
+}
+
+.thumbnail.active {
+  .img {
+    opacity: 1;
+  }
+}
