@@ -150,7 +150,7 @@ const ProductCard = ({
             `select-product${index}${index0}-variant-section`
           ).value
         ).id,
-        productInCartCount
+        1
       );
     } else {
       const isAdded = addProductToCart(product);

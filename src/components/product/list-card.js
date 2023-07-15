@@ -860,7 +860,7 @@ const ListCard = ({
                     handleAddToCart(product, index);
                   }}
                 >
-                  add to cart2
+                  add to cart
                 </button>
 
                 <div
