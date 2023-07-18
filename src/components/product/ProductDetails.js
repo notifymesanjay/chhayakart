@@ -108,10 +108,11 @@ const ProductDetails = ({
 	}, []);
 
 	useEffect(() => {
+		window.scrollTo(0,0);
 		const currUrl = window.location.href;
 		const productId = currUrl.split("/")[4];
 		setProduct(productId)
-	},[]);
+	},[window.location.href]);
 
 	const [mainimage, setmainimage] = useState("");
 	const [images, setimages] = useState([]);

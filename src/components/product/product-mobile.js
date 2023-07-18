@@ -212,10 +212,6 @@ const ProductMobile = ({
     }
   };
 
-  useEffect(() => {
-    console.log("xyz1", showImages);
-  }, [showImages]);
-
   return (
     <div className="row body-wrapper productDetailWrapper ">
       <div className="carousel-container">
