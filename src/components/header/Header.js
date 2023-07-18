@@ -296,7 +296,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 				<div className="site-scroll ps">
 					<div className="canvas-header">
 						<div className="site-brand">
-							<img src={logoPath} height="50px" alt="logo"></img>
+							<img src={ChhaykartPinkLogo} height="50px" alt="logo"></img>
 						</div>
 
 						<button

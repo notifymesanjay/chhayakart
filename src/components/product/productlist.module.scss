@@ -12,6 +12,7 @@ $color-green: #51bd88;
 .cardWrapper {
   display: flex;
   gap: 6px;
+  justify-content: center;
   background-color: white;
   padding: 10px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), inset 0 0 2px 0 rgba(0, 0, 0, 0.2);
@@ -135,4 +136,17 @@ $color-green: #51bd88;
   display: flex;
   justify-content: space-between;
   text-align: center;
+}
+
+.noProductWrapper{
+  background-color: white;
+  color: black;
+  padding: 10px;
+  border-radius: 12px;
+
+  .description{
+    font-size: 22px;
+    text-align: center;
+    margin: 15px 0 10px;
+  }
 }

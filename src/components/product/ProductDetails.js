@@ -301,7 +301,7 @@ const ProductDetails = ({
 				breakpoint: 425,
 				settings: {
 					slidesToShow: 1.5,
-					dots: true,
+					dots: false,
 					arrows: false,
 				},
 			},
@@ -468,7 +468,6 @@ const ProductDetails = ({
 							<div className="row">
 								{/* //<ResponsiveCarousel */}
 								<Slider {...settings}>
-									{}
 									{relatedProducts.map((related_product, index) => (
 										<div className="col-md-3 col-lg-4">
 											<ProductCard

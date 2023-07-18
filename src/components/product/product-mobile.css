@@ -850,12 +850,12 @@ option {
     border-radius: 12px;
     background-color: #e2e9e9;
     align-items: center;
-    position: absolute;
+    position: fixed;
     bottom: 3px;
     z-index: 1099;
     border-radius: 0;
-    height: 50px;
-    left: -2px;
+    height: 86px;
+    left: 0;
   }
   .add-to-cartActive,
   .viewCartSticker {

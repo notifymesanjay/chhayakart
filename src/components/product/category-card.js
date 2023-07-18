@@ -2,11 +2,7 @@ import React from "react";
 import styles from "./category-card.module.scss";
 import { useNavigate } from "react-router-dom";
 
-const CategoryCard = ({
-  title = "Home & Kitchen Essentials",
-  subCategories = [],
-  setSelectedFilter = () => {}
-}) => {
+const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
   const navigate = useNavigate();
   return (
     <>
@@ -28,10 +24,7 @@ const CategoryCard = ({
                 <div className={styles.imageWrapper}>
                   <img
                     className={styles.subCategoryImg}
-                    src={
-                      sub_ctg.image_url ||
-                      "https://admin.chhayakart.com/storage/categories/Papad_52.jpg"
-                    }
+                    src={sub_ctg.image_url}
                     alt=""
                   />
                 </div>

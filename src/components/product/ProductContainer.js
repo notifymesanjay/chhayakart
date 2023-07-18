@@ -92,7 +92,23 @@ const ProductContainer = ({
         if (flag === Number.MAX_VALUE && obj.category_id) {
           finalSectionList.push(obj);
         } else if (flag !== Number.MAX_VALUE && obj.category_id) {
-          finalSectionList[flag]["sub_category"].push(obj["sub_category"]);
+          finalSectionList[flag]["sub_category"].push(obj["sub_category"][0]);
+        }
+      }
+      const categoryList = shop.shop.category;
+      if (categoryList.length > 0) {
+        for (let i = 0; i < finalSectionList.length; i++) {
+          for (let j = 0; j < finalSectionList[i].sub_category.length; j++) {
+            for (let k = 0; k < categoryList.length; k++) {
+              if (
+                (finalSectionList[i].sub_category[j].title).toLowerCase() ===
+                (categoryList[k].name).toLowerCase()
+              ) {
+                finalSectionList[i].sub_category[j]["image_url"] =
+                  categoryList[k].image_url;
+              }
+            }
+          }
         }
       }
       setSubCategories(finalSectionList);

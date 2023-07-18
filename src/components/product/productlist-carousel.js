@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import DkCarousel from "../shared/responsive-carousel/dk-carousel";
+import No_Orders from "../../utils/zero-state-screens/No_Orders.svg";
 import styles from "./productlist.module.scss";
 import ProductMobile from "./product-list-mobile";
 import { useSelector } from "react-redux";
 
 const ProductListCarousel = ({
   productresult = [],
-  No_Orders,
   productTriggered = false,
   setProductTriggered = () => {},
   selectedFilter = 0,
@@ -39,13 +39,13 @@ const ProductListCarousel = ({
         if (flag === Number.MAX_VALUE && obj.category_id) {
           finalList.push(obj);
         } else if (flag !== Number.MAX_VALUE && obj.category_id) {
-          finalList[flag]["sub_category"].push(obj["sub_category"]);
+          finalList[flag]["sub_category"].push(obj["sub_category"][0]);
         }
       }
       setSubCategories(finalList);
     }
   }, [shop.shop]);
-  
+
   return (
     <>
       {subCategories.length > 0 && (
@@ -81,13 +81,13 @@ const ProductListCarousel = ({
             selectedFilter={selectedFilter}
           />
         ) : (
-          <div className="no-product">
+          <div className={styles.noProductWrapper}>
             <img
-              data-src={No_Orders}
+              src={No_Orders}
               alt="no-product"
               className="img-fluid lazyloader"
             ></img>
-            <p>No Products Found</p>
+            <p className={styles.description}>No Products Found</p>
           </div>
         )}
       </div>
