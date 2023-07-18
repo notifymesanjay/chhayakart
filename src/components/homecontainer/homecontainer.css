@@ -1,5 +1,5 @@
 .home-element {
-    padding: 15px 0;
+    padding: 15px 0 0;
 }
 
 .home-section {
@@ -33,7 +33,7 @@
     margin-left: auto;
     position: relative;
     height: 100%;
-    margin-bottom: 50px;
+    margin-bottom: 0;
 }
 
 .category_section_header p {
@@ -116,5 +116,7 @@
         height: auto;
         margin: 0;
         width: 100%;
+        background-color: rgba(0,0,0,.16);
+        margin-top: -2px;
     }
 }

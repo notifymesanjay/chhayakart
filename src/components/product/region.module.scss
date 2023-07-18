@@ -1,0 +1,82 @@
+.homeCategoryWrapper {
+  margin: 10px 0;
+  background-color: white;
+  padding: 15px 5px;
+  border-radius: 8px;
+}
+
+.headerWrapper {
+  padding: 5px 0;
+  margin-bottom: 10px;
+  border-bottom: 2px solid lightgray;
+}
+
+.subCategoryWrapper {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  font-size: 24px;
+  text-align: left;
+  padding-left: 10px;
+  color: rgb(68, 68, 68);
+}
+
+.subCategoryCard {
+  width: 125px;
+  border: 1px solid lightgray;
+  background-color: #eeeeee;
+  border-radius: 8px;
+}
+
+.imageWrapper {
+  width: 110px;
+  height: 95px;
+  padding: 5px;
+  border-radius: 100%;
+  margin: 0 auto;
+}
+
+.subCategoryImg {
+  width: 100%;
+  height: 95px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+
+.cardBody {
+  text-align: center;
+  padding: 8px 5px 5px;
+
+  .title {
+    font-size: 14px;
+    margin: 5px 0 0;
+    padding: 0;
+    line-height: 17px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media only screen and (max-width: 408px) {
+  .subCategoryCard {
+    width: 115px;
+  }
+}
+
+@media only screen and (max-width: 385px) {
+  .subCategoryCard {
+    width: 150px;
+  }
+}
+
+@media only screen and (max-width: 330px) {
+  .subCategoryCard {
+    width: 140px;
+  }
+}
