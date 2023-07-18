@@ -1360,6 +1360,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 
 				{/* favorite sidebar */}
 				<Favorite />
+        {isLogin && <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin}/>}
 			</header>
 		</>
 	);

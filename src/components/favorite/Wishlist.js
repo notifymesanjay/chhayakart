@@ -257,7 +257,7 @@ const Wishlist = () => {
 							data-bs-dismiss="offcanvas"
 							aria-label="Close"
 							onClick={() => {
-								navigate("/");
+								navigate("/products");
 							}}
 						>
 							start shopping
