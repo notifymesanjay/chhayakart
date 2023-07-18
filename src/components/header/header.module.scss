@@ -1,0 +1,41 @@
+.appWrapper {
+  padding: 10px;
+  display: flex;
+  gap: 3px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid lightgray;
+
+  .logo {
+    height: 30px;
+    width: auto;
+  }
+
+  .description{
+    font-size: 10px;
+    margin-bottom: 0;
+  }
+
+  .btn{
+    padding: 5px 3px;
+    background-color: pink;
+    border-radius: 4px;
+
+    .anchorTag{
+        text-decoration: none;
+        color: black;
+        font-size: 12px;
+    }
+  }
+
+  .icon{
+    font-size: 12px;
+  }
+}
+
+.appContentWrapper {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+  align-items: center;
+}

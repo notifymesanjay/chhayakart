@@ -1,0 +1,18 @@
+.stickyMenu {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1005;
+  box-shadow: 0 0 16px rgba(51, 51, 51, 0.4);
+  padding: 8px;
+}
+
+.bgWhite {
+  background-color: #fff;
+}
+
+.stickyMenu:hover {
+  box-shadow: none;
+  border-top: 1px solid rgba(51, 51, 51, 0.3);
+}

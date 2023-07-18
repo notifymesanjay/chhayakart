@@ -29,12 +29,20 @@ import { toast } from "react-toastify";
 import Favorite from "../favorite/Favorite";
 import $ from "jquery";
 import LoginUser from "../login/login-user";
+import ChhaykartPinkLogo from "../../public/images/logo/chhayakart-pink-logo.png";
+import ChhayakartWhiteLogo from "../../public/images/logo/chhayakart-white-logo.png";
+import styles from "./header.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useResponsive } from "../shared/use-responsive";
+import MobileMenu from "./mobile-menu";
+import chhayakartPinkMiniLogo from "../../public/images/logo/chhayakert-pink-mini-logo.png";
 // import { FaRegUserCircle } from 'react-icons/fa';
 
 // import 'bootstrap/dist/js/bootstrap.bundle.js'
 // import { Modal } from 'bootstrap/dist/js/bootstrap.bundle.js';
 
-const Header = ({productTriggered, setProductTriggered = () => {}}) => {
+const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
   // const [islocationclick, setislocationclick] = useState(false);
   // const [issearchClick, setissearchClick] = useState(false);
   const [isLocationPresent, setisLocationPresent] = useState(false);
@@ -49,6 +57,7 @@ const Header = ({productTriggered, setProductTriggered = () => {}}) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+  const { isSmScreen } = useResponsive();
 
   const city = useSelector((state) => state.city);
   const cssmode = useSelector((state) => state.cssmode);
@@ -242,46 +251,42 @@ const Header = ({productTriggered, setProductTriggered = () => {}}) => {
     <>
       {/* sidebar */}
 
-      {Array.from(Array(counter)).map((item, idx) => (
-        <div
-          className="d-flex justify-content-between w-100 d-block d-sm-none"
-          id="chaiclose"
-        >
-          <div className="text-center">
-            <button
-              id="chaibutton"
-              onClick={handleRemoveDiv}
-              type="button"
-              className="btn-close mt-4 px-4"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div>
-            <img src={logoPath} height="50px" alt="logo"></img>
-          </div>
-          <div style={{ textAlign: "left" }}>
-            <b>
-              Use app for best <br /> experience!
-            </b>
-            <br />
-            Avialable for android & ios
-          </div>
-          <div>
-            <button
-              className="btn mt-4"
-              style={{ backgroundColor: "pink", color: "white" }}
-            >
-              <a
-                style={{ textDecoration: "none" }}
-                href="https://play.google.com/store/apps/details?id=com.chayakart"
-              >
-                {" "}
-                Use App
-              </a>
-            </button>
-          </div>
-        </div>
-      ))}
+      {isSmScreen && (
+        <>
+          {Array.from(Array(counter)).map((item, idx) => (
+            <div className={styles.appWrapper}>
+              <FontAwesomeIcon
+                onClick={handleRemoveDiv}
+                icon={faTimes}
+                className={styles.icon}
+              />
+              <div className={styles.appContentWrapper}>
+                <img
+                  src={chhayakartPinkMiniLogo}
+                  className={styles.logo}
+                  alt=""
+                />
+                <p className={styles.description}>
+                  <b>Use app for best experience!</b>
+                  <br />
+                  Avialable for android & ios
+                </p>
+                <div>
+                  <button className={styles.btn}>
+                    <a
+                      className={styles.anchorTag}
+                      href="https://play.google.com/store/apps/details?id=com.chayakart"
+                    >
+                      {" "}
+                      Use App
+                    </a>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </>
+      )}
       <div
         className="hide-desktop offcanvas offcanvas-start"
         tabIndex="-1"
@@ -610,72 +615,27 @@ const Header = ({productTriggered, setProductTriggered = () => {}}) => {
                   </button>
                 </div>
 
-                <Link
-                  to="/"
-                  className="site-brand"
-                  style={
-                    curr_url.pathname === "/profile"
-                      ? { marginLeft: "4px" }
-                      : null
-                  }
-                >
-                  <img
-                    src={logoPath}
-                    height="50px"
-                    alt="logo"
-                    className="desktop-logo hide-mobile"
-                  />
-                  <img
-                    src={logoPath}
-                    height="50px"
-                    alt="logo"
-                    className="mobile-logo hide-desktop"
-                  />
-                </Link>
+                <div className="siteBrandWrapper">
+                  <Link
+                    to="/"
+                    className="site-brand"
+                    style={
+                      curr_url.pathname === "/profile"
+                        ? { marginLeft: "4px" }
+                        : null
+                    }
+                  >
+                    <img
+                      src={isSmScreen ? ChhayakartWhiteLogo : ChhaykartPinkLogo}
+                      height="50px"
+                      alt="logo"
+                      className="desktop-logo"
+                    />
+                  </Link>
+                </div>
               </div>
 
               <div className="d-flex  w-lg-100 col-md-6 order-2 justify-content-center align-items-center ">
-                {/* location modal trigger button */}
-                {/* <button
-                  whileTap={{ scale: 0.6 }}
-                  type="buton"
-                  className="header-location site-location hide-mobile"
-                  data-bs-toggle="modal"
-                  data-bs-target="#locationModal"
-                  ref={locationModalTrigger}
-                >
-                  <div className="d-flex flex-row gap-2">
-                    <div className="icon location p-1 m-auto">
-                      <GoLocation />
-                    </div>
-                    <div className="d-flex flex-column flex-grow-1 align-items-start">
-                      <span className="location-description">
-                        Deliver to <IoMdArrowDropdown />
-                      </span>
-                      <span className="current-location">
-                        {isLocationPresent ? (
-                          <>
-                            {city.status === "fulfill" ? (
-                              city.city.formatted_address
-                            ) : (
-                              <div className="d-flex justify-content-center">
-                                <div className="spinner-border" role="status">
-                                  <span className="visually-hidden">
-                                    Loading...
-                                  </span>
-                                </div>
-                              </div>
-                            )}
-                          </>
-                        ) : (
-                          "Please select location"
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                </button> */}
-
-                <></>
                 <div className="header-search rounded-3 ">
                   <form
                     onSubmit={(e) => {
@@ -790,38 +750,33 @@ const Header = ({productTriggered, setProductTriggered = () => {}}) => {
                   </button>
                 )}
 
-                    
-
-                    
                 {city.city === null ? (
-                      <button
-                        type="button"
-                        whileTap={{ scale: 0.6 }}
-                        className="icon mx-4 me-sm-5 position-relative"
-                      >
-                        <IoCartOutline />
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        whileTap={{ scale: 0.6 }}
-                        className="icon mx-4 me-sm-5 position-relative"
-                        data-bs-toggle="offcanvas"
-                        data-bs-target="#cartoffcanvasExample"
-                        aria-controls="cartoffcanvasExample"
-                      >
-                        <IoCartOutline />
+                  <button
+                    type="button"
+                    whileTap={{ scale: 0.6 }}
+                    className="icon mx-4 me-sm-5 position-relative"
+                  >
+                    <IoCartOutline />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    whileTap={{ scale: 0.6 }}
+                    className="icon mx-4 me-sm-5 position-relative"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#cartoffcanvasExample"
+                    aria-controls="cartoffcanvasExample"
+                  >
+                    <IoCartOutline />
 
-                        {productsInCart > 0 ? (
-                          <span className="position-absolute start-100 translate-middle badge rounded-pill fs-5">
-                            {productsInCart}
-                            <span className="visually-hidden">
-                              unread messages
-                            </span>
-                          </span>
-                        ) : null}
-                      </button>
-                    )}
+                    {productsInCart > 0 ? (
+                      <span className="position-absolute start-100 translate-middle badge rounded-pill fs-5">
+                        {productsInCart}
+                        <span className="visually-hidden">unread messages</span>
+                      </span>
+                    ) : null}
+                  </button>
+                )}
 
                 {user.status === "loading" ? (
                   <div className="hide-mobile-screen px-3">
@@ -853,11 +808,59 @@ const Header = ({productTriggered, setProductTriggered = () => {}}) => {
                 )}
               </div>
             </div>
+            {isSmScreen && (
+              <>
+                <br />
+                <div className="d-flex  w-lg-100 col-md-6 order-4 justify-content-center align-items-center ">
+                  <div className="header-search mob-header-search rounded-3 ">
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+
+                        if (search !== "") {
+                          dispatch({
+                            type: ActionTypes.SET_FILTER_SEARCH,
+                            payload: search,
+                          });
+                          if (curr_url.pathname !== "/products") {
+                            navigate("/products");
+                          }
+                          searchNavTrigger.current.click();
+                        }
+                      }}
+                      className="search-form"
+                    >
+                      <input
+                        type="search"
+                        id="search-box"
+                        placeholder="What are you looking for..."
+                        className="rounded-5"
+                        onChange={(e) => {
+                          if (e.target.value === "") {
+                            dispatch({
+                              type: ActionTypes.SET_FILTER_SEARCH,
+                              payload: null,
+                            });
+                          }
+                          setsearch(e.target.value);
+                        }}
+                      />
+
+                      <button type="submit">
+                        <MdSearch fill="white" />
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
+        {isSmScreen && <MobileMenu />}
+
         {/* Mobile bottom Nav */}
-        <nav className="header-mobile-nav">
+        {/* <nav className="header-mobile-nav">
           <div className="mobile-nav-wrapper">
             <ul>
               <li className="menu-item">
@@ -989,16 +992,16 @@ const Header = ({productTriggered, setProductTriggered = () => {}}) => {
                     type="button"
                     className="wishlist"
                     onClick={() => {
-                      // if (cookies.get("jwt_token") === undefined) {
-                      // 	toast.error(
-                      // 		"OOPS! You have to login first to see your cart!"
-                      // 	);
-                      // } else if (city.city === null) {
-                      // 	toast.error(
-                      // 		"Please Select you delivery location first!"
-                      // 	);
-                      // }
-                      // else
+                      if (cookies.get("jwt_token") === undefined) {
+                      	toast.error(
+                      		"OOPS! You have to login first to see your cart!"
+                      	);
+                      } else if (city.city === null) {
+                      	toast.error(
+                      		"Please Select you delivery location first!"
+                      	);
+                      }
+                      else
                       {
                         document
                           .getElementsByClassName("wishlist")[0]
@@ -1197,7 +1200,7 @@ const Header = ({productTriggered, setProductTriggered = () => {}}) => {
               )}
             </ul>
           </div>
-        </nav>
+        </nav> */}
 
         {/* login modal */}
         {isLogin && (
@@ -1223,7 +1226,10 @@ const Header = ({productTriggered, setProductTriggered = () => {}}) => {
         </div> */}
 
         {/* Cart Sidebar */}
-        <Cart productTriggered={productTriggered} setProductTriggered={setProductTriggered} />
+        <Cart
+          productTriggered={productTriggered}
+          setProductTriggered={setProductTriggered}
+        />
 
         {/* favorite sidebar */}
         <Favorite />

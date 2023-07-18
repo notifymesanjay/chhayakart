@@ -9,10 +9,13 @@ import ProductHeader from "./product-header";
 import "./product.css";
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
 import ProductCard from "../shared/card/product-card";
+import CategoryCard from "./category-card";
+import ShopByRegion from "./region";
 
 const ProductContainer = ({
   productTriggered,
   setProductTriggered = () => {},
+  setSelectedFilter = () => {},
 }) => {
   const dispatch = useDispatch();
 
@@ -22,12 +25,12 @@ const ProductContainer = ({
 
   const [productSizes, setproductSizes] = useState(null);
   const [offerConatiner, setOfferContainer] = useState(0);
-  const [isLogin, setIsLogin] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
 
   useEffect(() => {
     if (sizes.sizes === null || sizes.status === "loading") {
       if (city.city !== null) {
-        console.log("productContainer");
         api
           .getProductbyFilter(
             city.city.id,
@@ -50,6 +53,52 @@ const ProductContainer = ({
     }
   }, [city, sizes]);
 
+  useEffect(() => {
+    if (shop.shop.category.length > 0) {
+      const categoryList = shop.shop.category;
+      let finalCategoryList = [];
+      categoryList.map((category) => {
+        if (category.has_child) {
+          finalCategoryList.push(category);
+        }
+      });
+      setCategories(finalCategoryList);
+    }
+  }, [shop.shop]);
+
+  useEffect(() => {
+    if (shop.shop.sections.length > 0 && categories.length > 0) {
+      const sectionList = shop.shop.sections;
+      let finalSectionList = [];
+      for (let i = 0; i < sectionList.length; i++) {
+        let obj = {};
+        for (let j = 0; j < categories.length; j++) {
+          if (
+            parseInt(sectionList[i].category_ids) === parseInt(categories[j].id)
+          ) {
+            obj = {
+              category_id: parseInt(categories[j].id),
+              category_name: categories[j].name,
+            };
+            obj["sub_category"] = [sectionList[i]];
+          }
+        }
+        let flag = Number.MAX_VALUE;
+        for (let k = 0; k < finalSectionList.length && obj.category_id; k++) {
+          if (parseInt(finalSectionList[k].category_id) === obj.category_id) {
+            flag = k;
+          }
+        }
+        if (flag === Number.MAX_VALUE && obj.category_id) {
+          finalSectionList.push(obj);
+        } else if (flag !== Number.MAX_VALUE && obj.category_id) {
+          finalSectionList[flag]["sub_category"].push(obj["sub_category"]);
+        }
+      }
+      setSubCategories(finalSectionList);
+    }
+  }, [shop.shop, categories]);
+
   return (
     <section id="products">
       <div className="container">
@@ -63,53 +112,17 @@ const ProductContainer = ({
           </>
         ) : (
           <>
-            {shop.shop.sections.map((section, index0) => (
-              <div key={index0}>
-                <div
-                  className="product_section row flex-column"
-                  value={index0}
-                  onChange={(e) => {
-                    setOfferContainer(index0);
-                  }}
-                >
-                  <ProductHeader section={section} />
-                  <div className="product_section_content p-0">
-                    <ResponsiveCarousel
-                      items={5}
-                      itemsInTablet={3}
-                      itemsInMobile={1}
-                      infinite={true}
-                      autoPlay={false}
-                      autoPlaySpeed={4000}
-                      showArrows={false}
-                      showDots={false}
-                      // className={styles.carousel}
-                    >
-                      {section.products.map((product, index) => (
-                        <ProductCard
-                          productTriggered={productTriggered}
-                          setProductTriggered={setProductTriggered}
-                          product={product}
-                        />
-                      ))}
-                    </ResponsiveCarousel>
-                  </div>
-                </div>
-
-                {index0 === 1 && (
-                  <div className="product_section row flex-column" id="offers">
-                    <Offers />
-                  </div>
-                )}
-              </div>
-            ))}
+            {/* <ShopByRegion /> */}
+            {subCategories.length > 0 && (
+              <CategoryCard
+                subCategories={subCategories}
+                setSelectedFilter={setSelectedFilter}
+              />
+            )}
           </>
         )}
         {offerConatiner === 1 ? <Offers /> : null}
       </div>
-      {isLogin && (
-        <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
-      )}
     </section>
   );
 };

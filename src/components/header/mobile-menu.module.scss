@@ -1,0 +1,56 @@
+$color-green: #51bd88;
+
+.mobileMenu {
+  background-color: #f8f8f8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 6px 3px;
+  border: 0;
+  z-index: 99;
+}
+
+.menu {
+  position: relative;
+  padding: 6px 10px;
+  color: #cbcbcb;
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+
+  .menuIcon {
+    font-size: 20px;
+  }
+
+  .menuName {
+    display: block;
+  }
+}
+
+.mobileIcon{
+    width: 30px;
+    height: 30px;
+}
+
+.menu.active {
+  color: $color-green;
+  font-weight: 600;
+}
+
+.selectedItem {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 5px;
+  background: #51bd88;
+  border-radius: 0 0 4px 4px;
+}
+
+.DonateMonthlyItem {
+  width: 60px;
+  left: 15px;
+}

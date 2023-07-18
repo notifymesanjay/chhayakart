@@ -335,3 +335,9 @@ color: #fff !important;
         display: none;
     }
 }
+
+@media only screen and (max-width: 575px){
+    .category_section{
+        margin: 10px auto 0;
+    }
+}
