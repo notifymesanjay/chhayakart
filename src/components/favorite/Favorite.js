@@ -164,7 +164,7 @@ const Favorite = () => {
 						data-bs-dismiss="offcanvas"
 						aria-label="Close"
 						onClick={() => {
-							navigate("/products");
+							navigate("/");
 						}}
 					>
 						start shopping

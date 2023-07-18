@@ -303,7 +303,7 @@ const ProductCard = ({
 												payload: product.id,
 											});
 											setSelectedProductId(product.id);
-											navigate("/product/" + product.id);
+											navigate("/product/" + product.slug);
 										}}
 									/>
 								</div>

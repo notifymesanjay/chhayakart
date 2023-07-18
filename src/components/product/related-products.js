@@ -155,55 +155,64 @@ const RelateProduct = ({
 								payload: related_product.id,
 							});
 							setSelectedProductId(related_product.id);
-							navigate("/product/" + related_product.id);
+							navigate("/product/" + related_product.slug);
 							window.scrollTo(0, 0);
 						}}
 					/>
 				</div>
 			</div>
 
-      <div
-        className="card-body product-card-body p-3"
-        onClick={() => {
-          dispatch({
-            type: ActionTypes.SET_SELECTED_PRODUCT,
-            payload: related_product.id,
-          });
-          setSelectedProductId(related_product.id);
-        }}
-      >
-        <h3>{related_product.name}</h3>
-        <div className="price">
-          <span
-            id={`price${index}-section`}
-            className="d-flex align-items-center"
-          >
-            <p id="fa-rupee" className="m-0">
-              <FaRupeeSign fill="var(--secondary-color)" />
-            </p>
-            {related_product.variants[0].discounted_price}{" "} ({Math.round(parseFloat((related_product.variants[0].price-related_product.variants[0].discounted_price)*100/related_product.variants[0].price))}% off)
-          </span>
-          <span
-            id={`price${index}-section`}
-            className="d-flex align items-center"
-            style={{ textDecoration: "line-through" }}
-          >
-            <p id="fa-rupee" className="m-0">
-              <FaRupeeSign fill="var(--secondary-color)" />
-            </p>{" "}
-            {parseFloat(related_product.variants[0].price)}
-          </span>
-        </div>
-        <div className="product_varients_drop">
-          {related_product.variants.length > 1 ? (
-            <>
-              <select
-                style={{ fontSize: "8px !important" }}
-                className="form-select variant_selection select-arrow"
-                id={`select-product${index}-variant-section`}
-                onChange={(e) => {
-                  document.getElementById(`price${index}-section`).innerHTML =
-                    parseFloat(JSON.parse(e.target.value).price);
+			<div
+				className="card-body product-card-body p-3"
+				onClick={() => {
+					dispatch({
+						type: ActionTypes.SET_SELECTED_PRODUCT,
+						payload: related_product.id,
+					});
+					setSelectedProductId(related_product.id);
+				}}
+			>
+				<h3>{related_product.name}</h3>
+				<div className="price">
+					<span
+						id={`price${index}-section`}
+						className="d-flex align-items-center"
+					>
+						<p id="fa-rupee" className="m-0">
+							<FaRupeeSign fill="var(--secondary-color)" />
+						</p>
+						{related_product.variants[0].discounted_price} (
+						{Math.round(
+							parseFloat(
+								((related_product.variants[0].price -
+									related_product.variants[0].discounted_price) *
+									100) /
+									related_product.variants[0].price
+							)
+						)}
+						% off)
+					</span>
+					<span
+						id={`price${index}-section`}
+						className="d-flex align items-center"
+						style={{ textDecoration: "line-through" }}
+					>
+						<p id="fa-rupee" className="m-0">
+							<FaRupeeSign fill="var(--secondary-color)" />
+						</p>{" "}
+						{parseFloat(related_product.variants[0].price)}
+					</span>
+				</div>
+				<div className="product_varients_drop">
+					{related_product.variants.length > 1 ? (
+						<>
+							<select
+								style={{ fontSize: "8px !important" }}
+								className="form-select variant_selection select-arrow"
+								id={`select-product${index}-variant-section`}
+								onChange={(e) => {
+									document.getElementById(`price${index}-section`).innerHTML =
+										parseFloat(JSON.parse(e.target.value).price);
 
 									if (isCart) {
 										setIsCart(false);
