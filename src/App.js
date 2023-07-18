@@ -41,6 +41,7 @@ function App() {
 	const shop = useSelector((state) => state.shop);
 	const setting = useSelector((state) => state.setting);
 	const [productTriggered, setProductTriggered] = useState(false);
+	const [selectedFilter, setSelectedFilter] = useState(0);
 
 	const getCurrentUser = (token) => {
 		api
@@ -176,6 +177,20 @@ function App() {
 										<ProductList
 											productTriggered={productTriggered}
 											setProductTriggered={setProductTriggered}
+											selectedFilter={selectedFilter}
+											setSelectedFilter={setSelectedFilter}
+										/>
+									}
+								></Route>
+								<Route
+									exact={true}
+									path="/subCategory/:slug"
+									element={
+										<ProductList
+											productTriggered={productTriggered}
+											setProductTriggered={setProductTriggered}
+											selectedFilter={selectedFilter}
+											setSelectedFilter={setSelectedFilter}
 										/>
 									}
 								></Route>
@@ -219,6 +234,7 @@ function App() {
 										<MainContainer
 											productTriggered={productTriggered}
 											setProductTriggered={setProductTriggered}
+											setSelectedFilter={setSelectedFilter}
 										/>
 									}
 								></Route>

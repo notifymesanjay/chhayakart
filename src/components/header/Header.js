@@ -29,6 +29,14 @@ import { toast } from "react-toastify";
 import Favorite from "../favorite/Favorite";
 import $ from "jquery";
 import LoginUser from "../login/login-user";
+import ChhaykartPinkLogo from "../../public/images/logo/chhayakart-pink-logo.png";
+import ChhayakartWhiteLogo from "../../public/images/logo/chhayakart-white-logo.png";
+import styles from "./header.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useResponsive } from "../shared/use-responsive";
+import MobileMenu from "./mobile-menu";
+import chhayakartPinkMiniLogo from "../../public/images/logo/chhayakert-pink-mini-logo.png";
 // import { FaRegUserCircle } from 'react-icons/fa';
 
 // import 'bootstrap/dist/js/bootstrap.bundle.js'
@@ -49,6 +57,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 	const navigate = useNavigate();
 
 	const dispatch = useDispatch();
+	const { isSmScreen } = useResponsive();
 
 	const city = useSelector((state) => state.city);
 	const cssmode = useSelector((state) => state.cssmode);
@@ -242,46 +251,42 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 		<>
 			{/* sidebar */}
 
-			{Array.from(Array(counter)).map((item, idx) => (
-				<div
-					className="d-flex justify-content-between w-100 d-block d-sm-none"
-					id="chaiclose"
-				>
-					<div className="text-center">
-						<button
-							id="chaibutton"
-							onClick={handleRemoveDiv}
-							type="button"
-							className="btn-close mt-4 px-4"
-							aria-label="Close"
-						></button>
-					</div>
-					<div>
-						<img src={logoPath} height="50px" alt="logo"></img>
-					</div>
-					<div style={{ textAlign: "left" }}>
-						<b>
-							Use app for best <br /> experience!
-						</b>
-						<br />
-						Avialable for android & ios
-					</div>
-					<div>
-						<button
-							className="btn mt-4"
-							style={{ backgroundColor: "pink", color: "white" }}
-						>
-							<a
-								style={{ textDecoration: "none" }}
-								href="https://play.google.com/store/apps/details?id=com.chayakart"
-							>
-								{" "}
-								Use App
-							</a>
-						</button>
-					</div>
-				</div>
-			))}
+			{isSmScreen && (
+				<>
+					{Array.from(Array(counter)).map((item, idx) => (
+						<div className={styles.appWrapper}>
+							<FontAwesomeIcon
+								onClick={handleRemoveDiv}
+								icon={faTimes}
+								className={styles.icon}
+							/>
+							<div className={styles.appContentWrapper}>
+								<img
+									src={chhayakartPinkMiniLogo}
+									className={styles.logo}
+									alt=""
+								/>
+								<p className={styles.description}>
+									<b>Use app for best experience!</b>
+									<br />
+									Avialable for android & ios
+								</p>
+								<div>
+									<button className={styles.btn}>
+										<a
+											className={styles.anchorTag}
+											href="https://play.google.com/store/apps/details?id=com.chayakart"
+										>
+											{" "}
+											Use App
+										</a>
+									</button>
+								</div>
+							</div>
+						</div>
+					))}
+				</>
+			)}
 			<div
 				className="hide-desktop offcanvas offcanvas-start"
 				tabIndex="-1"
@@ -610,72 +615,27 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 									</button>
 								</div>
 
-								<Link
-									to="/"
-									className="site-brand"
-									style={
-										curr_url.pathname === "/profile"
-											? { marginLeft: "4px" }
-											: null
-									}
-								>
-									<img
-										src={logoPath}
-										height="50px"
-										alt="logo"
-										className="desktop-logo hide-mobile"
-									/>
-									<img
-										src={logoPath}
-										height="50px"
-										alt="logo"
-										className="mobile-logo hide-desktop"
-									/>
-								</Link>
+								<div className="siteBrandWrapper">
+									<Link
+										to="/"
+										className="site-brand"
+										style={
+											curr_url.pathname === "/profile"
+												? { marginLeft: "4px" }
+												: null
+										}
+									>
+										<img
+											src={isSmScreen ? ChhayakartWhiteLogo : ChhaykartPinkLogo}
+											height="50px"
+											alt="logo"
+											className="desktop-logo"
+										/>
+									</Link>
+								</div>
 							</div>
 
 							<div className="d-flex  w-lg-100 col-md-6 order-2 justify-content-center align-items-center ">
-								{/* location modal trigger button */}
-								{/* <button
-                  whileTap={{ scale: 0.6 }}
-                  type="buton"
-                  className="header-location site-location hide-mobile"
-                  data-bs-toggle="modal"
-                  data-bs-target="#locationModal"
-                  ref={locationModalTrigger}
-                >
-                  <div className="d-flex flex-row gap-2">
-                    <div className="icon location p-1 m-auto">
-                      <GoLocation />
-                    </div>
-                    <div className="d-flex flex-column flex-grow-1 align-items-start">
-                      <span className="location-description">
-                        Deliver to <IoMdArrowDropdown />
-                      </span>
-                      <span className="current-location">
-                        {isLocationPresent ? (
-                          <>
-                            {city.status === "fulfill" ? (
-                              city.city.formatted_address
-                            ) : (
-                              <div className="d-flex justify-content-center">
-                                <div className="spinner-border" role="status">
-                                  <span className="visually-hidden">
-                                    Loading...
-                                  </span>
-                                </div>
-                              </div>
-                            )}
-                          </>
-                        ) : (
-                          "Please select location"
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                </button> */}
-
-								<></>
 								<div className="header-search rounded-3 ">
 									<form
 										onSubmit={(e) => {
@@ -848,91 +808,100 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 								)}
 							</div>
 						</div>
+						{isSmScreen && (
+							<>
+								<br />
+								<div className="d-flex  w-lg-100 col-md-6 order-4 justify-content-center align-items-center ">
+									<div className="header-search mob-header-search rounded-3 ">
+										<form
+											onSubmit={(e) => {
+												e.preventDefault();
+
+												if (search !== "") {
+													dispatch({
+														type: ActionTypes.SET_FILTER_SEARCH,
+														payload: search,
+													});
+													if (curr_url.pathname !== "/products") {
+														navigate("/products");
+													}
+													searchNavTrigger.current.click();
+												}
+											}}
+											className="search-form"
+										>
+											<input
+												type="search"
+												id="search-box"
+												placeholder="What are you looking for..."
+												className="rounded-5"
+												onChange={(e) => {
+													if (e.target.value === "") {
+														dispatch({
+															type: ActionTypes.SET_FILTER_SEARCH,
+															payload: null,
+														});
+													}
+													setsearch(e.target.value);
+												}}
+											/>
+
+											<button type="submit">
+												<MdSearch fill="white" />
+											</button>
+										</form>
+									</div>
+								</div>
+							</>
+						)}
 					</div>
 				</div>
 
-				{/* Mobile bottom Nav */}
-				<nav className="header-mobile-nav">
-					<div className="mobile-nav-wrapper">
-						<ul>
-							<li className="menu-item">
-								<Link
-									to="/products"
-									className={`shop ${
-										curr_url.pathname === "/products" ? "active" : ""
-									}`}
-									onClick={() => {
-										document
-											.getElementsByClassName("shop")[0]
-											.classList.add("active");
-										if (curr_url.pathname !== "/products") {
-											if (curr_url.pathname === "/products") {
-												document
-													.getElementsByClassName("filter")[0]
-													.classList.remove("active");
-											}
-											if (curr_url.pathname === "/profile") {
-												document
-													.getElementsByClassName("profile-account")[0]
-													.classList.remove("active");
-											}
-											document
-												.getElementsByClassName("wishlist")[0]
-												.classList.remove("active");
-											document
-												.getElementsByClassName("search")[0]
-												.classList.remove("active");
-											document
-												.getElementsByClassName("header-search")[0]
-												.classList.remove("active");
-										}
-									}}
-								>
-									<div>
-										<BsShopWindow />
-									</div>
-									<span>Shop</span>
-								</Link>
-							</li>
+				{isSmScreen && <MobileMenu />}
 
-							<li className="menu-item">
-								<button
-									type="button"
-									className="search"
-									ref={searchNavTrigger}
-									onClick={() => {
-										document
-											.getElementsByClassName("search")[0]
-											.classList.toggle("active");
-										if (curr_url.pathname === "/products") {
-											document
-												.getElementsByClassName("filter")[0]
-												.classList.remove("active");
-										}
-										if (curr_url.pathname === "/profile") {
-											document
-												.getElementsByClassName("profile-account")[0]
-												.classList.remove("active");
-										}
-										document
-											.getElementsByClassName("wishlist")[0]
-											.classList.remove("active");
-										if (curr_url.pathname !== "/products") {
-											document
-												.getElementsByClassName("shop")[0]
-												.classList.remove("active");
-										}
-										document
-											.getElementsByClassName("header-search")[0]
-											.classList.toggle("active");
-									}}
-								>
-									<div>
-										<MdSearch />
-									</div>
-									<span>Search</span>
-								</button>
-							</li>
+				{/* Mobile bottom Nav */}
+				{/* <nav className="header-mobile-nav">
+          <div className="mobile-nav-wrapper">
+            <ul>
+              <li className="menu-item">
+                <Link
+                  to="/products"
+                  className={`shop ${
+                    curr_url.pathname === "/products" ? "active" : ""
+                  }`}
+                  onClick={() => {
+                    document
+                      .getElementsByClassName("shop")[0]
+                      .classList.add("active");
+                    if (curr_url.pathname !== "/products") {
+                      if (curr_url.pathname === "/products") {
+                        document
+                          .getElementsByClassName("filter")[0]
+                          .classList.remove("active");
+                      }
+                      if (curr_url.pathname === "/profile") {
+                        document
+                          .getElementsByClassName("profile-account")[0]
+                          .classList.remove("active");
+                      }
+                      document
+                        .getElementsByClassName("wishlist")[0]
+                        .classList.remove("active");
+                      document
+                        .getElementsByClassName("search")[0]
+                        .classList.remove("active");
+                      document
+                        .getElementsByClassName("header-search")[0]
+                        .classList.remove("active");
+                    }
+                  }}
+                >
+                  <div>
+                    <BsShopWindow />
+                  </div>
+                  <span>Shop</span>
+                </Link>
+              </li>
 
 							{curr_url.pathname === "/products" ? (
 								<li className="menu-item">
@@ -1074,28 +1043,102 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 										<div>
 											<IoHeartOutline />
 
-											{favorite.favorite !== null ? (
-												<span
-													className="translate-middle badge rounded-pill fs-5"
-													style={{
-														background: "var(--secondary-color)",
-														borderRadius: "50%",
-														color: "#fff",
-														top: "1px",
-														right: "-9px",
-													}}
-												>
-													{favorite.favorite.total}
-													<span className="visually-hidden">
-														unread messages
-													</span>
-												</span>
-											) : null}
-										</div>
-										<span>Wishlist</span>
-									</button>
-								)}
-							</li>
+              <li className="menu-item">
+                {city.city === null ||
+                cookies.get("jwt_token") === undefined ? (
+                  <button
+                    type="button"
+                    className="wishlist"
+                    onClick={() => {
+                      if (cookies.get("jwt_token") === undefined) {
+                      	toast.error(
+                      		"OOPS! You have to login first to see your cart!"
+                      	);
+                      } else if (city.city === null) {
+                      	toast.error(
+                      		"Please Select you delivery location first!"
+                      	);
+                      }
+                      else
+                      {
+                        document
+                          .getElementsByClassName("wishlist")[0]
+                          .classList.toggle("active");
+                        if (curr_url.pathname === "/products") {
+                          document
+                            .getElementsByClassName("filter")[0]
+                            .classList.remove("active");
+                        }
+                        if (curr_url.pathname === "/profile") {
+                          document
+                            .getElementsByClassName("profile-account")[0]
+                            .classList.remove("active");
+                        }
+                        if (curr_url.pathname !== "/products") {
+                          document
+                            .getElementsByClassName("shop")[0]
+                            .classList.remove("active");
+                        }
+                        document
+                          .getElementsByClassName("search")[0]
+                          .classList.remove("active");
+                        document
+                          .getElementsByClassName("header-search")[0]
+                          .classList.remove("active");
+                      }
+                    }}
+                  >
+                    <div>
+                      <IoHeartOutline />
+                    </div>
+                    <span>Wishlist</span>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="wishlist"
+                    onClick={() => {
+                      if (cookies.get("jwt_token") === undefined) {
+                        toast.error(
+                          "OOPS! You have to login first to see your cart!"
+                        );
+                      } else if (city.city === null) {
+                        toast.error(
+                          "Please Select you delivery location first!"
+                        );
+                      } else {
+                        document
+                          .getElementsByClassName("wishlist")[0]
+                          .classList.toggle("active");
+                        if (curr_url.pathname === "/products") {
+                          document
+                            .getElementsByClassName("filter")[0]
+                            .classList.remove("active");
+                        }
+                        if (curr_url.pathname === "/profile") {
+                          document
+                            .getElementsByClassName("profile-account")[0]
+                            .classList.remove("active");
+                        }
+                        if (curr_url.pathname !== "/products") {
+                          document
+                            .getElementsByClassName("shop")[0]
+                            .classList.remove("active");
+                        }
+                        document
+                          .getElementsByClassName("search")[0]
+                          .classList.remove("active");
+                        document
+                          .getElementsByClassName("header-search")[0]
+                          .classList.remove("active");
+                      }
+                    }}
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#favoriteoffcanvasExample"
+                    aria-controls="favoriteoffcanvasExample"
+                  >
+                    <div>
+                      <IoHeartOutline />
 
 							{curr_url.pathname === "/profile" ? (
 								<li className="menu-item">
@@ -1194,10 +1237,102 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 					</div>
 				</nav>
 
-				{/* login modal */}
-				{isLogin && (
-					<LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
-				)}
+              {curr_url.pathname === "/profile" ? (
+                <li className="menu-item">
+                  <button
+                    type="button"
+                    className="profile-account"
+                    onClick={() => {
+                      document
+                        .getElementsByClassName("profile-account")[0]
+                        .classList.toggle("active");
+                      document
+                        .getElementsByClassName("wishlist")[0]
+                        .classList.remove("active");
+                      if (curr_url.pathname === "/products") {
+                        document
+                          .getElementsByClassName("filter")[0]
+                          .classList.remove("active");
+                      }
+                      if (curr_url.pathname !== "/products") {
+                        document
+                          .getElementsByClassName("shop")[0]
+                          .classList.remove("active");
+                      }
+                      document
+                        .getElementsByClassName("search")[0]
+                        .classList.remove("active");
+                      document
+                        .getElementsByClassName("header-search")[0]
+                        .classList.remove("active");
+                    }}
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#profilenavoffcanvasExample"
+                    aria-controls="profilenavoffcanvasExample"
+                  >
+                    <div>
+                      <MdOutlineAccountCircle />
+                    </div>
+                    <span>Account</span>
+                  </button>
+                </li>
+              ) : (
+                <li className="menu-item">
+                  {user.status === "loading" ? (
+                    <>
+                      <button
+                        type="button"
+                        className="account"
+                        onClick={() => {
+                          handleMobLogin();
+                        }}
+                      >
+                        <div>
+                          <BiUserCircle />
+                        </div>
+                        <span>Login</span>
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        to="/profile"
+                        className="d-flex user-profile gap-1 account"
+                        onClick={() => {
+                          document
+                            .getElementsByClassName("wishlist")[0]
+                            .classList.remove("active");
+                          if (curr_url.pathname === "/products") {
+                            document
+                              .getElementsByClassName("filter")[0]
+                              .classList.remove("active");
+                          }
+                          if (curr_url.pathname !== "/products") {
+                            document
+                              .getElementsByClassName("shop")[0]
+                              .classList.remove("active");
+                          }
+                          document
+                            .getElementsByClassName("search")[0]
+                            .classList.remove("active");
+                          document
+                            .getElementsByClassName("header-search")[0]
+                            .classList.remove("active");
+                        }}
+                      >
+                        <div className="d-flex flex-column user-info my-auto">
+                          <span className="name"> {user.user.name}</span>
+                        </div>
+                        <img src={user.user.profile} alt="user"></img>
+                        <span>Profile</span>
+                      </Link>
+                    </>
+                  )}
+                </li>
+              )}
+            </ul>
+          </div>
+        </nav> */}
 
 				{/* location modal */}
 				{/* <div

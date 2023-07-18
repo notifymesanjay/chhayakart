@@ -4,7 +4,7 @@
 }
 
 .category_section {
-    margin: 50px auto;
+    margin: 50px auto 0;
     /* padding: 0 !important; */
 
 }
@@ -333,5 +333,11 @@ color: #fff !important;
 
     .seeAllDsk, .carouselBtnWrapper{
         display: none;
+    }
+}
+
+@media only screen and (max-width: 575px){
+    .category_section{
+        margin: 10px auto 0;
     }
 }

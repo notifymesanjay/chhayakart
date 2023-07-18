@@ -22,7 +22,7 @@ const DkCarousel = forwardRef(
       showDots = false,
       dotWrapperClass = '',
       children,
-    } = props,
+    },
     ref
   ) => {
     const sliderRef = useRef();
@@ -106,9 +106,7 @@ const DkCarousel = forwardRef(
             onScroll={onScroll}>
             {items.map((child, index) => (
               <div
-                className={`${styles.slide} ${
-                  child.props ? child.props.slideClass : ''
-                }`}
+                className={`${styles.slide}`}
                 style={{ width: itemWidth }}
                 key={index}>
                 {child}
