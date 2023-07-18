@@ -154,7 +154,7 @@ const RelateProduct = ({
                 payload: related_product.id,
               });
               setSelectedProductId(related_product.id);
-              navigate("/product/" + related_product.id);
+              navigate("/product/" + related_product.slug);
               window.scrollTo(0, 0);
             }}
           />
