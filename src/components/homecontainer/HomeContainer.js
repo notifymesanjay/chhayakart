@@ -20,6 +20,7 @@ const HomeContainer = ({ setSelectedFilter = () => {} }) => {
           finalCategoryList.push(category);
         }
       });
+      finalCategoryList.sort((a,b) => a.id-b.id);
       setCategories(finalCategoryList);
     }
   }, [shop.shop]);

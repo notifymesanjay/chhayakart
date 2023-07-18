@@ -40,7 +40,7 @@ const menuItems = [
         alt="categories-icon"
       />
     ),
-    link: "/subCategory/102",
+    link: "/subCategory/94",
   },
   {
     id: 3,
@@ -78,7 +78,7 @@ const MobileMenu = ({ selectedMenu = 0 }) => {
             className={`${styles.menu}`}
             id={menu.tagId}
             onClick={() => {
-              if (cookies.get("jwt_token") === undefined && (menu.id !== 2 && menu.id !== 5)) {
+              if (cookies.get("jwt_token") === undefined && (menu.id !== 1 && menu.id !== 2)) {
                 toast.error(
                     "OOPS! You have to login first to see your cart!"
                 );
