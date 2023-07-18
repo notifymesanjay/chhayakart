@@ -303,7 +303,7 @@ const ProductCard = ({
 												payload: product.id,
 											});
 											setSelectedProductId(product.id);
-											navigate("/product/" + product.slug);
+											navigate("/product/" + product.id);
 										}}
 									/>
 								</div>
@@ -452,7 +452,7 @@ const ProductCard = ({
 								)}
 							</div>
 
-							<Share slug={product.slug} share_url={share_url} />
+							<Share slug={product.id} share_url={share_url} />
 						</div>
 					</div>
 				</div>

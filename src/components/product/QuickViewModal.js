@@ -657,21 +657,21 @@ const QuickViewModal = (props) => {
 												<ul className="share-product">
 													<li className="share-product-icon">
 														<WhatsappShareButton
-															url={`${share_parent_url}/${product.slug}`}
+															url={`${share_parent_url}/${product.id}`}
 														>
 															<WhatsappIcon size={32} round={true} />
 														</WhatsappShareButton>
 													</li>
 													<li className="share-product-icon">
 														<TelegramShareButton
-															url={`${share_parent_url}/${product.slug}`}
+															url={`${share_parent_url}/${product.id}`}
 														>
 															<TelegramIcon size={32} round={true} />
 														</TelegramShareButton>
 													</li>
 													<li className="share-product-icon">
 														<FacebookShareButton
-															url={`${share_parent_url}/${product.slug}`}
+															url={`${share_parent_url}/${product.id}`}
 														>
 															<FacebookIcon size={32} round={true} />
 														</FacebookShareButton>
@@ -681,7 +681,7 @@ const QuickViewModal = (props) => {
 															type="button"
 															onClick={() => {
 																navigator.clipboard.writeText(
-																	`${share_parent_url}/${product.slug}`
+																	`${share_parent_url}/${product.id}`
 																);
 																//popup commented
 																//	toast.success("Copied Succesfully!!");
