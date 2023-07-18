@@ -264,6 +264,11 @@ const ProductCard = ({
 		}
 	};
 
+	const [zoomed, setZoomed] = useState(false);
+	const handleClick = () => {
+		setZoomed((prevZoomed) => !prevZoomed);
+	};
+
 	return (
 		<>
 			<div className="row" key={index}>
@@ -282,19 +287,26 @@ const ProductCard = ({
 								/>
 							</span>
 							<div className="imageWrapper">
-								<img
-									data-src={product.image_url}
-									alt={product.slug}
-									className="card-img-top lazyload"
-									onClick={() => {
-										dispatch({
-											type: ActionTypes.SET_SELECTED_PRODUCT,
-											payload: product.id,
-										});
-										setSelectedProductId(product.id);
-										navigate("/product/" + product.slug);
-									}}
-								/>
+								<div
+									className={`zoom-on-click-container ${
+										zoomed ? "zoomed" : ""
+									}`}
+									onmouseover={handleClick}
+								>
+									<img
+										data-src={product.image_url}
+										alt={product.slug}
+										className="card-img-top lazyload"
+										onClick={() => {
+											dispatch({
+												type: ActionTypes.SET_SELECTED_PRODUCT,
+												payload: product.id,
+											});
+											setSelectedProductId(product.id);
+											navigate("/product/" + product.slug);
+										}}
+									/>
+								</div>
 							</div>
 						</div>
 

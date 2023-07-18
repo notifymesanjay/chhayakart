@@ -379,17 +379,14 @@ const ProductMobile = ({
 
 			{/* //collapsiable buttons start */}
 			<div className="productDetailsContainer">
-				<div
-					// style={{ overflow: "hidden" }}
-					className="productDescriptionContianer"
-				>
+				<div className="productDescriptionContianer" index="0">
 					<CollapsibleButton
 						title="Product Description"
 						content={productdata.description}
 					/>
 				</div>
 
-				<div className="productFeaturesContianer">
+				<div className="productFeaturesContianer" index="1">
 					<CollapsibleButton
 						title="Product Feature & Details"
 						content={productdata.features}
