@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./productDetails.css";
-import ProductCard from "../shared/card/product-card";
+
 // import { FaRupeeSign } from "react-icons/fa";
 import { BsHeart, BsShare, BsPlus, BsHeartFill } from "react-icons/bs";
 import { BiMinus, BiLink } from "react-icons/bi";
@@ -33,12 +33,9 @@ import {
 	incrementProduct,
 } from "../../services/cartService";
 import LoginUser from "../login/login-user";
-import RelateProducts from "./related-products";
 import RelateProduct from "./related-products";
 import { useResponsive } from "../shared/use-responsive";
 import Product from "./product";
-import ProductMobile from "./product-mobile";
-import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
 
 function SamplePrevArrow(props) {
 	const { className, style, onClick } = props;
@@ -89,7 +86,7 @@ function SampleNextArrow(props) {
 	);
 }
 
-const ProductDetails = ({
+const Productdetails = ({
 	productTriggered,
 	setProductTriggered = () => {},
 }) => {
@@ -396,6 +393,8 @@ const ProductDetails = ({
 	};
 
 	return (
+		// Responsive
+
 		<div className="product-details-view">
 			<div className="container" style={{ gap: "20px" }}>
 				<div className="top-wrapper">
@@ -408,39 +407,22 @@ const ProductDetails = ({
 							</div>
 						</div>
 					) : (
-						<>
-							{!isSmScreen ? (
-								<Product
-									images={images}
-									mainimage={mainimage}
-									productbrand={productbrand}
-									setmainimage={setmainimage}
-									addtoCart={addtoCart}
-									productdata={productdata}
-									productTriggered={productTriggered}
-									setProductTriggered={setProductTriggered}
-									removefromCart={removefromCart}
-									getProductVariants={getProductVariants}
-								/>
-							) : (
-								<ProductMobile
-									images={images}
-									mainimage={mainimage}
-									productbrand={productbrand}
-									setmainimage={setmainimage}
-									addtoCart={addtoCart}
-									productdata={productdata}
-									productTriggered={productTriggered}
-									setProductTriggered={setProductTriggered}
-									removefromCart={removefromCart}
-									getProductVariants={getProductVariants}
-								/>
-							)}
-						</>
+						<Product
+							images={images}
+							mainimage={mainimage}
+							productbrand={productbrand}
+							setmainimage={setmainimage}
+							addtoCart={addtoCart}
+							productdata={productdata}
+							productTriggered={productTriggered}
+							setProductTriggered={setProductTriggered}
+							removefromCart={removefromCart}
+							getProductVariants={getProductVariants}
+						/>
 					)}
 				</div>
 
-				{/* <div className="description-wrapper">
+				<div className="description-wrapper">
 					<h5 className="title">Product Description</h5>
 					<div>
 						<div
@@ -449,66 +431,58 @@ const ProductDetails = ({
 							dangerouslySetInnerHTML={{ __html: productdata.description }}
 						></div>
 					</div>
-				</div> */}
 
-				<div className="related-product-wrapper">
-					<h4>You might also like</h4>
-					<div className="related-product-container">
-						{relatedProducts === null ? (
-							<div className="d-flex justify-content-center">
-								<div className="spinner-border" role="status">
-									<span className="visually-hidden">Loading...</span>
+					<div className="related-product-wrapper">
+						<h4 className="relatedProductHeader">You might also like</h4>
+						<div className="related-product-container">
+							{relatedProducts === null ? (
+								<div className="d-flex justify-content-center">
+									<div className="spinner-border" role="status">
+										<span className="visually-hidden">Loading...</span>
+									</div>
 								</div>
-							</div>
-						) : (
-							<div className="row">
-								{/* //<ResponsiveCarousel */}
-								<Slider {...settings}>
-									{}
-									{relatedProducts.map((related_product, index) => (
-										<div className="col-md-3 col-lg-4">
-											<ProductCard
-												productTriggered={productTriggered}
-												setProductTriggered={setProductTriggered}
-												product={related_product}
-												displayAddtoCart={false}
-											/>
-											{/* <RelateProduct
-												index={index}
-												related_product={related_product}
-												productTriggered={productTriggered}
-												setIsViewModal={setIsViewModal}
-												setselectedProduct={setselectedProduct}
-												setSelectedProductId={setSelectedProductId}
-												setProductTriggered={setProductTriggered}
-												getProductVariants={getProductVariants}
-												removefromCart={removefromCart}
-												addtoCart={addtoCart}
-											/> */}
-										</div>
-									))}
-								</Slider>
-							</div>
-						)}
+							) : (
+								<div className="row">
+									<Slider {...settings}>
+										{relatedProducts.map((related_product, index) => (
+											<div className="col-md-3 col-lg-4">
+												<RelateProduct
+													index={index}
+													related_product={related_product}
+													productTriggered={productTriggered}
+													setIsViewModal={setIsViewModal}
+													setselectedProduct={setselectedProduct}
+													setSelectedProductId={setSelectedProductId}
+													setProductTriggered={setProductTriggered}
+													getProductVariants={getProductVariants}
+													removefromCart={removefromCart}
+													addtoCart={addtoCart}
+												/>
+											</div>
+										))}
+									</Slider>
+								</div>
+							)}
+						</div>
 					</div>
+					{isViewModal && (
+						<QuickViewModal
+							selectedProduct={selectedProduct}
+							setselectedProduct={setselectedProduct}
+							productTriggered={productTriggered}
+							setProductTriggered={setProductTriggered}
+							isOpenModal={isViewModal}
+							setIsOpenModal={setIsViewModal}
+						/>
+					)}
 				</div>
-				{isViewModal && (
-					<QuickViewModal
-						selectedProduct={selectedProduct}
-						setselectedProduct={setselectedProduct}
-						productTriggered={productTriggered}
-						setProductTriggered={setProductTriggered}
-						isOpenModal={isViewModal}
-						setIsOpenModal={setIsViewModal}
-					/>
+
+				{isLogin && (
+					<LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
 				)}
 			</div>
-
-			{isLogin && (
-				<LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
-			)}
 		</div>
 	);
 };
 
-export default ProductDetails;
+export default Productdetails;
