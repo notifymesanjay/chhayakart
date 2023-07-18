@@ -237,7 +237,16 @@ const SelectedCategoryProducts = ({
 
   return (
     <div className={styles.cardWrapper} key={index}>
-      <div className={styles.imageWrapper} onClick={() => {navigate(`/product/${product.id}`)}}>
+      <div
+        className={styles.imageWrapper}
+        onClick={() => {
+          navigate(`/product/${product.id}`);
+          dispatch({
+            type: ActionTypes.SET_SELECTED_PRODUCT,
+            payload: product.id,
+          });
+        }}
+      >
         <img src={product.image_url} alt="" className={styles.productImg} />
       </div>
       <div className={styles.productBody}>

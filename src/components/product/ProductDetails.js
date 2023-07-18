@@ -96,9 +96,8 @@ const ProductDetails = ({
 	const dispatch = useDispatch();
 	const cookies = new Cookies();
 	const { slug } = useParams();
-
-	const product = useSelector((state) => state.selectedProduct);
 	const city = useSelector((state) => state.city);
+	const [product, setProduct] = useState(0);
 
 	useEffect(() => {
 		return () => {
@@ -107,6 +106,13 @@ const ProductDetails = ({
 			setproductbrand({});
 		};
 	}, []);
+
+	useEffect(() => {
+		const currUrl = window.location.href;
+		const productId = currUrl.split("/")[4];
+		setProduct(productId)
+	// const product = useSelector((state) => state.selectedProduct);
+	},[]);
 
 	const [mainimage, setmainimage] = useState("");
 	const [images, setimages] = useState([]);
@@ -166,7 +172,7 @@ const ProductDetails = ({
 				city.city.id,
 				city.city.latitude,
 				city.city.longitude,
-				product.selectedProduct_id
+				product
 			)
 			.then((response) => response.json())
 			.then((result) => {
@@ -193,7 +199,6 @@ const ProductDetails = ({
 
 	useEffect(() => {
 		const findProductBySlug = async () => {
-			console.log("productDetails1");
 			await api
 				.getProductbyFilter(
 					city.city.id,
@@ -221,7 +226,6 @@ const ProductDetails = ({
 
 	useEffect(() => {
 		if (Object.keys(productdata).length !== 0) {
-			console.log("productDetails2");
 			api
 				.getProductbyFilter(
 					city.city.id,
@@ -244,7 +248,7 @@ const ProductDetails = ({
 
 	useEffect(() => {
 		if (city.city !== null) {
-			if (product.selectedProduct_id !== null && product.status !== "loading") {
+			if (product !== 0) {
 				getProductDatafromApi();
 			}
 			// else {
@@ -399,7 +403,7 @@ const ProductDetails = ({
 		<div className="product-details-view">
 			<div className="container" style={{ gap: "20px" }}>
 				<div className="top-wrapper">
-					{product.selectedProduct_id === null ||
+					{product === 0 ||
 					Object.keys(productdata).length === 0 ||
 					Object.keys(productSize).length === 0 ? (
 						<div className="d-flex justify-content-center">
@@ -452,7 +456,7 @@ const ProductDetails = ({
 				</div> */}
 
 				<div className="related-product-wrapper">
-					<h4>You might also like</h4>
+					<h4 className="relatedProductsHeader">You might also like</h4>
 					<div className="related-product-container">
 						{relatedProducts === null ? (
 							<div className="d-flex justify-content-center">

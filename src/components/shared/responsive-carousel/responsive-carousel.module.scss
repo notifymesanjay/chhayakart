@@ -68,7 +68,7 @@
 
 .carousel :global(.react-multi-carousel-dot-list) {
   position: absolute;
-  bottom: 0;
+  bottom: -4px;
   display: flex;
   left: 0;
   right: 0;
@@ -82,7 +82,7 @@
 
 .carousel :global(.react-multi-carousel-dot button) {
   cursor: pointer;
-  border: 1px solid #ff7400 !important;
+  border: 1px solid #51bd88 !important;
   padding: 5px !important;
   font: inherit;
   background-color: #fff !important;
@@ -92,8 +92,8 @@
 
 .carousel :global(.react-multi-carousel-dot button:hover):active,
 .carousel :global(.react-multi-carousel-dot--active button) {
-  background: linear-gradient(45deg, orange, red) !important;
-  border: 1px solid #ff7400 !important;
+  background: linear-gradient(45deg, rgb(242, 0, 255), rgb(255, 0, 119)) !important;
+  border: 1px solid #51bd88 !important;
   width: 32px;
 }
 
