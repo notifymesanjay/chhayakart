@@ -197,7 +197,7 @@ const ViewCart = () => {
 						<button
 							type="button"
 							onClick={() => {
-								navigate("/");
+								navigate("/products");
 							}}
 						>
 							start shopping

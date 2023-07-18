@@ -111,7 +111,6 @@ const ProductDetails = ({
 		const currUrl = window.location.href;
 		const productId = currUrl.split("/")[4];
 		setProduct(productId)
-	// const product = useSelector((state) => state.selectedProduct);
 	},[]);
 
 	const [mainimage, setmainimage] = useState("");

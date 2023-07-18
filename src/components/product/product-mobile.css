@@ -708,6 +708,10 @@ option {
   cursor: pointer;
 }
 
+.sub-image img{
+	z-index: 99;
+}
+
 .related-product-container .slick-prev {
   left: 5px !important;
   z-index: 10 !important;
