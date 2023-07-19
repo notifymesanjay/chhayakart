@@ -657,7 +657,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 										<input
 											type="search"
 											id="search-box"
-											placeholder="What are you looking for..."
+											placeholder="Search 1000+ products..."
 											className="rounded-5"
 											onChange={(e) => {
 												if (e.target.value === "") {
@@ -833,7 +833,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 											<input
 												type="search"
 												id="search-box"
-												placeholder="What are you looking for..."
+												placeholder="Search 1000+ products..."
 												className="rounded-5"
 												onChange={(e) => {
 													if (e.target.value === "") {
@@ -1360,7 +1360,6 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 
 				{/* favorite sidebar */}
 				<Favorite />
-        {isLogin && <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin}/>}
 			</header>
 		</>
 	);
