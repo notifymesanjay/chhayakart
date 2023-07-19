@@ -708,6 +708,10 @@ option {
 	cursor: pointer;
 }
 
+.sub-image img {
+	z-index: 99;
+}
+
 .related-product-container .slick-prev {
 	left: 5px !important;
 	z-index: 10 !important;
@@ -839,7 +843,6 @@ option {
 	.addToCartStickerDiv {
 		width: auto;
 		height: 4rem;
-		padding-bottom: 0;
 	}
 
 	.productPricing,
@@ -880,7 +883,6 @@ option {
 		color: black;
 		text-decoration: none;
 	}
-
 	.input-to-cart {
 		background: #d3d1d1;
 		display: inline-flex;
