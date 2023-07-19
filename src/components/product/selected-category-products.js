@@ -236,7 +236,7 @@ const SelectedCategoryProducts = ({
   };
 
   return (
-    <div className={styles.cardWrapper} key={index}>
+    <div className={`${styles.productCard} ${styles.cardWrapper}`} key={index}>
       <div
         className={styles.imageWrapper}
         onClick={() => {

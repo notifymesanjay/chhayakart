@@ -13,19 +13,13 @@ import ListCard from "./list-card";
 import ProductFilterDropDown from "./product-filter-dropdown";
 import ProductFilter from "./product-filter";
 import { useResponsive } from "../shared/use-responsive";
-import styles from "./productlist.module.scss";
 import DkCarousel from "../shared/responsive-carousel/dk-carousel";
 import ProductMobile from "./product-list-mobile";
 import ProductListCarousel from "./productlist-carousel";
 
 const total_products_per_page = 12;
 
-const ProductList = ({
-  productTriggered,
-  setProductTriggered = () => {},
-  selectedFilter = 0,
-  setSelectedFilter = () => {},
-}) => {
+const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
   const dispatch = useDispatch();
   const sliderRef = useRef();
   const closeCanvas = useRef();
@@ -88,6 +82,7 @@ const ProductList = ({
 
   const getProductfromApi = () => {
     setproductresult([]);
+    setisLoader(true);
     api
       .getProductbyFilter(
         city.city.id,
@@ -101,6 +96,7 @@ const ProductList = ({
       )
       .then((response) => response.json())
       .then((result) => {
+        setisLoader(false);
         if (result.status === 1) {
           setminmaxTotalPrice({
             total_min_price: result.total_min_price,
@@ -115,6 +111,9 @@ const ProductList = ({
           setproductresult([]);
           settotalProducts(0);
         }
+      })
+      .catch(() => {
+        setisLoader(false);
       });
   };
 
@@ -207,6 +206,7 @@ const ProductList = ({
   //filters
   const filterProductsFromApi = async (filter) => {
     setproductresult([]);
+    setisLoader(true);
     await api
       .getProductbyFilter(
         city.city.id,
@@ -216,6 +216,7 @@ const ProductList = ({
       )
       .then((response) => response.json())
       .then((result) => {
+        setisLoader(false);
         if (result.status === 1) {
           setminmaxTotalPrice({
             total_min_price: result.total_min_price,
@@ -239,7 +240,10 @@ const ProductList = ({
           settotalProducts(0);
         }
       })
-      .catch((error) => console.log("error ", error));
+      .catch((error) => {
+        setisLoader(false);
+        console.log("error ", error);
+      });
   };
 
   //page change
@@ -248,7 +252,12 @@ const ProductList = ({
     setoffset(pageNum * total_products_per_page - total_products_per_page);
   };
 
-  return !isSmScreen ? (
+  useEffect(() => {
+    console.log("xyz", productresult);
+    console.log("xyz1", isLoader);
+  }, [productresult, isLoader]);
+
+  return (
     <section
       id="productlist"
       className="container"
@@ -275,11 +284,6 @@ const ProductList = ({
               data-bs-dismiss="offcanvas"
               aria-label="Close"
               ref={closeCanvas}
-              onClick={() => {
-                document
-                  .getElementsByClassName("filter")[0]
-                  .classList.remove("active");
-              }}
             >
               <AiOutlineCloseCircle />
             </button>
@@ -319,11 +323,10 @@ const ProductList = ({
           <div className="row">
             <ProductFilterDropDown totalProducts={totalProducts} />
 
-            {productresult === null ? (
+            {isLoader ? (
               <Loader background="none" width="100%" height="75vh" />
             ) : (
               <>
-                {isLoader ? <Loader screen="full" background="none" /> : null}
                 {productresult.length > 0 ? (
                   <div className="h-100 productList_content">
                     <div className="row flex-wrap">
@@ -377,17 +380,6 @@ const ProductList = ({
         </div>
       </div>
     </section>
-  ) : (
-    <div className={styles.productListWrapper}>
-      <ProductListCarousel
-        productresult={productresult}
-        productTriggered={productTriggered}
-        setProductTriggered={setProductTriggered}
-        No_Orders={No_Orders}
-        selectedFilter={selectedFilter}
-        setSelectedFilter={setSelectedFilter}
-      />
-    </div>
   );
 };
 
