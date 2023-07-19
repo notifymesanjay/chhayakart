@@ -236,18 +236,22 @@ const ProductCard = ({
 	useEffect(() => {
 		if (cookies.get("jwt_token") !== undefined) {
 			const productsInCart = cart.cart.data.cart;
-			for (let i = 0; i < productsInCart.length; i++) {
-				if (parseInt(productsInCart[i].product_id) === parseInt(product.id)) {
-					setIsCart(true);
-					setProductInCartCount(parseInt(productsInCart[i].qty));
+			if (productsInCart != null) {
+				for (let i = 0; i < productsInCart.length; i++) {
+					if (parseInt(productsInCart[i].product_id) === parseInt(product.id)) {
+						setIsCart(true);
+						setProductInCartCount(parseInt(productsInCart[i].qty));
+					}
 				}
 			}
 		} else {
 			const products = JSON.parse(localStorage.getItem("cart"));
-			for (let i = 0; i < products.length; i++) {
-				if (products[i].product_id === product.id) {
-					setIsCart(true);
-					setProductInCartCount(products[i].qty);
+			if (products != null) {
+				for (let i = 0; i < products.length; i++) {
+					if (products[i].product_id === product.id) {
+						setIsCart(true);
+						setProductInCartCount(products[i].qty);
+					}
 				}
 			}
 		}

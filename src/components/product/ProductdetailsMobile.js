@@ -217,7 +217,10 @@ const Productdetails = ({
 	}, [city]);
 
 	useEffect(() => {
-		if (Object.keys(productdata).length !== 0) {
+		if (
+			Object.keys(productdata) != null &&
+			Object.keys(productdata).length !== 0
+		) {
 			console.log("productDetails2");
 			api
 				.getProductbyFilter(
