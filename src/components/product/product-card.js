@@ -336,7 +336,7 @@ const ProductCard = ({
 								</span>
 							</div>
 							<div className="product_varients_drop">
-								{product.variants.length > 1 ? (
+								{product.variants != null && product.variants.length > 1 ? (
 									<>
 										<select
 											style={{ fontSize: "8px !important" }}
