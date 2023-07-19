@@ -267,7 +267,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 									alt=""
 								/>
 								<p className={styles.description}>
-									<b>Use app for best experience!</b>
+									<b>Use App for Additional Discounts & Offers</b>
 									<br />
 									Avialable for android & ios
 								</p>
@@ -657,7 +657,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 										<input
 											type="search"
 											id="search-box"
-											placeholder="Search 1000+ products..."
+											placeholder="Search 1000+ products.."
 											className="rounded-5"
 											onChange={(e) => {
 												if (e.target.value === "") {
@@ -833,7 +833,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 											<input
 												type="search"
 												id="search-box"
-												placeholder="Search 1000+ products..."
+												placeholder="Search 1000+ products.."
 												className="rounded-5"
 												onChange={(e) => {
 													if (e.target.value === "") {
