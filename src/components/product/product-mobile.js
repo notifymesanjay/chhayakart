@@ -30,6 +30,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import CkModal from "../shared/ck-modal";
+import { Link } from "react-router-dom";
 
 const ProductMobile = ({
 	images,
