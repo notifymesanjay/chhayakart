@@ -1,0 +1,31 @@
+.productCardWrapper {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.imageCard {
+  background-color: white;
+  color: black;
+  padding: 10px;
+  border-radius: 12px;
+  text-align: center;
+
+  img{
+    height: 200px;
+    width: auto;
+  }
+
+  .description {
+    font-size: 22px;
+    text-align: center;
+    margin: 15px 0 10px;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .productCardWrapper {
+    gap: 6px;
+  }
+}

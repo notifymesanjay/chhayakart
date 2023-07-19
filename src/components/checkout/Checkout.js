@@ -59,7 +59,7 @@ const Checkout = () => {
         .getOrders(cookies.get("jwt_token"))
         .then((response) => response.json())
         .then((result) => {
-          if (result.status === 1) {
+          if (result.status === 1 && result.data > 0) {
             setOrderID(result.data[0].id);
           }
         });
@@ -335,7 +335,8 @@ const Checkout = () => {
             allProductVariantId +=
               cartVal[i].product_variant_id.toString() + ",";
             allQuantity += cartVal[i].qty.toString() + ",";
-            subTotal += parseInt(cartVal[i].qty) * parseInt(cartVal[i].discounted_price);
+            subTotal +=
+              parseInt(cartVal[i].qty) * parseInt(cartVal[i].discounted_price);
           }
 
           allProductVariantId +=
@@ -411,20 +412,22 @@ const Checkout = () => {
     if (isUserLoggedIn) {
       const cartVal = JSON.parse(localStorage.getItem("cart"));
       setIsLoader(true);
-      for (let i = 0; i < cartVal.length; i++) {
-        api
-          .addToCart(
-            cookies.get("jwt_token"),
-            cartVal[i].product_id,
-            cartVal[i].product_variant_id,
-            cartVal[i].qty
-          )
-          .then((response) => response.json())
-          .then((result) => {
-            if (result.status === 1 && i === cartVal.length - 1) {
-              setProductsAddedToCart(true);
-            }
-          });
+      if (cartVal) {
+        for (let i = 0; i < cartVal.length; i++) {
+          api
+            .addToCart(
+              cookies.get("jwt_token"),
+              cartVal[i].product_id,
+              cartVal[i].product_variant_id,
+              cartVal[i].qty
+            )
+            .then((response) => response.json())
+            .then((result) => {
+              if (result.status === 1 && i === cartVal.length - 1) {
+                setProductsAddedToCart(true);
+              }
+            });
+        }
       }
     } else {
       setIsLoader(false);

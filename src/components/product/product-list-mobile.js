@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SelectedCategoryProducts from "./selected-category-products";
+import No_Orders from "../../utils/zero-state-screens/No_Orders.svg";
+import styles from "./product-list-mobile.module.scss";
 
 const ProductMobile = ({
   subCategories = [],
@@ -42,8 +42,8 @@ const ProductMobile = ({
 
   return (
     <>
-      {productList.length > 0 && (
-        <>
+      {productList.length > 0 ? (
+        <div className={styles.productCardWrapper}>
           {productList.map((product, index) => (
             <SelectedCategoryProducts
               product={product}
@@ -52,7 +52,16 @@ const ProductMobile = ({
               index={index}
             />
           ))}
-        </>
+        </div>
+      ) : (
+        <div className={styles.imageCard}>
+          <img
+            src={No_Orders}
+            alt="no-product"
+            className="img-fluid lazyloader"
+          ></img>
+          <p className={styles.description}>No Products Found</p>
+        </div>
       )}
     </>
   );

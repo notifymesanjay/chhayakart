@@ -498,7 +498,7 @@ const ProductMobile = ({
 								handleDecrement();
 							}}
 						>
-							<BiMinus fill="#fff" />
+							<BiMinus />
 						</button>
 						<span id={`input-productdetail`}>{productInCartCount}</span>
 						<button
@@ -508,7 +508,7 @@ const ProductMobile = ({
 								handleIncrement();
 							}}
 						>
-							<BsPlus fill="#fff" />{" "}
+							<BsPlus />{" "}
 						</button>
 					</div>
 				)}

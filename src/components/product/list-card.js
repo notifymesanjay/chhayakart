@@ -306,6 +306,7 @@ const ListCard = ({
 				} else if (result.status === 0) {
 					setisLoader(false);
 				} else {
+					setisLoader(false);
 					toast.error(result.message);
 				}
 			});

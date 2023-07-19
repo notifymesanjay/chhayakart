@@ -4,15 +4,16 @@ import No_Orders from "../../utils/zero-state-screens/No_Orders.svg";
 import styles from "./productlist.module.scss";
 import ProductMobile from "./product-list-mobile";
 import { useSelector } from "react-redux";
+import { useResponsive } from "../shared/use-responsive";
 
 const ProductListCarousel = ({
-  productresult = [],
   productTriggered = false,
   setProductTriggered = () => {},
   selectedFilter = 0,
-  setSelectedFilter= () => {}
+  setSelectedFilter = () => {},
 }) => {
   const sliderRef = useRef();
+  const { isSmScreen } = useResponsive();
   const shop = useSelector((state) => state.shop);
   const [subCategories, setSubCategories] = useState([]);
 
@@ -51,9 +52,9 @@ const ProductListCarousel = ({
       {subCategories.length > 0 && (
         <DkCarousel
           ref={sliderRef}
-          slidesToShow={3}
+          slidesToShow={isSmScreen ? 2 : 4}
           gap={24}
-          partialVisible={false}
+          partialVisible={true}
           partialVisibilityGutter={32}
           className={styles.cardCarousel}
         >
