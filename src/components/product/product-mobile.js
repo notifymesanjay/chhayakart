@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiLink, BiMinus } from "react-icons/bi";
 
 import { FaChevronLeft, FaChevronRight, FaRupeeSign } from "react-icons/fa";
@@ -29,7 +29,7 @@ import {
 } from "react-share";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import CkModal from "../shared/ck-modal";
 
 const ProductMobile = ({
 	images,
@@ -51,6 +51,7 @@ const ProductMobile = ({
 	const [isCart, setIsCart] = useState(false);
 	const [productInCartCount, setProductInCartCount] = useState(0);
 	const { isSmScreen } = useResponsive();
+	const [showImages, setShowImages] = useState(false);
 
 	const [selectQunatityClassName, setSelectQunatityClassName] = useState("");
 	const handleClick = (event) => {
@@ -155,16 +156,11 @@ const ProductMobile = ({
 	};
 
 	const addProductToCart1 = (qunatity) => {
+		console.log("xyz", productdata);
 		if (cookies.get("jwt_token") !== undefined) {
 			setIsCart(true);
 			setProductInCartCount(parseInt(qunatity));
-			addtoCart(
-				productdata.id,
-				JSON.parse(
-					document.getElementById(`select-product-variant-productdetail`).value
-				).id,
-				parseInt(qunatity)
-			);
+			addtoCart(productdata.id, productdata.variants[0].id, parseInt(qunatity));
 		} else {
 			const isAdded = addProductToCart(productdata, parseInt(qunatity));
 			if (isAdded) {
@@ -182,23 +178,10 @@ const ProductMobile = ({
 				if (val === 1) {
 					setProductInCartCount(0);
 					setIsCart(false);
-					removefromCart(
-						productdata.id,
-						JSON.parse(
-							document.getElementById(`select-product-variant-productdetail`)
-								.value
-						).id
-					);
+					removefromCart(productdata.id, productdata.variants[0].id);
 				} else {
 					setProductInCartCount(val - 1);
-					addtoCart(
-						productdata.id,
-						JSON.parse(
-							document.getElementById(`select-product-variant-productdetail`)
-								.value
-						).id,
-						val - 1
-					);
+					addtoCart(productdata.id, productdata.variants[0].id, val - 1);
 				}
 			}
 		} else {
@@ -218,14 +201,7 @@ const ProductMobile = ({
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val < productdata.total_allowed_quantity) {
 				setProductInCartCount(val + 1);
-				addtoCart(
-					productdata.id,
-					JSON.parse(
-						document.getElementById(`select-product-variant-productdetail`)
-							.value
-					).id,
-					val + 1
-				);
+				addtoCart(productdata.id, productdata.variants[0].id, val + 1);
 			}
 		} else {
 			const isIncremented = incrementProduct(productdata.id, productdata, 1);
@@ -260,36 +236,37 @@ const ProductMobile = ({
 						<BiLink size={30} />
 					</button>
 				</div>
-
-				<ResponsiveCarousel
-					items={images.length}
-					itemsInTablet={3}
-					infinite={true}
-					autoPlay={false}
-					autoPlaySpeed={4000}
-					showArrows={false}
-					showDots={true}
-					className="carousel"
-				>
-					{images.map((image, index) => (
-						<div key={index}>
-							<div
-								className={`sub-image border ${
-									mainimage === image ? "active" : ""
-								}`}
-							>
-								<img
-									src={image}
-									className="col-12 imgZoom"
-									alt="product"
-									onClick={() => {
-										setmainimage(image);
-									}}
-								></img>
+				<div>
+					<ResponsiveCarousel
+						items={images.length}
+						itemsInTablet={3}
+						infinite={true}
+						autoPlay={false}
+						autoPlaySpeed={4000}
+						showArrows={false}
+						showDots={true}
+						className="carousel"
+					>
+						{images.map((image, index) => (
+							<div key={index}>
+								<div
+									className={`sub-image border ${
+										mainimage === image ? "active" : ""
+									}`}
+								>
+									<img
+										src={image}
+										className="col-12 imgZoom"
+										alt="product"
+										onClick={() => {
+											setmainimage(image);
+										}}
+									></img>
+								</div>
 							</div>
-						</div>
-					))}
-				</ResponsiveCarousel>
+						))}
+					</ResponsiveCarousel>
+				</div>
 			</div>
 
 			<div>
@@ -541,7 +518,6 @@ const ProductMobile = ({
 							Buy Now
 						</Link>
 					</button>
-					{/* <ChatOnWhatsapp></ChatOnWhatsapp> */}
 					{/* {favorite.favorite &&
 					favorite.favorite.data.some(
 						(element) => element.id === productdata.id
@@ -566,6 +542,25 @@ const ProductMobile = ({
 					)} */}
 				</div>
 			</div>
+			{showImages && (
+				<>
+					<p>Hello</p>
+					<CkModal
+						show={showImages}
+						onHide={() => {
+							setShowImages(false);
+						}}
+					>
+						<div>
+							{images.map((img, index) => (
+								<div key={index}>
+									<img src={img} alt="" />
+								</div>
+							))}
+						</div>
+					</CkModal>
+				</>
+			)}
 		</div>
 	);
 };
