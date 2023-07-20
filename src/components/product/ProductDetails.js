@@ -100,6 +100,7 @@ const ProductDetails = ({
 	const [product, setProduct] = useState(0);
 
 	useEffect(() => {
+		window.scrollTo(0,0);
 		return () => {
 			dispatch({ type: ActionTypes.CLEAR_SELECTED_PRODUCT, payload: null });
 			setproductcategory({});
@@ -108,7 +109,6 @@ const ProductDetails = ({
 	}, []);
 
 	useEffect(() => {
-		window.scrollTo(0,0);
 		const currUrl = window.location.href;
 		const productId = currUrl.split("/")[4];
 		setProduct(productId)
@@ -469,7 +469,7 @@ const ProductDetails = ({
 								{/* //<ResponsiveCarousel */}
 								<Slider {...settings}>
 									{relatedProducts.map((related_product, index) => (
-										<div className="col-md-3 col-lg-4">
+										<div className="col-md-3 col-lg-4" key={index}>
 											<ProductCard
 												productTriggered={productTriggered}
 												setProductTriggered={setProductTriggered}

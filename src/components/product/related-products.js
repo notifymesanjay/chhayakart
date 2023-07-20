@@ -156,7 +156,6 @@ const RelateProduct = ({
 							});
 							setSelectedProductId(related_product.id);
 							navigate("/product/" + related_product.id);
-							window.scrollTo(0, 0);
 						}}
 					/>
 				</div>

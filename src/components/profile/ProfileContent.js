@@ -78,7 +78,7 @@ const ProfileContent = (props) => {
                                 {/* accept={'image/*'} */}
                                 <input type="file" id="file" onChange={(e) => { setselectedFile(e.target.files[0]) }} />
                             </div>
-                            <button whileTap={{ scale: 0.8 }} type='submit' disabled={props.isupdating} >update profile</button>
+                            <button type='submit' disabled={props.isupdating} >update profile</button>
                         </form>
                     )}
 

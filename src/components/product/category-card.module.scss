@@ -42,6 +42,7 @@
 }
 
 .cardBody {
+  text-align: center;
   padding: 12px 0;
 
   .title {
@@ -80,18 +81,19 @@
     background-color: #ffffff;
     border-radius: 8px;
     width: 190px;
+    padding: 5px 5px 5px 0;
   }
 
   .imageWrapper,
   .subCategoryImg {
-    border-radius: 8px;
+    border-radius: 0 8px 8px 0;
     height: 140px;
     width: 165px;
   }
 
   .cardBody {
-    text-align: center;
-    padding: 8px 5px 5px;
+    text-align: left;
+    padding: 8px 5px 5px 8px;
 
     .title {
       padding: 0;
@@ -115,10 +117,20 @@
     .subCategoryCard{
         width: 150px;
     }
+
+    .imageWrapper, .subCategoryImg{
+      height: 120px;
+      width: 140px;
+    }
 }
 
 @media only screen and (max-width: 330px){
     .subCategoryCard{
         width: 140px;
+    }
+
+    .imageWrapper, .subCategoryImg{
+      height: 110px;
+      width: 130px;
     }
 }

@@ -235,7 +235,6 @@ const Login = ({
                 and <a onClick={handlePolicy}>Privacy & policy</a>
               </span>
               <button
-                whileTap={{ scale: 0.6 }}
                 type="submit"
                 className="login-btn"
               >
@@ -272,7 +271,7 @@ const Login = ({
                   Privacy & policy
                 </span>
               </span>
-              <button whileTap={{ scale: 0.6 }} type="submit">
+              <button type="submit">
                 {" "}
                 Login to Continue
               </button>

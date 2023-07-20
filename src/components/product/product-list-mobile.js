@@ -19,7 +19,9 @@ const ProductMobile = ({
         subCategories.map((sub_ctg) => {
           if (sub_ctg.products.length > 0) {
             sub_ctg.products.map((product) => {
-              selectCategory.push(product);
+              if (product.variants.length > 0) {
+                selectCategory.push(product);
+              }
             });
           }
         });
@@ -30,7 +32,9 @@ const ProductMobile = ({
           if (sub_ctg.id === selectedFilter) {
             if (sub_ctg.products.length > 0) {
               sub_ctg.products.map((product) => {
-                selectCategory.push(product);
+                if (product.variants.length > 0) {
+                  selectCategory.push(product);
+                }
               });
             }
           }

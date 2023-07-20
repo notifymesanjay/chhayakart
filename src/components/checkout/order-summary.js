@@ -68,7 +68,6 @@ const OrderSummary = ({
                 <div className="button-container">
                   {paymentMethod === "Stripe" ? (
                     <motion.button
-                      whileTap={{ scale: 0.8 }}
                       type="button"
                       className="checkout"
                       onClick={(e) => {
@@ -82,7 +81,6 @@ const OrderSummary = ({
                     </motion.button>
                   ) : (
                     <motion.button
-                      whileTap={{ scale: 0.8 }}
                       type="button"
                       className="checkout"
                       onClick={(e) => {

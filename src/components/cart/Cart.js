@@ -37,7 +37,6 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 	useEffect(() => {
 		if (sizes.sizes === null || sizes.status === "loading") {
 			if (city.city !== null && cart.cart !== null) {
-				console.log("cart");
 				api
 					.getProductbyFilter(
 						city.city.id,

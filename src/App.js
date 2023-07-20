@@ -245,7 +245,6 @@ function App() {
 
               <button
                 type="button"
-                whileTap={{ scale: 0.8 }}
                 id="toTop"
                 onClick={() => {
                   window.scrollTo({ top: 0, behavior: "smooth" });
