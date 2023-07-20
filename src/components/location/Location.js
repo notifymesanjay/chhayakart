@@ -337,7 +337,6 @@ const Location = (props) => {
 								</span>
 
 								<button
-									whileTap={{ scale: 0.6 }}
 									onClick={handleCurrentLocationClick}
 									disabled={isInputFields}
 									style={isInputFields ? { opacity: "0.5" } : null}
@@ -401,7 +400,6 @@ const Location = (props) => {
 												: localLocation.formatted_address}
 										</p>
 										<button
-											whileTap={{ scale: 0.6 }}
 											type="button"
 											className="btn-confirm-location"
 											onClick={confirmCurrentLocation}

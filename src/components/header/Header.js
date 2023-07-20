@@ -254,7 +254,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 			{isSmScreen && (
 				<>
 					{Array.from(Array(counter)).map((item, idx) => (
-						<div className={styles.appWrapper}>
+						<div className={styles.appWrapper} key={idx}>
 							<FontAwesomeIcon
 								onClick={handleRemoveDiv}
 								icon={faTimes}
@@ -312,7 +312,6 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 					<div className="canvas-main">
 						<div className="site-location">
 							{/* <button
-                whileTap={{ scale: 0.8 }}
                 type="buton"
                 data-bs-toggle="modal"
                 data-bs-target="#locationModal"
@@ -649,7 +648,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 												if (curr_url.pathname !== "/products") {
 													navigate("/products");
 												}
-												searchNavTrigger.current.click();
+												// searchNavTrigger.current.click();
 											}
 										}}
 										className="search-form"
@@ -671,7 +670,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 										/>
 
 										<button type="submit">
-											<MdSearch fill="white" />
+											<MdSearch fill="black" />
 										</button>
 									</form>
 								</div>
@@ -680,7 +679,6 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 							<div className="d-flex col-md-3 w-auto order-3  justify-content-end align-items-center">
 								<button
 									type="button"
-									whileTap={{ scale: 0.6 }}
 									className="icon position-relative hide-mobile mx-sm-4"
 									onClick={() => {
 										if (cookies.get("jwt_token") === undefined) {
@@ -705,7 +703,6 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 								{city.city === null ||
 								cookies.get("jwt_token") === undefined ? (
 									<button
-										whileTap={{ scale: 0.6 }}
 										className="icon mx-sm-4 position-relative hide-mobile-screen"
 										onClick={() => {
 											if (cookies.get("jwt_token") === undefined) {
@@ -723,7 +720,6 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 									</button>
 								) : (
 									<button
-										whileTap={{ scale: 0.6 }}
 										className="icon mx-4 position-relative hide-mobile-screen"
 										data-bs-toggle="offcanvas"
 										data-bs-target="#favoriteoffcanvasExample"
@@ -753,7 +749,6 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 								{city.city === null ? (
 									<button
 										type="button"
-										whileTap={{ scale: 0.6 }}
 										className="icon mx-4 me-sm-5 position-relative"
 									>
 										<IoCartOutline />
@@ -761,7 +756,6 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 								) : (
 									<button
 										type="button"
-										whileTap={{ scale: 0.6 }}
 										className="icon mx-4 me-sm-5 position-relative"
 										data-bs-toggle="offcanvas"
 										data-bs-target="#cartoffcanvasExample"
@@ -825,7 +819,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 													if (curr_url.pathname !== "/products") {
 														navigate("/products");
 													}
-													searchNavTrigger.current.click();
+													// searchNavTrigger.current.click();
 												}
 											}}
 											className="search-form"
@@ -847,7 +841,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 											/>
 
 											<button type="submit">
-												<MdSearch fill="white" />
+												<MdSearch fill="black" />
 											</button>
 										</form>
 									</div>

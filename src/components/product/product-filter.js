@@ -72,7 +72,6 @@ const ProductFilter = ({
 					<>
 						{category.category.map((ctg, index) => (
 							<div
-								whileTap={{ scale: 0.8 }}
 								onClick={() => {
 									filterbyCategory(ctg);
 									closeCanvas.current.click();
@@ -150,7 +149,6 @@ const ProductFilter = ({
 					<>
 						{brands.map((brand, index) => (
 							<div
-								whileTap={{ scale: 0.8 }}
 								onClick={() => {
 									filterbyBrands(brand);
 									closeCanvas.current.click();

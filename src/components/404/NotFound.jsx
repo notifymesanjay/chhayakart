@@ -14,7 +14,7 @@ const NotFound = () => {
 
           <img src={Not_Found} alt='not-found'></img>
           <p >Page Not Found!!</p>
-          <button whileTap={{ scale: 0.8 }} type='button' onClick={() => {
+          <button type='button' onClick={() => {
             navigate('/')
           }}>Go to Home</button>
         </div>

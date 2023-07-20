@@ -331,7 +331,7 @@ const ProfileDashboard = () => {
                                                                     {/* accept={'image/*'} */}
                                                                     <input type="file" id="file" name='file' onChange={(e) => { setselectedFile(e.target.files[0]) }} />
                                                                 </div>
-                                                                <button whileTap={{ scale: 0.8 }} type='submit' disabled={isupdating} >update profile</button>
+                                                                <button type='submit' disabled={isupdating} >update profile</button>
                                                             </form>
                                                         )}
 

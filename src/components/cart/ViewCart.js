@@ -328,7 +328,6 @@ const ViewCart = () => {
 
 													<th className="remove last-column">
 														<button
-															whileTap={{ scale: 0.8 }}
 															type="button"
 															onClick={() =>
 																removefromCart(

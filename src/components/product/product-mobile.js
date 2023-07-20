@@ -157,9 +157,9 @@ const ProductMobile = ({
 	};
 
 	const addProductToCart1 = (qunatity) => {
-		console.log("xyz", productdata);
 		if (cookies.get("jwt_token") !== undefined) {
 			setIsCart(true);
+			setProductTriggered(!productTriggered);
 			setProductInCartCount(parseInt(qunatity));
 			addtoCart(productdata.id, productdata.variants[0].id, parseInt(qunatity));
 		} else {

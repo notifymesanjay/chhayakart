@@ -16,7 +16,6 @@ export const Footer = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const setting = useSelector((state) => state.setting);
-	console.log(setting);
 	const user = useSelector((state) => state.user);
 	//fetch Category
 	const fetchCategory = () => {

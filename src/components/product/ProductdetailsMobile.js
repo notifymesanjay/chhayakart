@@ -448,7 +448,7 @@ const Productdetails = ({
 								<div className="row">
 									<Slider {...settings}>
 										{relatedProducts.map((related_product, index) => (
-											<div className="col-md-3 col-lg-4">
+											<div className="col-md-3 col-lg-4" key={index}>
 												<RelateProduct
 													index={index}
 													related_product={related_product}

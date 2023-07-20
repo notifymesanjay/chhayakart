@@ -81,7 +81,7 @@ const Transaction = () => {
                                                 {transactions.map((transaction, index) => (
                                                     <tr key={index} className={index === transactions.length - 1 ? 'last-column' : ''}>
                                                         <th>{transaction.id}</th>
-                                                        <th>{transaction.type}</th>
+                                                    <th>{transaction.type}</th>
                                                         <th>{`${new Date(transaction.created_at).getDate()}-${new Date(transaction.created_at).getMonth() + 1}-${new Date(transaction.created_at).getFullYear()}`}</th>
                                                         <th className='amount'><FaRupeeSign fill='var(--secondary-color)' />{transaction.amount}</th>
                                                         <th className={transaction.status === 'failed' ? 'failed' : 'success'}><p>{transaction.status}</p></th>
