@@ -34,18 +34,30 @@ const OrderSummary = ({
               <span>GST</span>
               <div className="d-flex align-items-center">
                 <FaRupeeSign />
-                <span>{parseFloat(cart.taxes)}</span>
+                <span>
+                  {parseFloat(cart.sub_total) > 9999
+                    ? Math.ceil(parseFloat(cart.sub_total * 0.88 * 0.05))
+                    : parseFloat(cart.taxes)}
+                </span>
               </div>
             </div>
+
+            {parseFloat(cart.sub_total) > 9999 && (
+              <div className="d-flex justify-content-between">
+                <span>Discount</span>
+                <div className="d-flex align-items-center">
+                  -<FaRupeeSign />
+                  <span>{Math.floor(parseFloat(cart.sub_total) * 0.12)}</span>
+                </div>
+              </div>
+            )}
 
             <div className="d-flex justify-content-between">
               <span>Delivery Charges</span>
               <div className="d-flex align-items-center">
                 <FaRupeeSign />
                 <span>
-                  {parseFloat(
-                    cart.delivery_charge.total_delivery_charge
-                  )}
+                  {parseFloat(cart.delivery_charge.total_delivery_charge)}
                 </span>
               </div>
             </div>
@@ -54,46 +66,56 @@ const OrderSummary = ({
               <span>Total</span>
               <div className="d-flex align-items-center total-amount">
                 <FaRupeeSign fill="var(--secondary-color)" />
-                <span>{parseFloat(cart.total_amount)}</span>
+                <span>
+                  {parseFloat(cart.sub_total)
+                    ? Math.ceil(
+                        parseFloat(
+                          cart.sub_total +
+                            40 +
+                            0.05 * 0.88 * cart.sub_total -
+                            0.12 * cart.sub_total
+                        )
+                      )
+                    : parseFloat(cart.total_amount)}
+                </span>
               </div>
             </div>
 
             {isUserLoggedIn && (
-              
               <>
-              {loadingPlaceOrder ? (
-              <Loader screen="full" background="none" />
-            ) : (
-              <>
-                <div className="button-container">
-                  {paymentMethod === "Stripe" ? (
-                    <motion.button
-                      type="button"
-                      className="checkout"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handlePlaceOrder();
-                      }}
-                      data-bs-toggle="modal"
-                      data-bs-target="#stripeModal"
-                    >
-                      place order
-                    </motion.button>
-                  ) : (
-                    <motion.button
-                      type="button"
-                      className="checkout"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handlePlaceOrder();
-                      }}
-                    >
-                      place order
-                    </motion.button>
-                  )}
-                </div>
-              </>
-            )}
+                {loadingPlaceOrder ? (
+                  <Loader screen="full" background="none" />
+                ) : (
+                  <>
+                    <div className="button-container">
+                      {paymentMethod === "Stripe" ? (
+                        <motion.button
+                          type="button"
+                          className="checkout"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handlePlaceOrder();
+                          }}
+                          data-bs-toggle="modal"
+                          data-bs-target="#stripeModal"
+                        >
+                          place order
+                        </motion.button>
+                      ) : (
+                        <motion.button
+                          type="button"
+                          className="checkout"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handlePlaceOrder();
+                          }}
+                        >
+                          place order
+                        </motion.button>
+                      )}
+                    </div>
+                  </>
+                )}
               </>
             )}
           </div>

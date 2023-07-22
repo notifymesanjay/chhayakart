@@ -16,6 +16,8 @@ import CryptoJS from "crypto-js";
 import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
+import CkModal from "../shared/ck-modal";
+import BulkOrder from "./bulk-order";
 
 const secret_key = "Xyredg$5g";
 
@@ -31,6 +33,8 @@ const SelectedCategoryProducts = ({
   const city = useSelector((state) => state.city);
   const [isProductAdded, setIsProductAdded] = useState(false);
   const [productVal, setProductVal] = useState(0);
+  const [isOpenBulk, setIsOpenBulk] = useState(false);
+  const [bulkVal, setBulkVal] = useState(0);
 
   const addtoCart = async (product_id, product_variant_id, qty) => {
     await api
@@ -191,11 +195,10 @@ const SelectedCategoryProducts = ({
     }
   };
 
-  const handleIncrement = (product, index) => {
-    var val = productVal;
+  const incrementProduct = (val, index) => {
     if (cookies.get("jwt_token") !== undefined) {
-      if (val < product.total_allowed_quantity) {
-        setProductVal(val + 1);
+      if (parseInt(val) < product.total_allowed_quantity) {
+        setProductVal(parseInt(val) + 1);
         addtoCart(
           product.id,
           product.variants.length > 1
@@ -209,15 +212,24 @@ const SelectedCategoryProducts = ({
               ).id
             : document.getElementById(`default-product${index}-variant-id`)
                 .value,
-          val + 1
+          parseInt(val) + 1
         );
       }
     } else {
       const isIncremented = incrementProduct(product.id, product);
       if (isIncremented) {
-        setProductVal(val + 1);
+        setProductVal(parseInt(val) + 1);
       }
       setProductTriggered(!productTriggered);
+    }
+  };
+
+  const handleIncrement = (product, index) => {
+    var val = productVal;
+    if (val >= Math.ceil(parseInt(product.total_allowed_quantity) / 2)) {
+      setIsOpenBulk(true);
+    } else {
+      incrementProduct(val, index);
     }
   };
 
@@ -348,28 +360,40 @@ const SelectedCategoryProducts = ({
               Add
             </button>
           ) : (
-            <div
-              id={`input-cart-section${index}`}
-              className={`${styles.addBtn} ${styles.addedProduct}`}
-            >
-              <button
-                type="button"
-                onClick={() => {
-                  handleDecrement(product, index);
-                }}
+            <>
+              <div
+                id={`input-cart-section${index}`}
+                className={`${styles.addBtn} ${styles.addedProduct}`}
               >
-                <BiMinus />
-              </button>
-              <span id={`input-section${index}`}>{productVal}</span>
-              <button
-                type="button"
-                onClick={() => {
-                  handleIncrement(product, index);
-                }}
-              >
-                <BsPlus />{" "}
-              </button>
-            </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleDecrement(product, index);
+                  }}
+                >
+                  <BiMinus />
+                </button>
+                <span id={`input-section${index}`}>{productVal}</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleIncrement(product, index);
+                  }}
+                >
+                  <BsPlus />{" "}
+                </button>
+              </div>
+              {isOpenBulk && (
+                <BulkOrder
+                  isOpenBulk={isOpenBulk}
+                  setIsOpenBulk={setIsOpenBulk}
+                  product={product}
+                  onSubmit={incrementProduct}
+                  productVal={productVal}
+                  index={index}
+                />
+              )}
+            </>
           )}
         </div>
       </div>

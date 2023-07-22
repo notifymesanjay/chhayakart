@@ -5,9 +5,11 @@ import Cookies from 'universal-cookie';
 import api from '../../api/api';
 import './address.css'
 import { GoogleMap, MarkerF } from '@react-google-maps/api';
+import { useSelector } from 'react-redux';
 
 const NewAddress = (props) => {
     const closeModalRef = useRef();
+    const city = useSelector((state) => state.city);
 
     //initialize cookies
     const cookies = new Cookies();
@@ -16,35 +18,38 @@ const NewAddress = (props) => {
         e.preventDefault()
 
         let address = `${addressDetails.address}, ${addressDetails.landmark}, ${addressDetails.city}, ${addressDetails.area}, ${addressDetails.state}, ${addressDetails.country} ,${addressDetails.pincode}`
-        const geocoder = new window.google.maps.Geocoder();
+        // console.log('xyz1234', window)
+        // console.log('xyz12345', window);
+        // window.google.maps.Geocoder()
+        // const geocoder = window.google.maps.Geocoder();
 
-        geocoder.geocode({
-            'address': address
-        })
-            .then(result => {
+        // geocoder.geocode({
+        //     'address': address
+        // })
+        //     .then(result => {
 
 
-                setlocalLocation({
-                    lat: parseFloat(result.results[0].geometry.location.lat()),
-                    lng: parseFloat(result.results[0].geometry.location.lng())
-                })
+        //         setlocalLocation({
+        //             lat: parseFloat(result.results[0].geometry.location.lat()),
+        //             lng: parseFloat(result.results[0].geometry.location.lng())
+        //         })
 
-                api.getCity(addressDetails.city, result.results[0].geometry.location.lat(), result.results[0].geometry.location.lng())
+                api.getCity(addressDetails.city, city.city.latitude, city.city.longitude)
                     .then(resp => resp.json())
                     .then(res => {
                         if (res.status === 1) {
-                            setisconfirmAddress(true)
+                            handleConfirmAddress();
                         }
                         else {
                             setisconfirmAddress(false)
                             toast.error(res.message)
                         }
                     })
-            })
-            .catch(error => {
-                setisconfirmAddress(false)
-                toast.error(`Cann't find address!! Please enter a valid address!`)
-            })
+            // })
+            // .catch(error => {
+            //     setisconfirmAddress(false)
+            //     toast.error(`Cann't find address!! Please enter a valid address!`)
+            // })
     }
 
 
@@ -300,7 +305,7 @@ const NewAddress = (props) => {
                         }} style={{ width: "30px" }}><AiOutlineCloseCircle /></button>
                     </div>
 
-                    {isconfirmAddress
+                    {/* {isconfirmAddress
                         ? <>
                             <div className='w-100'>
 
@@ -310,10 +315,10 @@ const NewAddress = (props) => {
                                 </GoogleMap>
                             </div>
 
-                            {/* {address !== '' ? <p style={{ fontWeight: 'bolder', fontSize: "1.755rem", marginTop: "10px" }}>Address : <span className='text-danger' style={{ fontWeight: "normal" }}>{address}</span></p> : null} */}
+                            {address !== '' ? <p style={{ fontWeight: 'bolder', fontSize: "1.755rem", marginTop: "10px" }}>Address : <span className='text-danger' style={{ fontWeight: "normal" }}>{address}</span></p> : null}
 
                         </>
-                        : null}
+                        : null} */}
 
                     {addressLoading
                         ? <div className="d-flex justify-content-center">
@@ -424,9 +429,10 @@ const NewAddress = (props) => {
                                 </div>
                             </div>
 
-                            {isconfirmAddress
-                                ? <button type='button' className='confirm-address' onClick={() => handleConfirmAddress()}>Confirm Address</button>
-                                : <button type='submit'>Add New Address</button>}
+                            {/* {isconfirmAddress
+                                ? <button type='button' className='confirm-address' onClick={() => handleConfirmAddress()}>Confirm Address</button> */}
+                                : <button type='submit'>Add New Address</button>
+                                {/* } */}
 
                         </form>}
 

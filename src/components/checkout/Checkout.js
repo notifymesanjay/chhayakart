@@ -350,9 +350,20 @@ const Checkout = () => {
             product_variant_id: allProductVariantId,
             quantity: allQuantity,
             sub_total: subTotal,
-            taxes: Math.ceil(0.05 * subTotal),
+            taxes:
+              subTotal > 9999
+                ? Math.ceil(0.05 * 0.88 * subTotal)
+                : Math.ceil(0.05 * subTotal),
             delivery_charge: { total_delivery_charge: 40 },
-            total_amount: Math.ceil(subTotal + 0.05 * subTotal + 40),
+            total_amount:
+              subTotal > 9999
+                ? Math.ceil(
+                    subTotal +
+                      0.05 * 0.88 * subTotal +
+                      40 -
+                      Math.floor(0.12 * subTotal)
+                  )
+                : Math.ceil(subTotal + 0.05 * subTotal + 40),
             cod_allowed: 1,
           };
           setOrderSummary(orderVal);
@@ -377,12 +388,23 @@ const Checkout = () => {
           product_variant_id: cart.checkout.product_variant_id,
           quantity: cart.checkout.quantity,
           sub_total: cart.checkout.sub_total,
-          taxes: Math.ceil(0.05 * cart.checkout.sub_total),
+          taxes:
+            cart.checkout.sub_total > 9999
+              ? Math.ceil(0.05 * 0.88 * cart.checkout.sub_total)
+              : Math.ceil(0.05 * cart.checkout.sub_total),
           delivery_charge: {
             total_delivery_charge:
               cart.checkout.delivery_charge.total_delivery_charge,
           },
-          total_amount: Math.ceil(cart.checkout.total_amount),
+          total_amount:
+            cart.checkout.sub_total > 9999
+              ? Math.ceil(
+                  cart.checkout.sub_total +
+                    0.05 * 0.88 * cart.checkout.sub_total +
+                    40 -
+                    Math.floor(0.12 * cart.checkout.sub_total)
+                )
+              : Math.ceil(cart.checkout.total_amount),
           cod_allowed: 1,
         };
         setOrderSummary(orderVal);
