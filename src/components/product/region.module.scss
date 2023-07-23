@@ -1,82 +1,67 @@
-.homeCategoryWrapper {
-  margin: 10px 0;
+.mobCardWrapper {
   background-color: white;
   padding: 15px 5px;
+  margin-top: 10px;
   border-radius: 8px;
+
+  .headerWrapper {
+    padding: 0 0 5px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid lightgray;
+
+    .header {
+          text-align: left;
+    padding-left: 10px;
+    font-size: 20px;
+    color: #898b8a;
+    font-weight: 700;
+    }
+  }
 }
 
-.headerWrapper {
-  padding: 5px 0;
-  margin-bottom: 10px;
-  border-bottom: 2px solid lightgray;
-}
-
-.subCategoryWrapper {
+.mobCategoryWrapper {
   display: flex;
-  gap: 6px;
   flex-wrap: wrap;
+  gap: 16px;
   justify-content: center;
-  align-items: center;
-}
 
-.header {
-  font-size: 24px;
-  text-align: left;
-  padding-left: 10px;
-  color: rgb(68, 68, 68);
-}
+  .imageWrapper {
+    text-align: center;
+    height: 120px;
+    width: 100%;
+  }
 
-.subCategoryCard {
-  width: 125px;
-  border: 1px solid lightgray;
-  background-color: #eeeeee;
-  border-radius: 8px;
-}
+  .category {
+    width: calc(31% - 6px);
+    background-color: #eeeeee;
+  }
 
-.imageWrapper {
-  width: 110px;
-  height: 95px;
-  padding: 5px;
-  border-radius: 100%;
-  margin: 0 auto;
-}
-
-.subCategoryImg {
-  width: 100%;
-  height: 95px;
-  object-fit: cover;
-  border-radius: 100%;
-}
-
-.cardBody {
-  text-align: center;
-  padding: 8px 5px 5px;
-
-  .title {
-    font-size: 14px;
-    margin: 5px 0 0;
+  .categoryImg {
+    width: 100%;
+    min-width: 100%;
+    height: 120px;
+    min-height: 120px;
+    object-fit: fill;
     padding: 0;
-    line-height: 17px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    border: none;
+    margin: 0 auto;
+    border-radius: 0;
   }
 }
 
-@media only screen and (max-width: 408px) {
-  .subCategoryCard {
-    width: 115px;
-  }
-}
-
-@media only screen and (max-width: 385px) {
-  .subCategoryCard {
-    width: 150px;
-  }
-}
-
-@media only screen and (max-width: 330px) {
-  .subCategoryCard {
-    width: 140px;
+@media only screen and (max-width: 365px) {
+  .mobCategoryWrapper {
+    .category {
+      width: calc(30% - 6px);
+    }
+    .imageWrapper{
+      height: 90px;
+    }
+    .categoryImg {
+      width: 100%;
+      height: 90px;
+      min-height: 90px;
+      min-width: 100%;
+    }
   }
 }

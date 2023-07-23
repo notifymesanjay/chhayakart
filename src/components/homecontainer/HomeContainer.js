@@ -6,6 +6,8 @@ import styles from "./home-container.module.scss";
 import { useSelector } from "react-redux";
 import { useResponsive } from "../shared/use-responsive";
 
+const shopByRegion = "SHOP BY REGION";
+
 const HomeContainer = ({ setSelectedFilter = () => {} }) => {
   const {isSmScreen} = useResponsive();
   const shop = useSelector((state) => state.shop);
@@ -16,7 +18,7 @@ const HomeContainer = ({ setSelectedFilter = () => {} }) => {
       const categoryList = shop.shop.category;
       let finalCategoryList = [];
       categoryList.map((category) => {
-        if (category.has_child) {
+        if (category.has_child && category.name.toLowerCase() !== shopByRegion.toLowerCase()) {
           finalCategoryList.push(category);
         }
       });

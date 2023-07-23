@@ -1,0 +1,80 @@
+.bulkOrderWrapper {
+  padding: 25px 10px 0;
+  max-width: 575px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.header {
+  font-weight: 700;
+  font-size: 18px;
+  color: #373737;
+  margin-bottom: 15px;
+}
+
+.subHeader {
+  font-size: 18px;
+  font-weight: 400;
+  color: #373737;
+  margin-bottom: 15px;
+}
+
+.inputWrapper {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+
+  .label,
+  .quantityAllowed {
+    font-size: 14px;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+
+  .inputClass {
+    border: 1px solid #d3d3d3;
+    height: 34px;
+    width: 120px;
+    padding: 7px 5px;
+    font-size: 14px;
+    text-align: center;
+    background-color: rgba(255, 229, 137, 0.3);
+  }
+}
+
+.btnWrapper {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.submitBtn {
+  width: 120px;
+  padding: 10px;
+  background-color: #f25cc5;
+  color: white;
+  font-size: 14px;
+}
+
+@media only screen and(max-width: 575px) {
+  .bulkOrderWrapper {
+    text-align: left;
+  }
+
+  .header,
+  .sub-header {
+    font-size: 18px;
+  }
+
+  .inputWrapper {
+    .label,
+    .quantityAllowed,
+    .inputClass {
+      font-size: 14px;
+    }
+  }
+
+  .submitBtn {
+    font-size: 14px;
+  }
+}
