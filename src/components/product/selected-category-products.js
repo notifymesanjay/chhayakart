@@ -195,7 +195,7 @@ const SelectedCategoryProducts = ({
     }
   };
 
-  const incrementProduct = (val, index) => {
+  const incrementProduct1 = (val, index) => {
     if (cookies.get("jwt_token") !== undefined) {
       if (parseInt(val) < product.total_allowed_quantity) {
         setProductVal(parseInt(val) + 1);
@@ -214,6 +214,8 @@ const SelectedCategoryProducts = ({
                 .value,
           parseInt(val) + 1
         );
+      }else{
+        toast.error("Maximum Quantity Exceeded");
       }
     } else {
       const isIncremented = incrementProduct(product.id, product);
@@ -226,11 +228,11 @@ const SelectedCategoryProducts = ({
 
   const handleIncrement = (product, index) => {
     var val = productVal;
-    if (val >= Math.ceil(parseInt(product.total_allowed_quantity) / 2)) {
-      setIsOpenBulk(true);
-    } else {
-      incrementProduct(val, index);
-    }
+    // if (val >= Math.ceil(parseInt(product.total_allowed_quantity) / 2)) {
+    //   setIsOpenBulk(true);
+    // } else {
+      incrementProduct1(val, index);
+    // }
   };
 
   const getProductVariants = (product) => {
@@ -383,7 +385,7 @@ const SelectedCategoryProducts = ({
                   <BsPlus />{" "}
                 </button>
               </div>
-              {isOpenBulk && (
+              {/* {isOpenBulk && (
                 <BulkOrder
                   isOpenBulk={isOpenBulk}
                   setIsOpenBulk={setIsOpenBulk}
@@ -392,7 +394,7 @@ const SelectedCategoryProducts = ({
                   productVal={productVal}
                   index={index}
                 />
-              )}
+              )} */}
             </>
           )}
         </div>

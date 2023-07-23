@@ -199,7 +199,7 @@ const ProductMobile = ({
     }
   };
 
-  const incrementProduct = (val, index) => {
+  const incrementProduct1 = (val, index) => {
     if (cookies.get("jwt_token") !== undefined) {
       if (parseInt(val) < productdata.total_allowed_quantity) {
         setProductInCartCount(parseInt(val) + 1);
@@ -208,6 +208,8 @@ const ProductMobile = ({
           productdata.variants[0].id,
           parseInt(val) + 1
         );
+      }else{
+        toast.error("Maximum Quantity Exceeded");
       }
     } else {
       const isIncremented = incrementProduct(productdata.id, productdata, 1);
@@ -220,11 +222,11 @@ const ProductMobile = ({
 
   const handleIncrement = () => {
     var val = productInCartCount;
-    if (val >= Math.ceil(parseInt(productdata.total_allowed_quantity) / 2)) {
-      setIsOpenBulk(true);
-    } else {
-      incrementProduct(val, 0);
-    }
+    // if (val >= Math.ceil(parseInt(productdata.total_allowed_quantity) / 2)) {
+    //   setIsOpenBulk(true);
+    // } else {
+      incrementProduct1(val, 0);
+    // }
   };
 
   return (
@@ -526,7 +528,7 @@ const ProductMobile = ({
                 <BsPlus />{" "}
               </button>
             </div>
-            {isOpenBulk && (
+            {/* {isOpenBulk && (
               <BulkOrder
                 isOpenBulk={isOpenBulk}
                 setIsOpenBulk={setIsOpenBulk}
@@ -534,7 +536,7 @@ const ProductMobile = ({
                 onSubmit={incrementProduct}
                 productVal={productInCartCount}
               />
-            )}
+            )} */}
           </>
         )}
 
