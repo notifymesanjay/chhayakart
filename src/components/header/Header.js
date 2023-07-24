@@ -829,7 +829,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 											<input
 												type="search"
 												id="search-box"
-												placeholder="Search 1000+ products.."
+												placeholder="Delivering 1000+ Products Across India"
 												className="rounded-5"
 												onChange={(e) => {
 													if (e.target.value === "") {
