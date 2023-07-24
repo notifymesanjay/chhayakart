@@ -148,7 +148,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
         );
       }
     } else {
-      const isIncremented = incrementProduct(product.product_id, product, 1);
+      const isIncremented = incrementProduct(product.product_id, product, 1, false);
       if (isIncremented) {
         document.getElementById(`input-cart-sidebar${index}`).innerHTML =
           val + 1;
@@ -219,7 +219,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
     if (cookies.get("jwt_token") === undefined) {
       if (localStorage.getItem("cart")) {
         const cartVal = JSON.parse(localStorage.getItem("cart"));
-        if (cartVal.length > 0) {
+        if (cartVal && cartVal.length > 0) {
           let allProductVariantId = "",
             allQuantity = "",
             subTotal = 0,
@@ -289,7 +289,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
               subTotal > 9999
                 ? Math.ceil(0.05 * 0.88 * subTotal)
                 : Math.ceil(0.05 * subTotal),
-            discount: Math.floor(0.12 * subTotal),
+            discount: subTotal > 9999 ? Math.floor(0.12 * subTotal) : 0,
             delivery_charge: { total_delivery_charge: 40 },
             total_amount:
               subTotal > 9999
@@ -344,7 +344,10 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
             cart.checkout.sub_total > 9999
               ? Math.ceil(0.05 * 0.88 * cart.checkout.sub_total)
               : Math.ceil(0.05 * cart.checkout.sub_total),
-          discount: Math.floor(0.12 * cart.checkout.sub_total),
+          discount:
+            cart.checkout.sub_total > 9999
+              ? Math.floor(0.12 * cart.checkout.sub_total)
+              : 0,
           delivery_charge: {
             total_delivery_charge:
               cart.checkout.delivery_charge.total_delivery_charge,

@@ -359,7 +359,7 @@ const QuickViewModal = (props) => {
 				);
 			}
 		} else {
-			const isIncremented = incrementProduct(product.id, product, 1);
+			const isIncremented = incrementProduct(product.id, product, 1, false);
 			if (isIncremented) {
 				document.getElementById(`input-quickview`).innerHTML =
 					parseInt(val) + 1;
