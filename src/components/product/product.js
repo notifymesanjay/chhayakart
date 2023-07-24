@@ -210,7 +210,7 @@ const Product = ({
 				);
 			}
 		} else {
-			const isIncremented = incrementProduct(productdata.id, productdata, 1);
+			const isIncremented = incrementProduct(productdata.id, productdata, 1, false);
 			if (isIncremented) {
 				setProductInCartCount(val + 1);
 			}

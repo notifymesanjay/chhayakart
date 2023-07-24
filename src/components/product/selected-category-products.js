@@ -197,7 +197,7 @@ const SelectedCategoryProducts = ({
 
   const incrementProduct1 = (val, index) => {
     if (cookies.get("jwt_token") !== undefined) {
-      if (parseInt(val) < product.total_allowed_quantity) {
+      if (parseInt(val) < parseInt(product.total_allowed_quantity)) {
         setProductVal(parseInt(val) + 1);
         addtoCart(
           product.id,
@@ -214,11 +214,11 @@ const SelectedCategoryProducts = ({
                 .value,
           parseInt(val) + 1
         );
-      }else{
+      } else {
         toast.error("Maximum Quantity Exceeded");
       }
     } else {
-      const isIncremented = incrementProduct(product.id, product);
+      const isIncremented = incrementProduct(product.id, product, val+1, true);
       if (isIncremented) {
         setProductVal(parseInt(val) + 1);
       }
@@ -228,11 +228,11 @@ const SelectedCategoryProducts = ({
 
   const handleIncrement = (product, index) => {
     var val = productVal;
-    // if (val >= Math.ceil(parseInt(product.total_allowed_quantity) / 2)) {
-    //   setIsOpenBulk(true);
-    // } else {
+    if (val >= Math.ceil(parseInt(product.total_allowed_quantity) / 2)) {
+      setIsOpenBulk(true);
+    } else {
       incrementProduct1(val, index);
-    // }
+    }
   };
 
   const getProductVariants = (product) => {
@@ -385,16 +385,16 @@ const SelectedCategoryProducts = ({
                   <BsPlus />{" "}
                 </button>
               </div>
-              {/* {isOpenBulk && (
+              {isOpenBulk && (
                 <BulkOrder
                   isOpenBulk={isOpenBulk}
                   setIsOpenBulk={setIsOpenBulk}
                   product={product}
-                  onSubmit={incrementProduct}
+                  onSubmit={incrementProduct1}
                   productVal={productVal}
                   index={index}
                 />
-              )} */}
+              )}
             </>
           )}
         </div>

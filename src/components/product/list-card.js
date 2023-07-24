@@ -170,7 +170,7 @@ const ListCard = ({
 				);
 			}
 		} else {
-			const isIncremented = incrementProduct(product.id, product, 1);
+			const isIncremented = incrementProduct(product.id, product, 1, false);
 			if (isIncremented) {
 				document.getElementById(`input-productlist${index}`).innerHTML =
 					parseInt(val) + 1;
@@ -435,7 +435,7 @@ const ListCard = ({
 				);
 			}
 		} else {
-			const isIncremented = incrementProduct(product.id, product, 1);
+			const isIncremented = incrementProduct(product.id, product, 1, false);
 			if (isIncremented) {
 				document.getElementById(`input-section${index}`).innerHTML =
 					parseInt(val) + 1;

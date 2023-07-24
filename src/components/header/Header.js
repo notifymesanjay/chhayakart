@@ -223,7 +223,9 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 		if (cookies.get("jwt_token") === undefined) {
 			if (localStorage.getItem("cart")) {
 				const cartVal = JSON.parse(localStorage.getItem("cart"));
-				setProductsInCart(cartVal.length);
+				if (cartVal) {
+					setProductsInCart(cartVal.length);
+				}
 			}
 		} else {
 			if (cart.cart !== null) {
@@ -827,7 +829,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 											<input
 												type="search"
 												id="search-box"
-												placeholder="Delivering 1000+ Products Across India"
+												placeholder="Search 1000+ products.."
 												className="rounded-5"
 												onChange={(e) => {
 													if (e.target.value === "") {
@@ -1355,6 +1357,10 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 				{/* favorite sidebar */}
 				<Favorite />
 			</header>
+
+			{isLogin && (
+				<LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
+			)}
 		</>
 	);
 };
