@@ -152,7 +152,7 @@ const ProductCard = ({
         addtoCart(product.id, product.variants[0].id, val + 1);
       }
     } else {
-      const isIncremented = incrementProduct(product.id, product, 1);
+      const isIncremented = incrementProduct(product.id, product, 1, false);
       if (isIncremented) {
         setProductInCartCount(val + 1);
       }

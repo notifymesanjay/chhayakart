@@ -18,7 +18,7 @@ const BulkOrder = ({
     setBulkVal(e.target.value);
   };
   const submitVal = () => {
-    if(bulkVal > product.total_allowed_quantity){
+    if(parseInt(bulkVal) > parseInt(product.total_allowed_quantity)){
         toast.error("Entered Quantity is more than Allowed");
     }else{
         onSubmit(parseInt(bulkVal)-1, index)

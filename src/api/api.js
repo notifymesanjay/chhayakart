@@ -569,6 +569,7 @@ const api = {
 		payment_method,
 		address_id,
 		deliveryTime,
+		discount,
 		status = 2
 	) {
 		var myHeaders = new Headers();
@@ -586,6 +587,7 @@ const api = {
 		formdata.append("payment_method", payment_method);
 		formdata.append("address_id", address_id);
 		formdata.append("delivery_time", deliveryTime);
+		formdata.append("discount", discount);
 		if (payment_method === "COD") {
 			formdata.append("status", 2);
 		} else {
