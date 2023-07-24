@@ -6,7 +6,7 @@ import SectionTitle from "../shared/section-title/section-title";
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
 import { useResponsive } from "../shared/use-responsive";
 import styles from "./category.module.scss";
-
+import Gaon from "../Gaon.png";
 const Category = ({ categories = [], setSelectedFilter = () => {} }) => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -65,7 +65,14 @@ const Category = ({ categories = [], setSelectedFilter = () => {} }) => {
 							<div className={styles.mobCardWrapper}>
 								<div className={styles.headerWrapper}>
 									<h1 className={styles.header}>SHOP BY CATEGORY</h1>
+
+									<img
+										className={styles.gaonKiDukan}
+										src={Gaon}
+										alt="Gaon Ki Dukan"
+									/>
 								</div>
+
 								<div className={styles.mobCategoryWrapper}>
 									{categories.map((ctg, index) => (
 										<div className={styles.category} key={index}>

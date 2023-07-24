@@ -56,6 +56,9 @@
     padding: 0 0 5px;
     margin-bottom: 10px;
     border-bottom: 2px solid lightgray;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     .header {
           text-align: left;
@@ -64,9 +67,16 @@
     color: #898b8a;
     font-weight: 700;
     }
+    .gaonKiDukan {
+
+      height: 40px;
+      width: auto;
+    }
     
+   
   }
 }
+ 
 
 .mobCategoryWrapper {
   display: flex;
