@@ -350,7 +350,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 						</div>
 
 						<div className="canvas-title">
-							<h6 className="entry-title">Site Navigation</h6>
+							<h6 className="entry-title">Gaon Ki Dukaan Me Swagat Hai </h6>
 						</div>
 
 						<nav className="canvas-menu canvas-primary vertical">
@@ -656,7 +656,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 										<input
 											type="search"
 											id="search-box"
-											placeholder="Search 1000+ products.."
+											placeholder="Delivering 1000+ Products Across India"
 											className="rounded-5"
 											onChange={(e) => {
 												if (e.target.value === "") {
@@ -827,7 +827,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 											<input
 												type="search"
 												id="search-box"
-												placeholder="Search 1000+ products.."
+												placeholder="Delivering 1000+ Products Across India"
 												className="rounded-5"
 												onChange={(e) => {
 													if (e.target.value === "") {

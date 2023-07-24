@@ -9,6 +9,9 @@ import payt from "../payt.png";
 import cardPayment from "../cardPayment.png";
 import OTPInput from "otp-input-react";
 import "./checkout.css";
+import { useState } from "react";
+
+//const [enableCod, setEnableCod] = useState();
 
 const PaymentMethod = ({ setting, setPaymentMethod = () => {} }) => {
 	return (
