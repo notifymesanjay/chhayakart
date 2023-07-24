@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import api from "../../api/api";
 import { ActionTypes } from "../../model/action-type";
 import Offers from "../offer/Offers";
 import LoginUser from "../login/login-user";
 import ProductHeader from "./product-header";
-import ProductCard from "./product-card";
 import "./product.css";
+import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
+import ProductCard from "../shared/card/product-card";
+import CategoryCard from "./category-card";
+import ShopByRegion from "./region";
 
 const ProductContainer = ({
   productTriggered,
   setProductTriggered = () => {},
+  setSelectedFilter = () => {},
 }) => {
   const dispatch = useDispatch();
 
@@ -24,53 +25,12 @@ const ProductContainer = ({
 
   const [productSizes, setproductSizes] = useState(null);
   const [offerConatiner, setOfferContainer] = useState(0);
-  const [isLogin, setIsLogin] = useState(false);
-
-  const settings = {
-    infinite: false,
-    slidesToShow: 5.5,
-    slidesPerRow: 1,
-    initialSlide: 0,
-    // centerMode: true,
-    centerMargin: "10px",
-    margin: "20px", // set the time interval between slides
-    // Add custom navigation buttons using Font Awesome icons
-    prevArrow: (
-      <button type="button" className="slick-prev">
-        <FaChevronLeft size={30} className="prev-arrow" />
-      </button>
-    ),
-    nextArrow: (
-      <button type="button" className="slick-next">
-        <FaChevronRight color="#f7f7f7" size={30} className="next-arrow" />
-      </button>
-    ),
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 4,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 425,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-    ],
-  };
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
 
   useEffect(() => {
     if (sizes.sizes === null || sizes.status === "loading") {
       if (city.city !== null) {
-        console.log('productContainer');
         api
           .getProductbyFilter(
             city.city.id,
@@ -93,6 +53,68 @@ const ProductContainer = ({
     }
   }, [city, sizes]);
 
+  useEffect(() => {
+    if (shop.shop.category.length > 0) {
+      const categoryList = shop.shop.category;
+      let finalCategoryList = [];
+      categoryList.map((category) => {
+        if (category.has_child) {
+          finalCategoryList.push(category);
+        }
+      });
+      setCategories(finalCategoryList);
+    }
+  }, [shop.shop]);
+
+  useEffect(() => {
+    if (shop.shop.sections.length > 0 && categories.length > 0) {
+      const sectionList = shop.shop.sections;
+      let finalSectionList = [];
+      for (let i = 0; i < sectionList.length; i++) {
+        let obj = {};
+        for (let j = 0; j < categories.length; j++) {
+          if (
+            parseInt(sectionList[i].category_ids) === parseInt(categories[j].id)
+          ) {
+            obj = {
+              category_id: parseInt(categories[j].id),
+              category_name: categories[j].name,
+            };
+            obj["sub_category"] = [sectionList[i]];
+          }
+        }
+        let flag = Number.MAX_VALUE;
+        for (let k = 0; k < finalSectionList.length && obj.category_id; k++) {
+          if (parseInt(finalSectionList[k].category_id) === obj.category_id) {
+            flag = k;
+          }
+        }
+        if (flag === Number.MAX_VALUE && obj.category_id) {
+          finalSectionList.push(obj);
+        } else if (flag !== Number.MAX_VALUE && obj.category_id) {
+          finalSectionList[flag]["sub_category"].push(obj["sub_category"][0]);
+        }
+      }
+      const categoryList = shop.shop.category;
+      if (categoryList.length > 0) {
+        for (let i = 0; i < finalSectionList.length; i++) {
+          for (let j = 0; j < finalSectionList[i].sub_category.length; j++) {
+            for (let k = 0; k < categoryList.length; k++) {
+              if (
+                (finalSectionList[i].sub_category[j].title).toLowerCase() ===
+                (categoryList[k].name).toLowerCase()
+              ) {
+                finalSectionList[i].sub_category[j]["image_url"] =
+                  categoryList[k].image_url;
+              }
+            }
+          }
+        }
+      }
+      setSubCategories(finalSectionList);
+    }
+  }, [shop.shop, categories]);
+
   return (
     <section id="products">
       <div className="container">
@@ -106,45 +128,17 @@ const ProductContainer = ({
           </>
         ) : (
           <>
-            {shop.shop.sections.map((section, index0) => (
-              <div key={index0}>
-                <div
-                  className="product_section row flex-column"
-                  value={index0}
-                  onChange={(e) => {
-                    setOfferContainer(index0);
-                  }}
-                >
-                  <ProductHeader section={section} />
-                  <div className="product_section_content p-0">
-                    <Slider {...settings}>
-                      {section.products.map((product, index) => (
-                        <ProductCard
-                          index={index}
-                          index0={index0}
-                          product={product}
-                          productTriggered={productTriggered}
-                          setProductTriggered={setProductTriggered}
-                        />
-                      ))}
-                    </Slider>
-                  </div>
-                </div>
-
-                {index0 === 1 && (
-                  <div className="product_section row flex-column" id="offers">
-                    <Offers />
-                  </div>
-                )}
-              </div>
-            ))}
+            {/* <ShopByRegion /> */}
+            {subCategories.length > 0 && (
+              <CategoryCard
+                subCategories={subCategories}
+                setSelectedFilter={setSelectedFilter}
+              />
+            )}
           </>
         )}
         {offerConatiner === 1 ? <Offers /> : null}
       </div>
-      {isLogin && (
-        <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
-      )}
     </section>
   );
 };

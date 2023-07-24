@@ -1,0 +1,152 @@
+$color-green: #51bd88;
+
+.productWrapper {
+  margin-top: 10px;
+}
+.productListWrapper {
+  min-height: 100vh;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.16);
+}
+
+.cardWrapper {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  background-color: white;
+  padding: 10px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), inset 0 0 2px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  margin-bottom: 5px;
+}
+
+.cardWrapper.active {
+  background-color: #f25cc5;
+  .title {
+    color: white;
+  }
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid #eeeff1;
+  -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.productImg {
+  height: 100px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.title {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.productBody {
+  padding: 10px;
+  width: calc(100% - 106px);
+
+  .productName {
+    color: #141a1f;
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-transform: capitalize;
+    width: 200px;
+  }
+
+  .priceWrapper {
+    display: flex;
+    gap: 6px;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .discountPrice {
+    color: $color-green !important;
+    float: left;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    text-transform: capitalize;
+    margin-bottom: 0;
+  }
+
+  .rupeeIcon {
+    color: $color-green !important;
+    font-size: 12px;
+    margin-right: 2px;
+  }
+
+  .actualPrice {
+    font-size: 12px;
+    color: #adadad !important;
+    text-decoration: line-through;
+
+    .rupeeIcon {
+      font-size: 10px;
+    }
+  }
+
+  .stockUnit {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    margin-bottom: 0 !important;
+    margin-top: 3px !important;
+    color: #adadad !important;
+  }
+
+  .precentage {
+    text-decoration: none;
+  }
+}
+
+.btnWrapper {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.addBtn {
+  background-color: pink;
+  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  width: 100px;
+}
+
+.addedProduct {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.noProductWrapper{
+  background-color: white;
+  color: black;
+  padding: 10px;
+  border-radius: 12px;
+
+  .description{
+    font-size: 22px;
+    text-align: center;
+    margin: 15px 0 10px;
+  }
+}

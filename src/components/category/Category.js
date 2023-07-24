@@ -1,167 +1,98 @@
-import React, { useState, useEffect, useRef } from "react";
-import "./category.css";
-import api from "../../api/api";
-import { motion } from "framer-motion";
-import { BsPlusCircle, BsGrid3X3GapFill } from "react-icons/bs";
-import CategoryChild from "./CategoryChild";
-import { AiOutlineArrowRight, AiOutlineDown } from "react-icons/ai";
+import React, { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { ActionTypes } from "../../model/action-type";
-import { Link, useNavigate } from "react-router-dom";
-import { Card } from "react-bootstrap";
-import Slider from "react-slick";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import SectionTitle from "../shared/section-title/section-title";
+import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
+import { useResponsive } from "../shared/use-responsive";
+import styles from "./category.module.scss";
 
-const Category = () => {
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
+const Category = ({ categories = [], setSelectedFilter = () => {} }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isSmScreen } = useResponsive();
 
-	const sliderRef = useRef(null);
+  const shop = useSelector((state) => state.shop);
 
-	const handlePrevClick = () => {
-		sliderRef.current.slickPrev();
-	};
+  const selectCategory = (category) => {
+    dispatch({ type: ActionTypes.SET_FILTER_CATEGORY, payload: category.id });
+    navigate("/products");
+  };
 
-	const handleNextClick = () => {
-		sliderRef.current.slickNext();
-	};
-
-	const shop = useSelector((state) => state.shop);
-
-	const selectCategory = (category) => {
-		dispatch({ type: ActionTypes.SET_FILTER_CATEGORY, payload: category.id });
-		navigate("/products");
-	};
-	const settings = {
-		infinite: false,
-		autoplay: true,
-		autoplaySpeed: 3000,
-		pauseOnHover: false,
-		direction: "rtl",
-		pauseOnDotsHover: false,
-		pauseOnFocus: true,
-		slidesToShow: 5,
-		slidesPerRow: 1,
-		initialSlide: 0,
-		responsive: [
-			{
-				breakpoint: 1200,
-				settings: {
-					slidesToShow: 5,
-					slidesToScroll: 4,
-				},
-			},
-			{
-				breakpoint: 1024,
-				settings: {
-					slidesToShow: 4,
-				},
-			},
-
-			{
-				breakpoint: 768,
-				settings: {
-					slidesToShow: 3,
-				},
-			},
-			{
-				breakpoint: 425,
-				settings: {
-					slidesToShow: 3,
-					rows: 2,
-				},
-			},
-		],
-	};
-
-	return (
-		<>
-			{shop.shop === null ? (
-				<></>
-			) : (
-				<>
-					<div className="category_section_header">
-						<div className="rowWrapper">
-							<div>
-								<div className="title">
-									<p>Shop by Category</p>
-								</div>
-							</div>
-							<div className="rowWrapper">
-								<div>
-									<Link className="seeAllDsk" to="/categories">
-										See all categories
-										<AiOutlineArrowRight size={15} />{" "}
-									</Link>
-									<Link className="category_button seeAllMob" to="/products">
-										see all
-									</Link>
-								</div>
-								<div className="carouselBtnWrapper">
-									<button
-										className="prev-arrow-category"
-										onClick={handlePrevClick}
-									>
-										<FaChevronLeft size={20} />
-									</button>
-									<button
-										className="next-arrow-category"
-										onClick={handleNextClick}
-									>
-										<FaChevronRight size={20} />
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div className="caegory_section_content">
-						<div className="row " id="expandCategory">
-							<Slider {...settings} ref={sliderRef}>
-								{shop.shop.category.map((ctg, index) => (
-									<div className="col-md-12" key={index}>
-										<div
-											className="category-container "
-											style={{ padding: "1%" }}
-										>
-											{ctg.has_child ? (
-												<Card onClick={() => selectCategory(ctg)}>
-													<Card.Img
-														variant="top"
-														src={ctg.image_url}
-														alt={ctg.subtitle}
-														className="card-img-top category_image img-fluid "
-													/>
-													<Card.Body className="card-body">
-														<Card.Title className="card-title">
-															{ctg.name}
-														</Card.Title>
-													</Card.Body>
-												</Card>
-											) : (
-												<Card onClick={() => selectCategory(ctg)}>
-													<Card.Img
-														variant="top"
-														data-src={ctg.image_url}
-														alt={ctg.subtitle}
-														className="card-img-top category_image img-fluid lazyload"
-													/>
-													<Card.Body className="card-body">
-														<Card.Title className="card-title">
-															{ctg.name}
-														</Card.Title>
-													</Card.Body>
-												</Card>
-											)}
-										</div>
-									</div>
-								))}
-							</Slider>
-						</div>
-					</div>
-				</>
-			)}
-		</>
-	);
+  return useMemo(
+    () => (
+      <>
+        {shop.shop !== null && (
+          <>
+            {!isSmScreen ? (
+              <>
+                <div className={styles.categoryWrapper}>
+                  <SectionTitle
+                    title={"Shop By Category"}
+                    linkText={true}
+                    linkName={!isSmScreen ? "See All Categories" : "See All"}
+                    onLinkClick={() => {
+                      navigate("/categories");
+                    }}
+                  />
+                </div>
+                <ResponsiveCarousel
+                  items={5}
+                  itemsInTablet={3}
+                  infinite={true}
+                  autoPlay={true}
+                  autoPlaySpeed={4000}
+                  showArrows={false}
+                  showDots={false}
+                >
+                  {shop.shop.category.map((ctg, index) => (
+                    <div
+                      key={index}
+                      className={styles.cardWrapper}
+                      onClick={() => selectCategory(ctg)}
+                    >
+                      <img
+                        className={styles.categoryImg}
+                        src={ctg.image_url}
+                        alt={ctg.subtitle}
+                      />
+                      <p className={styles.categoryName}>{ctg.name}</p>
+                    </div>
+                  ))}
+                </ResponsiveCarousel>
+              </>
+            ) : (
+              <div className={styles.mobCardWrapper}>
+                <div className={styles.headerWrapper}>
+                  <h1 className={styles.header}>Shop By Category</h1>
+                </div>
+                <div className={styles.mobCategoryWrapper}>
+                  {categories.map((ctg, index) => (
+                    <div className={styles.category} key={index}>
+                      <div
+                        className={styles.imageWrapper}
+                        onClick={() => {
+                          navigate(`/subCategory/${ctg.id}`);
+                          setSelectedFilter(0);
+                        }}
+                      >
+                        <img
+                          className={styles.categoryImg}
+                          src={ctg.image_url}
+                          alt={ctg.subtitle}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+      </>
+    ),
+    [shop, isSmScreen, navigate]
+  );
 };
 
 export default Category;

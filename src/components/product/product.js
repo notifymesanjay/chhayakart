@@ -150,7 +150,7 @@ const Product = ({
         1
       );
     } else {
-      const isAdded = addProductToCart(productdata);
+      const isAdded = addProductToCart(productdata, 1);
       if (isAdded) {
         setIsCart(true);
         setProductInCartCount(1);
@@ -210,7 +210,7 @@ const Product = ({
         );
       }
     } else {
-      const isIncremented = incrementProduct(productdata.id, productdata);
+      const isIncremented = incrementProduct(productdata.id, productdata, 1);
       if (isIncremented) {
         setProductInCartCount(val + 1);
       }
@@ -291,7 +291,16 @@ const Product = ({
             <div className="d-flex flex-row gap-2 align-items-center my-1">
               <span className="price green-text" id={`price-productdetail`}>
                 <FaRupeeSign fill="var(--secondary-color)" />
-                {parseFloat(productdata.variants[0].discounted_price)}{" "} ({Math.round(parseFloat((productdata.variants[0].price-productdata.variants[0].discounted_price)*100/productdata.variants[0].price))}% off)
+                {parseFloat(productdata.variants[0].discounted_price)} (
+                {Math.round(
+                  parseFloat(
+                    ((productdata.variants[0].price -
+                      productdata.variants[0].discounted_price) *
+                      100) /
+                      productdata.variants[0].price
+                  )
+                )}
+                % off)
               </span>{" "}
               <div
                 className="not-price gray-text"
@@ -333,10 +342,7 @@ const Product = ({
                   Add to Cart
                 </button>
               ) : (
-                <div
-                  id={`input-cart-productdetail`}
-                  className="input-to-cart"
-                >
+                <div id={`input-cart-productdetail`} className="input-to-cart">
                   <button
                     type="button"
                     className="wishlist-button"

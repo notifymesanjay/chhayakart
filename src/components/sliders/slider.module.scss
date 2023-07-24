@@ -1,0 +1,26 @@
+.carousel {
+  padding-bottom: 0 !important;
+}
+
+.showCaseSection {
+  background-color: white;
+  border-radius: 16px;
+}
+
+.banner {
+  position: relative;
+}
+
+.bannerImg {
+  width: 100%;
+  height: calc(100vw * 800 / 2400);
+  border-radius: 16px;
+}
+
+@media only screen and (max-width: 575px){
+    .bannerImg {
+        width: 100%;
+        height: calc(100vw * 1106 / 1919);
+        border-radius: 16px;
+      }
+}

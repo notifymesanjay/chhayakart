@@ -15,18 +15,21 @@ import "slick-carousel/slick/slick-theme.css";
 import "lazysizes";
 // import a plugin
 import "lazysizes/plugins/parent-fit/ls.parent-fit";
+import { AppWrapper } from "./components/useAppContext";
 
 ReactDOM.render(
-	<React.StrictMode>
-		<BrowserRouter>
-			<Provider store={store}>
-				{/* <PersistGate loading={null} persistor={Persiststore}> */}
-				<App />
-				{/* </PersistGate> */}
-			</Provider>
-		</BrowserRouter>
-	</React.StrictMode>,
-	document.getElementById("root")
+  <React.StrictMode>
+    <BrowserRouter>
+      <Provider store={store}>
+        <AppWrapper>
+          {/* <PersistGate loading={null} persistor={Persiststore}> */}
+          <App />
+          {/* </PersistGate> */}
+        </AppWrapper>
+      </Provider>
+    </BrowserRouter>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

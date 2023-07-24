@@ -149,7 +149,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 				);
 			}
 		} else {
-			const isIncremented = incrementProduct(product.product_id, product);
+			const isIncremented = incrementProduct(product.product_id, product, 1);
 			if (isIncremented) {
 				document.getElementById(`input-cart-sidebar${index}`).innerHTML =
 					val + 1;

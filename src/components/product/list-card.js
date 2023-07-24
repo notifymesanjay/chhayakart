@@ -93,7 +93,7 @@ const ListCard = ({
         document.getElementById(`input-section${index}`).innerHTML
       );
     } else {
-      const isAdded = addProductToCart(product);
+      const isAdded = addProductToCart(product, 1);
       if (isAdded) {
         document
           .getElementById(`Add-to-cart-section${index}`)
@@ -170,7 +170,7 @@ const ListCard = ({
         );
       }
     } else {
-      const isIncremented = incrementProduct(product.id, product);
+      const isIncremented = incrementProduct(product.id, product, 1);
       if (isIncremented) {
         document.getElementById(`input-productlist${index}`).innerHTML =
           parseInt(val) + 1;
@@ -335,7 +335,7 @@ const ListCard = ({
         document.getElementById(`input-section${index}`).innerHTML
       );
     } else {
-      const isAdded = addProductToCart(product);
+      const isAdded = addProductToCart(product, 1);
       if (isAdded) {
         document
           .getElementById(`Add-to-cart-section${index}`)
@@ -434,7 +434,7 @@ const ListCard = ({
         );
       }
     } else {
-      const isIncremented = incrementProduct(product.id, product);
+      const isIncremented = incrementProduct(product.id, product, 1);
       if (isIncremented) {
         document.getElementById(`input-section${index}`).innerHTML =
           parseInt(val) + 1;
@@ -581,7 +581,7 @@ const ListCard = ({
                   <ul className="dropdown-menu">
                     <li>
                       <WhatsappShareButton
-                        url={`https://chhayakart.com/product/${product.slug}`}
+                        url={`https://chhayakart.com/product/${product.id}`}
                       >
                         <WhatsappIcon size={32} round={true} />{" "}
                         <span>WhatsApp</span>
@@ -589,7 +589,7 @@ const ListCard = ({
                     </li>
                     <li>
                       <TelegramShareButton
-                        url={`https://chhayakart.com/product/${product.slug}`}
+                        url={`https://chhayakart.com/product/${product.id}`}
                       >
                         <TelegramIcon size={32} round={true} />{" "}
                         <span>Telegram</span>
@@ -597,7 +597,7 @@ const ListCard = ({
                     </li>
                     <li>
                       <FacebookShareButton
-                        url={`https://chhayakart.com/product/${product.slug}`}
+                        url={`https://chhayakart.com/product/${product.id}`}
                       >
                         <FacebookIcon size={32} round={true} />{" "}
                         <span>Facebook</span>
@@ -608,7 +608,7 @@ const ListCard = ({
                         type="button"
                         onClick={() => {
                           navigator.clipboard.writeText(
-                            `https://chhayakart.com/product/${product.slug}`
+                            `https://chhayakart.com/product/${product.id}`
                           );
                           toast.success("Copied Succesfully!!");
                         }}
@@ -653,8 +653,17 @@ const ListCard = ({
                   <p id="fa-rupee">
                     <FaRupeeSign fill="var(--secondary-color)" />
                   </p>{" "}
-                  {product.variants[0].discounted_price} ({Math.round(parseFloat((product.variants[0].price-product.variants[0].discounted_price)*100/product.variants[0].price))}% off)
-                </span>                              
+                  {product.variants[0].discounted_price} (
+                  {Math.round(
+                    parseFloat(
+                      ((product.variants[0].price -
+                        product.variants[0].discounted_price) *
+                        100) /
+                        product.variants[0].price
+                    )
+                  )}
+                  % off)
+                </span>
                 <span
                   id={`price${index}-section`}
                   className="d-flex align items-center"
@@ -859,7 +868,7 @@ const ListCard = ({
                     handleAddToCart(product, index);
                   }}
                 >
-                  add to cart2
+                  add to cart
                 </button>
 
                 <div
@@ -899,7 +908,7 @@ const ListCard = ({
                 <ul className="dropdown-menu">
                   <li className="dropDownLi">
                     <WhatsappShareButton
-                      url={`${share_parent_url}/${product.slug}`}
+                      url={`${share_parent_url}/${product.id}`}
                     >
                       <WhatsappIcon size={32} round={true} />{" "}
                       <span>WhatsApp</span>
@@ -907,7 +916,7 @@ const ListCard = ({
                   </li>
                   <li className="dropDownLi">
                     <TelegramShareButton
-                      url={`${share_parent_url}/${product.slug}`}
+                      url={`${share_parent_url}/${product.id}`}
                     >
                       <TelegramIcon size={32} round={true} />{" "}
                       <span>Telegram</span>
@@ -915,7 +924,7 @@ const ListCard = ({
                   </li>
                   <li className="dropDownLi">
                     <FacebookShareButton
-                      url={`${share_parent_url}/${product.slug}`}
+                      url={`${share_parent_url}/${product.id}`}
                     >
                       <FacebookIcon size={32} round={true} />{" "}
                       <span>Facebook</span>
@@ -926,7 +935,7 @@ const ListCard = ({
                       type="button"
                       onClick={() => {
                         navigator.clipboard.writeText(
-                          `${share_parent_url}/${product.slug}`
+                          `${share_parent_url}/${product.id}`
                         );
                         toast.success("Copied Succesfully!!");
                       }}

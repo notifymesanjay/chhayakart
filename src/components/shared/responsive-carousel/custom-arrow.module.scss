@@ -1,0 +1,30 @@
+$color-orange: #51bd88;
+$color-dark-orange: #f91717;
+// @use '../../../public/css/colorPalette';
+
+.customArrow {
+  outline: 0;
+  border: 0;
+  background: linear-gradient(90deg,
+      $color-orange 28.12%,
+      $color-dark-orange 100%);
+  color: white;
+  font-size: 18px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: absolute;
+  z-index: 10;
+  padding: 0;
+  margin: 0;
+}
+
+.customArrow.left {
+  transform: rotate(-90deg);
+  left: 16px;
+}
+
+.customArrow.right {
+  transform: rotate(90deg);
+  right: 16px;
+}

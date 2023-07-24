@@ -1,0 +1,122 @@
+.carousel:global(.react-multi-carousel-list) {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.carousel :global(.react-multi-carousel-track) {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, transition;
+}
+
+.carousel :global(.react-multiple-carousel__arrow) {
+  position: absolute;
+  outline: 0;
+  transition: all 0.5s;
+  border-radius: 35px;
+  z-index: 1000;
+  border: 0;
+  background: rgba(0, 0, 0, 0.5);
+  min-width: 43px;
+  min-height: 43px;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.carousel :global(.react-multiple-carousel__arrow):hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.carousel :global(.react-multiple-carousel__arrow)::before {
+  font-size: 20px;
+  color: #fff;
+  display: block;
+  font-family: revicons;
+  text-align: center;
+  z-index: 2;
+  position: relative;
+}
+
+.carousel :global(.react-multiple-carousel__arrow--left)::before {
+  content: '\2039';
+  font-weight: 800;
+  font-size: 22px;
+}
+
+.carousel :global(.react-multiple-carousel__arrow--left) {
+  left: calc(4% + 1px);
+}
+
+.carousel :global(.react-multiple-carousel__arrow--right)::before {
+  content: '\203A';
+  font-weight: 800;
+  font-size: 22px;
+}
+
+.carousel :global(.react-multiple-carousel__arrow--right) {
+  right: calc(4% + 1px);
+}
+
+.carousel :global(.react-multi-carousel-dot-list) {
+  position: absolute;
+  bottom: -4px;
+  display: flex;
+  left: 0;
+  right: 0;
+  justify-content: center;
+  margin: auto;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.carousel :global(.react-multi-carousel-dot button) {
+  cursor: pointer;
+  border: 1px solid #51bd88 !important;
+  padding: 5px !important;
+  font: inherit;
+  background-color: #fff !important;
+  border-radius: 50px !important;
+  margin: 4px !important;
+}
+
+.carousel :global(.react-multi-carousel-dot button:hover):active,
+.carousel :global(.react-multi-carousel-dot--active button) {
+  background: linear-gradient(45deg, rgb(242, 0, 255), rgb(255, 0, 119)) !important;
+  border: 1px solid #51bd88 !important;
+  width: 32px;
+}
+
+.carousel :global(.react-multi-carousel-item) {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .carousel :global(.react-multi-carousel-item) {
+    flex-shrink: 0 !important;
+  }
+
+  .carousel :global(.react-multi-carousel-track) {
+    overflow: visible !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .carousel {
+    :global(.react-multi-carousel-dot button) {
+      padding: 3px !important;
+    }
+  }
+}

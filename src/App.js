@@ -17,6 +17,7 @@ import { ToastContainer } from "react-toastify";
 import ShowAllCategories from "./components/category/ShowAllCategories";
 import ProductList from "./components/product/ProductList";
 import ProductDetails from "./components/product/ProductDetails";
+import Productdetails from "./components/product/ProductdetailsMobile";
 import ViewCart from "./components/cart/ViewCart";
 import Wishlist from "./components/favorite/Wishlist";
 import Checkout from "./components/checkout/Checkout";
@@ -40,6 +41,7 @@ function App() {
 	const shop = useSelector((state) => state.shop);
 	const setting = useSelector((state) => state.setting);
 	const [productTriggered, setProductTriggered] = useState(false);
+	const [selectedFilter, setSelectedFilter] = useState(0);
 
 	const getCurrentUser = (token) => {
 		api
@@ -128,7 +130,10 @@ function App() {
 		<AnimatePresence>
 			<div className="h-auto">
 				<ScrollToTop />
-				<Header productTriggered={productTriggered} setProductTriggered={setProductTriggered} />
+				<Header
+					productTriggered={productTriggered}
+					setProductTriggered={setProductTriggered}
+				/>
 				{city.city === null ||
 				shop.shop === null ||
 				setting.setting === null ? (
@@ -168,7 +173,26 @@ function App() {
 								<Route
 									exact={true}
 									path="/products"
-									element={<ProductList productTriggered={productTriggered} setProductTriggered={setProductTriggered}  />}
+									element={
+										<ProductList
+											productTriggered={productTriggered}
+											setProductTriggered={setProductTriggered}
+											selectedFilter={selectedFilter}
+											setSelectedFilter={setSelectedFilter}
+										/>
+									}
+								></Route>
+								<Route
+									exact={true}
+									path="/subCategory/:slug"
+									element={
+										<ProductList
+											productTriggered={productTriggered}
+											setProductTriggered={setProductTriggered}
+											selectedFilter={selectedFilter}
+											setSelectedFilter={setSelectedFilter}
+										/>
+									}
 								></Route>
 								{/* <Route
 									exact={true}
@@ -178,7 +202,12 @@ function App() {
 								<Route
 									exact={true}
 									path="/product/:slug"
-									element={<ProductDetails productTriggered={productTriggered} setProductTriggered={setProductTriggered} />}
+									element={
+										<ProductDetails
+											productTriggered={productTriggered}
+											setProductTriggered={setProductTriggered}
+										/>
+									}
 								></Route>
 								<Route
 									exact={true}
@@ -201,7 +230,13 @@ function App() {
 								<Route
 									exact={true}
 									path="/"
-									element={<MainContainer productTriggered={productTriggered} setProductTriggered={setProductTriggered} />}
+									element={
+										<MainContainer
+											productTriggered={productTriggered}
+											setProductTriggered={setProductTriggered}
+											setSelectedFilter={setSelectedFilter}
+										/>
+									}
 								></Route>
 
 								<Route exact={true} path="*" element={<NotFound />}></Route>
