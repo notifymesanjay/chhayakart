@@ -13,7 +13,11 @@ import { useState } from "react";
 
 //const [enableCod, setEnableCod] = useState();
 
-const PaymentMethod = ({ setting, setPaymentMethod = () => {} }) => {
+const PaymentMethod = ({
+	isCodAllowed,
+	setting,
+	setPaymentMethod = () => {},
+}) => {
 	return (
 		<div className="payment-wrapper checkout-component">
 			<span className="heading">payment-method</span>
@@ -73,7 +77,7 @@ const PaymentMethod = ({ setting, setPaymentMethod = () => {} }) => {
 				</div>
 			) : null}
 
-			{setting.payment_setting.cod_payment_method === "1" ? (
+			{setting.payment_setting.cod_payment_method === "1" && isCodAllowed ? (
 				<div>
 					<label className="form-check-label" htmlFor="cod">
 						<img src={cod} alt="Cash On Delivery" />
