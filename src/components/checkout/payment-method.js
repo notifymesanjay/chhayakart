@@ -21,7 +21,6 @@ const PaymentMethod = ({
 	return (
 		<div className="payment-wrapper checkout-component">
 			<span className="heading">payment-method</span>
-
 			{setting.payment_setting.razorpay_payment_method === "1" ? (
 				<div>
 					<label className="form-check-label" htmlFor="razorpay">
@@ -58,7 +57,6 @@ const PaymentMethod = ({
 					/>
 				</div>
 			) : null}
-
 			{setting.payment_setting.razorpay_payment_method === "1" ? (
 				<div>
 					<label className="form-check-label" htmlFor="razorpay">
@@ -76,14 +74,14 @@ const PaymentMethod = ({
 					/>
 				</div>
 			) : null}
-
-			{setting.payment_setting.cod_payment_method === "1" && isCodAllowed ? (
+			{setting.payment_setting.cod_payment_method === "1" ? (
 				<div>
 					<label className="form-check-label" htmlFor="cod">
 						<img src={cod} alt="Cash On Delivery" />
 						<span>Cash On Delivery</span>
 					</label>
 					<input
+						disabled={!isCodAllowed}
 						type="radio"
 						name="payment-method"
 						id="cod"
@@ -92,8 +90,8 @@ const PaymentMethod = ({
 						}}
 					/>
 				</div>
-			) : null}
-
+			) : null}{" "}
+			<h1 className="below199"> COD Not Available for Order Below ₹199</h1>
 			{setting.payment_setting.paystack_payment_method === "1" ? (
 				<div>
 					<label className="form-check-label" htmlFor="paystack">
@@ -110,7 +108,6 @@ const PaymentMethod = ({
 					/>
 				</div>
 			) : null}
-
 			{setting.payment_setting.stripe_payment_method === "1" ? (
 				<div>
 					<label className="form-check-label" htmlFor="stripe">
