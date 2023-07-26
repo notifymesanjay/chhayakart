@@ -389,7 +389,11 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 			aria-labelledby="cartoffcanvasExampleLabel"
 		>
 			<div className="cart-sidebar-header-discount">
-				<h2>order above 9999 to get huge discounts</h2>
+				<h2>
+					Big discounts for Order above
+					<FaRupeeSign fill="var(--secondary-color )" />
+					9,999
+				</h2>
 			</div>
 			<div className="cart-sidebar-header">
 				<h5>your cart</h5>

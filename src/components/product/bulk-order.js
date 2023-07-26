@@ -4,6 +4,7 @@ import CkModal from "../shared/ck-modal";
 import { useState } from "react";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { FaRupeeSign } from "react-icons/fa";
 
 const BulkOrder = ({
 	isOpenBulk = false,
@@ -58,7 +59,9 @@ const BulkOrder = ({
 				</div>
 				<div>
 					<h2 className={styles.BulkOrder9999}>
-						order above 9999 to get huge discounts
+						Big discounts for Order above
+						<FaRupeeSign fill="var(--secondary-color )" />
+						9,999
 					</h2>
 				</div>
 			</div>
