@@ -210,6 +210,16 @@ function App() {
                     />
                   }
                 ></Route>
+                 <Route
+                  exact={true}
+                  path="/product/:id"
+                  element={
+                    <ProductDetails
+                      productTriggered={productTriggered}
+                      setProductTriggered={setProductTriggered}
+                    />
+                  }
+                ></Route>
                 <Route
                   exact={true}
                   path="/transactions"
