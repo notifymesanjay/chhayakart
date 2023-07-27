@@ -855,6 +855,13 @@
   }
 }
 
+.sidebarWrapper{
+  width: 90% !important;
+  box-shadow: 0px 4px 16px rgba(0,0,0,.16);
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
 @media screen and (min-width: 20rem) {
   .site-header .header-main .header-buttons .header-canvas {
     margin-right: 0.625rem;
