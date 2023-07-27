@@ -9,7 +9,6 @@ import Loader from "../loader/Loader";
 import PhoneInput from "react-phone-number-input";
 import { parsePhoneNumber } from "react-phone-number-input";
 import validator from "validator";
-import OTPInput from "otp-input-react";
 import { authentication } from "../../utils/firebase/firebase-config";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import Cookies from "universal-cookie";
@@ -17,6 +16,9 @@ import jwt from "jwt-decode";
 import { setlocalstorageOTP } from "../../utils/manageLocalStorage";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import CkModal from "../shared/ck-modal";
+import OtpInput from "../shared/inputs/otp-input";
+
+const otpMaxLength = 6;
 
 const Login = ({
   setIsOpenModal = () => {},
@@ -24,9 +26,9 @@ const Login = ({
   setError = () => {},
   setIsOTP = () => {},
   setisLoading = () => {},
-  setOTP = () => {},
+  setOtpVal = () => {},
   setcheckboxSelected = () => {},
-  OTP = "",
+  otpVal = "",
   isLoading = false,
   isOTP = false,
   error,
@@ -98,7 +100,7 @@ const Login = ({
           });
           if (!isCheckout) {
             setIsOpenModal(false);
-          }else{
+          } else {
             setIsUserLoggedIn(true);
           }
           setisLoading(true);
@@ -114,7 +116,7 @@ const Login = ({
     let confirmationResult = window.confirmationResult;
 
     await confirmationResult
-      .confirm(OTP)
+      .confirm(otpVal)
       .then((result) => {
         // User verified successfully.
         setUid(result.user.uid);
@@ -155,7 +157,7 @@ const Login = ({
           closeModalRef.current.click();
         } else {
           setError(result.message);
-          setOTP("");
+          setOtpVal("");
         }
 
         setisLoading(false);
@@ -211,15 +213,14 @@ const Login = ({
           {isOTP ? (
             <form className="formWrapper" onSubmit={verifyOTP}>
               {isLoading ? <Loader width="100%" height="auto" /> : null}
-              <OTPInput
-                className="otp-container"
-                value={OTP}
-                onChange={setOTP}
-                autoFocus
-                OTPLength={6}
-                otpType="number"
-                disabled={false}
-                secure
+              <OtpInput
+                label="Enter Email OTP"
+                name={"code"}
+                otp={otpVal}
+                setOtp={(e) => {
+                  setOtpVal(e.target.value);
+                }}
+                digits={otpMaxLength}
               />
               <span className="description">
                 <input
@@ -234,10 +235,7 @@ const Login = ({
                 I Agree to the <a onClick={handleTerms}>terms & condition</a>{" "}
                 and <a onClick={handlePolicy}>Privacy & policy</a>
               </span>
-              <button
-                type="submit"
-                className="login-btn"
-              >
+              <button type="submit" className="login-btn">
                 Verify
               </button>
             </form>
@@ -271,10 +269,7 @@ const Login = ({
                   Privacy & policy
                 </span>
               </span>
-              <button type="submit">
-                {" "}
-                Login to Continue
-              </button>
+              <button type="submit"> Login to Continue</button>
             </form>
           )}
         </div>

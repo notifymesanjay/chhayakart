@@ -32,9 +32,9 @@ const LoginUser = ({ isOpenModal, setIsOpenModal = () => {} }) => {
         setError={setError}
         setIsOTP={setIsOTP}
         setisLoading={setisLoading}
-        setOTP={setOTP}
+        setOtpVal={setOTP}
         setcheckboxSelected={setcheckboxSelected}
-        OTP={OTP}
+        otpVal={OTP}
         isLoading={isLoading}
         isOTP={isOTP}
         error={error}
