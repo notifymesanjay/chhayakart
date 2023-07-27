@@ -44,6 +44,14 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
     }
   };
 
+  const handleOrders = () => {
+    if (user.status === "loading") {
+      toast.error("OOPS! You have to login first to see notification!");
+    } else {
+      navigate("/profile");
+    }
+  };
+
   return (
     <div>
       <div className={styles.headerWrapper}>
@@ -94,7 +102,15 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
         >
           Season Special
         </li>
-        {/* <li className={styles.listItem}>My Orders</li> */}
+        <li
+          className={styles.listItem}
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+          ref={closeRef}
+          onClick={handleOrders}
+        >
+          My Orders
+        </li>
         <li
           className={styles.listItem}
           data-bs-dismiss="offcanvas"
@@ -103,6 +119,15 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
           onClick={handleWishlist}
         >
           My Wishlist
+        </li>
+        <li className={`${styles.listItem} ${styles.disableItem}`}>
+          Chhaya Purse<span className={styles.comingSoon}>( Coming Soon )</span>
+        </li>
+        <li className={`${styles.listItem} ${styles.disableItem}`}>
+          Share & Earn<span className={styles.comingSoon}>( Coming Soon )</span>
+        </li>
+        <li className={`${styles.listItem} ${styles.disableItem}`}>
+          Donate<span className={styles.comingSoon}>( Coming Soon )</span>
         </li>
         <p className={styles.subHeader}>Help & Support</p>
         <li
