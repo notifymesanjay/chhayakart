@@ -28,9 +28,9 @@ const GuestLogin = ({ setIsUserLoggedIn = () => {} }) => {
               setError={setError}
               setIsOTP={setIsOTP}
               setisLoading={setisLoading}
-              setOTP={setOTP}
+              setOtpVal={setOTP}
               setcheckboxSelected={setcheckboxSelected}
-              OTP={OTP}
+              otpVal={OTP}
               isLoading={isLoading}
               isOTP={isOTP}
               error={error}

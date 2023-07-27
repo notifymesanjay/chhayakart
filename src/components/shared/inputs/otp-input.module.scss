@@ -1,0 +1,59 @@
+$color-orange: #ff7400;
+
+.otpcontainer {
+  margin-top: 16px;
+  width: 100%;
+}
+
+.otpLabel {
+  margin-bottom: 6px;
+  color: gray;
+  font-weight: 400;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.boxWrapper {
+  width: 290px;
+  margin: 0 auto 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputBox {
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  background-color: hsla(0,2%,60%,.205);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputBox.active {
+  animation: blink 1s ease infinite;
+}
+
+.orgInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  opacity: 0;
+  font-size: 1px;
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    color: rgba(black, 1);
+  }
+  75%,
+  100% {
+    color: rgba(black, 0);
+  }
+}
