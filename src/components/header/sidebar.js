@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import DownloadApp from "../../public/images/logo/app-logo.svg";
 import ChhayakartPinkLogo from "../../public/images/logo/chhayakart-pink-logo.png";
 import { removelocalstorageOTP } from "../../utils/manageLocalStorage";
@@ -18,6 +18,8 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cookies = new Cookies();
+
+  const [isSubMenu, setIsSubMenu] = useState(false);
 
   const handleLogout = () => {
     api
@@ -129,51 +131,66 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
         <li className={`${styles.listItem} ${styles.disableItem}`}>
           Donate<span className={styles.comingSoon}>( Coming Soon )</span>
         </li>
-        <p className={styles.subHeader}>Help & Support</p>
-        <li
-          className={styles.listItem}
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-          ref={closeRef}
+        <p
+          className={styles.subMenuHeader}
           onClick={() => {
-            navigate("/about");
+            setIsSubMenu(!isSubMenu);
           }}
         >
-          About Chhayakart
-        </li>
-        <li
-          className={styles.listItem}
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-          ref={closeRef}
-          onClick={() => {
-            navigate("/terms");
-          }}
-        >
-          Chhayakart Terms
-        </li>
-        <li
-          className={styles.listItem}
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-          ref={closeRef}
-          onClick={() => {
-            navigate("/policy/Privacy_Policy");
-          }}
-        >
-          Chhayakart Policies
-        </li>
-        <li
-          className={styles.listItem}
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-          ref={closeRef}
-          onClick={() => {
-            navigate("/contact");
-          }}
-        >
-          Contact Us
-        </li>
+          About Chhayakart{" "}
+          <FontAwesomeIcon
+            className={isSubMenu ? styles.activeIcon : ""}
+            icon={faAngleDown}
+          />
+        </p>
+        {isSubMenu && (
+          <ul className={`${styles.listWrapper} ${styles.subWrapper}`}>
+            <li
+              className={styles.listItem}
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+              ref={closeRef}
+              onClick={() => {
+                navigate("/about");
+              }}
+            >
+              About Us
+            </li>
+            <li
+              className={styles.listItem}
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+              ref={closeRef}
+              onClick={() => {
+                navigate("/terms");
+              }}
+            >
+              Chhayakart Terms
+            </li>
+            <li
+              className={styles.listItem}
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+              ref={closeRef}
+              onClick={() => {
+                navigate("/policy/Privacy_Policy");
+              }}
+            >
+              Chhayakart Policies
+            </li>
+            <li
+              className={styles.listItem}
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+              ref={closeRef}
+              onClick={() => {
+                navigate("/contact");
+              }}
+            >
+              Contact Us
+            </li>
+          </ul>
+        )}
         {user.status !== "loading" && (
           <li
             className={styles.listItem}

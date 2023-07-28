@@ -8,7 +8,8 @@
   width: 90%;
   min-height: 60px;
 
-  .backIcon, .backIcon > * {
+  .backIcon,
+  .backIcon > * {
     color: white;
     font-size: 20px;
   }
@@ -61,12 +62,12 @@
   padding: 30px 24px 40px;
   border-bottom: 1px solid #e0e0e0;
 
-  .logo{
+  .logo {
     width: 250px;
     height: auto;
   }
 
-  .downloadAppWrapper{
+  .downloadAppWrapper {
     margin-bottom: 15px;
   }
 
@@ -79,8 +80,26 @@
   }
 }
 
-.comingSoon{
+.comingSoon {
   margin-left: 10px;
   font-size: 14px;
   color: red;
+}
+
+.subMenuHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px 12px 12px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.subWrapper {
+  padding: 0 20px;
+}
+
+.activeIcon{
+  transform: rotate(-180deg);
 }
