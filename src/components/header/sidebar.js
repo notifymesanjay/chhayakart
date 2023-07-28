@@ -139,7 +139,7 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
             navigate("/about");
           }}
         >
-          About Chayyakart
+          About Chhayakart
         </li>
         <li
           className={styles.listItem}
@@ -150,7 +150,7 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
             navigate("/terms");
           }}
         >
-          Chayyakart Terms
+          Chhayakart Terms
         </li>
         <li
           className={styles.listItem}
@@ -161,7 +161,7 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
             navigate("/policy/Privacy_Policy");
           }}
         >
-          Chayyakart Policies
+          Chhayakart Policies
         </li>
         <li
           className={styles.listItem}
@@ -196,7 +196,7 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
         <img
           className={styles.logo}
           src={ChhayakartPinkLogo}
-          alt="chayyakart-logo"
+          alt="chhayakart-logo"
         />
       </div>
     </div>
