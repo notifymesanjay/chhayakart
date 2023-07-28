@@ -67,7 +67,7 @@ const OrderSummary = ({
               <div className="d-flex align-items-center total-amount">
                 <FaRupeeSign fill="var(--secondary-color)" />
                 <span>
-                  {parseFloat(cart.sub_total)
+                  {parseFloat(cart.sub_total) > 9999
                     ? Math.ceil(
                         parseFloat(
                           cart.sub_total +
