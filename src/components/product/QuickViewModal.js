@@ -20,7 +20,6 @@ import {
 } from "react-share";
 import Loader from "../loader/Loader";
 import CryptoJS from "crypto-js";
-import Slider from "react-slick";
 import {
 	addProductToCart,
 	decrementProduct,
@@ -266,52 +265,6 @@ const QuickViewModal = (props) => {
 					toast.error(result.message);
 				}
 			});
-	};
-	const settings_subImage = {
-		infinite: false,
-		slidesToShow: 3,
-		initialSlide: 0,
-		// centerMargin: "10px",
-		margin: "20px",
-		prevArrow: (
-			<button
-				type="button"
-				className="slick-prev"
-				onClick={(e) => {
-					setmainimage(e.target.value);
-				}}
-			>
-				<FaChevronLeft size={30} className="prev-arrow" />
-			</button>
-		),
-		nextArrow: (
-			<button
-				type="button"
-				className="slick-next"
-				onClick={(e) => {
-					setmainimage(e.target.value);
-				}}
-			>
-				<FaChevronRight color="#f7f7f7" size={30} className="next-arrow" />
-			</button>
-		),
-		responsive: [
-			{
-				breakpoint: 1024,
-				settings: {
-					slidesToShow: 4,
-					slidesToScroll: 1,
-					infinite: true,
-				},
-			},
-			{
-				breakpoint: 768,
-				settings: {
-					slidesToShow: 3,
-					slidesToScroll: 1,
-				},
-			},
-		],
 	};
 
 	const handleAddToCart = () => {

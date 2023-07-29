@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { ActionTypes } from "../../model/action-type";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import Cookies from "universal-cookie";
-import Slider from "react-slick";
 import { AiOutlineEye } from "react-icons/ai";
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
 import { FaChevronLeft, FaChevronRight, FaRupeeSign } from "react-icons/fa";
@@ -257,50 +256,6 @@ const Productdetails = ({
 			removeSelectedProductId();
 		};
 	}, []);
-
-	const settings = {
-		infinite: false,
-		slidesToShow: 5,
-		initialSlide: 0,
-		prevArrow: (
-			<button type="button" className="slick-prev">
-				<FaChevronLeft size={30} className="prev-arrow" />
-			</button>
-		),
-		nextArrow: (
-			<button type="button" className="slick-next">
-				<FaChevronRight color="#f7f7f7" size={30} className="next-arrow" />
-			</button>
-		),
-		responsive: [
-			{
-				breakpoint: 1199,
-				settings: {
-					slidesToShow: 4,
-				},
-			},
-			{
-				breakpoint: 1024,
-				settings: {
-					slidesToShow: 3,
-				},
-			},
-			{
-				breakpoint: 768,
-				settings: {
-					slidesToShow: 2,
-				},
-			},
-			{
-				breakpoint: 425,
-				settings: {
-					slidesToShow: 1.5,
-					dots: true,
-					arrows: false,
-				},
-			},
-		],
-	};
 
 	const getProductVariants = (product) => {
 		return product.variants.map((variant, index) => (
