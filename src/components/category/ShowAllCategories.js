@@ -93,7 +93,7 @@ const ShowAllCategories = () => {
 										<img
 											className="card-img-top lazyload"
 											data-src={ctg.image_url}
-											alt=""
+											alt="catogery"
 										/>
 									</div>
 									<div

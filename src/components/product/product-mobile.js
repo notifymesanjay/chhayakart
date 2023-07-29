@@ -445,7 +445,7 @@ const ProductMobile = ({
 						<div>
 							{images.map((img, index) => (
 								<div key={index}>
-									<img src={img} alt="" />
+									<img src={img} alt="chhayakart" />
 								</div>
 							))}
 						</div>
