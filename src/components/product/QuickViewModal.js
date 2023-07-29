@@ -443,7 +443,16 @@ const QuickViewModal = (props) => {
 										<div className="sub-images-container row">
 											{product.images.length >= 4 ? (
 												<>
-													<Slider {...settings_subImage}>
+													<ResponsiveCarousel
+													items={3}
+            										itemsInTablet={3}
+													itemsInMobile={3}
+            										infinite={false}
+            										autoPlay={true}
+            										autoPlaySpeed={4000}
+            										showArrows={false}
+            										showDots={false}
+          											>
 														{product.images.map((image, index) => (
 															<div key={index}>
 																<div
@@ -462,7 +471,7 @@ const QuickViewModal = (props) => {
 																</div>
 															</div>
 														))}
-													</Slider>
+													</ResponsiveCarousel>
 												</>
 											) : (
 												<>

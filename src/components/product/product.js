@@ -233,7 +233,14 @@ const Product = ({
 					<div className="sub-images-container">
 						{images != null && images.length >= 4 ? (
 							<>
-								<Slider {...settings_subImage}>
+									<ResponsiveCarousel
+									items={5}
+									infinite={false}
+									autoPlaySpeed={4000}
+									showArrows={false}
+									showDots={false}
+									autoPlay={true}
+									>
 									{images.map((image, index) => (
 										<div key={index}>
 											<div
@@ -252,7 +259,7 @@ const Product = ({
 											</div>
 										</div>
 									))}
-								</Slider>
+								</ResponsiveCarousel>
 							</>
 						) : (
 							<>

@@ -5,6 +5,7 @@ import Slider from 'react-slick'
 import { AiOutlineArrowRight } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import ResponsiveCarousel from '../shared/responsive-carousel/responsive-carousel'
 // import offer3 from '../../utils/offers/offer3.jpg'
 // import offer4 from '../../utils/offers/offer4.jpg'
 // import offer5 from '../../utils/offers/offer5.jpg'
@@ -106,7 +107,15 @@ const Offers = () => {
                                     </div>
                                     <div className="offer-container-content">
 
-                                        <Slider {...settings}>
+                                    <ResponsiveCarousel
+									    items={5}
+									    itemsInTablet={3}
+									    infinite={false}
+									    autoPlay={true}
+									    autoPlaySpeed={4000}
+									    showArrows={false}
+									    showDots={false}
+								        >
                                             {shop.shop.offers.map((offer, index) => (
                                                 <div key={index} >
                                                     <div className="offer-container-body p-2 col-3'">
@@ -117,7 +126,7 @@ const Offers = () => {
                                                 </div>
                                             ))}
 
-                                        </Slider>
+                                        </ResponsiveCarousel>
                                     </div>
                                 </div>
                             </div>

@@ -257,7 +257,7 @@ const ProductMobile = ({
 				</div>
 				<div>
 					<ResponsiveCarousel
-						items={images.length}
+						items={5}
 						itemsInTablet={3}
 						infinite={true}
 						autoPlay={false}

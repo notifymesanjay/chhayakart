@@ -429,7 +429,15 @@ const ProductDetails = ({
 						) : (
 							<div className="row">
 								{/* //<ResponsiveCarousel */}
-								<Slider {...settings}>
+									<ResponsiveCarousel
+									 items={5}
+									 itemsInTablet={3}
+									 infinite={false}
+									 autoPlaySpeed={4000}
+									 showArrows={false}
+									 showDots={false}
+									 autoPlay={true}>
+
 									{relatedProducts.map((related_product, index) => (
 										<div className="col-md-3 col-lg-4" key={index}>
 											<ProductCard
@@ -452,7 +460,7 @@ const ProductDetails = ({
 											/> */}
 										</div>
 									))}
-								</Slider>
+								</ResponsiveCarousel>
 							</div>
 						)}
 					</div>
