@@ -18,15 +18,7 @@ import {
 	decrementProduct,
 	incrementProduct,
 } from "../../services/cartService";
-import { BsHeart, BsHeartFill, BsPlus } from "react-icons/bs";
-import {
-	FacebookIcon,
-	FacebookShareButton,
-	TelegramIcon,
-	TelegramShareButton,
-	WhatsappIcon,
-	WhatsappShareButton,
-} from "react-share";
+import { BsPlus } from "react-icons/bs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import CkModal from "../shared/ck-modal";
@@ -36,7 +28,6 @@ import BulkOrder from "./bulk-order";
 const ProductMobile = ({
 	images,
 	mainimage,
-	productbrand,
 	setmainimage = () => {},
 	addtoCart = () => {},
 	productdata,
@@ -55,7 +46,7 @@ const ProductMobile = ({
 	const { isSmScreen } = useResponsive();
 	const [showImages, setShowImages] = useState(false);
 	const [isOpenBulk, setIsOpenBulk] = useState(false);
-
+	const [isBulkOrder, setIsBulkOrder] = useState(false);
 	const [selectQunatityClassName, setSelectQunatityClassName] = useState("");
 	const handleClick = (event) => {
 		alert(event);
@@ -212,6 +203,7 @@ const ProductMobile = ({
 				toast.error("Maximum Quantity Exceeded");
 			}
 		} else {
+			console.log("xyz", val, productdata);
 			const isIncremented = incrementProduct(
 				productdata.id,
 				productdata,
@@ -229,6 +221,7 @@ const ProductMobile = ({
 		var val = productInCartCount;
 		if (val >= Math.ceil(parseInt(productdata.total_allowed_quantity) / 2)) {
 			setIsOpenBulk(true);
+			setIsBulkOrder(false);
 		} else {
 			incrementProduct1(val, 0);
 		}
@@ -374,12 +367,12 @@ const ProductMobile = ({
 					onClick={() => {
 						console.log("xyz");
 						setIsOpenBulk(true);
+						setIsBulkOrder(true);
 					}}
 				>
 					Bulk Order
 				</span>
 			</div>
-
 			{/* //collapsiable buttons start */}
 			<div className="productDetailsContainer">
 				<div className="productDescriptionContianer" index="0">
@@ -396,114 +389,6 @@ const ProductMobile = ({
 					/>
 				</div>
 			</div>
-
-			{/* // collapse end */}
-			{/*<div className="col-xl-8 col-lg-6 col-md-12 col-12">
-				<div className="detail-wrapper">
-					 <div className="top-section">
-						{/* <p className="product_name">{productdata.name}</p>
-						{Object.keys(productbrand).length === 0 ? null : (
-							<div className="product-brand">
-								<span className="brand-title">Brand:</span>
-								<span className="brand-name">{productbrand.name}</span>
-							</div>
-            )} 
-            
-						{/* <div className="d-flex flex-row gap-2 align-items-center my-1">
-							<span className="price green-text" id={`price-productdetail`}>
-								<FaRupeeSign fill="var(--secondary-color)" />
-								{parseFloat(productdata.variants[0].discounted_price)}{" "}
-							</span>{" "}
-							{/* <div
-								className="not-price gray-text"
-								style={{ textDecoration: "line-through" }}
-							>
-								<FaRupeeSign
-									fill="var(--text-color)"
-									textDecoration="line-through"
-								/>
-								{parseFloat(productdata.variants[0].price)}
-							</div> 
-						</div> 
-          </div> 
-
-					<div className="bottom-section">
-						 <p>Product Variants</p> 
-						<div className="d-flex gap-3 bottom-section-content">
-							{/* <select
-								id={`select-product-variant-productdetail`}
-								onChange={(e) => {
-									document.getElementById(`price-productdetail`).innerHTML =
-										parseFloat(JSON.parse(e.target.value).price);
-
-									if (isCart) {
-										setIsCart(false);
-									}
-								}}
-								defaultValue={JSON.stringify(productdata.variants[0])}
-							>
-								{getProductVariants(productdata)}
-							</select> 
-						</div>
-							<div className="product-overview">
-							 <div className="product-seller">
-								{/* <span className='seller-title'>Sold By:</span>
-                                                    <span className='seller-name'>{productdata.seller_name} </span> 
-							</div> {productdata.tags !== "" ? (
-								<div className="product-tags">
-									<span className="tag-title">Product Tags:</span>
-									<span className="tag-name">{productdata.tags} </span>
-								</div>
-							) : (
-								""
-							)} 
-						</div> 
-					    <div className="share-product-container">
-							<span>Share product:</span>
-
-							<ul className="share-product">
-								<li className="share-product-icon">
-									<WhatsappShareButton
-										url={`https://chhayakart.com/product/${productdata.slug}`}
-									>
-										<WhatsappIcon size={32} round={true} />{" "}
-									</WhatsappShareButton>
-								</li>
-								<li className="share-product-icon">
-									<TelegramShareButton
-										url={`https://chhayakart.com/product/${productdata.slug}`}
-									>
-										<TelegramIcon size={32} round={true} />{" "}
-									</TelegramShareButton>
-								</li>
-								<li className="share-product-icon">
-									<FacebookShareButton
-										url={`https://chhayakart.com/product/${productdata.slug}`}
-									>
-										<FacebookIcon size={32} round={true} />{" "}
-									</FacebookShareButton>
-								</li>
-								<li className="share-product-icon">
-									<button
-										type="button"
-										onClick={() => {
-											navigator.clipboard.writeText(
-												`https://chhayakart.com/product/${productdata.slug}`
-											);
-											toast.success("Copied Succesfully!!");
-										}}
-									>
-										{" "}
-										<BiLink size={30} />
-									</button>
-								</li>
-							</ul>
-						</div> 
-
-					 </div>
-				</div>
-			</div>*/}
-
 			<div className="addToCartStickerDiv">
 				{!isCart ? (
 					<button
@@ -546,28 +431,6 @@ const ProductMobile = ({
 							Buy Now
 						</Link>
 					</button>
-					{/* {favorite.favorite &&
-					favorite.favorite.data.some(
-						(element) => element.id === productdata.id
-					) ? (
-						<button
-							type="button"
-							className="wishlist-product"
-							onClick={() => removefromFavorite(productdata.id)}
-						>
-							<BsHeartFill fill="red" />
-							Add to wishlist
-						</button>
-					) : (
-						<button
-							key={productdata.id}
-							type="button"
-							className="wishlist-product"
-							onClick={() => addToFavorite(productdata.id)}
-						>
-							<BsHeart /> wishlist
-						</button>
-					)} */}
 				</div>
 			</div>
 			{showImages && (
@@ -595,7 +458,9 @@ const ProductMobile = ({
 					setIsOpenBulk={setIsOpenBulk}
 					product={productdata}
 					onSubmit={incrementProduct1}
+					onSubmit1={addProductToCart1}
 					productVal={productInCartCount}
+					isBulkOrder={isBulkOrder}
 				/>
 			)}
 		</div>

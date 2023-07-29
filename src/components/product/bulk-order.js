@@ -13,6 +13,8 @@ const BulkOrder = ({
 	onSubmit = () => {},
 	productVal = 0,
 	index = 0,
+	isBulkOrder = false,
+	onSubmit1 = () => {},
 }) => {
 	const [bulkVal, setBulkVal] = useState(productVal);
 	const inputChange = (e) => {
@@ -22,7 +24,12 @@ const BulkOrder = ({
 		if (parseInt(bulkVal) > parseInt(product.total_allowed_quantity)) {
 			toast.error("Entered Quantity is more than Allowed");
 		} else {
-			onSubmit(parseInt(bulkVal) - 1, index);
+			if (isBulkOrder) {
+				onSubmit1(parseInt(bulkVal));
+			} else {
+				onSubmit(parseInt(bulkVal) - 1, index);
+			}
+
 			setIsOpenBulk(false);
 		}
 	};
