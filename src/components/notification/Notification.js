@@ -33,7 +33,7 @@ const Notification = () => {
           settotalNotification(result.total)
         }
       })
-      .catch(error => console.log(error))
+      .catch(error => {})
   }
 
   useEffect(() => {

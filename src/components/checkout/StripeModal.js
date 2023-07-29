@@ -112,10 +112,9 @@ const StripeModal = (props) => {
                     }
                     closeModal.current.click()
                 })
-                .catch(error => console.log(error))
+                .catch(error => {})
         } else {
-            // Handle other payment status scenarios
-            console.log('Payment failed');
+            // Handle other payment failed status scenarios
         }
     }
 

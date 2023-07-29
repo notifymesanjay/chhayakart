@@ -63,7 +63,7 @@ const QuickViewModal = (props) => {
 					setmainimage(result.data.image_url);
 				}
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {});
 	};
 
 	useEffect(() => {
@@ -103,7 +103,7 @@ const QuickViewModal = (props) => {
 					});
 				}
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {});
 	};
 
 	const getBrandDetails = () => {
@@ -119,7 +119,7 @@ const QuickViewModal = (props) => {
 					});
 				}
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {});
 	};
 
 	//Add to Cart
@@ -159,7 +159,7 @@ const QuickViewModal = (props) => {
 									payload: res.data,
 								});
 						})
-						.catch((error) => console.log(error));
+						.catch((error) => {});
 				} else {
 					toast.error(result.message);
 				}
@@ -204,7 +204,7 @@ const QuickViewModal = (props) => {
 									payload: res.data,
 								});
 						})
-						.catch((error) => console.log(error));
+						.catch((error) => {});
 				} else {
 					toast.error(result.message);
 				}

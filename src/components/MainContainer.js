@@ -20,7 +20,6 @@ const MainContainer = ({
   const shop = useSelector((state) => state.shop);
   const setting = useSelector((state) => state.setting);
 
-  console.log('xyz12', shop);
 
   const fetchShop = (city_id, latitude, longitude) => {
     api

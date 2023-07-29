@@ -62,10 +62,10 @@ const Address = (props) => {
                                 setaddresses([])
                             }
                         })
-                        .catch(error => console.log(error))
+                        .catch(error => {})
                 }
             })
-            .catch(error => console.log(error))
+            .catch(error => {})
     }
 
     return (

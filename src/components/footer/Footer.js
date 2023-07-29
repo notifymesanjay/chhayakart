@@ -34,11 +34,11 @@ export const Footer = () => {
 					dispatch({ type: ActionTypes.SET_CATEGORY, payload: result.data });
 				}
 			})
-			.catch((error) => console.log("error ", error));
+			.catch((error) => {});
 	};
 
 	useEffect(() => {
-		fetchCategory();
+		// fetchCategory();
 	}, []);
 
 	const [category, setcategory] = useState(null);

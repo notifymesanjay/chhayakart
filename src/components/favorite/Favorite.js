@@ -87,13 +87,13 @@ const Favorite = () => {
 								dispatch({ type: ActionTypes.SET_CART, payload: res });
 							else dispatch({ type: ActionTypes.SET_CART, payload: null });
 						})
-						.catch((error) => console.log(error));
+						.catch((error) => {});
 				} else {
 					setisLoader(false);
 					toast.error(result.message);
 				}
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {});
 	};
 
 	//remove from favorite
@@ -184,7 +184,6 @@ const Favorite = () => {
 								</div>
 
 								<div className="products-container">
-									{/* { console.log(favorite.favorite)} */}
 									{favorite.favorite.data.map((product, index) => (
 										<div key={index} className="cart-card">
 											<div className="left-wrapper">

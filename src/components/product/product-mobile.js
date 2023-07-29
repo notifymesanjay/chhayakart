@@ -247,7 +247,7 @@ const ProductMobile = ({
 									})
 									.catch(console.error);
 							} else {
-								console.log("Your browser doesn't support navigator.share!");
+								//Your browser doesn't support navigator.share!
 							}
 						}}
 					>

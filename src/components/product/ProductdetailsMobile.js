@@ -130,7 +130,7 @@ const Productdetails = ({
 					});
 				}
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {});
 	};
 
 	const getBrandDetails = (id) => {
@@ -146,7 +146,7 @@ const Productdetails = ({
 					});
 				}
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {});
 	};
 
 	const getProductDatafromApi = () => {
@@ -157,7 +157,6 @@ const Productdetails = ({
 		//             setproductSize(result.sizes)
 		//         }
 		//     })
-		//     .catch(error => console.log(error))
 		api
 			.getProductbyId(
 				city.city.id,
@@ -175,7 +174,7 @@ const Productdetails = ({
 					getBrandDetails(result.data.brand_id);
 				}
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {});
 	};
 
 	useEffect(() => {
@@ -190,7 +189,6 @@ const Productdetails = ({
 
 	useEffect(() => {
 		const findProductBySlug = async () => {
-			console.log("productDetails1");
 			await api
 				.getProductbyFilter(
 					city.city.id,
@@ -209,7 +207,7 @@ const Productdetails = ({
 					} else {
 					}
 				})
-				.catch((error) => console.log(error));
+				.catch((error) => {});
 		};
 		if (city.city !== null && slug !== undefined) {
 			findProductBySlug();
@@ -221,7 +219,6 @@ const Productdetails = ({
 			Object.keys(productdata) != null &&
 			Object.keys(productdata).length !== 0
 		) {
-			console.log("productDetails2");
 			api
 				.getProductbyFilter(
 					city.city.id,
@@ -238,7 +235,7 @@ const Productdetails = ({
 						setrelatedProducts(result.data);
 					}
 				})
-				.catch((error) => console.log(error));
+				.catch((error) => {});
 		}
 	}, [productdata]);
 
@@ -346,7 +343,7 @@ const Productdetails = ({
 									payload: res.data,
 								});
 						})
-						.catch((error) => console.log(error));
+						.catch((error) => {});
 				} else {
 					toast.error(result.message);
 				}
@@ -388,7 +385,7 @@ const Productdetails = ({
 									payload: res.data,
 								});
 						})
-						.catch((error) => console.log(error));
+						.catch((error) => {});
 				} else {
 					toast.error(result.message);
 				}

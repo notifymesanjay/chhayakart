@@ -228,7 +228,7 @@ const ListCard = ({
 									payload: res.data,
 								});
 						})
-						.catch((error) => console.log(error));
+						.catch((error) => {});
 				} else {
 					setisLoader(false);
 					toast.error(result.message);
@@ -272,7 +272,7 @@ const ListCard = ({
 									payload: res.data,
 								});
 						})
-						.catch((error) => console.log(error));
+						.catch((error) => {});
 				} else {
 					setisLoader(false);
 					toast.error(result.message);
@@ -469,7 +469,6 @@ const ListCard = ({
 							onClick={() => {
 								setselectedProduct(product);
 								setShowViewModal(true);
-								console.log("xyz1234");
 							}}
 						/>
 					</span>

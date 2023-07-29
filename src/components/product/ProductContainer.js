@@ -25,7 +25,7 @@ const ProductContainer = ({
   const shop = useSelector((state) => state.shop);
   const sizes = useSelector((state) => state.productSizes);
 
-  const [productSizes, setproductSizes] = useState(null);
+  // const [productSizes, setproductSizes] = useState(null);
   const [offerConatiner, setOfferContainer] = useState(0);
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
@@ -34,25 +34,25 @@ const ProductContainer = ({
   useEffect(() => {
     if (sizes.sizes === null || sizes.status === "loading") {
       if (city.city !== null) {
-        api
-          .getProductbyFilter(
-            city.city.id,
-            city.city.latitude,
-            city.city.longitude
-          )
-          .then((response) => response.json())
-          .then((result) => {
-            if (result.status === 1) {
-              setproductSizes(result.sizes);
-              dispatch({
-                type: ActionTypes.SET_PRODUCT_SIZES,
-                payload: result.sizes,
-              });
-            }
-          });
+        // api
+        //   .getProductbyFilter(
+        //     city.city.id,
+        //     city.city.latitude,
+        //     city.city.longitude
+        //   )
+        //   .then((response) => response.json())
+        //   .then((result) => {
+        //     if (result.status === 1) {
+        //       setproductSizes(result.sizes);
+        //       dispatch({
+        //         type: ActionTypes.SET_PRODUCT_SIZES,
+        //         payload: result.sizes,
+        //       });
+        //     }
+        //   });
       }
     } else {
-      setproductSizes(sizes.sizes);
+      // setproductSizes(sizes.sizes);
     }
   }, [city, sizes]);
 
@@ -131,7 +131,7 @@ const ProductContainer = ({
   return (
     <section id="products">
       <div className="container">
-        {shop.shop === null || productSizes === null ? (
+        {shop.shop === null ? (
           <>
             <div className="d-flex justify-content-center">
               <div className="spinner-border" role="status">

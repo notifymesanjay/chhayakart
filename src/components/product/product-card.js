@@ -132,7 +132,7 @@ const ProductCard = ({
 									payload: res.data,
 								});
 						})
-						.catch((error) => console.log(error));
+						.catch((error) => {});
 				} else {
 					toast.error(result.message);
 				}
@@ -196,7 +196,7 @@ const ProductCard = ({
 									payload: res.data,
 								});
 						})
-						.catch((error) => console.log(error));
+						.catch((error) => {});
 				} else {
 					toast.error(result.message);
 				}

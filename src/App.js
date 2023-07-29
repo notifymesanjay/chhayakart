@@ -68,7 +68,8 @@ function App() {
           dispatch({ type: ActionTypes.SET_SETTING, payload: result.data });
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+      });
   };
 
   useEffect(() => {
@@ -210,7 +211,7 @@ function App() {
                     />
                   }
                 ></Route>
-                 <Route
+                <Route
                   exact={true}
                   path="/product/:id"
                   element={

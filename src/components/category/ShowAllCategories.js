@@ -16,7 +16,6 @@ const ShowAllCategories = () => {
 	const [map, setMap] = useState(new Map());
 
 	// const getProductfromApi = async (ctg) => {
-	//     console.log('showAllCategories');
 	// 	await api
 	// 		.getProductbyFilter(
 	// 			city.city.id,
@@ -48,7 +47,7 @@ const ShowAllCategories = () => {
 					dispatch({ type: ActionTypes.SET_CATEGORY, payload: strAscending });
 				}
 			})
-			.catch((error) => console.log("error ", error));
+			.catch((error) => {});
 	};
 
 	useEffect(() => {

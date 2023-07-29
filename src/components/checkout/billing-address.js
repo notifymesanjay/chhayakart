@@ -7,7 +7,6 @@ import Loader from "../loader/Loader";
 import "./checkout.css";
 
 const BillingAddress = ({
-  timeSlots,
   setSelectedAddress = () => {},
   expectedDate,
   setExpectedDate = () => {},

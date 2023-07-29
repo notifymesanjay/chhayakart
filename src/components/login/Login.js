@@ -75,11 +75,9 @@ const Login = ({
         let appVerifier = window.recaptchaVerifier;
         signInWithPhoneNumber(authentication, phonenum, appVerifier)
           .then((confirmationResult) => {
-            console.log(confirmationResult);
             window.confirmationResult = confirmationResult;
           })
           .catch((error) => {
-            console.log(error);
           });
       } else {
         setPhonenum();
@@ -162,7 +160,7 @@ const Login = ({
 
         setisLoading(false);
       })
-      .catch((error) => console.log("error ", error));
+      .catch((error) => {});
   };
   const handleTerms = () => {
     if (closeModalRef.current) {

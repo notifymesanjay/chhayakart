@@ -103,7 +103,6 @@ const ProductDetails = ({
 		window.scrollTo(0,0);
 		return () => {
 			dispatch({ type: ActionTypes.CLEAR_SELECTED_PRODUCT, payload: null });
-			setproductcategory({});
 			setproductbrand({});
 		};
 	}, []);
@@ -118,29 +117,12 @@ const ProductDetails = ({
 	const [images, setimages] = useState([]);
 	const [productdata, setproductdata] = useState({});
 	const [productSize, setproductSize] = useState({});
-	const [productcategory, setproductcategory] = useState({});
 	const [productbrand, setproductbrand] = useState({});
 	const [relatedProducts, setrelatedProducts] = useState(null);
 	const [selectedProduct, setselectedProduct] = useState({});
 	const [isLogin, setIsLogin] = useState(false);
 	const [isViewModal, setIsViewModal] = useState(false);
 	const { isSmScreen } = useResponsive();
-
-	const getCategoryDetails = (id) => {
-		api
-			.getCategory()
-			.then((response) => response.json())
-			.then((result) => {
-				if (result.status === 1) {
-					result.data.forEach((ctg) => {
-						if (ctg.id === id) {
-							setproductcategory(ctg);
-						}
-					});
-				}
-			})
-			.catch((error) => console.log(error));
-	};
 
 	const getBrandDetails = (id) => {
 		api
@@ -155,7 +137,7 @@ const ProductDetails = ({
 					});
 				}
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {});
 	};
 
 	const getProductDatafromApi = () => {
@@ -166,7 +148,6 @@ const ProductDetails = ({
 		//             setproductSize(result.sizes)
 		//         }
 		//     })
-		//     .catch(error => console.log(error))
 		api
 			.getProductbyId(
 				city.city.id,
@@ -180,11 +161,10 @@ const ProductDetails = ({
 					setproductdata(result.data);
 					setmainimage(result.data.image_url);
 					setimages(result.data.images);
-					getCategoryDetails(result.data.category_id);
 					getBrandDetails(result.data.brand_id);
 				}
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {});
 	};
 
 	useEffect(() => {
@@ -197,35 +177,9 @@ const ProductDetails = ({
 		}
 	}, []);
 
-	useEffect(() => {
-		const findProductBySlug = async () => {
-			await api
-				.getProductbyFilter(
-					city.city.id,
-					city.city.latitude,
-					city.city.longitude,
-					{ slug: slug }
-				)
-				.then((response) => response.json())
-				.then((result) => {
-					if (result.status === 1) {
-						dispatch({
-							type: ActionTypes.SET_SELECTED_PRODUCT,
-							payload: result.data[0].id,
-						});
-						// setSelectedProductId(result.data[0].id)
-					} else {
-					}
-				})
-				.catch((error) => console.log(error));
-		};
-		if (city.city !== null && slug !== undefined) {
-			findProductBySlug();
-		}
-	}, [city]);
 
 	useEffect(() => {
-		if (Object.keys(productdata).length !== 0) {
+		if (city.city !== null && slug !== undefined && Object.keys(productdata).length !== 0) {
 			api
 				.getProductbyFilter(
 					city.city.id,
@@ -238,13 +192,21 @@ const ProductDetails = ({
 				.then((response) => response.json())
 				.then((result) => {
 					if (result.status === 1) {
+						for(let i=0; i<result.data.length; i++){
+							if(slug.toLowerCase() === result.data[i].slug.toLowerCase()){
+								dispatch({
+									type: ActionTypes.SET_SELECTED_PRODUCT,
+									payload: result.data[i].id,
+								});
+							}
+						}
 						setproductSize(result.sizes);
 						setrelatedProducts(result.data);
 					}
 				})
-				.catch((error) => console.log(error));
+				.catch((error) => {});
 		}
-	}, [productdata]);
+	}, [city, productdata]);
 
 	useEffect(() => {
 		if (city.city !== null) {
@@ -350,7 +312,7 @@ const ProductDetails = ({
 									payload: res.data,
 								});
 						})
-						.catch((error) => console.log(error));
+						.catch((error) => {});
 				} else {
 					toast.error(result.message);
 				}
@@ -392,7 +354,7 @@ const ProductDetails = ({
 									payload: res.data,
 								});
 						})
-						.catch((error) => console.log(error));
+						.catch((error) => {});
 				} else {
 					toast.error(result.message);
 				}

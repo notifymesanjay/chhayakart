@@ -69,7 +69,7 @@ const SelectedCategoryProducts = ({
                   payload: res.data,
                 });
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {});
         } else {
           toast.error(result.message);
         }
@@ -138,7 +138,7 @@ const SelectedCategoryProducts = ({
                   payload: res.data,
                 });
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {});
         } else {
           toast.error(result.message);
         }

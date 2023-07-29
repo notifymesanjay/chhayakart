@@ -71,13 +71,13 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
                 } else {
                 }
               })
-              .catch((error) => console.log("error ", error));
+              .catch((error) => {});
           });
           setbrands(result.data);
         } else {
         }
       })
-      .catch((error) => console.log("error ", error));
+      .catch((error) => {});
   };
 
   const getProductfromApi = () => {
@@ -242,7 +242,6 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
       })
       .catch((error) => {
         setisLoader(false);
-        console.log("error ", error);
       });
   };
 
@@ -251,11 +250,6 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
     setcurrPage(pageNum);
     setoffset(pageNum * total_products_per_page - total_products_per_page);
   };
-
-  useEffect(() => {
-    console.log("xyz", productresult);
-    console.log("xyz1", isLoader);
-  }, [productresult, isLoader]);
 
   return (
     <section

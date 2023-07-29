@@ -34,7 +34,6 @@ const Wishlist = () => {
 	useEffect(() => {
 		if (sizes.sizes === null || sizes.status === "loading") {
 			if (city.city !== null && favorite.favorite !== null) {
-				console.log("wishlist");
 				api
 					.getProductbyFilter(
 						city.city.id,
@@ -117,7 +116,7 @@ const Wishlist = () => {
 						document.getElementById(div_id).appendChild(select);
 				}
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {});
 	};
 
 	//Add to Cart
@@ -173,13 +172,13 @@ const Wishlist = () => {
 								dispatch({ type: ActionTypes.SET_CART, payload: res });
 							else dispatch({ type: ActionTypes.SET_CART, payload: null });
 						})
-						.catch((error) => console.log(error));
+						.catch((error) => {});
 				} else {
 					setisLoader(false);
 					toast.error(result.message);
 				}
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => {});
 	};
 
 	//remove from favorite

@@ -39,7 +39,14 @@ const Checkout = () => {
   const [timeSlots, setTimeSlots] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [expectedDate, setExpectedDate] = useState(new Date());
-  const [expectedTime, setExpectedTime] = useState(null);
+  const [expectedTime, setExpectedTime] = useState({
+    id: 1,
+    title: "Morning 9:00 A.M - 1:00 P.M",
+    from_time: "09:00:00",
+    to_time: "01:00:00",
+    last_order_time: "00:00:00",
+    status: "1",
+  });
   const [show, setShow] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("Razorpay");
   const [loadingPlaceOrder, setLoadingPlaceOrder] = useState(false);
@@ -53,7 +60,6 @@ const Checkout = () => {
     cookies.get("jwt_token")
   );
   const [isLoader, setIsLoader] = useState(false);
-  const [productsAddedToCart, setProductsAddedToCart] = useState(false);
 
   const fetchOrders = () => {
     if (cookies.get("jwt_token")) {
@@ -66,19 +72,6 @@ const Checkout = () => {
           }
         });
     }
-  };
-
-  const fetchTimeSlot = () => {
-    api
-      .fetchTimeSlot()
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.status === 1) {
-          setTimeSlots(result.data);
-          setExpectedTime(result.data.time_slots[0]);
-        }
-      })
-      .catch((error) => console.log(error));
   };
 
   const addRazorPayTransaction = (res, order_id) => {
@@ -102,7 +95,7 @@ const Checkout = () => {
           toast.error(result.message);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {});
   };
 
   const handleRozarpayPayment = useCallback(
@@ -147,9 +140,7 @@ const Checkout = () => {
         };
 
         const rzpay = new Razorpay(options);
-        rzpay.on("payment.failed", function (response) {
-          console.log(response.error);
-        });
+        rzpay.on("payment.failed", function (response) {});
         rzpay.open();
       }
     },
@@ -175,7 +166,7 @@ const Checkout = () => {
           toast.error(result.message);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {});
   };
 
   const handlePayStackPayment = (email, amount, currency, support_email) => {
@@ -199,7 +190,6 @@ const Checkout = () => {
   };
 
   const placeOrder = (delivery_time) => {
-    console.log("xyz", orderSummary.discount);
     api
       .placeOrder(
         cookies.get("jwt_token"),
@@ -267,20 +257,19 @@ const Checkout = () => {
               )
               .then((resp) => resp.json())
               .then((res) => {
-                console.log(res);
                 setLoadingPlaceOrder(false);
                 setStripeOrderId(result.data.order_id);
                 setStripeClientSecret(res.data.client_secret);
                 setStripeTransactionId(res.data.id);
               })
-              .catch((error) => console.log(error));
+              .catch((error) => {});
           }
         } else {
           toast.error(result.message);
           setLoadingPlaceOrder(false);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {});
   };
 
   const handlePlaceOrder = async (e) => {
@@ -356,27 +345,13 @@ const Checkout = () => {
             quantity: allQuantity,
             sub_total: subTotal,
             taxes:
-              subTotal > 4999 && subTotal < 9999
-                ? Math.ceil(0.05 * 0.92 * subTotal)
-                : subTotal > 9999
+              subTotal > 9999
                 ? Math.ceil(0.05 * 0.88 * subTotal)
                 : Math.ceil(0.05 * subTotal),
-            discount:
-              subTotal > 4999 && subTotal < 9999
-                ? Math.floor(0.08 * subTotal)
-                : subTotal > 9999
-                ? Math.floor(0.12 * subTotal)
-                : 0,
+            discount: subTotal > 9999 ? Math.floor(0.12 * subTotal) : 0,
             delivery_charge: { total_delivery_charge: 40 },
             total_amount:
-              subTotal > 4999 && subTotal < 9999
-                ? Math.ceil(
-                    subTotal +
-                      0.05 * 0.92 * subTotal +
-                      40 -
-                      Math.floor(0.08 * subTotal)
-                  )
-                : subTotal > 9999
+              subTotal > 9999
                 ? Math.ceil(
                     subTotal +
                       0.05 * 0.88 * subTotal +
@@ -389,6 +364,11 @@ const Checkout = () => {
           setOrderSummary(orderVal);
           sub_total = subTotal;
         }
+      }
+      if (sub_total <= 199) {
+        setIsCodAllowed(false);
+      } else {
+        setIsCodAllowed(true);
       }
     } else {
       api
@@ -404,68 +384,13 @@ const Checkout = () => {
             dispatch({ type: ActionTypes.SET_CART, payload: res });
           }
         });
-      if (cart.checkout !== null) {
-        sub_total = cart.checkout.sub_total;
-        let orderVal = {
-          product_variant_id: cart.checkout.product_variant_id,
-          quantity: cart.checkout.quantity,
-          sub_total: cart.checkout.sub_total,
-          taxes:
-            cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
-              ? Math.ceil(0.05 * 0.92 * cart.checkout.sub_total)
-              : cart.checkout.sub_total > 9999
-              ? Math.ceil(0.05 * 0.88 * cart.checkout.sub_total)
-              : Math.ceil(0.05 * cart.checkout.sub_total),
-          discount:
-            cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
-              ? Math.floor(0.08 * cart.checkout.sub_total)
-              : cart.checkout.sub_total > 9999
-              ? Math.floor(0.12 * cart.checkout.sub_total)
-              : 0,
-          delivery_charge: {
-            total_delivery_charge:
-              cart.checkout.delivery_charge.total_delivery_charge,
-          },
-          total_amount: Math.ceil(
-            cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
-              ? Math.ceil(
-                  cart.checkout.sub_total +
-                    0.05 * 0.92 * cart.checkout.sub_total +
-                    40 -
-                    Math.floor(0.08 * cart.checkout.sub_total)
-                )
-              : cart.checkout.sub_total > 9999
-              ? Math.ceil(
-                  cart.checkout.sub_total +
-                    0.05 * 0.88 * cart.checkout.sub_total +
-                    40 -
-                    Math.floor(0.12 * cart.checkout.sub_total)
-                )
-              : Math.ceil(
-                  cart.checkout.sub_total + 0.05 * cart.checkout.sub_total + 40
-                )
-          ),
-          cod_allowed: 1,
-        };
-        setOrderSummary(orderVal);
-      }
-    }
-
-    if (sub_total <= 199) {
-      setIsCodAllowed(false);
-    } else {
-      setIsCodAllowed(true);
     }
   };
 
   useEffect(() => {
-    fetchTimeSlot();
     fetchOrders();
-  }, []);
-
-  useEffect(() => {
     handleOrderSummary();
-  }, [cart, productsAddedToCart]);
+  }, []);
 
   useEffect(() => {
     if (isOrderPlaced) {
@@ -475,6 +400,49 @@ const Checkout = () => {
       }, 10000);
     }
   }, [isOrderPlaced]);
+
+  useEffect(() => {
+    if (cart.checkout !== null) {
+      var sub_total = 0;
+      sub_total = cart.checkout.sub_total;
+      let orderVal = {
+        product_variant_id: cart.checkout.product_variant_id,
+        quantity: cart.checkout.quantity,
+        sub_total: cart.checkout.sub_total,
+        taxes:
+          cart.checkout.sub_total > 9999
+            ? Math.ceil(0.05 * 0.88 * cart.checkout.sub_total)
+            : Math.ceil(0.05 * cart.checkout.sub_total),
+        discount:
+          cart.checkout.sub_total > 9999
+            ? Math.floor(0.12 * cart.checkout.sub_total)
+            : 0,
+        delivery_charge: {
+          total_delivery_charge:
+            cart.checkout.delivery_charge.total_delivery_charge,
+        },
+        total_amount: Math.ceil(
+          cart.checkout.sub_total > 9999
+            ? Math.ceil(
+                cart.checkout.sub_total +
+                  0.05 * 0.88 * cart.checkout.sub_total +
+                  40 -
+                  Math.floor(0.12 * cart.checkout.sub_total)
+              )
+            : Math.ceil(
+                cart.checkout.sub_total + 0.05 * cart.checkout.sub_total + 40
+              )
+        ),
+        cod_allowed: 1,
+      };
+      setOrderSummary(orderVal);
+      if (sub_total <= 199) {
+        setIsCodAllowed(false);
+      } else {
+        setIsCodAllowed(true);
+      }
+    }
+  }, [cart]);
 
   useEffect(() => {
     if (isUserLoggedIn) {
@@ -492,7 +460,7 @@ const Checkout = () => {
             .then((response) => response.json())
             .then((result) => {
               if (result.status === 1 && i === cartVal.length - 1) {
-                setProductsAddedToCart(true);
+                handleOrderSummary();
               }
             });
         }
@@ -524,8 +492,6 @@ const Checkout = () => {
             <div className="checkout-container container">
               {isUserLoggedIn ? (
                 <BillingAddress
-                  timeSlots={timeSlots}
-                  setTimeSlots={setTimeSlots}
                   setSelectedAddress={setSelectedAddress}
                   expectedDate={expectedDate}
                   setExpectedDate={setExpectedDate}
