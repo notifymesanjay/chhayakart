@@ -390,9 +390,13 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 		>
 			<div className="cart-sidebar-header-discount">
 				<h2>
-					Big discounts for Order above
+					Additional 12% Cash discount on order above{" "}
 					<FaRupeeSign fill="var(--secondary-color )" />
 					9,999
+					<br />
+					Additional 8% Cash discount on order above
+					<FaRupeeSign fill="var(--secondary-color )" />
+					4,999
 				</h2>
 			</div>
 			<div className="cart-sidebar-header">
@@ -530,6 +534,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 											<span>Delivery Charges</span>
 											<div className="d-flex align-items-center">
 												<FaRupeeSign />
+
 												<span>
 													{parseFloat(
 														orderSummary.delivery_charge.total_delivery_charge
@@ -537,7 +542,6 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 												</span>
 											</div>
 										</div>
-
 										{parseFloat(orderSummary.sub_total) > 9999 && (
 											<div className="d-flex justify-content-between">
 												<span>Discount</span>

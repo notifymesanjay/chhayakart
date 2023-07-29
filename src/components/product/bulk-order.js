@@ -59,9 +59,13 @@ const BulkOrder = ({
 				</div>
 				<div>
 					<h2 className={styles.BulkOrder9999}>
-						Big discounts for Order above
+						Additional 12% Cash discount on order above{" "}
 						<FaRupeeSign fill="var(--secondary-color )" />
 						9,999
+						<br />
+						Additional 8% Cash discount on order above
+						<FaRupeeSign fill="var(--secondary-color )" />
+						4,999
 					</h2>
 				</div>
 			</div>

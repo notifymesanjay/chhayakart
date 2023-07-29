@@ -234,6 +234,10 @@ const ProductMobile = ({
 		}
 	};
 
+	useEffect(() => {
+		console.log("xyz23", isOpenBulk);
+	}, [isOpenBulk]);
+
 	return (
 		<div className="row body-wrapper productDetailWrapper ">
 			<div className="carousel-container">
@@ -325,13 +329,16 @@ const ProductMobile = ({
 			</div>
 			{/* quantity buttons */}
 			<div className="productQuantityDiv">
-				<button
+				<span
 					className={`defaultProductQuantity ${
 						productInCartCount == 1
 							? "defaultProductQuantity"
 							: "productQuantityBtn"
 					}`}
-					onClick={() => addProductToCart1(1)}
+					onClick={() => {
+						addProductToCart1(1);
+						console.log("xyz2");
+					}}
 					id="1"
 				>
 					{" "}
@@ -340,15 +347,18 @@ const ProductMobile = ({
 							parseFloat(productdata.variants[0].stock_unit_name),
 							""
 						)}
-				</button>
+				</span>
 
-				<button
+				<span
 					className={`productQuantityBtn ${
 						productInCartCount == 2
 							? "defaultProductQuantity"
 							: "productQuantityBtn"
 					}`}
-					onClick={() => addProductToCart1(2)}
+					onClick={() => {
+						addProductToCart1(2);
+						console.log("xyz1");
+					}}
 					id="2"
 				>
 					{" "}
@@ -357,31 +367,17 @@ const ProductMobile = ({
 							parseFloat(productdata.variants[0].stock_unit_name),
 							""
 						)}
-				</button>
-				{/* <button
-          id="3"
-          className={` ${
-            productInCartCount == 4
-              ? "defaultProductQuantity"
-              : "productQuantityBtn"
-          }`}
-          onClick={() => addProductToCart1(4)}
-        >
-          {" "}
-          {parseFloat(productdata.variants[0].stock_unit_name) * 4 +
-            productdata.variants[0].stock_unit_name.replace(
-              parseFloat(productdata.variants[0].stock_unit_name),
-              ""
-            )}
-        </button> */}
-				<button
+				</span>
+
+				<span
 					className="productQuantityBtn"
 					onClick={() => {
+						console.log("xyz");
 						setIsOpenBulk(true);
 					}}
 				>
 					Bulk Order
-				</button>
+				</span>
 			</div>
 
 			{/* //collapsiable buttons start */}
@@ -541,15 +537,6 @@ const ProductMobile = ({
 								<BsPlus />{" "}
 							</button>
 						</div>
-						{isOpenBulk && (
-							<BulkOrder
-								isOpenBulk={isOpenBulk}
-								setIsOpenBulk={setIsOpenBulk}
-								product={productdata}
-								onSubmit={incrementProduct1}
-								productVal={productInCartCount}
-							/>
-						)}
 					</>
 				)}
 
@@ -601,6 +588,15 @@ const ProductMobile = ({
 						</div>
 					</CkModal>
 				</>
+			)}
+			{isOpenBulk && (
+				<BulkOrder
+					isOpenBulk={isOpenBulk}
+					setIsOpenBulk={setIsOpenBulk}
+					product={productdata}
+					onSubmit={incrementProduct1}
+					productVal={productInCartCount}
+				/>
 			)}
 		</div>
 	);
