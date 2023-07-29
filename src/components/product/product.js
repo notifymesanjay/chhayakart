@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BiLink, BiMinus } from "react-icons/bi";
 import { FaChevronLeft, FaChevronRight, FaRupeeSign } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
 import Slider from "react-slick";
 import api from "../../api/api";
 import Cookies from "universal-cookie";

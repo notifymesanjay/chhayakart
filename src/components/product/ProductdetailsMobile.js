@@ -12,6 +12,7 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 import Cookies from "universal-cookie";
 import Slider from "react-slick";
 import { AiOutlineEye } from "react-icons/ai";
+import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
 import { FaChevronLeft, FaChevronRight, FaRupeeSign } from "react-icons/fa";
 import {
 	getSelectedProductId,

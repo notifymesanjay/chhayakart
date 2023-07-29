@@ -9,6 +9,7 @@ import api from "../../api/api";
 import Cookies from "universal-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { ActionTypes } from "../../model/action-type";
+import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
 import {
 	FacebookIcon,
 	FacebookShareButton,
