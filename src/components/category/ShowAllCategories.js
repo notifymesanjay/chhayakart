@@ -64,7 +64,11 @@ const ShowAllCategories = () => {
 	return (
 		<section id="allcategories">
 			<div className="cover">
-				<img src={coverImg} className="img-fluid" alt="cover"></img>
+				<img
+					data-src={coverImg}
+					className="img-fluid lazyload "
+					alt="cover"
+				></img>
 				<div className="page-heading">
 					<h5>Categories</h5>
 					<p>

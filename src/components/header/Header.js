@@ -10,24 +10,17 @@ import {
 	IoCartOutline,
 	IoPersonOutline,
 } from "react-icons/io5";
-import { IoMdArrowDropdown, IoIosArrowDown } from "react-icons/io";
-import { GoLocation } from "react-icons/go";
-import { FiMenu, FiFilter } from "react-icons/fi";
-import { AiOutlineCloseCircle } from "react-icons/ai";
-import { motion } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Location from "../location/Location";
-import logoPath from "../../utils/logo_egrocer.svg";
-import { getLocation } from "../../utils/manageLocalStorage";
+
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../api/api";
 import { ActionTypes } from "../../model/action-type";
-import Category from "../category/Category";
+
 import Cookies from "universal-cookie";
 import Cart from "../cart/Cart";
 import { toast } from "react-toastify";
 import Favorite from "../favorite/Favorite";
-import $ from "jquery";
+
 import LoginUser from "../login/login-user";
 import ChhaykartPinkLogo from "../../public/images/logo/chhayakart-pink-logo.png";
 import ChhayakartWhiteLogo from "../../public/images/logo/chhayakart-white-logo.png";
@@ -38,14 +31,9 @@ import { useResponsive } from "../shared/use-responsive";
 import MobileMenu from "./mobile-menu";
 import chhayakartPinkMiniLogo from "../../public/images/logo/chhayakert-pink-mini-logo.png";
 import Sidebar from "./sidebar";
-// import { FaRegUserCircle } from 'react-icons/fa';
-
-// import 'bootstrap/dist/js/bootstrap.bundle.js'
-// import { Modal } from 'bootstrap/dist/js/bootstrap.bundle.js';
+import { FiMenu, FiFilter } from "react-icons/fi";
 
 const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
-	// const [islocationclick, setislocationclick] = useState(false);
-	// const [issearchClick, setissearchClick] = useState(false);
 	const [isLocationPresent, setisLocationPresent] = useState(false);
 	const [totalNotification, settotalNotification] = useState(null);
 	const [search, setsearch] = useState("");
@@ -66,31 +54,9 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 	const cart = useSelector((state) => state.cart);
 	const favorite = useSelector((state) => state.favorite);
 	const [isSticky, setIsSticky] = useState(false);
-	// const categories = useSelector(state => (state.category))
-
-	//initialize cookies
 	const cookies = new Cookies();
 
 	const curr_url = useLocation();
-
-	// useEffect(() => {
-	//   let location = getLocation();
-	//   if (location !== null) {
-	//     if (Object.keys(location).length !== 0) {
-	//       api
-	//         .getCity(location.city, location.lat, location.lng)
-	//         .then((response) => response.json())
-	//         .then((result) => {
-	//           if (result.status === 1) {
-	//             dispatch({ type: ActionTypes.SET_CITY, payload: result.data });
-	//           }
-	//         });
-	//       setisLocationPresent(true);
-	//     }
-	//   } else {
-	//     locationModalTrigger.current.click();
-	//   }
-	// }, [dispatch]);
 
 	const fetchCart = async (token, latitude, longitude) => {
 		await api
@@ -261,8 +227,8 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 							/>
 							<div className={styles.appContentWrapper}>
 								<img
-									src={chhayakartPinkMiniLogo}
-									className={styles.logo}
+									data-src={chhayakartPinkMiniLogo}
+									className={`${styles.logo} lazyload`}
 									alt="CHHAYAKART"
 								/>
 								<p className={styles.description}>
@@ -330,29 +296,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 								</Link>
 								{/* <Link to='/faq' className={`borderPad`} > faq</Link> */}
 							</div>
-							<div className="col-md-6 d-flex justify-content-end">
-								{/* 2nd Phase feature */}
-								{/* <div className='d-flex px-2 border-start'>
-                                    <div>
-                                        <IoContrast className='fs-3' />
-                                    </div>
-                                    <select className='p-2' onChange={handleCssModeChange}>
-                                        <option value="light">Light</option>
-                                        <option value="dark">Dark</option>
-                                    </select>
-                                </div> */}
-
-								{/* <div className='d-flex'>
-                                    <div className='p-4 bg-white' >
-                                        <MdGTranslate className='fs-3' />
-                                        <select className='bg-white' onChange={handleLanguageChange}>
-                                            <option value="english">English</option>
-                                            <option value="gujarati">Gujarati</option>
-                                            <option value="hindi">Hindi</option>
-                                        </select>
-                                    </div>
-                                </div> */}
-							</div>
+							<div className="col-md-6 d-flex justify-content-end"></div>
 						</div>
 					</div>
 				</div>
@@ -399,10 +343,12 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 										}
 									>
 										<img
-											src={isSmScreen ? ChhayakartWhiteLogo : ChhaykartPinkLogo}
+											data-src={
+												isSmScreen ? ChhayakartWhiteLogo : ChhaykartPinkLogo
+											}
 											height="50px"
 											alt="logo"
-											className="desktop-logo"
+											className="desktop-logo lazyload"
 										/>
 									</Link>
 								</div>
@@ -575,7 +521,11 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 												<span className="number"> Welcome</span>
 												<span className="name"> {user.user.name}</span>
 											</div>
-											<img src={user.user.profile} alt="user"></img>
+											<img
+												data-src={user.user.profile}
+												className="lazyload"
+												alt="user"
+											></img>
 										</Link>
 									</div>
 								)}
@@ -631,499 +581,6 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 				</div>
 
 				{isSmScreen && <MobileMenu />}
-
-				{/* Mobile bottom Nav */}
-				{/* <nav className="header-mobile-nav">
-          <div className="mobile-nav-wrapper">
-            <ul>
-              <li className="menu-item">
-                <Link
-                  to="/products"
-                  className={`shop ${
-                    curr_url.pathname === "/products" ? "active" : ""
-                  }`}
-                  onClick={() => {
-                    document
-                      .getElementsByClassName("shop")[0]
-                      .classList.add("active");
-                    if (curr_url.pathname !== "/products") {
-                      if (curr_url.pathname === "/products") {
-                        document
-                          .getElementsByClassName("filter")[0]
-                          .classList.remove("active");
-                      }
-                      if (curr_url.pathname === "/profile") {
-                        document
-                          .getElementsByClassName("profile-account")[0]
-                          .classList.remove("active");
-                      }
-                      document
-                        .getElementsByClassName("wishlist")[0]
-                        .classList.remove("active");
-                      document
-                        .getElementsByClassName("search")[0]
-                        .classList.remove("active");
-                      document
-                        .getElementsByClassName("header-search")[0]
-                        .classList.remove("active");
-                    }
-                  }}
-                >
-                  <div>
-                    <BsShopWindow />
-                  </div>
-                  <span>Shop</span>
-                </Link>
-              </li>
-
-							{curr_url.pathname === "/products" ? (
-								<li className="menu-item">
-									<button
-										type="button"
-										className="filter"
-										data-bs-toggle="offcanvas"
-										data-bs-target="#filteroffcanvasExample"
-										aria-controls="filteroffcanvasExample"
-										onClick={() => {
-											if (curr_url.pathname === "/profile") {
-												document
-													.getElementsByClassName("profile-account")[0]
-													.classList.remove("active");
-											}
-											document
-												.getElementsByClassName("filter")[0]
-												.classList.toggle("active");
-											document
-												.getElementsByClassName("search")[0]
-												.classList.remove("active");
-											document
-												.getElementsByClassName("wishlist")[0]
-												.classList.remove("active");
-											if (curr_url.pathname !== "/products") {
-												document
-													.getElementsByClassName("shop")[0]
-													.classList.remove("active");
-											}
-											document
-												.getElementsByClassName("header-search")[0]
-												.classList.remove("active");
-										}}
-									>
-										<div>
-											<FiFilter />
-										</div>
-										<span>Filter</span>
-									</button>
-								</li>
-							) : (
-								""
-							)}
-
-							<li className="menu-item">
-								{city.city === null ||
-								cookies.get("jwt_token") === undefined ? (
-									<button
-										type="button"
-										className="wishlist"
-										onClick={() => {
-											// if (cookies.get("jwt_token") === undefined) {
-											// 	toast.error(
-											// 		"OOPS! You have to login first to see your cart!"
-											// 	);
-											// } else if (city.city === null) {
-											// 	toast.error(
-											// 		"Please Select you delivery location first!"
-											// 	);
-											// }
-											// else
-											{
-												document
-													.getElementsByClassName("wishlist")[0]
-													.classList.toggle("active");
-												if (curr_url.pathname === "/products") {
-													document
-														.getElementsByClassName("filter")[0]
-														.classList.remove("active");
-												}
-												if (curr_url.pathname === "/profile") {
-													document
-														.getElementsByClassName("profile-account")[0]
-														.classList.remove("active");
-												}
-												if (curr_url.pathname !== "/products") {
-													document
-														.getElementsByClassName("shop")[0]
-														.classList.remove("active");
-												}
-												document
-													.getElementsByClassName("search")[0]
-													.classList.remove("active");
-												document
-													.getElementsByClassName("header-search")[0]
-													.classList.remove("active");
-											}
-										}}
-									>
-										<div>
-											<IoHeartOutline />
-										</div>
-										<span>Wishlist</span>
-									</button>
-								) : (
-									<button
-										type="button"
-										className="wishlist"
-										onClick={() => {
-											if (cookies.get("jwt_token") === undefined) {
-												toast.error(
-													"OOPS! You have to login first to see your cart!"
-												);
-											} else if (city.city === null) {
-												toast.error(
-													"Please Select you delivery location first!"
-												);
-											} else {
-												document
-													.getElementsByClassName("wishlist")[0]
-													.classList.toggle("active");
-												if (curr_url.pathname === "/products") {
-													document
-														.getElementsByClassName("filter")[0]
-														.classList.remove("active");
-												}
-												if (curr_url.pathname === "/profile") {
-													document
-														.getElementsByClassName("profile-account")[0]
-														.classList.remove("active");
-												}
-												if (curr_url.pathname !== "/products") {
-													document
-														.getElementsByClassName("shop")[0]
-														.classList.remove("active");
-												}
-												document
-													.getElementsByClassName("search")[0]
-													.classList.remove("active");
-												document
-													.getElementsByClassName("header-search")[0]
-													.classList.remove("active");
-											}
-										}}
-										data-bs-toggle="offcanvas"
-										data-bs-target="#favoriteoffcanvasExample"
-										aria-controls="favoriteoffcanvasExample"
-									>
-										<div>
-											<IoHeartOutline />
-
-              <li className="menu-item">
-                {city.city === null ||
-                cookies.get("jwt_token") === undefined ? (
-                  <button
-                    type="button"
-                    className="wishlist"
-                    onClick={() => {
-                      if (cookies.get("jwt_token") === undefined) {
-                      	toast.error(
-                      		"OOPS! You have to login first to see your cart!"
-                      	);
-                      } else if (city.city === null) {
-                      	toast.error(
-                      		"Please Select you delivery location first!"
-                      	);
-                      }
-                      else
-                      {
-                        document
-                          .getElementsByClassName("wishlist")[0]
-                          .classList.toggle("active");
-                        if (curr_url.pathname === "/products") {
-                          document
-                            .getElementsByClassName("filter")[0]
-                            .classList.remove("active");
-                        }
-                        if (curr_url.pathname === "/profile") {
-                          document
-                            .getElementsByClassName("profile-account")[0]
-                            .classList.remove("active");
-                        }
-                        if (curr_url.pathname !== "/products") {
-                          document
-                            .getElementsByClassName("shop")[0]
-                            .classList.remove("active");
-                        }
-                        document
-                          .getElementsByClassName("search")[0]
-                          .classList.remove("active");
-                        document
-                          .getElementsByClassName("header-search")[0]
-                          .classList.remove("active");
-                      }
-                    }}
-                  >
-                    <div>
-                      <IoHeartOutline />
-                    </div>
-                    <span>Wishlist</span>
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    className="wishlist"
-                    onClick={() => {
-                      if (cookies.get("jwt_token") === undefined) {
-                        toast.error(
-                          "OOPS! You have to login first to see your cart!"
-                        );
-                      } else if (city.city === null) {
-                        toast.error(
-                          "Please Select you delivery location first!"
-                        );
-                      } else {
-                        document
-                          .getElementsByClassName("wishlist")[0]
-                          .classList.toggle("active");
-                        if (curr_url.pathname === "/products") {
-                          document
-                            .getElementsByClassName("filter")[0]
-                            .classList.remove("active");
-                        }
-                        if (curr_url.pathname === "/profile") {
-                          document
-                            .getElementsByClassName("profile-account")[0]
-                            .classList.remove("active");
-                        }
-                        if (curr_url.pathname !== "/products") {
-                          document
-                            .getElementsByClassName("shop")[0]
-                            .classList.remove("active");
-                        }
-                        document
-                          .getElementsByClassName("search")[0]
-                          .classList.remove("active");
-                        document
-                          .getElementsByClassName("header-search")[0]
-                          .classList.remove("active");
-                      }
-                    }}
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#favoriteoffcanvasExample"
-                    aria-controls="favoriteoffcanvasExample"
-                  >
-                    <div>
-                      <IoHeartOutline />
-
-							{curr_url.pathname === "/profile" ? (
-								<li className="menu-item">
-									<button
-										type="button"
-										className="profile-account"
-										onClick={() => {
-											document
-												.getElementsByClassName("profile-account")[0]
-												.classList.toggle("active");
-											document
-												.getElementsByClassName("wishlist")[0]
-												.classList.remove("active");
-											if (curr_url.pathname === "/products") {
-												document
-													.getElementsByClassName("filter")[0]
-													.classList.remove("active");
-											}
-											if (curr_url.pathname !== "/products") {
-												document
-													.getElementsByClassName("shop")[0]
-													.classList.remove("active");
-											}
-											document
-												.getElementsByClassName("search")[0]
-												.classList.remove("active");
-											document
-												.getElementsByClassName("header-search")[0]
-												.classList.remove("active");
-										}}
-										data-bs-toggle="offcanvas"
-										data-bs-target="#profilenavoffcanvasExample"
-										aria-controls="profilenavoffcanvasExample"
-									>
-										<div>
-											<MdOutlineAccountCircle />
-										</div>
-										<span>Account</span>
-									</button>
-								</li>
-							) : (
-								<li className="menu-item">
-									{user.status === "loading" ? (
-										<>
-											<button
-												type="button"
-												className="account"
-												onClick={() => {
-													handleMobLogin();
-												}}
-											>
-												<div>
-													<BiUserCircle />
-												</div>
-												<span>Login</span>
-											</button>
-										</>
-									) : (
-										<>
-											<Link
-												to="/profile"
-												className="d-flex user-profile gap-1 account"
-												onClick={() => {
-													document
-														.getElementsByClassName("wishlist")[0]
-														.classList.remove("active");
-													if (curr_url.pathname === "/products") {
-														document
-															.getElementsByClassName("filter")[0]
-															.classList.remove("active");
-													}
-													if (curr_url.pathname !== "/products") {
-														document
-															.getElementsByClassName("shop")[0]
-															.classList.remove("active");
-													}
-													document
-														.getElementsByClassName("search")[0]
-														.classList.remove("active");
-													document
-														.getElementsByClassName("header-search")[0]
-														.classList.remove("active");
-												}}
-											>
-												<div className="d-flex flex-column user-info my-auto">
-													<span className="name"> {user.user.name}</span>
-												</div>
-												<img src={user.user.profile} alt="user"></img>
-												<span>Profile</span>
-											</Link>
-										</>
-									)}
-								</li>
-							)}
-						</ul>
-					</div>
-				</nav>
-
-              {curr_url.pathname === "/profile" ? (
-                <li className="menu-item">
-                  <button
-                    type="button"
-                    className="profile-account"
-                    onClick={() => {
-                      document
-                        .getElementsByClassName("profile-account")[0]
-                        .classList.toggle("active");
-                      document
-                        .getElementsByClassName("wishlist")[0]
-                        .classList.remove("active");
-                      if (curr_url.pathname === "/products") {
-                        document
-                          .getElementsByClassName("filter")[0]
-                          .classList.remove("active");
-                      }
-                      if (curr_url.pathname !== "/products") {
-                        document
-                          .getElementsByClassName("shop")[0]
-                          .classList.remove("active");
-                      }
-                      document
-                        .getElementsByClassName("search")[0]
-                        .classList.remove("active");
-                      document
-                        .getElementsByClassName("header-search")[0]
-                        .classList.remove("active");
-                    }}
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#profilenavoffcanvasExample"
-                    aria-controls="profilenavoffcanvasExample"
-                  >
-                    <div>
-                      <MdOutlineAccountCircle />
-                    </div>
-                    <span>Account</span>
-                  </button>
-                </li>
-              ) : (
-                <li className="menu-item">
-                  {user.status === "loading" ? (
-                    <>
-                      <button
-                        type="button"
-                        className="account"
-                        onClick={() => {
-                          handleMobLogin();
-                        }}
-                      >
-                        <div>
-                          <BiUserCircle />
-                        </div>
-                        <span>Login</span>
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <Link
-                        to="/profile"
-                        className="d-flex user-profile gap-1 account"
-                        onClick={() => {
-                          document
-                            .getElementsByClassName("wishlist")[0]
-                            .classList.remove("active");
-                          if (curr_url.pathname === "/products") {
-                            document
-                              .getElementsByClassName("filter")[0]
-                              .classList.remove("active");
-                          }
-                          if (curr_url.pathname !== "/products") {
-                            document
-                              .getElementsByClassName("shop")[0]
-                              .classList.remove("active");
-                          }
-                          document
-                            .getElementsByClassName("search")[0]
-                            .classList.remove("active");
-                          document
-                            .getElementsByClassName("header-search")[0]
-                            .classList.remove("active");
-                        }}
-                      >
-                        <div className="d-flex flex-column user-info my-auto">
-                          <span className="name"> {user.user.name}</span>
-                        </div>
-                        <img src={user.user.profile} alt="user"></img>
-                        <span>Profile</span>
-                      </Link>
-                    </>
-                  )}
-                </li>
-              )}
-            </ul>
-          </div>
-        </nav> */}
-
-				{/* location modal */}
-				{/* <div
-          className="modal fade location"
-          id="locationModal"
-          data-bs-backdrop="static"
-          aria-labelledby="locationModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content" style={{ borderRadius: "10px" }}>
-              <Location
-                isLocationPresent={isLocationPresent}
-                setisLocationPresent={setisLocationPresent}
-              />
-            </div>
-          </div>
-        </div> */}
 
 				{/* Cart Sidebar */}
 				<Cart

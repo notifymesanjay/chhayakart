@@ -52,9 +52,9 @@ const Category = ({ categories = [], setSelectedFilter = () => {} }) => {
 											onClick={() => selectCategory(ctg)}
 										>
 											<img
-												className={styles.categoryImg}
-												src={ctg.image_url}
+												data-src={ctg.image_url}
 												alt={ctg.subtitle}
+												className={`${styles.categoryImg} lazyload`}
 											/>
 											<p className={styles.categoryName}>{ctg.name}</p>
 										</div>
@@ -67,8 +67,8 @@ const Category = ({ categories = [], setSelectedFilter = () => {} }) => {
 									<h1 className={styles.header}>SHOP BY CATEGORY</h1>
 
 									<img
-										className={styles.gaonKiDukan}
-										src={Gaon}
+										className={`${styles.gaonKiDukan} lazyload`}
+										data-src={Gaon}
 										alt="Gaon Ki Dukan"
 									/>
 								</div>
@@ -84,7 +84,7 @@ const Category = ({ categories = [], setSelectedFilter = () => {} }) => {
 												}}
 											>
 												<img
-													className={styles.categoryImg}
+													className={`${styles.categoryImg} lazyload`}
 													src={ctg.image_url}
 													alt={ctg.subtitle}
 												/>

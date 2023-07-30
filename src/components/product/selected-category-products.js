@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 import { BiMinus } from "react-icons/bi";
@@ -16,7 +16,6 @@ import CryptoJS from "crypto-js";
 import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
-import CkModal from "../shared/ck-modal";
 import BulkOrder from "./bulk-order";
 
 const secret_key = "Xyredg$5g";
@@ -34,7 +33,6 @@ const SelectedCategoryProducts = ({
 	const [isProductAdded, setIsProductAdded] = useState(false);
 	const [productVal, setProductVal] = useState(0);
 	const [isOpenBulk, setIsOpenBulk] = useState(false);
-	const [bulkVal, setBulkVal] = useState(0);
 
 	const addtoCart = async (product_id, product_variant_id, qty) => {
 		await api
@@ -267,9 +265,9 @@ const SelectedCategoryProducts = ({
 				}}
 			>
 				<img
-					src={product.image_url}
+					data-src={product.image_url}
 					alt="product"
-					className={styles.productImg}
+					className={`{styles.productImg} lazyload `}
 				/>
 			</div>
 			<div className={styles.productBody}>

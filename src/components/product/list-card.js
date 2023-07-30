@@ -483,7 +483,7 @@ const ListCard = ({
 									payload: product.id,
 								});
 								setSelectedProductId(product.id);
-								navigate("/product/" + product.id+"/"+product.slug);
+								navigate("/product/" + product.id + "/" + product.slug);
 							}}
 						/>
 					</div>
@@ -638,7 +638,7 @@ const ListCard = ({
 								payload: product.id,
 							});
 							setSelectedProductId(product.id);
-							navigate("/product/" + product.id+"/"+product.slug);
+							navigate("/product/" + product.id + "/" + product.slug);
 						}}
 					>
 						{product.name}

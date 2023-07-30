@@ -24,9 +24,9 @@ const PaymentMethod = ({
 			{setting.payment_setting.razorpay_payment_method === "1" ? (
 				<div>
 					<label className="form-check-label" htmlFor="razorpay">
-						<img src={gpay} alt="ANY UPI" />
-						<img src={phonepay} alt="ANY UPI" />
-						<img src={payt} alt="ANY UPI" />
+						<img data-src={gpay} className="lazyload" alt="ANY UPI" />
+						<img data-src={phonepay} className="lazyload" alt="ANY UPI" />
+						<img data-src={payt} className="lazyload" alt="ANY UPI" />
 						<span> GPAY / Phonepay / Paytm </span>
 					</label>
 					<input
@@ -43,7 +43,11 @@ const PaymentMethod = ({
 			{setting.payment_setting.razorpay_payment_method === "1" ? (
 				<div>
 					<label className="form-check-label" htmlFor="razorpay">
-						<img src={cardPayment} alt=" DEBIT/CREDIT CARD" />
+						<img
+							data-src={cardPayment}
+							className="lazyload"
+							alt=" DEBIT/CREDIT CARD"
+						/>
 						<span> CARD PAYMENT</span>
 					</label>
 					<input
@@ -60,7 +64,7 @@ const PaymentMethod = ({
 			{setting.payment_setting.razorpay_payment_method === "1" ? (
 				<div>
 					<label className="form-check-label" htmlFor="razorpay">
-						<img src={rozerpay} alt="NETBANKING" />
+						<img data-src={rozerpay} className="lazyload" alt="NETBANKING" />
 						<span> NETBANKING</span>
 					</label>
 					<input
@@ -77,7 +81,7 @@ const PaymentMethod = ({
 			{setting.payment_setting.cod_payment_method === "1" ? (
 				<div>
 					<label className="form-check-label" htmlFor="cod">
-						<img src={cod} alt="Cash On Delivery" />
+						<img data-src={cod} className="lazyload" alt="Cash On Delivery" />
 						<span>Cash On Delivery</span>
 					</label>
 					<input
@@ -95,7 +99,7 @@ const PaymentMethod = ({
 			{setting.payment_setting.paystack_payment_method === "1" ? (
 				<div>
 					<label className="form-check-label" htmlFor="paystack">
-						<img src={paystack} alt="cod" />
+						<img data-src={paystack} className="lazyload" alt="cod" />
 						<span>Paystack</span>
 					</label>
 					<input
@@ -111,7 +115,7 @@ const PaymentMethod = ({
 			{setting.payment_setting.stripe_payment_method === "1" ? (
 				<div>
 					<label className="form-check-label" htmlFor="stripe">
-						<img src={Stripe} alt="stripe" />
+						<img data-src={Stripe} className="lazyload" alt="stripe" />
 						<span>Stripe</span>
 					</label>
 					<input

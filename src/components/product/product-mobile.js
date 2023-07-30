@@ -274,8 +274,8 @@ const ProductMobile = ({
 									}`}
 								>
 									<img
-										src={image}
-										className="col-12 imgZoom"
+										data-src={image}
+										className="col-12 imgZoom lazyload "
 										alt="product"
 										onClick={() => {
 											setmainimage(image);
@@ -445,7 +445,7 @@ const ProductMobile = ({
 						<div>
 							{images.map((img, index) => (
 								<div key={index}>
-									<img src={img} alt="chhayakart" />
+									<img data-src={img} className="lazyload" alt="chhayakart" />
 								</div>
 							))}
 						</div>

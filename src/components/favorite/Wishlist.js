@@ -235,7 +235,11 @@ const Wishlist = () => {
 	return (
 		<section id="wishlist" className="wishlist">
 			<div className="cover">
-				<img src={coverImg} className="img-fluid" alt="cover"></img>
+				<img
+					data-src={coverImg}
+					className="img-fluid lazyload"
+					alt="cover"
+				></img>
 				<div className="title">
 					<h3>Wishlist</h3>
 					<span>home / </span>
@@ -246,7 +250,11 @@ const Wishlist = () => {
 			<div className="view-cart-container container">
 				{isfavoriteEmpty ? (
 					<div className="empty-cart">
-						<img src={EmptyCart} alt="empty-cart"></img>
+						<img
+							data-src={EmptyCart}
+							className="lazyload"
+							alt="empty-cart"
+						></img>
 						<p>Your Cart is empty</p>
 						<span>You have no items in your shopping cart.</span>
 						<span>Let's go buy something!</span>
