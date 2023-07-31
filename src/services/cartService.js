@@ -2,8 +2,6 @@ import { toast } from "react-toastify";
 
 export const addProductToCart = (product, quantity) => {
 	let cart = JSON.parse(localStorage.getItem("cart"));
-	console.log("xyz4", cart);
-	console.log("xyz5", product);
 	if (!cart) {
 		let updatedProductList = [
 			{

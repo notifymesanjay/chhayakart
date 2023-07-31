@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import CkModal from "../shared/ck-modal";
 import BulkOrder from "./bulk-order";
+import TrackingService from "../../services/trackingService";
 
 const secret_key = "Xyredg$5g";
 
@@ -27,6 +28,7 @@ const SelectedCategoryProducts = ({
   setProductTriggered,
   index,
 }) => {
+  const user = useSelector((state) => state.user);
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -77,6 +79,12 @@ const SelectedCategoryProducts = ({
   };
 
   const handleAddToCart = (product, index) => {
+    const trackingService = new TrackingService();
+    trackingService.trackCart(
+      product,
+      1,
+      user.status === "loading" ? "" : user.user.email
+    );
     if (cookies.get("jwt_token") !== undefined) {
       setIsProductAdded(true);
       setProductVal(1);
@@ -147,6 +155,12 @@ const SelectedCategoryProducts = ({
 
   const handleDecrement = (product, index) => {
     var val = productVal;
+    const trackingService = new TrackingService();
+    trackingService.trackCart(
+      product,
+      parseInt(val) - 1,
+      user.status === "loading" ? "" : user.user.email
+    );
     if (cookies.get("jwt_token") !== undefined) {
       if (val === 1) {
         setProductVal(0);
@@ -196,6 +210,12 @@ const SelectedCategoryProducts = ({
   };
 
   const incrementProduct1 = (val, index) => {
+    const trackingService = new TrackingService();
+    trackingService.trackCart(
+      product,
+      parseInt(val) + 1,
+      user.status === "loading" ? "" : user.user.email
+    );
     if (cookies.get("jwt_token") !== undefined) {
       if (parseInt(val) < parseInt(product.total_allowed_quantity)) {
         setProductVal(parseInt(val) + 1);
@@ -218,7 +238,12 @@ const SelectedCategoryProducts = ({
         toast.error("Maximum Quantity Exceeded");
       }
     } else {
-      const isIncremented = incrementProduct(product.id, product, val+1, true);
+      const isIncremented = incrementProduct(
+        product.id,
+        product,
+        val + 1,
+        true
+      );
       if (isIncremented) {
         setProductVal(parseInt(val) + 1);
       }
