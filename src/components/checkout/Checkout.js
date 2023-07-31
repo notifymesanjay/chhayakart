@@ -19,6 +19,7 @@ import { ActionTypes } from "../../model/action-type";
 import "./checkout.css";
 import GuestLogin from "./guest-login";
 import { escapeSelector } from "jquery";
+import TrackingService from "../../services/trackingService";
 
 const stripePromise = loadStripe(
   "pk_test_51MKxDESEKxefYE6MZCHxEw4cFKiiLn2mV3Ek4Nx1UfcuNfE1Z6jgQrZrKpqTLju3n5SBjYJcwt1Jkw1bEoPXWRHB00XZ7D2f2F"
@@ -190,6 +191,11 @@ const Checkout = () => {
   };
 
   const placeOrder = (delivery_time) => {
+    const trackingService = new TrackingService();
+    trackingService.initiateCheckout(
+      orderSummary,
+      user.status === "loading" ? "" : user.user.email
+    );
     api
       .placeOrder(
         cookies.get("jwt_token"),
@@ -206,12 +212,25 @@ const Checkout = () => {
       .then((response) => response.json())
       .then(async (result) => {
         if (result.status === 1) {
+          const trackingService = new TrackingService();
           if (paymentMethod === "COD") {
+            trackingService.paymentSuccess(
+              orderSummary,
+              "COD",
+              result.data.order_id,
+              user.status === "loading" ? "" : user.user.email
+            );
             toast.success("Order Successfully Placed!");
             setLoadingPlaceOrder(false);
             setIsOrderPlaced(true);
             setShow(true);
           } else if (paymentMethod === "Razorpay") {
+            trackingService.paymentSuccess(
+              orderSummary,
+              "Razorpay",
+              result.data.order_id,
+              user.status === "loading" ? "" : user.user.email
+            );
             await api
               .initiate_transaction(
                 cookies.get("jwt_token"),
@@ -239,7 +258,12 @@ const Checkout = () => {
               .catch((error) => console.error(error));
           } else if (paymentMethod === "Paystack") {
             setLoadingPlaceOrder(false);
-
+            trackingService.paymentSuccess(
+              orderSummary,
+              "Paystack",
+              result.data.order_id,
+              user.status === "loading" ? "" : user.user.email
+            );
             handlePayStackPayment(
               user.user.email,
               cart.checkout.total_amount,
@@ -248,7 +272,12 @@ const Checkout = () => {
             );
           } else if (paymentMethod === "Stripe") {
             const order_id = result.data.order_id;
-
+            trackingService.paymentSuccess(
+              orderSummary,
+              "Stripe",
+              result.data.order_id,
+              user.status === "loading" ? "" : user.user.email
+            );
             await api
               .initiate_transaction(
                 cookies.get("jwt_token"),
@@ -361,6 +390,11 @@ const Checkout = () => {
                 : Math.ceil(subTotal + 0.05 * subTotal + 40),
             cod_allowed: 1,
           };
+          const trackingService = new TrackingService();
+          trackingService.checkout(
+            orderVal,
+            user.status === "loading" ? "" : user.user.email
+          );
           setOrderSummary(orderVal);
           sub_total = subTotal;
         }
@@ -435,6 +469,11 @@ const Checkout = () => {
         ),
         cod_allowed: 1,
       };
+      const trackingService = new TrackingService();
+      trackingService.checkout(
+        orderVal,
+        user.status === "loading" ? "" : user.user.email
+      );
       setOrderSummary(orderVal);
       if (sub_total <= 199) {
         setIsCodAllowed(false);

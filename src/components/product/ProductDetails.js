@@ -38,6 +38,7 @@ import { useResponsive } from "../shared/use-responsive";
 import Product from "./product";
 import ProductMobile from "./product-mobile";
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
+import TrackingService from "../../services/trackingService";
 
 function SamplePrevArrow(props) {
   const { className, style, onClick } = props;
@@ -92,6 +93,7 @@ const ProductDetails = ({
   productTriggered,
   setProductTriggered = () => {},
 }) => {
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const cookies = new Cookies();
   const { slug } = useParams();
@@ -200,6 +202,14 @@ const ProductDetails = ({
                   type: ActionTypes.SET_SELECTED_PRODUCT,
                   payload: result.data[i].id,
                 });
+
+                const trackingService = new TrackingService();
+                trackingService.trackProductPage(
+                  result.data[i].id,
+                  result.data[i].name,
+                  result.data[i].category_id,
+                  user.status === "loading" ? "" : user.user.email
+                );
               }
             }
             setproductSize(result.sizes);
@@ -390,7 +400,7 @@ const ProductDetails = ({
                 <ResponsiveCarousel
                   items={5}
                   itemsInTablet={3}
-				  itemsInMobile={1}
+                  itemsInMobile={1}
                   infinite={false}
                   autoPlaySpeed={4000}
                   showArrows={false}
@@ -406,7 +416,7 @@ const ProductDetails = ({
                         setProductTriggered={setProductTriggered}
                         product={related_product}
                         displayAddtoCart={false}
-						className="customProductCard"
+                        className="customProductCard"
                       />
                       {/* <RelateProduct
 												index={index}
