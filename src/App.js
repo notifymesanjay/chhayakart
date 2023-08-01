@@ -213,7 +213,7 @@ function App() {
                 ></Route>
                 <Route
                   exact={true}
-                  path="/product/:id"
+                  path="/product/:slug"
                   element={
                     <ProductDetails
                       productTriggered={productTriggered}

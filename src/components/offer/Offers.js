@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
 // import offer3 from '../../utils/offers/offer3.jpg'
 // import offer4 from '../../utils/offers/offer4.jpg'
 // import offer5 from '../../utils/offers/offer5.jpg'
@@ -60,51 +61,6 @@ function SampleNextArrow(props) {
 const Offers = () => {
 	const shop = useSelector((state) => state.shop);
 
-	const settings = {
-		infinite: false,
-		autoplay: true,
-		autoplaySpeed: 3000,
-		pauseOnHover: false,
-		direction: "rtl",
-		pauseOnDotsHover: false,
-		pauseOnFocus: true,
-		slidesToShow: 2,
-		slidesPerRow: 1,
-		initialSlide: 0,
-		prevArrow: (
-			<button type="button" className="slick-prev">
-				<FaChevronLeft size={30} className="prev-arrow" />
-			</button>
-		),
-		nextArrow: (
-			<button type="button" className="slick-next">
-				<FaChevronRight color="#f7f7f7" size={30} className="next-arrow" />
-			</button>
-		),
-		// Add custom navigation buttons using Font Awesome icons
-		responsive: [
-			{
-				breakpoint: 1024,
-				settings: {
-					slidesToShow: 2,
-				},
-			},
-
-			{
-				breakpoint: 768,
-				settings: {
-					slidesToShow: 1,
-				},
-			},
-			{
-				breakpoint: 425,
-				settings: {
-					slidesToShow: 1,
-				},
-			},
-		],
-	};
-
 	return (
 		<>
 			{shop.shop.offers.length === 0 ? null : (
@@ -119,22 +75,26 @@ const Offers = () => {
 									</div>
 								</div>
 								<div className="offer-container-content">
-									<Slider {...settings}>
+									<ResponsiveCarousel
+										items={5}
+										itemsInTablet={3}
+										infinite={false}
+										autoPlay={true}
+										autoPlaySpeed={4000}
+										showArrows={false}
+										showDots={false}
+									>
 										{shop.shop.offers.map((offer, index) => (
 											<div key={index}>
 												<div className="offer-container-body p-2 col-3'">
-													<img
-														data-src={offer.image_url}
-														className="lazyload"
-														alt="offers"
-													/>
+													<img src={offer.image_url} alt="offers" />
 													<button type="button">
 														shop now <AiOutlineArrowRight fill="#fff" />
 													</button>
 												</div>
 											</div>
 										))}
-									</Slider>
+									</ResponsiveCarousel>
 								</div>
 							</div>
 						</div>

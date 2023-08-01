@@ -26,6 +26,7 @@ const ProductCard = ({
   setProductTriggered = () => {},
   displayAddtoCart = true,
   product,
+  className= '',
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -263,7 +264,7 @@ const ProductCard = ({
 
   return (
     <>
-      <div className={styles.cardWrapper}>
+      <div className={`${styles.cardWrapper} ${className}`}>
         <div className={styles.imageContainer}>
           <span className={styles.eyeIcon}>
             <AiOutlineEye

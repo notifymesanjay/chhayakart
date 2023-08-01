@@ -619,3 +619,11 @@
   border-radius: 50%;
   margin: -5px;
 }
+
+@media only screen and (max-width: 575px){
+  .customProductCard{
+    max-width: calc(100% - 16px);
+    width: calc(100% - 16px);
+    margin: 15px 0;
+  }
+}
