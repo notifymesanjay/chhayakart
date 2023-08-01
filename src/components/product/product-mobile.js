@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { BiLink, BiMinus } from "react-icons/bi";
 
-import { FaChevronLeft, FaChevronRight, FaRupeeSign } from "react-icons/fa";
+import {
+	FaAngleDoubleRight,
+	FaChevronLeft,
+	FaChevronRight,
+} from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
 import ChatOnWhatsapp from "../whatsappChatFeature";
-import Slider from "react-slick";
 import api from "../../api/api";
 import Cookies from "universal-cookie";
 import { toast } from "react-toastify";
@@ -20,10 +23,15 @@ import {
 } from "../../services/cartService";
 import { BsPlus } from "react-icons/bs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
+import {
+	faAngleDoubleRight,
+	faCartShopping,
+	faIndianRupeeSign,
+} from "@fortawesome/free-solid-svg-icons";
 import CkModal from "../shared/ck-modal";
 import { Link } from "react-router-dom";
 import BulkOrder from "./bulk-order";
+import { IoCartOutline } from "react-icons/io5";
 
 const ProductMobile = ({
 	images,
@@ -392,12 +400,12 @@ const ProductMobile = ({
 			<div className="addToCartStickerDiv">
 				{!isCart ? (
 					<button
-						type="button"
+						color="#f25cc5"
 						id={`Add-to-cart-productdetail`}
 						className="add-to-cartActive"
 						onClick={() => addProductToCart1(1)}
 					>
-						Add to Cart
+						<IoCartOutline className="cartAdd" /> Add to Cart
 					</button>
 				) : (
 					<>
@@ -425,8 +433,16 @@ const ProductMobile = ({
 					</>
 				)}
 
+				<div>
+					<ChatOnWhatsapp></ChatOnWhatsapp>
+				</div>
+
 				<div className="viewCartSticker">
 					<button type="button" onClick={() => addProductToCart1(1)}>
+						<FontAwesomeIcon
+							icon={faAngleDoubleRight}
+							className="faAngleDoubleRight"
+						/>
 						<Link to="/checkout" className="buynowButton">
 							Buy Now
 						</Link>

@@ -31,7 +31,6 @@ const ChatOnWhatsapp = ({ imgSrc, height }) => {
 				round={true}
 				alt="Chat With Chhayakart Support"
 			/>{" "}
-			Chhayakart Helpline
 		</a>
 	);
 };

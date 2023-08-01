@@ -31,7 +31,7 @@ import { useResponsive } from "../shared/use-responsive";
 import MobileMenu from "./mobile-menu";
 import chhayakartPinkMiniLogo from "../../public/images/logo/chhayakert-pink-mini-logo.png";
 import Sidebar from "./sidebar";
-import { FiMenu, FiFilter } from "react-icons/fi";
+import { FiMenu } from "react-icons/fi";
 
 const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 	const [isLocationPresent, setisLocationPresent] = useState(false);
@@ -39,9 +39,9 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 	const [search, setsearch] = useState("");
 	const [active, setActive] = useState(false);
 
-	const locationModalTrigger = useRef();
+	//	const locationModalTrigger = useRef();
 	const closeSidebarRef = useRef();
-	const searchNavTrigger = useRef();
+	//	const searchNavTrigger = useRef();
 
 	const navigate = useNavigate();
 
@@ -234,7 +234,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 								<p className={styles.description}>
 									<b>Use App for Additional Discounts & Offers</b>
 									<br />
-									Avialable for android & ios
+									Avialable for android
 								</p>
 								<div>
 									<button className={styles.btn}>

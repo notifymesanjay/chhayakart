@@ -267,7 +267,7 @@ const SelectedCategoryProducts = ({
 				<img
 					data-src={product.image_url}
 					alt="product"
-					className={`{styles.productImg} lazyload `}
+					className={`${styles.productImg} lazyload `}
 				/>
 			</div>
 			<div className={styles.productBody}>
