@@ -207,12 +207,16 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
 				<div className={styles.downloadAppWrapper}>
 					<p className={styles.downloadAppHeader}>Download the App</p>
 					<a href="https://play.google.com/store/apps/details?id=com.chayakart">
-						<img src={DownloadApp} alt="app-download" />
+						<img
+							data-src={DownloadApp}
+							className="lazyload"
+							alt="app-download"
+						/>
 					</a>
 				</div>
 				<img
-					className={styles.logo}
-					src={ChhayakartPinkLogo}
+					className={`${styles.logo} lazyload`}
+					data-src={ChhayakartPinkLogo}
 					alt="chhayakart-logo"
 				/>
 			</div>

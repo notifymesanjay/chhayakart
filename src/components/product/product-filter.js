@@ -87,9 +87,9 @@ const ProductFilter = ({
 								<div className="d-flex gap-3">
 									<div className="image-container">
 										<img
-											src={ctg.image_url}
+											data-src={ctg.image_url}
 											alt="category"
-											className="lazyloaded"
+											className="lazyload"
 										></img>
 									</div>
 									<p>{ctg.name}</p>
@@ -164,7 +164,11 @@ const ProductFilter = ({
 							>
 								<div className="d-flex gap-3 align-items-baseline">
 									<div className="image-container">
-										<img src={brand.image_url} alt="category"></img>
+										<img
+											data-src={brand.image_url}
+											className="lazyload"
+											alt="category"
+										></img>
 									</div>
 									<p>{brand.name}</p>
 								</div>

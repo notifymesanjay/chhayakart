@@ -154,7 +154,7 @@ const Favorite = () => {
 
 			{isfavoriteEmpty ? (
 				<div className="empty-cart">
-					<img src={EmptyCart} alt="empty-cart"></img>
+					<img data-src={EmptyCart} className="lazyload" alt="empty-cart"></img>
 					<p>Your Cart is empty</p>
 					<span>You have no items in your shopping cart.</span>
 					<span>Let's go buy something!</span>
