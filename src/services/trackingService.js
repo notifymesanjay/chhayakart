@@ -152,9 +152,10 @@ class TrackingService {
   }
 
   paymentSuccess(order, type, order_id, userEmail) {
+    var deviceType = this.getDeviceType(window.navigator.userAgent);
     if (window.dataLayer) {
       window.dataLayer.push({
-        event: 'purchase',
+        event: "purchase",
         ecommerce: {
           value: order.total_amount,
           email: userEmail,
@@ -166,6 +167,35 @@ class TrackingService {
         currency: "INR",
         payment_type: type,
         transactionId: order_id,
+        site: deviceType,
+      });
+    }
+  }
+
+  viewCart(order, userEmail) {
+    var deviceType = this.getDeviceType(window.navigator.userAgent);
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: "view_cart",
+        ecommerce: {
+          currency: "INR",
+          value: parseInt(order.discounted_price) * parseInt(order.qty),
+          items: [
+            {
+              item_id: order.product_id,
+              item_name: order.name,
+              price: order.discounted_price,
+              amount: parseInt(order.discounted_price) * parseInt(order.qty),
+              currency: "INR",
+              title: order.name,
+              product_variant: order.product_variant_id,
+              quantity: order.qty,
+            },
+          ],
+          email: userEmail ? userEmail : "", // Can be an empty string
+          site: deviceType,
+        },
+        eventCallback: function () {},
       });
     }
   }
