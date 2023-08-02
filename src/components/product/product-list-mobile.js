@@ -59,9 +59,9 @@ const ProductMobile = ({
 			) : (
 				<div className={styles.imageCard}>
 					<img
-						src={No_Orders}
+						data-src={No_Orders}
 						alt="no-product"
-						className="img-fluid lazyloader"
+						className="img-fluid lazyload"
 					></img>
 					<p className={styles.description}>No Products Found</p>
 				</div>

@@ -265,7 +265,12 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
 				>
 					<div className="canvas-header">
 						<div className="site-brand">
-							<img src={logoPath} height="50px" alt="logo"></img>
+							<img
+								data-src={logoPath}
+								className="lazyload"
+								height="50px"
+								alt="logo"
+							></img>
 						</div>
 
 						<button
@@ -359,7 +364,7 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
 										<img
 											data-src={No_Orders}
 											alt="no-product"
-											className="img-fluid lazyloader"
+											className="img-fluid lazyload"
 										></img>
 										<p>No Products Found</p>
 									</div>

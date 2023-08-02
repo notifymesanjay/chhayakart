@@ -519,7 +519,11 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 									<div key={index} className="cart-card">
 										<div className="left-wrapper">
 											<div className="image-container">
-												<img src={product.image_url} alt="product"></img>
+												<img
+													data-src={product.image_url}
+													className="lazyload"
+													alt="product"
+												></img>
 											</div>
 
 											<div className="product-details">

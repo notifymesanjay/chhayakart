@@ -29,6 +29,7 @@ const ViewCart = () => {
 	const [iscartEmpty, setiscartEmpty] = useState(false);
 	const [isLoader, setisLoader] = useState(false);
 	const user = useSelector((state) => state.user);
+	const trackingService = new TrackingService();
 
 	useEffect(() => {
 		if (sizes.sizes === null || sizes.status === "loading") {
@@ -116,16 +117,20 @@ const ViewCart = () => {
 
 	//Add to Cart
 	const addtoCart = async (product, product_variant_id, qty) => {
-		const trackingService = new TrackingService();
 		trackingService.trackCart(
 			product,
-			1,
+			qty,
 			user.status === "loading" ? "" : user.user.email
 		);
 		setisLoader(true);
 
 		await api
-			.addToCart(cookies.get("jwt_token"), product.id, product_variant_id, qty)
+			.addToCart(
+				cookies.get("jwt_token"),
+				product.product_id,
+				product_variant_id,
+				qty
+			)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
@@ -152,10 +157,20 @@ const ViewCart = () => {
 	};
 
 	//remove from Cart
-	const removefromCart = async (product_id, product_variant_id) => {
+	const removefromCart = async (product, product_variant_id) => {
+		trackingService.trackCart(
+			product,
+			0,
+			user.status === "loading" ? "" : user.user.email
+		);
+
 		setisLoader(true);
 		await api
-			.removeFromCart(cookies.get("jwt_token"), product_id, product_variant_id)
+			.removeFromCart(
+				cookies.get("jwt_token"),
+				product.product_id,
+				product_variant_id
+			)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
@@ -186,7 +201,11 @@ const ViewCart = () => {
 	return (
 		<section id="viewcart" className="viewcart">
 			<div className="cover">
-				<img src={coverImg} className="img-fluid" alt="cover"></img>
+				<img
+					data-src={coverImg}
+					className="img-fluid lazyload"
+					alt="cover"
+				></img>
 				<div className="title">
 					<h3>Cart</h3>
 					<span>home / </span>
@@ -197,7 +216,11 @@ const ViewCart = () => {
 			<div className="view-cart-container container">
 				{iscartEmpty ? (
 					<div className="empty-cart">
-						<img src={EmptyCart} alt="empty-cart"></img>
+						<img
+							data-src={EmptyCart}
+							className="lazyload"
+							alt="empty-cart"
+						></img>
 						<p>Your Cart is empty</p>
 						<span>You have no items in your shopping cart.</span>
 						<span>Let's go buy something!</span>
@@ -286,7 +309,7 @@ const ViewCart = () => {
 																			`input-viewcart${index}`
 																		).innerHTML = val - 1;
 																		addtoCart(
-																			product.product_id,
+																			product,
 																			product.product_variant_id,
 																			document.getElementById(
 																				`input-cart-sidebar${index}`
@@ -313,7 +336,7 @@ const ViewCart = () => {
 																			`input-viewcart${index}`
 																		).innerHTML = val + 1;
 																		addtoCart(
-																			product.product_id,
+																			product,
 																			product.product_variant_id,
 																			document.getElementById(
 																				`input-viewcart${index}`
@@ -338,7 +361,7 @@ const ViewCart = () => {
 															type="button"
 															onClick={() =>
 																removefromCart(
-																	product.product_id,
+																	product,
 																	product.product_variant_id
 																)
 															}

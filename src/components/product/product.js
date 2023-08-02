@@ -203,9 +203,9 @@ const Product = ({
 				<div className="image-wrapper ">
 					<div className="main-image col-12 border">
 						<img
-							src={mainimage}
+							data-src={mainimage}
 							alt="main-product"
-							className="col-12"
+							className="col-12 lazyload"
 							style={{ width: "85%" }}
 						/>
 					</div>
@@ -229,8 +229,8 @@ const Product = ({
 												}`}
 											>
 												<img
-													src={image}
-													className="col-12"
+													data-src={image}
+													className="col-12 lazyload"
 													alt="product"
 													onClick={() => {
 														setmainimage(image);
@@ -251,8 +251,8 @@ const Product = ({
 										}`}
 									>
 										<img
-											src={image}
-											className="col-12 "
+											data-src={image}
+											className="col-12 lazyload"
 											alt="product"
 											onClick={() => {
 												setmainimage(image);

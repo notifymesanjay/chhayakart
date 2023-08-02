@@ -867,23 +867,36 @@ option {
 	.add-to-cartActive,
 	.viewCartSticker,
 	.input-to-cart {
-		width: 49%;
-		padding: 8px 3px;
+		width: 43%;
+		padding: 5px 3px;
 		text-align: center;
-		border: 1px solid black;
+		border: 1px solid #f25cc5;
 		border-radius: 4px;
-		background-color: goldenrod;
+		background-color: rgb(255, 255, 255);
 		font-size: 2rem;
+		margin-left: -2px;
+		margin-right: 3px;
+		font-weight: bold;
+		color: #f25cc5;
 	}
 	.viewCartSticker {
 		text-decoration: none;
 		font-size: 2rem;
-		margin-left: 0.5rem;
-		background-color: #51bd88;
+		margin-left: 3px;
+		background-color: #f25cc5;
+	}
+	.faCartShopping * {
+		color: #f25cc5;
+	}
+
+	.faAngleDoubleRight * {
+		color: white;
+		font-size: 30px;
 	}
 	.buynowButton {
-		color: black;
+		color: rgb(255, 255, 255);
 		text-decoration: none;
+		font-weight: bold;
 	}
 	.input-to-cart {
 		display: inline-flex;

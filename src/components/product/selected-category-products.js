@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 import { BiMinus } from "react-icons/bi";
@@ -16,7 +16,6 @@ import CryptoJS from "crypto-js";
 import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
-import CkModal from "../shared/ck-modal";
 import BulkOrder from "./bulk-order";
 import TrackingService from "../../services/trackingService";
 
@@ -429,7 +428,7 @@ const SelectedCategoryProducts = ({
 									isOpenBulk={isOpenBulk}
 									setIsOpenBulk={setIsOpenBulk}
 									product={product}
-									onSubmit={IncrementProduct1}
+									onSubmit={incrementProduct1}
 									productVal={productVal}
 									index={index}
 								/>
