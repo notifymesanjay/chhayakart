@@ -428,7 +428,7 @@ const SelectedCategoryProducts = ({
 									isOpenBulk={isOpenBulk}
 									setIsOpenBulk={setIsOpenBulk}
 									product={product}
-									onSubmit={incrementProduct1}
+									onSubmit={IncrementProduct1}
 									productVal={productVal}
 									index={index}
 								/>

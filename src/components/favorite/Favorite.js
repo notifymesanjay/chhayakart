@@ -43,7 +43,7 @@ const Favorite = () => {
 		const trackingService = new TrackingService();
 		trackingService.trackCart(
 			product,
-			1,
+			qty,
 			user.status === "loading" ? "" : user.user.email
 		);
 		setisLoader(true);
@@ -74,35 +74,35 @@ const Favorite = () => {
 	};
 
 	//remove from Cart
-	const removefromCart = async (product_id, product_variant_id) => {
-		setisLoader(true);
-		await api
-			.removeFromCart(cookies.get("jwt_token"), product_id, product_variant_id)
-			.then((response) => response.json())
-			.then(async (result) => {
-				if (result.status === 1) {
-					toast.success(result.message);
-					await api
-						.getCart(
-							cookies.get("jwt_token"),
-							city.city.latitude,
-							city.city.longitude
-						)
-						.then((resp) => resp.json())
-						.then((res) => {
-							setisLoader(false);
-							if (res.status === 1)
-								dispatch({ type: ActionTypes.SET_CART, payload: res });
-							else dispatch({ type: ActionTypes.SET_CART, payload: null });
-						})
-						.catch((error) => {});
-				} else {
-					setisLoader(false);
-					toast.error(result.message);
-				}
-			})
-			.catch((error) => {});
-	};
+	// const removefromCart = async (product_id, product_variant_id) => {
+	// 	setisLoader(true);
+	// 	await api
+	// 		.removeFromCart(cookies.get("jwt_token"), product_id, product_variant_id)
+	// 		.then((response) => response.json())
+	// 		.then(async (result) => {
+	// 			if (result.status === 1) {
+	// 				toast.success(result.message);
+	// 				await api
+	// 					.getCart(
+	// 						cookies.get("jwt_token"),
+	// 						city.city.latitude,
+	// 						city.city.longitude
+	// 					)
+	// 					.then((resp) => resp.json())
+	// 					.then((res) => {
+	// 						setisLoader(false);
+	// 						if (res.status === 1)
+	// 							dispatch({ type: ActionTypes.SET_CART, payload: res });
+	// 						else dispatch({ type: ActionTypes.SET_CART, payload: null });
+	// 					})
+	// 					.catch((error) => {});
+	// 			} else {
+	// 				setisLoader(false);
+	// 				toast.error(result.message);
+	// 			}
+	// 		})
+	// 		.catch((error) => {});
+	// };
 
 	//remove from favorite
 	const removefromFavorite = async (product_id) => {
@@ -134,14 +134,8 @@ const Favorite = () => {
 	};
 
 	const handleAddToCart = (product) => {
-		const trackingService = new TrackingService();
-		trackingService.trackCart(
-			product,
-			parseInt(val) + 1,
-			user.status === "loading" ? "" : user.user.email
-		);
 		if (cookies.get("jwt_token") !== undefined) {
-			addtoCart(product.id, product.variants[0].id, 1);
+			addtoCart(product, product.variants[0].id, 1);
 		} else {
 			setIsLogin(true);
 		}
