@@ -8,7 +8,6 @@ const ProductMobile = ({
 	selectedFilter = 0,
 	productTriggered,
 	setProductTriggered,
-	index,
 }) => {
 	const [productList, setProductList] = useState([]);
 

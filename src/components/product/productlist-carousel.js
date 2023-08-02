@@ -5,6 +5,7 @@ import styles from "./productlist.module.scss";
 import ProductMobile from "./product-list-mobile";
 import { useSelector } from "react-redux";
 import { useResponsive } from "../shared/use-responsive";
+import TrackingService from "../../services/trackingService";
 
 const ProductListCarousel = ({
 	productTriggered = false,
@@ -12,6 +13,7 @@ const ProductListCarousel = ({
 	selectedFilter = 0,
 	setSelectedFilter = () => {},
 }) => {
+	const user = useSelector((state) => state.user);
 	const sliderRef = useRef();
 	const { isSmScreen } = useResponsive();
 	const shop = useSelector((state) => state.shop);
@@ -21,6 +23,11 @@ const ProductListCarousel = ({
 		if (shop.shop.sections.length > 0) {
 			const currUrl = window.location.href;
 			const categoryId = currUrl.split("/")[4];
+			const trackingService = new TrackingService();
+			trackingService.trackSubCategory(
+				categoryId,
+				user.status === "loading" ? "" : user.user.email
+			);
 			const sectionList = shop.shop.sections;
 			let finalList = [];
 			for (let i = 0; i < sectionList.length; i++) {

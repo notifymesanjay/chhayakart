@@ -6,6 +6,7 @@ import api from "../api/api";
 import HomeContainer from "./homecontainer/HomeContainer";
 import ProductContainer from "./product/ProductContainer";
 import Loader from "./loader/Loader";
+import TrackingService from "../services/trackingService";
 
 const MainContainer = ({
 	productTriggered,
@@ -16,6 +17,7 @@ const MainContainer = ({
 
 	const modalRef = useRef();
 
+	const user = useSelector((state) => state.user);
 	const city = useSelector((state) => state.city);
 	const shop = useSelector((state) => state.shop);
 	const setting = useSelector((state) => state.setting);
@@ -47,6 +49,14 @@ const MainContainer = ({
 			modalRef.current.click();
 		}
 	}, [setting]);
+
+	useEffect(() => {
+		const trackingService = new TrackingService();
+		trackingService.trackHomePage(
+			user.status === "loading" ? "" : user.user.email
+		);
+	}, []);
+
 	return (
 		<>
 			{setting.setting === null ? (

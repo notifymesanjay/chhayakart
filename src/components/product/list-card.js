@@ -19,11 +19,12 @@ import { FaRupeeSign } from "react-icons/fa";
 import CryptoJS from "crypto-js";
 import api from "../../api/api";
 import {
-	addProductToCart,
-	decrementProduct,
-	incrementProduct,
+	AddProductToCart,
+	DecrementProduct,
+	IncrementProduct,
 } from "../../services/cartService";
 import "./product.css";
+import TrackingService from "../../services/trackingService";
 
 const share_parent_url = "https://chhayakart.com/product";
 const secret_key = "Xyredg$5g";
@@ -44,6 +45,8 @@ const ListCard = ({
 	const filter = useSelector((state) => state.productFilter);
 	const favorite = useSelector((state) => state.favorite);
 	const city = useSelector((state) => state.city);
+	const user = useSelector((state) => state.user);
+	const trackingService = new TrackingService();
 
 	const removefromFavorite = async (product_id) => {
 		await api
@@ -93,7 +96,7 @@ const ListCard = ({
 				document.getElementById(`input-section${index}`).innerHTML
 			);
 		} else {
-			const isAdded = addProductToCart(product, 1);
+			const isAdded = AddProductToCart(product, 1);
 			if (isAdded) {
 				document
 					.getElementById(`Add-to-cart-section${index}`)
@@ -138,7 +141,7 @@ const ListCard = ({
 				);
 			}
 		} else {
-			const isDecremented = decrementProduct(product.id, product);
+			const isDecremented = DecrementProduct(product.id, product);
 			if (isDecremented) {
 				document.getElementById(`input-productlist${index}`).innerHTML =
 					val - 1;
@@ -170,7 +173,7 @@ const ListCard = ({
 				);
 			}
 		} else {
-			const isIncremented = incrementProduct(product.id, product, 1, false);
+			const isIncremented = IncrementProduct(product.id, product, 1, false);
 			if (isIncremented) {
 				document.getElementById(`input-productlist${index}`).innerHTML =
 					parseInt(val) + 1;
@@ -193,10 +196,16 @@ const ListCard = ({
 		));
 	};
 
-	const addtoCart = async (product_id, product_variant_id, qty) => {
+	const addtoCart = async (product, product_variant_id, qty) => {
+		trackingService.trackCart(
+			product,
+			qty,
+			user.status === "loading" ? "" : user.user.email
+		);
+
 		setisLoader(true);
 		await api
-			.addToCart(cookies.get("jwt_token"), product_id, product_variant_id, qty)
+			.addToCart(cookies.get("jwt_token"), product.id, product_variant_id, qty)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
@@ -236,10 +245,15 @@ const ListCard = ({
 			});
 	};
 
-	const removefromCart = async (product_id, product_variant_id) => {
+	const removefromCart = async (product, product_variant_id) => {
+		trackingService.trackCart(
+			product,
+			0,
+			user.status === "loading" ? "" : user.user.email
+		);
 		setisLoader(true);
 		await api
-			.removeFromCart(cookies.get("jwt_token"), product_id, product_variant_id)
+			.removeFromCart(cookies.get("jwt_token"), product.id, product_variant_id)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
@@ -321,8 +335,9 @@ const ListCard = ({
 				.getElementById(`input-cart-section${index}`)
 				.classList.add("active");
 			document.getElementById(`input-section${index}`).innerHTML = 1;
+
 			addtoCart(
-				product.id,
+				product,
 				product.variants.length > 1
 					? JSON.parse(
 							CryptoJS.AES.decrypt(
@@ -336,7 +351,12 @@ const ListCard = ({
 				document.getElementById(`input-section${index}`).innerHTML
 			);
 		} else {
-			const isAdded = addProductToCart(product, 1);
+			trackingService.trackCart(
+				product,
+				1,
+				user.status === "loading" ? "" : user.user.email
+			);
+			const isAdded = AddProductToCart(product, 1);
 			if (isAdded) {
 				document
 					.getElementById(`Add-to-cart-section${index}`)
@@ -354,6 +374,7 @@ const ListCard = ({
 		var val = parseInt(
 			document.getElementById(`input-section${index}`).innerHTML
 		);
+
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val === 1) {
 				document.getElementById(`input-section${index}`).innerHTML = 0;
@@ -364,7 +385,7 @@ const ListCard = ({
 					.getElementById(`Add-to-cart-section${index}`)
 					.classList.add("active");
 				removefromCart(
-					product.id,
+					product,
 					product.variants.length > 1
 						? JSON.parse(
 								CryptoJS.AES.decrypt(
@@ -379,8 +400,9 @@ const ListCard = ({
 				);
 			} else {
 				document.getElementById(`input-section${index}`).innerHTML = val - 1;
+
 				addtoCart(
-					product.id,
+					product,
 					product.variants.length > 1
 						? JSON.parse(
 								CryptoJS.AES.decrypt(
@@ -396,7 +418,12 @@ const ListCard = ({
 				);
 			}
 		} else {
-			const isDecremented = decrementProduct(product.id, product);
+			trackingService.trackCart(
+				product,
+				val - 1,
+				user.status === "loading" ? "" : user.user.email
+			);
+			const isDecremented = DecrementProduct(product.id, product);
 			if (isDecremented) {
 				document.getElementById(`input-section${index}`).innerHTML = val - 1;
 			} else {
@@ -414,12 +441,13 @@ const ListCard = ({
 
 	const handleIncrement = (product, index) => {
 		var val = document.getElementById(`input-section${index}`).innerHTML;
+
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val < product.total_allowed_quantity) {
 				document.getElementById(`input-section${index}`).innerHTML =
 					parseInt(val) + 1;
 				addtoCart(
-					product.id,
+					product,
 					product.variants.length > 1
 						? JSON.parse(
 								CryptoJS.AES.decrypt(
@@ -435,7 +463,12 @@ const ListCard = ({
 				);
 			}
 		} else {
-			const isIncremented = incrementProduct(product.id, product, 1, false);
+			trackingService.trackCart(
+				product,
+				parseInt(val) + 1,
+				user.status === "loading" ? "" : user.user.email
+			);
+			const isIncremented = IncrementProduct(product.id, product, 1, false);
 			if (isIncremented) {
 				document.getElementById(`input-section${index}`).innerHTML =
 					parseInt(val) + 1;

@@ -13,10 +13,6 @@ import ListCard from "./list-card";
 import ProductFilterDropDown from "./product-filter-dropdown";
 import ProductFilter from "./product-filter";
 import { useResponsive } from "../shared/use-responsive";
-import DkCarousel from "../shared/responsive-carousel/dk-carousel";
-import ProductMobile from "./product-list-mobile";
-import ProductListCarousel from "./productlist-carousel";
-
 const total_products_per_page = 12;
 
 const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {

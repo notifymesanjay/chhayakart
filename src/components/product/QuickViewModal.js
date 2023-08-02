@@ -21,12 +21,14 @@ import {
 import Loader from "../loader/Loader";
 import CryptoJS from "crypto-js";
 import {
-	addProductToCart,
-	decrementProduct,
-	incrementProduct,
+	AddProductToCart,
+	DecrementProduct,
+	IncrementProduct,
 } from "../../services/cartService";
 import LoginUser from "../login/login-user";
 import CkModal from "../shared/ck-modal";
+
+import TrackingService from "../../services/trackingService";
 
 const QuickViewModal = (props) => {
 	const cookies = new Cookies();
@@ -38,6 +40,7 @@ const QuickViewModal = (props) => {
 
 	const secret_key = "Xyredg$5g";
 	const share_parent_url = "https://chhayakart.com/product";
+	const user = useSelector((state) => state.user);
 
 	useEffect(() => {
 		return () => {
@@ -123,10 +126,17 @@ const QuickViewModal = (props) => {
 	};
 
 	//Add to Cart
-	const addtoCart = async (product_id, product_variant_id, qty) => {
+	const addtoCart = async (product, product_variant_id, qty) => {
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			1,
+			user.status === "loading" ? "" : user.user.email
+		);
+
 		setisLoader(true);
 		await api
-			.addToCart(cookies.get("jwt_token"), product_id, product_variant_id, qty)
+			.addToCart(cookies.get("jwt_token"), product.id, product_variant_id, qty)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
@@ -268,6 +278,12 @@ const QuickViewModal = (props) => {
 	};
 
 	const handleAddToCart = () => {
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			1,
+			user.status === "loading" ? "" : user.user.email
+		);
 		if (cookies.get("jwt_token") !== undefined) {
 			document
 				.getElementById(`Add-to-cart-quickview`)
@@ -284,7 +300,7 @@ const QuickViewModal = (props) => {
 				document.getElementById(`input-quickview`).innerHTML
 			);
 		} else {
-			const isAdded = addProductToCart(product, 1);
+			const isAdded = AddProductToCart(product, 1);
 			if (isAdded) {
 				document
 					.getElementById(`Add-to-cart-quickview`)
@@ -298,8 +314,14 @@ const QuickViewModal = (props) => {
 		}
 	};
 
-	const handleIncrement = () => {
+	const handleIncrement = (product) => {
 		var val = document.getElementById(`input-quickview`).innerHTML;
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			parseInt(val) + 1,
+			user.status === "loading" ? "" : user.user.email
+		);
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val < product.total_allowed_quantity) {
 				document.getElementById(`input-quickview`).innerHTML =
@@ -313,7 +335,7 @@ const QuickViewModal = (props) => {
 				);
 			}
 		} else {
-			const isIncremented = incrementProduct(product.id, product, 1, false);
+			const isIncremented = IncrementProduct(product.id, product, 1, false);
 			if (isIncremented) {
 				document.getElementById(`input-quickview`).innerHTML =
 					parseInt(val) + 1;
@@ -322,8 +344,14 @@ const QuickViewModal = (props) => {
 		}
 	};
 
-	const handleDecrement = () => {
+	const handleDecrement = (product) => {
 		var val = parseInt(document.getElementById(`input-quickview`).innerHTML);
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			parseInt(val) - 1,
+			user.status === "loading" ? "" : user.user.email
+		);
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val === 1) {
 				document.getElementById(`input-quickview`).innerHTML = 0;
@@ -350,7 +378,7 @@ const QuickViewModal = (props) => {
 				);
 			}
 		} else {
-			const isDecremented = decrementProduct(product.id, product);
+			const isDecremented = DecrementProduct(product.id, product);
 			if (isDecremented) {
 				document.getElementById(`input-quickview`).innerHTML = val - 1;
 			} else {
@@ -398,15 +426,15 @@ const QuickViewModal = (props) => {
 											{product.images.length >= 4 ? (
 												<>
 													<ResponsiveCarousel
-													items={3}
-            										itemsInTablet={3}
-													itemsInMobile={3}
-            										infinite={false}
-            										autoPlay={true}
-            										autoPlaySpeed={4000}
-            										showArrows={false}
-            										showDots={false}
-          											>
+														items={3}
+														itemsInTablet={3}
+														itemsInMobile={3}
+														infinite={false}
+														autoPlay={true}
+														autoPlaySpeed={4000}
+														showArrows={false}
+														showDots={false}
+													>
 														{product.images.map((image, index) => (
 															<div key={index}>
 																<div

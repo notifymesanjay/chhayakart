@@ -11,12 +11,13 @@ import { BiMinus } from "react-icons/bi";
 import Share from "./share";
 import api from "../../api/api";
 import {
-	addProductToCart,
-	decrementProduct,
-	incrementProduct,
+	AddProductToCart,
+	DecrementProduct,
+	IncrementProduct,
 } from "../../services/cartService";
 import { setSelectedProductId } from "../../utils/manageLocalStorage";
 import QuickViewModal from "./QuickViewModal";
+import TrackingService from "../../services/trackingService";
 
 const share_url = "https://chhayakart.com";
 
@@ -99,9 +100,15 @@ const ProductCard = ({
 			});
 	};
 
-	const addtoCart = async (product_id, product_variant_id, qty) => {
+	const addtoCart = async (product, product_variant_id, qty) => {
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			1,
+			user.status === "loading" ? "" : user.user.email
+		);
 		await api
-			.addToCart(cookies.get("jwt_token"), product_id, product_variant_id, qty)
+			.addToCart(cookies.get("jwt_token"), product.id, product_variant_id, qty)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
@@ -140,6 +147,12 @@ const ProductCard = ({
 	};
 
 	const handleAddToCart = (index0, index, product) => {
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			parseInt(val) + 1,
+			user.status === "loading" ? "" : user.user.email
+		);
 		if (cookies.get("jwt_token") !== undefined) {
 			setIsCart(true);
 			setProductInCartCount(1);
@@ -153,7 +166,7 @@ const ProductCard = ({
 				productInCartCount
 			);
 		} else {
-			const isAdded = addProductToCart(product, 1);
+			const isAdded = AddProductToCart(product, 1);
 			if (isAdded) {
 				setIsCart(true);
 				setProductInCartCount(1);
@@ -205,6 +218,12 @@ const ProductCard = ({
 
 	const handleDecrement = (product, index, index0) => {
 		var val = productInCartCount;
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			parseInt(val) - 1,
+			user.status === "loading" ? "" : user.user.email
+		);
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val === 1) {
 				setProductInCartCount(0);
@@ -230,7 +249,7 @@ const ProductCard = ({
 				);
 			}
 		} else {
-			const isDecremented = decrementProduct(product.id, product);
+			const isDecremented = DecrementProduct(product.id, product);
 			if (isDecremented) {
 				setProductInCartCount(val - 1);
 			} else {
@@ -242,6 +261,12 @@ const ProductCard = ({
 
 	const handleIncrement = (product, index, index0) => {
 		var val = productInCartCount;
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			parseInt(val) + 1,
+			user.status === "loading" ? "" : user.user.email
+		);
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val < product.total_allowed_quantity) {
 				setProductInCartCount(val + 1);
@@ -256,7 +281,7 @@ const ProductCard = ({
 				);
 			}
 		} else {
-			const isIncremented = incrementProduct(product.id, product, 1, false);
+			const isIncremented = IncrementProduct(product.id, product, 1, false);
 			if (isIncremented) {
 				setProductInCartCount(val + 1);
 			}
@@ -303,7 +328,7 @@ const ProductCard = ({
 												payload: product.id,
 											});
 											setSelectedProductId(product.id);
-											navigate("/product/" + product.id+"/"+product.slug);
+											navigate("/product/" + product.id + "/" + product.slug);
 										}}
 									/>
 								</div>

@@ -15,6 +15,7 @@ import { ActionTypes } from "../../model/action-type";
 import { RiDeleteBinLine } from "react-icons/ri";
 import Loader from "../loader/Loader";
 import LoginUser from "../login/login-user";
+import TrackingService from "../../services/trackingService";
 
 const Wishlist = () => {
 	const closeCanvas = useRef();
@@ -30,7 +31,7 @@ const Wishlist = () => {
 	const [isfavoriteEmpty, setisfavoriteEmpty] = useState(false);
 	const [isLoader, setisLoader] = useState(false);
 	const [isLogin, setIsLogin] = useState(false);
-
+	const user = useSelector((state) => state.user);
 	useEffect(() => {
 		if (sizes.sizes === null || sizes.status === "loading") {
 			if (city.city !== null && favorite.favorite !== null) {
@@ -120,10 +121,16 @@ const Wishlist = () => {
 	};
 
 	//Add to Cart
-	const addtoCart = async (product_id, product_variant_id, qty) => {
+	const addtoCart = async (product, product_variant_id, qty) => {
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			1,
+			user.status === "loading" ? "" : user.user.email
+		);
 		setisLoader(true);
 		await api
-			.addToCart(cookies.get("jwt_token"), product_id, product_variant_id, qty)
+			.addToCart(cookies.get("jwt_token"), product.id, product_variant_id, qty)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
@@ -212,6 +219,12 @@ const Wishlist = () => {
 	};
 
 	const handleAddToCart = (index, product) => {
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			1,
+			user.status === "loading" ? "" : user.user.email
+		);
 		if (cookies.get("jwt_token") !== undefined) {
 			document
 				.getElementById(`Add-to-cart-wishlist${index}`)
