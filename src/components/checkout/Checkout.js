@@ -214,23 +214,30 @@ const Checkout = () => {
 				if (result.status === 1) {
 					const trackingService = new TrackingService();
 					if (paymentMethod === "COD") {
-						trackingService.paymentSuccess(
+						
+            try{trackingService.paymentSuccess(
 							orderSummary,
 							"COD",
-							result.data.order_id,
+							result.data,
 							user.status === "loading" ? "" : user.user.email
-						);
+						);}
+            catch(ex)
+            {
+
+
+            }
 						toast.success("Order Successfully Placed!");
 						setLoadingPlaceOrder(false);
 						setIsOrderPlaced(true);
 						setShow(true);
 					} else if (paymentMethod === "Razorpay") {
-						trackingService.paymentSuccess(
+						try{trackingService.paymentSuccess(
 							orderSummary,
 							"Razorpay",
 							result.data.order_id,
 							user.status === "loading" ? "" : user.user.email
-						);
+						);}
+						catch(ex){}
 						await api
 							.initiate_transaction(
 								cookies.get("jwt_token"),
@@ -244,7 +251,7 @@ const Checkout = () => {
 									handleRozarpayPayment(
 										result.data.order_id,
 										res.data.transaction_id,
-										cart.checkout.total_amount,
+										cart.checkout.sub_total,
 										user.user.name,
 										user.user.email,
 										user.user.mobile,
@@ -258,26 +265,26 @@ const Checkout = () => {
 							.catch((error) => console.error(error));
 					} else if (paymentMethod === "Paystack") {
 						setLoadingPlaceOrder(false);
-						trackingService.paymentSuccess(
+						try{trackingService.paymentSuccess(
 							orderSummary,
 							"Paystack",
 							result.data.order_id,
 							user.status === "loading" ? "" : user.user.email
-						);
+						);}catch(ex){}
 						handlePayStackPayment(
 							user.user.email,
-							cart.checkout.total_amount,
+							cart.checkout.sub_total,
 							setting.payment_setting.paystack_currency_code,
 							setting.setting.support_email
 						);
 					} else if (paymentMethod === "Stripe") {
 						const order_id = result.data.order_id;
-						trackingService.paymentSuccess(
+						try{trackingService.paymentSuccess(
 							orderSummary,
 							"Stripe",
 							result.data.order_id,
 							user.status === "loading" ? "" : user.user.email
-						);
+						);}catch(ex){}
 						await api
 							.initiate_transaction(
 								cookies.get("jwt_token"),
@@ -391,10 +398,11 @@ const Checkout = () => {
 						cod_allowed: 1,
 					};
 					const trackingService = new TrackingService();
-					trackingService.checkout(
+				try{	trackingService.checkout(
 						orderVal,
 						user.status === "loading" ? "" : user.user.email
-					);
+					);}
+					catch(ex){}
 					setOrderSummary(orderVal);
 					sub_total = subTotal;
 				}
@@ -581,13 +589,13 @@ const Checkout = () => {
 								orderID={stripeOrderId}
 								client_secret={stripeClientSecret}
 								transaction_id={stripeTransactionId}
-								amount={cart.checkout.total_amount}
+								amount={cart.checkout.sub_total}
 							>
 								<InjectCheckout
 									orderID={stripeOrderId}
 									client_secret={stripeClientSecret}
 									transaction_id={stripeTransactionId}
-									amount={cart.checkout.total_amount}
+									amount={cart.checkout.sub_total}
 								/>
 							</Elements>
 						)}
