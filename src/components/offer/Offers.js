@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../../api/api";
 import "./offer.css";
-import Slider from "react-slick";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";

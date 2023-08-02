@@ -35,11 +35,7 @@ const OrderSummary = ({
               <div className="d-flex align-items-center">
                 <FaRupeeSign />
                 <span>
-                  {parseFloat(cart.sub_total) > 4999 && parseFloat(cart.sub_total) < 9999
-                    ? Math.ceil(parseFloat(cart.sub_total * 0.92 * 0.05))
-                    : parseFloat(cart.sub_total) > 9999
-                    ? Math.ceil(parseFloat(cart.sub_total * 0.88 * 0.05))
-                    : parseFloat(cart.taxes)}
+                  {parseFloat(cart.taxes)}
                 </span>
               </div>
             </div>
@@ -50,9 +46,7 @@ const OrderSummary = ({
                 <div className="d-flex align-items-center">
                   -<FaRupeeSign />
                   <span>
-                    {parseFloat(cart.sub_total) > 4999 && parseFloat(cart.sub_total) < 9999
-                      ? Math.floor(parseFloat(cart.sub_total) * 0.08)
-                      : Math.floor(parseFloat(cart.sub_total) * 0.12)}
+                    {parseFloat(cart.discount)}
                   </span>
                 </div>
               </div>
@@ -73,25 +67,7 @@ const OrderSummary = ({
               <div className="d-flex align-items-center total-amount">
                 <FaRupeeSign fill="var(--secondary-color)" />
                 <span>
-                  {parseFloat(cart.sub_total) > 4999 && parseFloat(cart.sub_total) < 9999
-                    ? Math.ceil(
-                        parseFloat(
-                          cart.sub_total +
-                            40 +
-                            0.05 * 0.92 * cart.sub_total -
-                            0.08 * cart.sub_total
-                        )
-                      )
-                    : parseFloat(cart.sub_total) > 9999
-                    ? Math.ceil(
-                        parseFloat(
-                          cart.sub_total +
-                            40 +
-                            0.05 * 0.88 * cart.sub_total -
-                            0.12 * cart.sub_total
-                        )
-                      )
-                    : parseFloat(cart.total_amount)}
+                  {parseFloat(cart.total_amount)}
                 </span>
               </div>
             </div>

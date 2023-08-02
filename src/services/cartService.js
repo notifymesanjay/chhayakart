@@ -22,6 +22,7 @@ export const addProductToCart = (product, quantity) => {
 				taxable_amount: product.variants[0].taxable_amount,
 				total_allowed_quantity: product.total_allowed_quantity,
 				unit: product.variants[0].stock_unit,
+				delivery_charges: product.variants[0].delivery_charges
 			},
 		];
 		localStorage.setItem("cart", JSON.stringify(updatedProductList));
@@ -65,6 +66,7 @@ export const addProductToCart = (product, quantity) => {
 				taxable_amount: product.variants[0].taxable_amount,
 				total_allowed_quantity: product.total_allowed_quantity,
 				unit: product.variants[0].stock_unit,
+				delivery_charges: product.variants[0].delivery_charges
 			});
 			localStorage.setItem("cart", JSON.stringify(updatedProductList));
 			return true;
