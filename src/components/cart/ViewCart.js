@@ -83,7 +83,7 @@ const ViewCart = () => {
 					select.setAttribute("id", `selectedVariant${index}-viewcart`);
 					select.addEventListener("change", (e) => {
 						addtoCart(
-							product_id,
+							result.data,
 							JSON.parse(e.target.value).id,
 							document.getElementById(`input-viewcart${index}`).innerHTML
 						);
