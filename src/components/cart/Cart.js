@@ -35,6 +35,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 	const [isLoader, setisLoader] = useState(false);
 	const [orderSummary, setOrderSummary] = useState(false);
 	const [cartProducts, setCartProducts] = useState([]);
+	const trackingService = new TrackingService();
 
 	useEffect(() => {
 		if (sizes.sizes === null || sizes.status === "loading") {
@@ -69,15 +70,19 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 
 	//Add to Cart
 	const addtoCart = async (product, product_variant_id, qty) => {
-		const trackingService = new TrackingService();
 		trackingService.trackCart(
 			product,
-			1,
+			qty,
 			user.status === "loading" ? "" : user.user.email
 		);
 		setisLoader(true);
 		await api
-			.addToCart(cookies.get("jwt_token"), product.id, product_variant_id, qty)
+			.addToCart(
+				cookies.get("jwt_token"),
+				product.product_id,
+				product_variant_id,
+				qty
+			)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
@@ -121,23 +126,24 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 		var val = parseInt(
 			document.getElementById(`input-cart-sidebar${index}`).innerHTML
 		);
-		const trackingService = new TrackingService();
-		trackingService.trackCart(
-			product,
-			parseInt(val) - 1,
-			user.status === "loading" ? "" : user.user.email
-		);
+
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val > 1) {
 				document.getElementById(`input-cart-sidebar${index}`).innerHTML =
 					val - 1;
 				addtoCart(
-					product.product_id,
+					product,
 					product.product_variant_id,
 					document.getElementById(`input-cart-sidebar${index}`).innerHTML
 				);
 			}
 		} else {
+			trackingService.trackCart(
+				product,
+				parseInt(val) - 1,
+				user.status === "loading" ? "" : user.user.email
+			);
+
 			const isDecremented = DecrementProduct(product.product_id, product);
 			if (val > 1 && isDecremented) {
 				document.getElementById(`input-cart-sidebar${index}`).innerHTML =
@@ -151,24 +157,24 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 		var val = parseInt(
 			document.getElementById(`input-cart-sidebar${index}`).innerHTML
 		);
-		const trackingService = new TrackingService();
 		console.log("xyz", product);
-		trackingService.trackCart(
-			product,
-			parseInt(val) + 1,
-			user.status === "loading" ? "" : user.user.email
-		);
+
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val < product.total_allowed_quantity) {
 				document.getElementById(`input-cart-sidebar${index}`).innerHTML =
 					val + 1;
 				addtoCart(
-					product.product_id,
+					product,
 					product.product_variant_id,
 					document.getElementById(`input-cart-sidebar${index}`).innerHTML
 				);
 			}
 		} else {
+			trackingService.trackCart(
+				product,
+				parseInt(val) + 1,
+				user.status === "loading" ? "" : user.user.email
+			);
 			const isIncremented = IncrementProduct(
 				product.product_id,
 				product,
@@ -195,10 +201,19 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 	};
 
 	//remove from Cart
-	const removefromCart = async (product_id, product_variant_id) => {
+	const removefromCart = async (product, product_variant_id) => {
+		trackingService.trackCart(
+			product,
+			0,
+			user.status === "loading" ? "" : user.user.email
+		);
 		setisLoader(true);
 		await api
-			.removeFromCart(cookies.get("jwt_token"), product_id, product_variant_id)
+			.removeFromCart(
+				cookies.get("jwt_token"),
+				product.product_id,
+				product_variant_id
+			)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {

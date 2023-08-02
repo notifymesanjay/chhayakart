@@ -43,6 +43,7 @@ const Product = ({
 	const [isCart, setIsCart] = useState(false);
 	const [productInCartCount, setProductInCartCount] = useState(0);
 	const user = useSelector((state) => state.user);
+	const trackingService = new TrackingService();
 
 	//Add to favorite
 	const addToFavorite = async (product_id) => {
@@ -93,24 +94,23 @@ const Product = ({
 			});
 	};
 
-	const AddProductToCart1 = (product) => {
-		const trackingService = new TrackingService();
-		trackingService.trackCart(
-			product,
-			1,
-			user.status === "loading" ? "" : user.user.email
-		);
+	const AddProductToCart1 = () => {
 		if (cookies.get("jwt_token") !== undefined) {
 			setIsCart(true);
 			setProductInCartCount(1);
 			addtoCart(
-				productdata.id,
+				productdata,
 				JSON.parse(
 					document.getElementById(`select-product-variant-productdetail`).value
 				).id,
 				1
 			);
 		} else {
+			trackingService.trackCart(
+				productdata,
+				1,
+				user.status === "loading" ? "" : user.user.email
+			);
 			const isAdded = AddProductToCart(productdata, 1);
 			if (isAdded) {
 				setIsCart(true);
@@ -120,20 +120,15 @@ const Product = ({
 		}
 	};
 
-	const handleDecrement = (product) => {
+	const handleDecrement = () => {
 		var val = productInCartCount;
-		const trackingService = new TrackingService();
-		trackingService.trackCart(
-			product,
-			parseInt(val) - 1,
-			user.status === "loading" ? "" : user.user.email
-		);
+
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val === 1) {
 				setProductInCartCount(0);
 				setIsCart(false);
 				removefromCart(
-					productdata.id,
+					productdata,
 					JSON.parse(
 						document.getElementById(`select-product-variant-productdetail`)
 							.value
@@ -142,7 +137,7 @@ const Product = ({
 			} else {
 				setProductInCartCount(val - 1);
 				addtoCart(
-					productdata.id,
+					productdata,
 					JSON.parse(
 						document.getElementById(`select-product-variant-productdetail`)
 							.value
@@ -151,6 +146,12 @@ const Product = ({
 				);
 			}
 		} else {
+			trackingService.trackCart(
+				productdata,
+				parseInt(val) - 1,
+				user.status === "loading" ? "" : user.user.email
+			);
+
 			const isDecremented = DecrementProduct(productdata.id, productdata);
 			if (isDecremented) {
 				setProductInCartCount(val - 1);
@@ -162,19 +163,14 @@ const Product = ({
 		}
 	};
 
-	const handleIncrement = (product) => {
+	const handleIncrement = () => {
 		var val = productInCartCount;
-		const trackingService = new TrackingService();
-		trackingService.trackCart(
-			product,
-			parseInt(val) + 1,
-			user.status === "loading" ? "" : user.user.email
-		);
+
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val < productdata.total_allowed_quantity) {
 				setProductInCartCount(val + 1);
 				addtoCart(
-					productdata.id,
+					productdata,
 					JSON.parse(
 						document.getElementById(`select-product-variant-productdetail`)
 							.value
@@ -183,6 +179,12 @@ const Product = ({
 				);
 			}
 		} else {
+			trackingService.trackCart(
+				productdata,
+				parseInt(val) + 1,
+				user.status === "loading" ? "" : user.user.email
+			);
+
 			const isIncremented = IncrementProduct(
 				productdata.id,
 				productdata,

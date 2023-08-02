@@ -37,13 +37,13 @@ const SelectedCategoryProducts = ({
 	const [productVal, setProductVal] = useState(0);
 	const [isOpenBulk, setIsOpenBulk] = useState(false);
 	const [bulkVal, setBulkVal] = useState(0);
+	const trackingService = new TrackingService();
 
-	const addtoCart = async (product, product_variant_id, qty) => {
-		const trackingService = new TrackingService();
+	const addtoCart = async (product_variant_id, qty) => {
 		trackingService.trackCart(
 			product,
-			1,
-			user.status === "loading" ? "" : user.user.email
+			qty,
+			user != null && user.status === "loading" ? "" : user.user.email
 		);
 		await api
 			.addToCart(cookies.get("jwt_token"), product.id, product_variant_id, qty)
@@ -85,17 +85,11 @@ const SelectedCategoryProducts = ({
 	};
 
 	const handleAddToCart = (product, index) => {
-		const trackingService = new TrackingService();
-		trackingService.trackCart(
-			product,
-			1,
-			user.status === "loading" ? "" : user.user.email
-		);
 		if (cookies.get("jwt_token") !== undefined) {
 			setIsProductAdded(true);
 			setProductVal(1);
 			addtoCart(
-				product.id,
+				product,
 				product.variants.length > 1
 					? JSON.parse(
 							CryptoJS.AES.decrypt(
@@ -109,6 +103,12 @@ const SelectedCategoryProducts = ({
 				1
 			);
 		} else {
+			trackingService.trackCart(
+				product,
+				1,
+				user.status === "loading" ? "" : user.user.email
+			);
+
 			const isAdded = AddProductToCart(product);
 			if (isAdded) {
 				setIsProductAdded(true);
@@ -118,9 +118,15 @@ const SelectedCategoryProducts = ({
 		}
 	};
 
-	const removefromCart = async (product_id, product_variant_id) => {
+	const removefromCart = async (product, product_variant_id) => {
+		trackingService.trackCart(
+			product,
+			0,
+			user != null && user.status === "loading" ? "" : user.user.email
+		);
+
 		await api
-			.removeFromCart(cookies.get("jwt_token"), product_id, product_variant_id)
+			.removeFromCart(cookies.get("jwt_token"), product.id, product_variant_id)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
@@ -160,19 +166,15 @@ const SelectedCategoryProducts = ({
 	};
 
 	const handleDecrement = (product, index) => {
-		const trackingService = new TrackingService();
-		trackingService.trackCart(
-			product,
-			parseInt(val) - 1,
-			user.status === "loading" ? "" : user.user.email
-		);
 		var val = productVal;
+
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val === 1) {
 				setProductVal(0);
 				setIsProductAdded(false);
+
 				removefromCart(
-					product.id,
+					product,
 					product.variants.length > 1
 						? JSON.parse(
 								CryptoJS.AES.decrypt(
@@ -188,7 +190,7 @@ const SelectedCategoryProducts = ({
 			} else {
 				setProductVal(val - 1);
 				addtoCart(
-					product.id,
+					product,
 					product.variants.length > 1
 						? JSON.parse(
 								CryptoJS.AES.decrypt(
@@ -204,7 +206,14 @@ const SelectedCategoryProducts = ({
 				);
 			}
 		} else {
+			trackingService.trackCart(
+				product,
+				parseInt(val) - 1,
+				user.status === "loading" ? "" : user.user.email
+			);
+
 			const isDecremented = DecrementProduct(product.id, product);
+
 			if (isDecremented) {
 				setProductVal(val - 1);
 			} else {
@@ -215,18 +224,21 @@ const SelectedCategoryProducts = ({
 		}
 	};
 
+	const handleIncrement = (product, index) => {
+		var val = productVal;
+		if (val >= Math.ceil(parseInt(product.total_allowed_quantity) / 2)) {
+			setIsOpenBulk(true);
+		} else {
+			IncrementProduct1(val, index);
+		}
+	};
+
 	const IncrementProduct1 = (val, index) => {
-		const trackingService = new TrackingService();
-		trackingService.trackCart(
-			product,
-			parseInt(val) + 1,
-			user.status === "loading" ? "" : user.user.email
-		);
 		if (cookies.get("jwt_token") !== undefined) {
 			if (parseInt(val) < parseInt(product.total_allowed_quantity)) {
 				setProductVal(parseInt(val) + 1);
 				addtoCart(
-					product.id,
+					product,
 					product.variants.length > 1
 						? JSON.parse(
 								CryptoJS.AES.decrypt(
@@ -244,6 +256,11 @@ const SelectedCategoryProducts = ({
 				toast.error("Maximum Quantity Exceeded");
 			}
 		} else {
+			trackingService.trackCart(
+				product,
+				parseInt(val) + 1,
+				user.status === "loading" ? "" : user.user.email
+			);
 			const isIncremented = IncrementProduct(
 				product.id,
 				product,
@@ -254,21 +271,6 @@ const SelectedCategoryProducts = ({
 				setProductVal(parseInt(val) + 1);
 			}
 			setProductTriggered(!productTriggered);
-		}
-	};
-
-	const handleIncrement = (product, index) => {
-		const trackingService = new TrackingService();
-		trackingService.trackCart(
-			product,
-			parseInt(val) + 1,
-			user.status === "loading" ? "" : user.user.email
-		);
-		var val = productVal;
-		if (val >= Math.ceil(parseInt(product.total_allowed_quantity) / 2)) {
-			setIsOpenBulk(true);
-		} else {
-			IncrementProduct1(val, index);
 		}
 	};
 

@@ -54,63 +54,72 @@ const ProductMobile = ({
 		// setSelectedQuantity(event.target.id);
 	};
 
-	//Add to favorite
-	const addToFavorite = async (product_id) => {
-		await api
-			.addToFavotite(cookies.get("jwt_token"), product_id)
-			.then((response) => response.json())
-			.then(async (result) => {
-				if (result.status === 1) {
-					toast.success(result.message);
-					await api
-						.getFavorite(
-							cookies.get("jwt_token"),
-							city.city.latitude,
-							city.city.longitude
-						)
-						.then((resp) => resp.json())
-						.then((res) => {
-							if (res.status === 1)
-								dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
-						});
-				} else {
-					toast.error(result.message);
-				}
-			});
-	};
-	const removefromFavorite = async (product_id) => {
-		await api
-			.removeFromFavorite(cookies.get("jwt_token"), product_id)
-			.then((response) => response.json())
-			.then(async (result) => {
-				if (result.status === 1) {
-					toast.success(result.message);
-					await api
-						.getFavorite(
-							cookies.get("jwt_token"),
-							city.city.latitude,
-							city.city.longitude
-						)
-						.then((resp) => resp.json())
-						.then((res) => {
-							if (res.status === 1)
-								dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
-							else dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
-						});
-				} else {
-					toast.error(result.message);
-				}
-			});
-	};
+	const trackingService = new TrackingService();
 
-	const AddProductToCart1 = (qunatity) => {
+	// //Add to favorite
+	// const addToFavorite = async (product_id) => {
+	// 	await api
+	// 		.addToFavotite(cookies.get("jwt_token"), product_id)
+	// 		.then((response) => response.json())
+	// 		.then(async (result) => {
+	// 			if (result.status === 1) {
+	// 				toast.success(result.message);
+	// 				await api
+	// 					.getFavorite(
+	// 						cookies.get("jwt_token"),
+	// 						city.city.latitude,
+	// 						city.city.longitude
+	// 					)
+	// 					.then((resp) => resp.json())
+	// 					.then((res) => {
+	// 						if (res.status === 1)
+	// 							dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
+	// 					});
+	// 			} else {
+	// 				toast.error(result.message);
+	// 			}
+	// 		});
+	// };
+
+	// const removefromFavorite = async (product_id) => {
+	// 	await api
+	// 		.removeFromFavorite(cookies.get("jwt_token"), product_id)
+	// 		.then((response) => response.json())
+	// 		.then(async (result) => {
+	// 			if (result.status === 1) {
+	// 				toast.success(result.message);
+	// 				await api
+	// 					.getFavorite(
+	// 						cookies.get("jwt_token"),
+	// 						city.city.latitude,
+	// 						city.city.longitude
+	// 					)
+	// 					.then((resp) => resp.json())
+	// 					.then((res) => {
+	// 						if (res.status === 1)
+	// 							dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
+	// 						else dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
+	// 					});
+	// 			} else {
+	// 				toast.error(result.message);
+	// 			}
+	// 		});
+	// };
+
+	const DirectAddProductToCart = (qunatity) => {
 		if (cookies.get("jwt_token") !== undefined) {
 			setIsCart(true);
 			setProductTriggered(!productTriggered);
 			setProductInCartCount(parseInt(qunatity));
-			addtoCart(productdata.id, productdata.variants[0].id, parseInt(qunatity));
+			addtoCart(productdata, productdata.variants[0].id, parseInt(qunatity));
 		} else {
 			const isAdded = AddProductToCart(productdata, parseInt(qunatity));
+
+			trackingService.trackCart(
+				productdata,
+				parseInt(qunatity),
+				user.status === "loading" ? "" : user.user.email
+			);
 			if (isAdded) {
 				setIsCart(true);
 				setProductInCartCount(parseInt(qunatity));
@@ -119,26 +128,26 @@ const ProductMobile = ({
 		}
 	};
 
-	const handleDecrement = (product) => {
-		const trackingService = new TrackingService();
-		trackingService.trackCart(
-			product,
-			parseInt(val) - 1,
-			user.status === "loading" ? "" : user.user.email
-		);
+	const handleDecrement = () => {
 		var val = productInCartCount;
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val > 0) {
 				if (val === 1) {
 					setProductInCartCount(0);
 					setIsCart(false);
-					removefromCart(productdata.id, productdata.variants[0].id);
+					removefromCart(productdata, productdata.variants[0].id);
 				} else {
 					setProductInCartCount(val - 1);
-					addtoCart(productdata.id, productdata.variants[0].id, val - 1);
+					addtoCart(productdata, productdata.variants[0].id, val - 1);
 				}
 			}
 		} else {
+			trackingService.trackCart(
+				productdata,
+				parseInt(val) - 1,
+				user.status === "loading" ? "" : user.user.email
+			);
+
 			const isDecremented = DecrementProduct(productdata.id, productdata);
 			if (isDecremented) {
 				setProductInCartCount(val - 1);
@@ -154,15 +163,17 @@ const ProductMobile = ({
 		if (cookies.get("jwt_token") !== undefined) {
 			if (parseInt(val) < parseInt(productdata.total_allowed_quantity)) {
 				setProductInCartCount(parseInt(val) + 1);
-				addtoCart(
-					productdata.id,
-					productdata.variants[0].id,
-					parseInt(val) + 1
-				);
+				addtoCart(productdata, productdata.variants[0].id, parseInt(val) + 1);
 			} else {
 				toast.error("Maximum Quantity Exceeded");
 			}
 		} else {
+			trackingService.trackCart(
+				productdata,
+				parseInt(val) + 1,
+				user.status === "loading" ? "" : user.user.email
+			);
+
 			console.log("xyz", val, productdata);
 			const isIncremented = IncrementProduct(
 				productdata.id,
@@ -177,14 +188,8 @@ const ProductMobile = ({
 		}
 	};
 
-	const handleIncrement = (product) => {
+	const handleIncrement = () => {
 		var val = productInCartCount;
-		const trackingService = new TrackingService();
-		trackingService.trackCart(
-			product,
-			parseInt(val) + 1,
-			user.status === "loading" ? "" : user.user.email
-		);
 		if (val >= Math.ceil(parseInt(productdata.total_allowed_quantity) / 2)) {
 			setIsOpenBulk(true);
 			setIsBulkOrder(false);
@@ -295,7 +300,7 @@ const ProductMobile = ({
 							: "productQuantityBtn"
 					}`}
 					onClick={() => {
-						AddProductToCart1(1);
+						DirectAddProductToCart(1);
 						console.log("xyz2");
 					}}
 					id="1"
@@ -315,7 +320,7 @@ const ProductMobile = ({
 							: "productQuantityBtn"
 					}`}
 					onClick={() => {
-						AddProductToCart1(2);
+						DirectAddProductToCart(2);
 						console.log("xyz1");
 					}}
 					id="2"
@@ -361,7 +366,7 @@ const ProductMobile = ({
 						type="button"
 						id={`Add-to-cart-productdetail`}
 						className="add-to-cartActive"
-						onClick={() => AddProductToCart1(1)}
+						onClick={() => DirectAddProductToCart(1)}
 					>
 						Add to Cart
 					</button>
@@ -392,7 +397,7 @@ const ProductMobile = ({
 				)}
 
 				<div className="viewCartSticker">
-					<button type="button" onClick={() => AddProductToCart1(1)}>
+					<button type="button" onClick={() => DirectAddProductToCart(1)}>
 						<Link to="/checkout" className="buynowButton">
 							Buy Now
 						</Link>
@@ -424,7 +429,7 @@ const ProductMobile = ({
 					setIsOpenBulk={setIsOpenBulk}
 					product={productdata}
 					onSubmit={IncrementProduct1}
-					onSubmit1={AddProductToCart1}
+					onSubmit1={DirectAddProductToCart}
 					productVal={productInCartCount}
 					isBulkOrder={isBulkOrder}
 				/>

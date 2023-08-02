@@ -46,6 +46,7 @@ const ListCard = ({
 	const favorite = useSelector((state) => state.favorite);
 	const city = useSelector((state) => state.city);
 	const user = useSelector((state) => state.user);
+	const trackingService = new TrackingService();
 
 	const removefromFavorite = async (product_id) => {
 		await api
@@ -196,10 +197,9 @@ const ListCard = ({
 	};
 
 	const addtoCart = async (product, product_variant_id, qty) => {
-		const trackingService = new TrackingService();
 		trackingService.trackCart(
 			product,
-			1,
+			qty,
 			user.status === "loading" ? "" : user.user.email
 		);
 
@@ -245,10 +245,15 @@ const ListCard = ({
 			});
 	};
 
-	const removefromCart = async (product_id, product_variant_id) => {
+	const removefromCart = async (product, product_variant_id) => {
+		trackingService.trackCart(
+			product,
+			0,
+			user.status === "loading" ? "" : user.user.email
+		);
 		setisLoader(true);
 		await api
-			.removeFromCart(cookies.get("jwt_token"), product_id, product_variant_id)
+			.removeFromCart(cookies.get("jwt_token"), product.id, product_variant_id)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
@@ -322,12 +327,6 @@ const ListCard = ({
 	};
 
 	const handleAddToCart = (product, index) => {
-		const trackingService = new TrackingService();
-		trackingService.trackCart(
-			product,
-			1,
-			user.status === "loading" ? "" : user.user.email
-		);
 		if (cookies.get("jwt_token") !== undefined) {
 			document
 				.getElementById(`Add-to-cart-section${index}`)
@@ -336,8 +335,9 @@ const ListCard = ({
 				.getElementById(`input-cart-section${index}`)
 				.classList.add("active");
 			document.getElementById(`input-section${index}`).innerHTML = 1;
+
 			addtoCart(
-				product.id,
+				product,
 				product.variants.length > 1
 					? JSON.parse(
 							CryptoJS.AES.decrypt(
@@ -351,6 +351,11 @@ const ListCard = ({
 				document.getElementById(`input-section${index}`).innerHTML
 			);
 		} else {
+			trackingService.trackCart(
+				product,
+				1,
+				user.status === "loading" ? "" : user.user.email
+			);
 			const isAdded = AddProductToCart(product, 1);
 			if (isAdded) {
 				document
@@ -369,13 +374,7 @@ const ListCard = ({
 		var val = parseInt(
 			document.getElementById(`input-section${index}`).innerHTML
 		);
-		alert(val);
-		const trackingService = new TrackingService();
-		trackingService.trackCart(
-			product,
-			parseInt(val) - 1,
-			user.status === "loading" ? "" : user.user.email
-		);
+
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val === 1) {
 				document.getElementById(`input-section${index}`).innerHTML = 0;
@@ -386,7 +385,7 @@ const ListCard = ({
 					.getElementById(`Add-to-cart-section${index}`)
 					.classList.add("active");
 				removefromCart(
-					product.id,
+					product,
 					product.variants.length > 1
 						? JSON.parse(
 								CryptoJS.AES.decrypt(
@@ -401,8 +400,9 @@ const ListCard = ({
 				);
 			} else {
 				document.getElementById(`input-section${index}`).innerHTML = val - 1;
+
 				addtoCart(
-					product.id,
+					product,
 					product.variants.length > 1
 						? JSON.parse(
 								CryptoJS.AES.decrypt(
@@ -418,6 +418,11 @@ const ListCard = ({
 				);
 			}
 		} else {
+			trackingService.trackCart(
+				product,
+				val - 1,
+				user.status === "loading" ? "" : user.user.email
+			);
 			const isDecremented = DecrementProduct(product.id, product);
 			if (isDecremented) {
 				document.getElementById(`input-section${index}`).innerHTML = val - 1;
@@ -436,18 +441,13 @@ const ListCard = ({
 
 	const handleIncrement = (product, index) => {
 		var val = document.getElementById(`input-section${index}`).innerHTML;
-		const trackingService = new TrackingService();
-		trackingService.trackCart(
-			product,
-			parseInt(val) + 1,
-			user.status === "loading" ? "" : user.user.email
-		);
+
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val < product.total_allowed_quantity) {
 				document.getElementById(`input-section${index}`).innerHTML =
 					parseInt(val) + 1;
 				addtoCart(
-					product.id,
+					product,
 					product.variants.length > 1
 						? JSON.parse(
 								CryptoJS.AES.decrypt(
@@ -463,6 +463,11 @@ const ListCard = ({
 				);
 			}
 		} else {
+			trackingService.trackCart(
+				product,
+				parseInt(val) + 1,
+				user.status === "loading" ? "" : user.user.email
+			);
 			const isIncremented = IncrementProduct(product.id, product, 1, false);
 			if (isIncremented) {
 				document.getElementById(`input-section${index}`).innerHTML =

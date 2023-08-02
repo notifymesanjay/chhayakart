@@ -124,6 +124,7 @@ const ProductDetails = ({
 	const [isLogin, setIsLogin] = useState(false);
 	const [isViewModal, setIsViewModal] = useState(false);
 	const { isSmScreen, isMobile } = useResponsive();
+	const trackingService = new TrackingService();
 
 	const getBrandDetails = (id) => {
 		api
@@ -203,7 +204,6 @@ const ProductDetails = ({
 									payload: result.data[i].id,
 								});
 
-								const trackingService = new TrackingService();
 								trackingService.trackProductPage(
 									result.data[i].id,
 									result.data[i].name,
@@ -248,10 +248,9 @@ const ProductDetails = ({
 
 	//Add to Cart
 	const addtoCart = async (product, product_variant_id, qty) => {
-		const trackingService = new TrackingService();
 		trackingService.trackCart(
 			product,
-			1,
+			qty,
 			user.status === "loading" ? "" : user.user.email
 		);
 
@@ -295,9 +294,14 @@ const ProductDetails = ({
 	};
 
 	//remove from Cart
-	const removefromCart = async (product_id, product_variant_id) => {
+	const removefromCart = async (product, product_variant_id) => {
+		trackingService.trackCart(
+			product,
+			0,
+			user.status === "loading" ? "" : user.user.email
+		);
 		await api
-			.removeFromCart(cookies.get("jwt_token"), product_id, product_variant_id)
+			.removeFromCart(cookies.get("jwt_token"), product.id, product_variant_id)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
