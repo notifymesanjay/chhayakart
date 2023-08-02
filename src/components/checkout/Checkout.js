@@ -390,6 +390,11 @@ const Checkout = () => {
 								: Math.ceil(subTotal + 0.05 * subTotal + 40),
 						cod_allowed: 1,
 					};
+					const trackingService = new TrackingService();
+					trackingService.checkout(
+						orderVal,
+						user.status === "loading" ? "" : user.user.email
+					);
 					setOrderSummary(orderVal);
 					sub_total = subTotal;
 				}
