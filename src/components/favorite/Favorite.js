@@ -14,6 +14,7 @@ import Cookies from "universal-cookie";
 import { ActionTypes } from "../../model/action-type";
 import Loader from "../loader/Loader";
 import LoginUser from "../login/login-user";
+import TrackingService from "../../services/trackingService";
 
 const Favorite = () => {
 	const closeCanvas = useRef();
@@ -27,6 +28,7 @@ const Favorite = () => {
 	const [isfavoriteEmpty, setisfavoriteEmpty] = useState(false);
 	const [isLoader, setisLoader] = useState(false);
 	const [isLogin, setIsLogin] = useState(false);
+	const user = useSelector((state) => state.user);
 
 	useEffect(() => {
 		if (favorite.favorite === null && favorite.status === "fulfill") {
@@ -37,10 +39,16 @@ const Favorite = () => {
 	}, [favorite]);
 
 	//Add to Cart
-	const addtoCart = async (product_id, product_variant_id, qty) => {
+	const addtoCart = async (product, product_variant_id, qty) => {
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			1,
+			user.status === "loading" ? "" : user.user.email
+		);
 		setisLoader(true);
 		await api
-			.addToCart(cookies.get("jwt_token"), product_id, product_variant_id, qty)
+			.addToCart(cookies.get("jwt_token"), product.id, product_variant_id, qty)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
@@ -126,6 +134,12 @@ const Favorite = () => {
 	};
 
 	const handleAddToCart = (product) => {
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			parseInt(val) + 1,
+			user.status === "loading" ? "" : user.user.email
+		);
 		if (cookies.get("jwt_token") !== undefined) {
 			addtoCart(product.id, product.variants[0].id, 1);
 		} else {

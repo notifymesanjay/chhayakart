@@ -28,14 +28,16 @@ import {
 } from "react-share";
 import QuickViewModal from "./QuickViewModal";
 import {
-	addProductToCart,
-	decrementProduct,
-	incrementProduct,
+	AddProductToCart,
+	DecrementProduct,
+	IncrementProduct,
 } from "../../services/cartService";
 import LoginUser from "../login/login-user";
 import RelateProduct from "./related-products";
 import { useResponsive } from "../shared/use-responsive";
 import Product from "./product";
+
+import TrackingService from "../../services/trackingService";
 
 function SamplePrevArrow(props) {
 	const { className, style, onClick } = props;
@@ -116,7 +118,7 @@ const Productdetails = ({
 	const [isLogin, setIsLogin] = useState(false);
 	const [isViewModal, setIsViewModal] = useState(false);
 	const { isSmScreen } = useResponsive();
-
+	const user = useSelector((state) => state.user);
 	const getCategoryDetails = (id) => {
 		api
 			.getCategory()
@@ -266,9 +268,16 @@ const Productdetails = ({
 	};
 
 	//Add to Cart
-	const addtoCart = async (product_id, product_variant_id, qty) => {
+	const addtoCart = async (product, product_variant_id, qty) => {
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			1,
+			user.status === "loading" ? "" : user.user.email
+		);
+
 		await api
-			.addToCart(cookies.get("jwt_token"), product_id, product_variant_id, qty)
+			.addToCart(cookies.get("jwt_token"), product.id, product_variant_id, qty)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
@@ -400,14 +409,14 @@ const Productdetails = ({
 							) : (
 								<div className="row">
 									<ResponsiveCarousel
-									 items={5}
-									 itemsInTablet={3}
-									 infinite={false}
-									 autoPlaySpeed={4000}
-									 showArrows={false}
-									 showDots={false}
-									 autoPlay={true}>
-
+										items={5}
+										itemsInTablet={3}
+										infinite={false}
+										autoPlaySpeed={4000}
+										showArrows={false}
+										showDots={false}
+										autoPlay={true}
+									>
 										{relatedProducts.map((related_product, index) => (
 											<div className="col-md-3 col-lg-4" key={index}>
 												<RelateProduct

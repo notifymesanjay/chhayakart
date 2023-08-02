@@ -7,10 +7,11 @@ import api from "../../api/api";
 import Cookies from "universal-cookie";
 import { toast } from "react-toastify";
 import { ActionTypes } from "../../model/action-type";
+import TrackingService from "../../services/trackingService";
 import {
-	addProductToCart,
-	decrementProduct,
-	incrementProduct,
+	AddProductToCart,
+	DecrementProduct,
+	IncrementProduct,
 } from "../../services/cartService";
 import { BsHeart, BsHeartFill, BsPlus } from "react-icons/bs";
 import {
@@ -41,6 +42,7 @@ const Product = ({
 
 	const [isCart, setIsCart] = useState(false);
 	const [productInCartCount, setProductInCartCount] = useState(0);
+	const user = useSelector((state) => state.user);
 
 	//Add to favorite
 	const addToFavorite = async (product_id) => {
@@ -91,7 +93,13 @@ const Product = ({
 			});
 	};
 
-	const addProductToCart1 = () => {
+	const AddProductToCart1 = (product) => {
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			1,
+			user.status === "loading" ? "" : user.user.email
+		);
 		if (cookies.get("jwt_token") !== undefined) {
 			setIsCart(true);
 			setProductInCartCount(1);
@@ -103,7 +111,7 @@ const Product = ({
 				1
 			);
 		} else {
-			const isAdded = addProductToCart(productdata, 1);
+			const isAdded = AddProductToCart(productdata, 1);
 			if (isAdded) {
 				setIsCart(true);
 				setProductInCartCount(1);
@@ -112,8 +120,14 @@ const Product = ({
 		}
 	};
 
-	const handleDecrement = () => {
+	const handleDecrement = (product) => {
 		var val = productInCartCount;
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			parseInt(val) - 1,
+			user.status === "loading" ? "" : user.user.email
+		);
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val === 1) {
 				setProductInCartCount(0);
@@ -137,7 +151,7 @@ const Product = ({
 				);
 			}
 		} else {
-			const isDecremented = decrementProduct(productdata.id, productdata);
+			const isDecremented = DecrementProduct(productdata.id, productdata);
 			if (isDecremented) {
 				setProductInCartCount(val - 1);
 			} else {
@@ -148,8 +162,14 @@ const Product = ({
 		}
 	};
 
-	const handleIncrement = () => {
+	const handleIncrement = (product) => {
 		var val = productInCartCount;
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			parseInt(val) + 1,
+			user.status === "loading" ? "" : user.user.email
+		);
 		if (cookies.get("jwt_token") !== undefined) {
 			if (val < productdata.total_allowed_quantity) {
 				setProductInCartCount(val + 1);
@@ -163,7 +183,12 @@ const Product = ({
 				);
 			}
 		} else {
-			const isIncremented = incrementProduct(productdata.id, productdata, 1, false);
+			const isIncremented = IncrementProduct(
+				productdata.id,
+				productdata,
+				1,
+				false
+			);
 			if (isIncremented) {
 				setProductInCartCount(val + 1);
 			}
@@ -186,14 +211,14 @@ const Product = ({
 					<div className="sub-images-container">
 						{images != null && images.length >= 4 ? (
 							<>
-									<ResponsiveCarousel
+								<ResponsiveCarousel
 									items={5}
 									infinite={false}
 									autoPlaySpeed={4000}
 									showArrows={false}
 									showDots={false}
 									autoPlay={true}
-									>
+								>
 									{images.map((image, index) => (
 										<div key={index}>
 											<div
@@ -297,7 +322,7 @@ const Product = ({
 									type="button"
 									id={`Add-to-cart-productdetail`}
 									className="add-to-cart active"
-									onClick={addProductToCart1}
+									onClick={AddProductToCart1}
 								>
 									Add to Cart
 								</button>
