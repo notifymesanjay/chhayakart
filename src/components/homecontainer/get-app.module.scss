@@ -1,0 +1,25 @@
+.cardWrapper {
+  background-color: white;
+  padding: 15px 7%;
+  margin: 10px 0 25px;
+  border-radius: 8px;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.appImg{
+    height: 400px;
+    width: auto;
+}
+
+.appLogo{
+    width: 150px;
+    height: auto;
+}
+
+.header{
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}

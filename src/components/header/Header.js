@@ -32,6 +32,7 @@ import MobileMenu from "./mobile-menu";
 import chhayakartPinkMiniLogo from "../../public/images/logo/chhayakert-pink-mini-logo.png";
 import Sidebar from "./sidebar";
 import { FiMenu } from "react-icons/fi";
+import DskpHeader from "./dskp-header";
 
 const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 	const [isLocationPresent, setisLocationPresent] = useState(false);
@@ -212,7 +213,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 			.classList.remove("active");
 	};
 
-	return (
+	return isSmScreen ? (
 		<>
 			{/* sidebar */}
 
@@ -351,48 +352,6 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 											className="desktop-logo lazyload"
 										/>
 									</Link>
-								</div>
-							</div>
-
-							<div className="d-flex  w-lg-100 col-md-6 order-2 justify-content-center align-items-center ">
-								<div className="header-search rounded-3 ">
-									<form
-										onSubmit={(e) => {
-											e.preventDefault();
-
-											if (search !== "") {
-												dispatch({
-													type: ActionTypes.SET_FILTER_SEARCH,
-													payload: search,
-												});
-												if (curr_url.pathname !== "/products") {
-													navigate("/products");
-												}
-												// searchNavTrigger.current.click();
-											}
-										}}
-										className="search-form"
-									>
-										<input
-											type="search"
-											id="search-box"
-											placeholder="Delivering 1000+ Products Across India"
-											className="rounded-5"
-											onChange={(e) => {
-												if (e.target.value === "") {
-													dispatch({
-														type: ActionTypes.SET_FILTER_SEARCH,
-														payload: null,
-													});
-												}
-												setsearch(e.target.value);
-											}}
-										/>
-
-										<button type="submit" aria-label="search">
-											<MdSearch fill="black" />
-										</button>
-									</form>
 								</div>
 							</div>
 
@@ -596,7 +555,9 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 				<LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
 			)}
 		</>
-	);
+	) : (
+		<DskpHeader />
+	)
 };
 
 export default Header;

@@ -1,60 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import api from "../../api/api";
-import { ActionTypes } from "../../model/action-type";
-import Offers from "../offer/Offers";
-import LoginUser from "../login/login-user";
-import ProductHeader from "./product-header";
-import "./product.css";
-import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
-import ProductCard from "../shared/card/product-card";
+import { useSelector } from "react-redux";
+import { useResponsive } from "../shared/use-responsive";
+import Loader from "../loader/Loader";
 import CategoryCard from "./category-card";
 import ShopByRegion from "./region";
+import "./product.css";
 
 const shopByRegionName = "SHOP BY REGION";
 
-const ProductContainer = ({
-  productTriggered,
-  setProductTriggered = () => {},
-  setSelectedFilter = () => {},
-}) => {
-  const dispatch = useDispatch();
-
-  const city = useSelector((state) => state.city);
+const ProductContainer = ({ setSelectedFilter = () => {} }) => {
   const shop = useSelector((state) => state.shop);
-  const sizes = useSelector((state) => state.productSizes);
+  const {isSmScreen} = useResponsive();
 
-  // const [productSizes, setproductSizes] = useState(null);
-  const [offerConatiner, setOfferContainer] = useState(0);
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [shopByRegionList, setShopByRegionList] = useState([]);
-
-  useEffect(() => {
-    if (sizes.sizes === null || sizes.status === "loading") {
-      if (city.city !== null) {
-        // api
-        //   .getProductbyFilter(
-        //     city.city.id,
-        //     city.city.latitude,
-        //     city.city.longitude
-        //   )
-        //   .then((response) => response.json())
-        //   .then((result) => {
-        //     if (result.status === 1) {
-        //       setproductSizes(result.sizes);
-        //       dispatch({
-        //         type: ActionTypes.SET_PRODUCT_SIZES,
-        //         payload: result.sizes,
-        //       });
-        //     }
-        //   });
-      }
-    } else {
-      // setproductSizes(sizes.sizes);
-    }
-  }, [city, sizes]);
 
   useEffect(() => {
     if (shop.shop.category != null && shop.shop.category.length > 0) {
@@ -92,6 +52,7 @@ const ProductContainer = ({
             obj = {
               category_id: parseInt(categories[j].id),
               category_name: categories[j].name,
+              category_image: categories[j].image_url,
             };
             obj["sub_category"] = [sectionList[i]];
           }
@@ -129,32 +90,32 @@ const ProductContainer = ({
   }, [shop.shop, categories]);
 
   return (
-    <section id="products">
-      <div className="container">
-        {shop.shop === null ? (
-          <>
-            <div className="d-flex justify-content-center">
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            {shopByRegionList.length > 0 && (
-              <ShopByRegion regionList={shopByRegionList} setSelectedFilter={setSelectedFilter} />
-            )}
-            {subCategories.length > 0 && (
-              <CategoryCard
-                subCategories={subCategories}
-                setSelectedFilter={setSelectedFilter}
-              />
-            )}
-          </>
-        )}
-        {offerConatiner === 1 ? <Offers /> : null}
-      </div>
-    </section>
+    <div className="container">
+      {shop.shop === null ? (
+        <Loader screen="full" />
+      ) : (
+        <>
+          {isSmScreen && shopByRegionList.length > 0 && (
+            <ShopByRegion
+              regionList={shopByRegionList}
+              setSelectedFilter={setSelectedFilter}
+            />
+          )}
+          {subCategories.length > 0 && (
+            <CategoryCard
+              subCategories={subCategories}
+              setSelectedFilter={setSelectedFilter}
+            />
+          )}
+          {!isSmScreen && shopByRegionList.length > 0 && (
+            <ShopByRegion
+              regionList={shopByRegionList}
+              setSelectedFilter={setSelectedFilter}
+            />
+          )}
+        </>
+      )}
+    </div>
   );
 };
 

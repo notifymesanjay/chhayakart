@@ -31,10 +31,14 @@ import Terms from "./components/terms/Terms";
 import Policy from "./components/policy/Policy";
 import NotFound from "./components/404/NotFound";
 import SubCategory from "./components/product/sub-category";
+import DskpFooter from './components/footer/new-footer';
+import { useResponsive } from "./components/shared/use-responsive";
 
 function App() {
   //initialize cookies
   const cookies = new Cookies();
+
+  const {isSmScreen} = useResponsive();
 
   const dispatch = useDispatch();
 
@@ -269,7 +273,7 @@ function App() {
             </main>
           </>
         )}
-        <Footer />
+        {isSmScreen ? <Footer /> : <DskpFooter setSelectedFilter={setSelectedFilter} />}
 
         <ToastContainer toastClassName="toast-container-class" />
       </div>

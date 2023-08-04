@@ -8,6 +8,59 @@
   border-bottom: 2px solid lightgray;
 }
 
+.categoryWrapper {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 15px;
+
+  .categoryImgWrapper {
+    width: calc(20% - 6px);
+
+    img{
+      width: 100%;
+      object-fit: fill;
+    }
+  }
+
+  .bodyWrapper {
+    width: calc(80% - 6px);
+  }
+
+  .subCategoryWrapper{
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .subCategoryCard{
+    width: 185px;
+    cursor: pointer;
+  }
+
+  .imageWrapper{
+    min-width: 170px;
+    min-height: 170px;
+    height: 170px;
+    width: 170px;
+  }
+
+  .subCategoryImg{
+    min-width: 170px;
+    min-height: 170px;
+    height: 170px;
+    width: 170px;
+  }
+}
+
+.cardWrapper {
+  background-color: white;
+  padding: 15px 0;
+  margin-top: 15px;
+  border-radius: 8px;
+}
+
 .subCategoryWrapper {
   display: flex;
   gap: 6px;
@@ -17,10 +70,10 @@
 }
 
 .header {
-     font-size: 20px;
-    /* text-align: center; */
-    color: #898b8a;
-    font-weight: 700;
+  font-size: 20px;
+  color: #898b8a;
+  font-weight: 700;
+  padding-left: 10px;
 }
 
 .subCategoryCard {
@@ -72,11 +125,6 @@
     border-radius: 8px;
   }
 
-  .header{
-    text-align: left;
-    padding-left: 10px;
-  }
-
   .subCategoryCard {
     background-color: #ffffff;
     border-radius: 8px;
@@ -107,30 +155,32 @@
   }
 }
 
-@media only screen and (max-width: 408px){
-  .subCategoryCard{
+@media only screen and (max-width: 408px) {
+  .subCategoryCard {
     width: 178px;
   }
 }
 
-@media only screen and (max-width: 385px){
-    .subCategoryCard{
-        width: 150px;
-    }
+@media only screen and (max-width: 385px) {
+  .subCategoryCard {
+    width: 150px;
+  }
 
-    .imageWrapper, .subCategoryImg{
-      height: 120px;
-      width: 148px;
-    }
+  .imageWrapper,
+  .subCategoryImg {
+    height: 120px;
+    width: 148px;
+  }
 }
 
-@media only screen and (max-width: 330px){
-    .subCategoryCard{
-        width: 140px;
-    }
+@media only screen and (max-width: 330px) {
+  .subCategoryCard {
+    width: 140px;
+  }
 
-    .imageWrapper, .subCategoryImg{
-      height: 110px;
-      width: 130px;
-    }
+  .imageWrapper,
+  .subCategoryImg {
+    height: 110px;
+    width: 130px;
+  }
 }

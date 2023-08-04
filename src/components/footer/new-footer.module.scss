@@ -1,0 +1,38 @@
+.footerWrapper {
+  background-color: #dddddd;
+  padding: 15px 45px 0;
+}
+
+.linksWrapper {
+  width: 65%;
+  margin: 0 auto 15px;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+}
+
+.links {
+  font-size: 14px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.links:hover {
+  text-decoration: underline;
+}
+
+.subFooter {
+  border-top: 1px solid #bbbbbb;
+  padding: 10px 0;
+}
+
+.copyRight {
+  margin-bottom: 0;
+  text-align: center;
+  font-size: 14px;
+}
+
+.chhayakartTxt {
+  color: #f25cc5;
+  font-weight: bold;
+}
