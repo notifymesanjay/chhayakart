@@ -188,9 +188,21 @@ function App() {
                     />
                   }
                 ></Route>
+                  <Route
+                  exact={true}
+                  path="/subCategory/:slug/"
+                  element={
+                    <SubCategory
+                      productTriggered={productTriggered}
+                      setProductTriggered={setProductTriggered}
+                      selectedFilter={selectedFilter}
+                      setSelectedFilter={setSelectedFilter}
+                    />
+                  }
+                ></Route>
                 <Route
                   exact={true}
-                  path="/subCategory/:slug"
+                  path="/subCategory/:slug/:title"
                   element={
                     <SubCategory
                       productTriggered={productTriggered}
