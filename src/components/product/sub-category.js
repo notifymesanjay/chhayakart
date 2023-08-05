@@ -2,6 +2,8 @@ import React from "react";
 import No_Orders from "../../utils/zero-state-screens/No_Orders.svg";
 import ProductListCarousel from "./productlist-carousel";
 import styles from "./productlist.module.scss";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const SubCategory = ({
   productTriggered,
@@ -9,6 +11,16 @@ const SubCategory = ({
   selectedFilter,
   setSelectedFilter = () => {},
 }) => {
+  const { slug,title } =  useParams();
+
+useEffect(()=>{
+  debugger;
+  var subCatrId= title.split("_")[0];
+  if(subCatrId)
+{  setSelectedFilter(parseInt(subCatrId));
+}
+},[])
+
   return (
     <div className={styles.productListWrapper}>
       <ProductListCarousel

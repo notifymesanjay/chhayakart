@@ -362,6 +362,7 @@ const Checkout = () => {
 
   const handleOrderSummary = () => {
     var sub_total = 0;
+    var  totalDeliveryCharge=0;
     if (cookies.get("jwt_token") === undefined) {
       if (localStorage.getItem("cart")) {
         const cartVal = JSON.parse(localStorage.getItem("cart"));
@@ -369,8 +370,7 @@ const Checkout = () => {
           let allProductVariantId = "",
             allQuantity = "",
             subTotal = 0,
-            totalDeliveryCharge = 0,
-            taxes =0;
+            taxes = 0;
 
           for (let i = 0; i < cartVal.length - 1; i++) {
             allProductVariantId +=
@@ -442,7 +442,7 @@ parseInt(cartVal[cartVal.length - 1].discounted_price))*
           sub_total = subTotal;
         }
       }
-      if (sub_total <= 199) {
+      if (sub_total <= 199 || parseInt(totalDeliveryCharge)<1) {
         setIsCodAllowed(false);
       } else {
         setIsCodAllowed(true);
