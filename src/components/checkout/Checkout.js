@@ -258,7 +258,7 @@ const Checkout = () => {
                   handleRozarpayPayment(
                     result.data.order_id,
                     res.data.transaction_id,
-                    cart.data.sub_total,
+                    cart.cart.data.sub_total,
                     user.user.name,
                     user.user.email,
                     user.user.mobile,
@@ -282,7 +282,7 @@ const Checkout = () => {
 
             handlePayStackPayment(
               user.user.email,
-              cart.data.sub_total,
+              cart.cart.data.sub_total,
               setting.payment_setting.paystack_currency_code,
               setting.setting.support_email
             );
@@ -636,13 +636,13 @@ parseInt(cartVal[cartVal.length - 1].discounted_price))*
                 orderID={stripeOrderId}
                 client_secret={stripeClientSecret}
                 transaction_id={stripeTransactionId}
-                amount={cart.data.sub_total}
+                amount={cart.cart.data.sub_total}
               >
                 <InjectCheckout
                   orderID={stripeOrderId}
                   client_secret={stripeClientSecret}
                   transaction_id={stripeTransactionId}
-                  amount={cart.data.sub_total}
+                  amount={cart.cart.data.sub_total}
                 />
               </Elements>
             )}
