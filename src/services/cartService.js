@@ -1,9 +1,9 @@
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import TrackingService from "./trackingService";
 
-export const addProductToCart = (product, quantity) => {
+export const AddProductToCart = (product, quantity) => {
 	let cart = JSON.parse(localStorage.getItem("cart"));
-	console.log("xyz4", cart);
-	console.log("xyz5", product);
 	if (!cart) {
 		let updatedProductList = [
 			{
@@ -74,7 +74,7 @@ export const addProductToCart = (product, quantity) => {
 	}
 };
 
-export const incrementProduct = (
+export const IncrementProduct = (
 	product_id,
 	product,
 	quantity,
@@ -113,7 +113,7 @@ export const incrementProduct = (
 	return flag === 1;
 };
 
-export const decrementProduct = (product_id, product) => {
+export const DecrementProduct = (product_id, product) => {
 	let cart = JSON.parse(localStorage.getItem("cart"));
 	let flag = 0;
 	if (cart) {
@@ -132,7 +132,7 @@ export const decrementProduct = (product_id, product) => {
 	return flag === 1;
 };
 
-export const deleteProductFromCart = (product_id) => {
+export const DeleteProductFromCart = (product_id) => {
 	let cart = JSON.parse(localStorage.getItem("cart"));
 	let i = 0;
 	if (cart) {

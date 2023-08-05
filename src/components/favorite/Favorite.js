@@ -14,6 +14,7 @@ import Cookies from "universal-cookie";
 import { ActionTypes } from "../../model/action-type";
 import Loader from "../loader/Loader";
 import LoginUser from "../login/login-user";
+import TrackingService from "../../services/trackingService";
 
 const Favorite = () => {
 	const closeCanvas = useRef();
@@ -27,6 +28,7 @@ const Favorite = () => {
 	const [isfavoriteEmpty, setisfavoriteEmpty] = useState(false);
 	const [isLoader, setisLoader] = useState(false);
 	const [isLogin, setIsLogin] = useState(false);
+	const user = useSelector((state) => state.user);
 
 	useEffect(() => {
 		if (favorite.favorite === null && favorite.status === "fulfill") {
@@ -37,10 +39,16 @@ const Favorite = () => {
 	}, [favorite]);
 
 	//Add to Cart
-	const addtoCart = async (product_id, product_variant_id, qty) => {
+	const addtoCart = async (product, product_variant_id, qty) => {
+		const trackingService = new TrackingService();
+		trackingService.trackCart(
+			product,
+			qty,
+			user.status === "loading" ? "" : user.user.email
+		);
 		setisLoader(true);
 		await api
-			.addToCart(cookies.get("jwt_token"), product_id, product_variant_id, qty)
+			.addToCart(cookies.get("jwt_token"), product.id, product_variant_id, qty)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
@@ -66,35 +74,35 @@ const Favorite = () => {
 	};
 
 	//remove from Cart
-	const removefromCart = async (product_id, product_variant_id) => {
-		setisLoader(true);
-		await api
-			.removeFromCart(cookies.get("jwt_token"), product_id, product_variant_id)
-			.then((response) => response.json())
-			.then(async (result) => {
-				if (result.status === 1) {
-					toast.success(result.message);
-					await api
-						.getCart(
-							cookies.get("jwt_token"),
-							city.city.latitude,
-							city.city.longitude
-						)
-						.then((resp) => resp.json())
-						.then((res) => {
-							setisLoader(false);
-							if (res.status === 1)
-								dispatch({ type: ActionTypes.SET_CART, payload: res });
-							else dispatch({ type: ActionTypes.SET_CART, payload: null });
-						})
-						.catch((error) => {});
-				} else {
-					setisLoader(false);
-					toast.error(result.message);
-				}
-			})
-			.catch((error) => {});
-	};
+	// const removefromCart = async (product_id, product_variant_id) => {
+	// 	setisLoader(true);
+	// 	await api
+	// 		.removeFromCart(cookies.get("jwt_token"), product_id, product_variant_id)
+	// 		.then((response) => response.json())
+	// 		.then(async (result) => {
+	// 			if (result.status === 1) {
+	// 				toast.success(result.message);
+	// 				await api
+	// 					.getCart(
+	// 						cookies.get("jwt_token"),
+	// 						city.city.latitude,
+	// 						city.city.longitude
+	// 					)
+	// 					.then((resp) => resp.json())
+	// 					.then((res) => {
+	// 						setisLoader(false);
+	// 						if (res.status === 1)
+	// 							dispatch({ type: ActionTypes.SET_CART, payload: res });
+	// 						else dispatch({ type: ActionTypes.SET_CART, payload: null });
+	// 					})
+	// 					.catch((error) => {});
+	// 			} else {
+	// 				setisLoader(false);
+	// 				toast.error(result.message);
+	// 			}
+	// 		})
+	// 		.catch((error) => {});
+	// };
 
 	//remove from favorite
 	const removefromFavorite = async (product_id) => {
@@ -127,7 +135,7 @@ const Favorite = () => {
 
 	const handleAddToCart = (product) => {
 		if (cookies.get("jwt_token") !== undefined) {
-			addtoCart(product.id, product.variants[0].id, 1);
+			addtoCart(product, product.variants[0].id, 1);
 		} else {
 			setIsLogin(true);
 		}
