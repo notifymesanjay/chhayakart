@@ -659,11 +659,6 @@ const ListCard = ({
 				</div>
 
 				<div className="card-body product-card-body p-3">
-					{/* {filter.grid_view?
-                                                                        <></>:
-                                                                         <>
-                                                                         <div className="product_name"></div>
-                                                                         </>} */}
 					<h3
 						onClick={() => {
 							dispatch({

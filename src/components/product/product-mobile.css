@@ -574,23 +574,21 @@ option {
 
 .product-details-view .image-wrapper {
 	padding: 15px;
-}
-
-.product-details-view .image-wrapper .main-image {
-	width: 100%;
-	text-align: center;
-	border-radius: 5px;
+	display: flex;
 }
 
 .product-details-view .image-wrapper .main-image img {
-	width: 480px;
+	max-width: 280px;
+	justify-content: center;
+	display: block;
 }
 
 .product-details-view .image-wrapper .sub-images-container {
 	margin-top: 15px;
-	display: flex;
-	justify-content: space-evenly;
-	position: relative;
+	display: grid;
+	padding: 2px;
+	justify-content: space-around;
+	float: left;
 }
 
 .product-details-view

@@ -27,7 +27,6 @@ const MainContainer = ({
 			.getShop(city_id, latitude, longitude)
 			.then((response) => response.json())
 			.then((result) => {
-				debugger;
 				if (result.status === 1) {
 					const dataToBeSorted = result.data.category;
 					//sorting of items lexographically..

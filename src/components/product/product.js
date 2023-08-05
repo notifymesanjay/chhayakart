@@ -201,15 +201,6 @@ const Product = ({
 		<div className="row body-wrapper ">
 			<div className="col-xl-4 col-lg-6 col-md-12 col-12">
 				<div className="image-wrapper ">
-					<div className="main-image col-12 border">
-						<img
-							data-src={mainimage}
-							alt="main-product"
-							className="col-12 lazyload"
-							style={{ width: "85%" }}
-						/>
-					</div>
-
 					<div className="sub-images-container">
 						{images != null && images.length >= 4 ? (
 							<>
@@ -262,6 +253,14 @@ const Product = ({
 								))}
 							</>
 						)}
+					</div>
+					<div className="main-image col-12 border">
+						<img
+							data-src={mainimage}
+							alt="main-product"
+							className="col-12 lazyload"
+							style={{ width: "85%" }}
+						/>
 					</div>
 				</div>
 			</div>
