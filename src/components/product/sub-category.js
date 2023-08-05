@@ -14,11 +14,12 @@ const SubCategory = ({
   const { slug,title } =  useParams();
 
 useEffect(()=>{
-  debugger;
+  if(title)
   var subCatrId= title.split("_")[0];
   if(subCatrId)
 {  setSelectedFilter(parseInt(subCatrId));
 }
+  
 },[])
 
   return (
