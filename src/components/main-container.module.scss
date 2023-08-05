@@ -1,12 +1,20 @@
 .searchWrapper{
-    margin: 35px auto;
+    margin: 0 auto;
+    padding: 70px 0;
     text-align: center;
+    min-height: 250px;
+    background-image: url('../public/images/home-page/search-bg.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-top: -4px;
 }
 
 .searchHeader{
     font-size: 26px;
     margin-bottom: 10px;
     text-align: center;
+    color: white;
 }
 
 .searchBar{

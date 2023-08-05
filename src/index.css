@@ -95,7 +95,6 @@ body.modal-open {
   color: var(--sub-text-color);
   font-size: 18px;
   margin-bottom: -1px;
-
 }
 
 .react-confirm-alert-body h1 {
@@ -128,7 +127,7 @@ body.modal-open {
 }
 
 @media (max-width: 479px) {
-  #toTop{
+  #toTop {
     right: 20px;
     bottom: 85px;
   }
@@ -146,11 +145,6 @@ body.modal-open {
   .row {
     margin-left: 0 !important;
     margin-right: 0 !important;
-  }
-}
-@media only screen and (min-width: 1300px) {
-  .container {
-    max-width: 1610px !important;
   }
 }
 @media (max-width: 768px) {
@@ -176,7 +170,7 @@ body.modal-open {
 }
 
 @media (max-width: 479px) {
-  .see-all{
+  .see-all {
     font-size: 14px;
   }
 }

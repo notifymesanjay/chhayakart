@@ -113,7 +113,7 @@ const MainContainer = ({
       ) : (
         <>
           {!isSmScreen && (
-            <div className={`container ${styles.searchWrapper}`}>
+            <div className={styles.searchWrapper}>
               <h1 className={styles.searchHeader}>Search For Products</h1>
               <SearchInput
                 inputClass={styles.searchBar}
