@@ -236,6 +236,7 @@ const Checkout = () => {
             setIsOrderPlaced(true);
             setShow(true);
           } else if (paymentMethod === "Razorpay") {
+           
             try{trackingService.paymentSuccess(
 							orderSummary,
 							"Razorpay",
@@ -253,10 +254,11 @@ const Checkout = () => {
               .then((res) => {
                 if (res.status === 1) {
                   setLoadingPlaceOrder(false);
+                  debugger;
                   handleRozarpayPayment(
                     result.data.order_id,
                     res.data.transaction_id,
-                    cart.checkout.total_amount,
+                    cart.data.sub_total,
                     user.user.name,
                     user.user.email,
                     user.user.mobile,
@@ -280,7 +282,7 @@ const Checkout = () => {
 
             handlePayStackPayment(
               user.user.email,
-              cart.checkout.total_amount,
+              cart.data.sub_total,
               setting.payment_setting.paystack_currency_code,
               setting.setting.support_email
             );
@@ -634,13 +636,13 @@ parseInt(cartVal[cartVal.length - 1].discounted_price))*
                 orderID={stripeOrderId}
                 client_secret={stripeClientSecret}
                 transaction_id={stripeTransactionId}
-                amount={cart.checkout.total_amount}
+                amount={cart.data.sub_total}
               >
                 <InjectCheckout
                   orderID={stripeOrderId}
                   client_secret={stripeClientSecret}
                   transaction_id={stripeTransactionId}
-                  amount={cart.checkout.total_amount}
+                  amount={cart.data.sub_total}
                 />
               </Elements>
             )}
