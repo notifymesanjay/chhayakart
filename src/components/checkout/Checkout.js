@@ -21,6 +21,7 @@ import GuestLogin from "./guest-login";
 import { escapeSelector } from "jquery";
 import TrackingService from "../../services/trackingService";
 
+
 const stripePromise = loadStripe(
   "pk_test_51MKxDESEKxefYE6MZCHxEw4cFKiiLn2mV3Ek4Nx1UfcuNfE1Z6jgQrZrKpqTLju3n5SBjYJcwt1Jkw1bEoPXWRHB00XZ7D2f2F"
 );
@@ -190,31 +191,35 @@ const Checkout = () => {
     handler.openIframe();
   };
 
-	const placeOrder = (delivery_time) => {
-		const trackingService = new TrackingService();
+  const placeOrder = (delivery_time) => {
+    
+    try{const trackingService = new TrackingService();
 		trackingService.initiateCheckout(
 			orderSummary,
 			user.status === "loading" ? "" : user.user.email
 		);
-		api
-			.placeOrder(
-				cookies.get("jwt_token"),
-				orderSummary.product_variant_id,
-				orderSummary.quantity,
-				orderSummary.sub_total,
-				orderSummary.delivery_charge.total_delivery_charge,
-				orderSummary.total_amount,
-				paymentMethod,
-				selectedAddress.id,
-				delivery_time,
-				orderSummary.discount
-			)
-			.then((response) => response.json())
-			.then(async (result) => {
-				if (result.status === 1) {
-					const trackingService = new TrackingService();
-					if (paymentMethod === "COD") {
-						
+    }
+    catch(ex)
+    {}
+
+    api
+      .placeOrder(
+        cookies.get("jwt_token"),
+        orderSummary.product_variant_id,
+        orderSummary.quantity,
+        orderSummary.sub_total,
+        orderSummary.delivery_charge.total_delivery_charge,
+        orderSummary.total_amount,
+        paymentMethod,
+        selectedAddress.id,
+        delivery_time,
+        orderSummary.discount
+      )
+      .then((response) => response.json())
+      .then(async (result) => {
+        if (result.status === 1) {
+          const trackingService = new TrackingService();
+          if (paymentMethod === "COD") {
             try{trackingService.paymentSuccess(
 							orderSummary,
 							"COD",
@@ -226,87 +231,89 @@ const Checkout = () => {
 
 
             }
-						toast.success("Order Successfully Placed!");
-						setLoadingPlaceOrder(false);
-						setIsOrderPlaced(true);
-						setShow(true);
-					} else if (paymentMethod === "Razorpay") {
-						try{trackingService.paymentSuccess(
+            toast.success("Order Successfully Placed!");
+            setLoadingPlaceOrder(false);
+            setIsOrderPlaced(true);
+            setShow(true);
+          } else if (paymentMethod === "Razorpay") {
+            try{trackingService.paymentSuccess(
 							orderSummary,
 							"Razorpay",
 							result.data.order_id,
 							user.status === "loading" ? "" : user.user.email
 						);}
 						catch(ex){}
-						await api
-							.initiate_transaction(
-								cookies.get("jwt_token"),
-								result.data.order_id,
-								"Razorpay"
-							)
-							.then((resp) => resp.json())
-							.then((res) => {
-								if (res.status === 1) {
-									setLoadingPlaceOrder(false);
-									handleRozarpayPayment(
-										result.data.order_id,
-										res.data.transaction_id,
-										cart.checkout.sub_total,
-										user.user.name,
-										user.user.email,
-										user.user.mobile,
-										setting.setting.app_name
-									);
-								} else {
-									toast.error(res.message);
-									setLoadingPlaceOrder(false);
-								}
-							})
-							.catch((error) => console.error(error));
-					} else if (paymentMethod === "Paystack") {
-						setLoadingPlaceOrder(false);
-						try{trackingService.paymentSuccess(
+            await api
+              .initiate_transaction(
+                cookies.get("jwt_token"),
+                result.data.order_id,
+                "Razorpay"
+              )
+              .then((resp) => resp.json())
+              .then((res) => {
+                if (res.status === 1) {
+                  setLoadingPlaceOrder(false);
+                  handleRozarpayPayment(
+                    result.data.order_id,
+                    res.data.transaction_id,
+                    cart.checkout.total_amount,
+                    user.user.name,
+                    user.user.email,
+                    user.user.mobile,
+                    setting.setting.app_name
+                  );
+                } else {
+                  toast.error(res.message);
+                  setLoadingPlaceOrder(false);
+                }
+              })
+              .catch((error) => console.error(error));
+          } else if (paymentMethod === "Paystack") {
+            
+            setLoadingPlaceOrder(false);
+            try{trackingService.paymentSuccess(
 							orderSummary,
 							"Paystack",
 							result.data.order_id,
 							user.status === "loading" ? "" : user.user.email
 						);}catch(ex){}
-						handlePayStackPayment(
-							user.user.email,
-							cart.checkout.sub_total,
-							setting.payment_setting.paystack_currency_code,
-							setting.setting.support_email
-						);
-					} else if (paymentMethod === "Stripe") {
-						const order_id = result.data.order_id;
-						try{trackingService.paymentSuccess(
+
+            handlePayStackPayment(
+              user.user.email,
+              cart.checkout.total_amount,
+              setting.payment_setting.paystack_currency_code,
+              setting.setting.support_email
+            );
+          } else if (paymentMethod === "Stripe") {
+            const order_id = result.data.order_id;
+            try{trackingService.paymentSuccess(
 							orderSummary,
 							"Stripe",
 							result.data.order_id,
 							user.status === "loading" ? "" : user.user.email
 						);}catch(ex){}
-						await api
-							.initiate_transaction(
-								cookies.get("jwt_token"),
-								result.data.order_id,
-								"Stripe"
-							)
-							.then((resp) => resp.json())
-							.then((res) => {
-								setLoadingPlaceOrder(false);
-								setStripeOrderId(result.data.order_id);
-								setStripeClientSecret(res.data.client_secret);
-								setStripeTransactionId(res.data.id);
-							})
-							.catch((error) => {});
-					}
-				} else {
-					toast.error(result.message);
-					setLoadingPlaceOrder(false);
-				}
-			})
-			.catch((error) => {});
-	};
+            await api
+              .initiate_transaction(
+                cookies.get("jwt_token"),
+                result.data.order_id,
+                "Stripe"
+              )
+              .then((resp) => resp.json())
+              .then((res) => {
+                setLoadingPlaceOrder(false);
+                setStripeOrderId(result.data.order_id);
+                setStripeClientSecret(res.data.client_secret);
+                setStripeTransactionId(res.data.id);
+              })
+              .catch((error) => {});
+          }
+        } else {
+          toast.error(result.message);
+          setLoadingPlaceOrder(false);
+        }
+      })
+      .catch((error) => {});
+  };
 
   const handlePlaceOrder = async (e) => {
     if (cookies.get("jwt_token")) {
@@ -360,7 +367,8 @@ const Checkout = () => {
           let allProductVariantId = "",
             allQuantity = "",
             subTotal = 0,
-            totalDeliveryCharge = 0;
+            totalDeliveryCharge = 0,
+            taxes =0;
 
           for (let i = 0; i < cartVal.length - 1; i++) {
             allProductVariantId +=
@@ -369,6 +377,7 @@ const Checkout = () => {
             subTotal +=
               parseInt(cartVal[i].qty) * parseInt(cartVal[i].discounted_price);
             totalDeliveryCharge += parseInt(cartVal[i].delivery_charges);
+            taxes  += parseFloat(parseInt(cartVal[i].qty) * parseInt(cartVal[i].discounted_price)*(cartVal[i].taxes/100));
           }
 
           allProductVariantId +=
@@ -377,62 +386,81 @@ const Checkout = () => {
           subTotal +=
             parseInt(cartVal[cartVal.length - 1].qty) *
             parseInt(cartVal[cartVal.length - 1].discounted_price);
-          totalDeliveryCharge += parseInt(
-            cartVal[cartVal.length - 1].delivery_charges
+          totalDeliveryCharge += parseInt(cartVal[cartVal.length - 1].delivery_charges
           );
+taxes += parseFloat( (parseInt(cartVal[cartVal.length - 1].qty) *
+parseInt(cartVal[cartVal.length - 1].discounted_price))*
+(  cartVal[cartVal.length - 1].taxes/100)
+);
+          let orderVal = {
+            product_variant_id: allProductVariantId,
+            quantity: allQuantity,
+            sub_total: subTotal,
+            taxes:
+            subTotal > 4999 && subTotal < 9999
+              ? Math.ceil( 0.92 * taxes)
+              : subTotal > 9999
+              ? Math.ceil(0.88 * taxes)
+              : Math.ceil(taxes),
+            discount:
+              subTotal > 4999 && subTotal < 9999
+                ? Math.floor(0.08 * subTotal)
+                : subTotal > 9999
+                ? Math.floor(0.12 * subTotal)
+                : 0,
+            delivery_charge: { total_delivery_charge: totalDeliveryCharge },
+                total_amount:
+                subTotal > 4999 && subTotal < 9999
+                  ? Math.ceil(
+                      subTotal +
+                         0.92 * taxes +
+                        totalDeliveryCharge -
+                        Math.floor(0.08 * subTotal)
+                    )
+                  : subTotal > 9999
+                  ? Math.ceil(
+                      subTotal +
+                         0.88 * taxes +
+                        totalDeliveryCharge -
+                        Math.floor(0.12 * subTotal)
+                    )
+                  : Math.ceil(subTotal + taxes + totalDeliveryCharge),
 
-					let orderVal = {
-						product_variant_id: allProductVariantId,
-						quantity: allQuantity,
-						sub_total: subTotal,
-						taxes:
-							subTotal > 9999
-								? Math.ceil(0.05 * 0.88 * subTotal)
-								: Math.ceil(0.05 * subTotal),
-						discount: subTotal > 9999 ? Math.floor(0.12 * subTotal) : 0,
-						delivery_charge: { total_delivery_charge: 40 },
-						total_amount:
-							subTotal > 9999
-								? Math.ceil(
-										subTotal +
-											0.05 * 0.88 * subTotal +
-											40 -
-											Math.floor(0.12 * subTotal)
-								  )
-								: Math.ceil(subTotal + 0.05 * subTotal + 40),
-						cod_allowed: 1,
-					};
-					const trackingService = new TrackingService();
+
+
+            cod_allowed: 1,
+          };
+          const trackingService = new TrackingService();
 				try{	trackingService.checkout(
 						orderVal,
 						user.status === "loading" ? "" : user.user.email
 					);}
 					catch(ex){}
-					setOrderSummary(orderVal);
-					sub_total = subTotal;
-				}
-			}
-			if (sub_total <= 199) {
-				setIsCodAllowed(false);
-			} else {
-				setIsCodAllowed(true);
-			}
-		} else {
-			api
-				.getCart(
-					cookies.get("jwt_token"),
-					city.city.latitude,
-					city.city.longitude
-				)
-				.then((resp) => resp.json())
-				.then((res) => {
-					if (res.status === 1) {
-						setIsLoader(false);
-						dispatch({ type: ActionTypes.SET_CART, payload: res });
-					}
-				});
-		}
-	};
+          setOrderSummary(orderVal);
+          sub_total = subTotal;
+        }
+      }
+      if (sub_total <= 199) {
+        setIsCodAllowed(false);
+      } else {
+        setIsCodAllowed(true);
+      }
+    } else {
+      api
+        .getCart(
+          cookies.get("jwt_token"),
+          city.city.latitude,
+          city.city.longitude
+        )
+        .then((resp) => resp.json())
+        .then((res) => {
+          if (res.status === 1) {
+            setIsLoader(false);
+            dispatch({ type: ActionTypes.SET_CART, payload: res });
+          }
+        });
+    }
+  };
 
   useEffect(() => {
     fetchOrders();
@@ -448,60 +476,60 @@ const Checkout = () => {
     }
   }, [isOrderPlaced]);
 
-  useEffect(() => {
-    if (cart.checkout !== null) {
-      var sub_total = 0;
-      sub_total = cart.checkout.sub_total;
-      let orderVal = {
-        product_variant_id: cart.checkout.product_variant_id,
-        quantity: cart.checkout.quantity,
-        sub_total: cart.checkout.sub_total,
-        taxes:
-          cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
-            ? Math.ceil(0.05 * 0.92 * cart.checkout.sub_total)
-            : cart.checkout.sub_total > 9999
-            ? Math.ceil(0.05 * 0.88 * cart.checkout.sub_total)
-            : Math.ceil(0.05 * cart.checkout.sub_total),
-        discount:
-          cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
-            ? Math.floor(0.08 * cart.checkout.sub_total)
-            : cart.checkout.sub_total > 9999
-            ? Math.floor(0.12 * cart.checkout.sub_total)
-            : 0,
-        delivery_charge: {
-          total_delivery_charge:
-            cart.checkout.delivery_charge.total_delivery_charge,
-        },
-        total_amount:
-          cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
-            ? Math.ceil(
-                cart.checkout.sub_total +
-                  0.05 * 0.92 * cart.checkout.sub_total +
-                  cart.checkout.delivery_charge.total_delivery_charge -
-                  Math.floor(0.08 * cart.checkout.sub_total)
-              )
-            : cart.checkout.sub_total > 9999
-            ? Math.ceil(
-                cart.checkout.sub_total +
-                  0.05 * 0.88 * cart.checkout.sub_total +
-                  cart.checkout.delivery_charge.total_delivery_charge -
-                  Math.floor(0.12 * cart.checkout.sub_total)
-              )
-            : Math.ceil(
-                cart.checkout.sub_total +
-                  0.05 * cart.checkout.sub_total +
-                  cart.checkout.delivery_charge.total_delivery_charge
-              ),
-        cod_allowed: 1,
-      };
-      setOrderSummary(orderVal);
-      if (sub_total <= 199) {
-        setIsCodAllowed(false);
-      } else {
-        setIsCodAllowed(true);
-      }
-    }
-  }, [cart]);
+  // useEffect(() => {
+  //   debugger;
+  //   if (cart.checkout !== null) {
+  //     var sub_total = 0;
+  //     sub_total = cart.checkout.sub_total;
+  //     let orderVal = {
+  //       product_variant_id: cart.checkout.product_variant_id,
+  //       quantity: cart.checkout.quantity,
+  //       sub_total: cart.checkout.sub_total,
+  //       taxes:
+  //         cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
+  //           ? Math.ceil( 0.92 * cart.checkout.taxes)
+  //           : cart.checkout.sub_total > 9999
+  //           ? Math.ceil( 0.88 * cart.checkout.taxes)
+  //           : Math.ceil(cart.checkout.taxes),
+  //       discount:
+  //         cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
+  //           ? Math.floor(0.08 * cart.checkout.sub_total)
+  //           : cart.checkout.sub_total > 9999
+  //           ? Math.floor(0.12 * cart.checkout.sub_total)
+  //           : 0,
+  //       delivery_charge: {
+  //         total_delivery_charge:
+  //           cart.checkout.delivery_charge.total_delivery_charge,
+  //       },
+  //       total_amount:
+  //         cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
+  //           ? Math.ceil(
+  //               cart.checkout.sub_total +
+  //                 0.92 * cart.checkout.taxes +
+  //                 cart.checkout.delivery_charge.total_delivery_charge -
+  //                 Math.floor(0.08 * cart.checkout.sub_total)
+  //             )
+  //           : cart.checkout.sub_total > 9999
+  //           ? Math.ceil(
+  //               cart.checkout.sub_total +
+  //                 0.88 * cart.checkout.taxes+
+  //                 cart.checkout.delivery_charge.total_delivery_charge -
+  //                 Math.floor(0.12 * cart.checkout.sub_total)
+  //             )
+  //           : Math.ceil(
+  //               cart.checkout.sub_total + cart.checkout.taxes +
+  //                 cart.checkout.delivery_charge.total_delivery_charge
+  //             ),
+  //       cod_allowed: 1,
+  //     };
+  //     // setOrderSummary(orderVal);
+  //     if (sub_total <= 199) {
+  //       setIsCodAllowed(false);
+  //     } else {
+  //       setIsCodAllowed(true);
+  //     }
+  //   }
+  // }, [cart]);
 
   useEffect(() => {
     if (isUserLoggedIn) {
@@ -586,41 +614,41 @@ const Checkout = () => {
         )}
       </div>
 
-			<div
-				className="modal fade"
-				id="stripeModal"
-				data-bs-backdrop="static"
-				tabIndex="-1"
-				aria-labelledby="stripeModalLabel"
-				aria-hidden="true"
-			>
-				<div className="modal-dialog modal-dialog-centered modal-lg">
-					<div className="modal-content" style={{ minWidth: "100%" }}>
-						{stripeOrderId === null ||
-						stripeClientSecret === null ||
-						stripeTransactionId === null ? (
-							<Loader width="100%" height="100%" />
-						) : (
-							<Elements
-								stripe={stripePromise}
-								orderID={stripeOrderId}
-								client_secret={stripeClientSecret}
-								transaction_id={stripeTransactionId}
-								amount={cart.checkout.sub_total}
-							>
-								<InjectCheckout
-									orderID={stripeOrderId}
-									client_secret={stripeClientSecret}
-									transaction_id={stripeTransactionId}
-									amount={cart.checkout.sub_total}
-								/>
-							</Elements>
-						)}
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+      <div
+        className="modal fade"
+        id="stripeModal"
+        data-bs-backdrop="static"
+        tabIndex="-1"
+        aria-labelledby="stripeModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered modal-lg">
+          <div className="modal-content" style={{ minWidth: "100%" }}>
+            {stripeOrderId === null ||
+            stripeClientSecret === null ||
+            stripeTransactionId === null ? (
+              <Loader width="100%" height="100%" />
+            ) : (
+              <Elements
+                stripe={stripePromise}
+                orderID={stripeOrderId}
+                client_secret={stripeClientSecret}
+                transaction_id={stripeTransactionId}
+                amount={cart.checkout.total_amount}
+              >
+                <InjectCheckout
+                  orderID={stripeOrderId}
+                  client_secret={stripeClientSecret}
+                  transaction_id={stripeTransactionId}
+                  amount={cart.checkout.total_amount}
+                />
+              </Elements>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Checkout;

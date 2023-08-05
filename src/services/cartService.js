@@ -4,6 +4,7 @@ import TrackingService from "./trackingService";
 
 export const AddProductToCart = (product, quantity) => {
 	let cart = JSON.parse(localStorage.getItem("cart"));
+
 	if (!cart) {
 		let updatedProductList = [
 			{
@@ -22,7 +23,8 @@ export const AddProductToCart = (product, quantity) => {
 				taxable_amount: product.variants[0].taxable_amount,
 				total_allowed_quantity: product.total_allowed_quantity,
 				unit: product.variants[0].stock_unit,
-				delivery_charges: product.variants[0].delivery_charges
+				delivery_charges: product.variants[0].delivery_charges,
+				taxes : product.variants[0].taxes
 			},
 		];
 		localStorage.setItem("cart", JSON.stringify(updatedProductList));
@@ -66,7 +68,8 @@ export const AddProductToCart = (product, quantity) => {
 				taxable_amount: product.variants[0].taxable_amount,
 				total_allowed_quantity: product.total_allowed_quantity,
 				unit: product.variants[0].stock_unit,
-				delivery_charges: product.variants[0].delivery_charges
+				delivery_charges: product.variants[0].delivery_charges,
+				taxes: product.variants[0].taxes
 			});
 			localStorage.setItem("cart", JSON.stringify(updatedProductList));
 			return true;
