@@ -95,7 +95,10 @@ const PaymentMethod = ({
 					/>
 				</div>
 			) : null}{" "}
-			<h1 className="below199"> COD Not Available for Order Below ₹199</h1>
+			<h1 className="below199">
+				{" "}
+				COD not available for order below ₹199 & Ganesha Idol Products
+			</h1>
 			{setting.payment_setting.paystack_payment_method === "1" ? (
 				<div>
 					<label className="form-check-label" htmlFor="paystack">
