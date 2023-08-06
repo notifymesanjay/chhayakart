@@ -20,6 +20,14 @@ class TrackingService {
 				ecommerce: {
 					currency: "INR",
 					value: totalAmount,
+					item_id: product.id,
+							item_name: product.name,
+							price: totalAmount / totalQuantity,
+							amount: totalAmount,
+							currency: "INR",
+							item_category: product.category_id,
+							title: product.name,
+							quantity: totalQuantity,
 					items: [
 						{
 							item_id: product.id,
