@@ -557,7 +557,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 		</>
 	) : (
 		<DskpHeader />
-	)
+	);
 };
 
 export default Header;
