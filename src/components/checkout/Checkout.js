@@ -234,7 +234,7 @@ const Checkout = () => {
 							trackingService.paymentSuccess(
 								orderSummary,
 								"Razorpay",
-								result.data.order_id,
+								result.data,
 								user.status === "loading" ? "" : user.user.email
 							);
 						} catch (ex) {}
@@ -270,7 +270,7 @@ const Checkout = () => {
 							trackingService.paymentSuccess(
 								orderSummary,
 								"Paystack",
-								result.data.order_id,
+								result.data,
 								user.status === "loading" ? "" : user.user.email
 							);
 						} catch (ex) {}
@@ -287,7 +287,7 @@ const Checkout = () => {
 							trackingService.paymentSuccess(
 								orderSummary,
 								"Stripe",
-								result.data.order_id,
+								result.data,
 								user.status === "loading" ? "" : user.user.email
 							);
 						} catch (ex) {}

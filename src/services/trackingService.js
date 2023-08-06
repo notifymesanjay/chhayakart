@@ -20,6 +20,14 @@ class TrackingService {
 				ecommerce: {
 					currency: "INR",
 					value: totalAmount,
+					item_id: product.id,
+							item_name: product.name,
+							price: totalAmount / totalQuantity,
+							amount: totalAmount,
+							currency: "INR",
+							item_category: product.category_id,
+							title: product.name,
+							quantity: totalQuantity,
 					items: [
 						{
 							item_id: product.id,
@@ -153,7 +161,7 @@ class TrackingService {
 		}
 	}
 
-	paymentSuccess(order, type, order_id, userEmail) {
+	paymentSuccess(order, type, data, userEmail) {
 		var deviceType = this.getDeviceType(window.navigator.userAgent);
 		if (window.dataLayer) {
 			window.dataLayer.push({
@@ -162,13 +170,14 @@ class TrackingService {
 					value: order.total_amount,
 					email: userEmail,
 					currency: "INR",
-					transaction_id: order_id,
+					transaction_id: data.order_id,
+					product_id:order.product_variant_id
 				},
 				amount: order.total_amount,
 				email: userEmail,
 				currency: "INR",
 				payment_type: type,
-				transactionId: order_id,
+				transactionId: data.order_id,
 				site: deviceType,
 			});
 		}
