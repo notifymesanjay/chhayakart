@@ -370,6 +370,10 @@ const Checkout = () => {
 						taxes = 0;
 
 					for (let i = 0; i < cartVal.length - 1; i++) {
+						if (cartVal[i].delivery_charges == 0 && !isCodAllowed) {
+							setIsCodAllowed(false);
+						}
+
 						allProductVariantId +=
 							cartVal[i].product_variant_id.toString() + ",";
 						allQuantity += cartVal[i].qty.toString() + ",";
@@ -383,15 +387,25 @@ const Checkout = () => {
 						);
 					}
 
+					if (
+						cartVal[cartVal.length - 1].delivery_charges == 0 &&
+						!isCodAllowed
+					) {
+						setIsCodAllowed(false);
+					}
+
 					allProductVariantId +=
 						cartVal[cartVal.length - 1].product_variant_id.toString();
 					allQuantity += cartVal[cartVal.length - 1].qty.toString();
+
 					subTotal +=
 						parseInt(cartVal[cartVal.length - 1].qty) *
 						parseInt(cartVal[cartVal.length - 1].discounted_price);
+
 					totalDeliveryCharge += parseInt(
 						cartVal[cartVal.length - 1].delivery_charges
 					);
+
 					taxes += parseFloat(
 						parseInt(cartVal[cartVal.length - 1].qty) *
 							parseInt(cartVal[cartVal.length - 1].discounted_price) *
