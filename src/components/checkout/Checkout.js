@@ -370,10 +370,6 @@ const Checkout = () => {
 						taxes = 0;
 
 					for (let i = 0; i < cartVal.length - 1; i++) {
-						if (cartVal[i].delivery_charges == 0) {
-							setIsCodAllowed(false);
-						}
-
 						allProductVariantId +=
 							cartVal[i].product_variant_id.toString() + ",";
 						allQuantity += cartVal[i].qty.toString() + ",";
@@ -385,13 +381,6 @@ const Checkout = () => {
 								parseInt(cartVal[i].discounted_price) *
 								(cartVal[i].taxes / 100)
 						);
-					}
-
-					if (
-						isCodAllowed &&
-						cartVal[cartVal.length - 1].delivery_charges == 0
-					) {
-						setIsCodAllowed(false);
 					}
 
 					allProductVariantId +=
@@ -458,7 +447,11 @@ const Checkout = () => {
 					sub_total = subTotal;
 				}
 			}
-			if (sub_total <= 199 || parseInt(totalDeliveryCharge) < 1) {
+			if (
+				sub_total <= 199 ||
+				parseInt(totalDeliveryCharge) < 1 ||
+				!cart.cart.data.isCodAllowed
+			) {
 				setIsCodAllowed(false);
 			} else {
 				setIsCodAllowed(true);
