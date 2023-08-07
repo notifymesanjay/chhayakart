@@ -370,7 +370,7 @@ const Checkout = () => {
 						taxes = 0;
 
 					for (let i = 0; i < cartVal.length - 1; i++) {
-						if (cartVal[i].delivery_charges == 0 && !isCodAllowed) {
+						if (cartVal[i].delivery_charges == 0) {
 							setIsCodAllowed(false);
 						}
 
@@ -387,10 +387,7 @@ const Checkout = () => {
 						);
 					}
 
-					if (
-						cartVal[cartVal.length - 1].delivery_charges == 0 &&
-						!isCodAllowed
-					) {
+					if (cartVal[cartVal.length - 1].delivery_charges == 0) {
 						setIsCodAllowed(false);
 					}
 
