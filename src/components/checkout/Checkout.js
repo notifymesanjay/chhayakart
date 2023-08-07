@@ -370,7 +370,7 @@ const Checkout = () => {
 						taxes = 0;
 
 					for (let i = 0; i < cartVal.length - 1; i++) {
-						if (cartVal[i].delivery_charges == 0) {
+						if (setIsCodAllowedcartVal[i].delivery_charges == 0) {
 							setIsCodAllowed(false);
 						}
 
