@@ -3,7 +3,7 @@ import styles from "./search-input.module.scss";
 
 const SearchInput = ({
 	inputClass = "",
-	placeholder = "Delivering 1000+ Products ",
+	placeholder = "Delivering 1000+ Products  Across India",
 	searchText = "",
 	onSearchText = () => {},
 	onBtnClick = () => {},
