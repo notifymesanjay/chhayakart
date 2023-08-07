@@ -113,7 +113,10 @@ const MainContainer = ({
 				<>
 					{!isSmScreen && (
 						<div className={styles.searchWrapper}>
-							<h1 className={styles.searchHeader}>Search For Products</h1>
+							<h1 className={styles.searchHeader}>
+								Self-Help Groups, Women Entrepreneurs & Rural
+								Manufacturers Products
+							</h1>
 							<SearchInput
 								inputClass={styles.searchBar}
 								onSearchText={onSearchText}

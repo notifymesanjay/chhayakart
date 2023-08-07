@@ -8,6 +8,7 @@ import Cookies from "universal-cookie";
 import { toast } from "react-toastify";
 import { ActionTypes } from "../../model/action-type";
 import TrackingService from "../../services/trackingService";
+import CollapsibleButton from "./Collapsible";
 import {
 	AddProductToCart,
 	DecrementProduct,
@@ -377,14 +378,30 @@ const Product = ({
 						</div>
 						<div className="product-overview">
 							<div className="product-seller">
-								{/* <span className='seller-title'>Sold By:</span>
-                                                    <span className='seller-name'>{productdata.seller_name} </span> */}
+								{/* <span className="seller-title">Sold By:</span>
+								<span className="seller-name">{productdata.seller_name} </span> */}
+							</div>
+
+							<div>
+								<div className="productDescriptionContianer" index="0">
+									<CollapsibleButton
+										title="Product Description"
+										content={productdata.description}
+									/>
+								</div>
+								<br />
+								<div className="productFeaturesContianer" index="1">
+									<CollapsibleButton
+										title="Product Feature & Details"
+										content={productdata.features}
+									/>
+								</div>
 							</div>
 
 							{productdata.tags !== "" ? (
 								<div className="product-tags">
-									<span className="tag-title">Product Tags:</span>
-									<span className="tag-name">{productdata.tags} </span>
+									{/* <span className="tag-title">Product Tags:</span>
+									<span className="tag-name">{productdata.tags} </span> */}
 								</div>
 							) : (
 								""
