@@ -222,7 +222,7 @@ const ProductMobile = ({
 							if (navigator.share) {
 								navigator
 									.share({
-										url: `https://chhayakart.com/product/${productdata.id}`,
+										url: `https://chhayakart.com/product/${productdata.id}/${productdata.slug}`,
 										text: productdata.name,
 									})
 									.catch(console.error);

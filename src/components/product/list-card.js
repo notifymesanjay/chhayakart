@@ -614,7 +614,7 @@ const ListCard = ({
 									<ul className="dropdown-menu">
 										<li>
 											<WhatsappShareButton
-												url={`https://chhayakart.com/product/${product.id}`}
+												url={`https://chhayakart.com/product/${product.id}/${product.slug}`}
 											>
 												<WhatsappIcon size={32} round={true} />{" "}
 												<span>WhatsApp</span>
@@ -622,7 +622,7 @@ const ListCard = ({
 										</li>
 										<li>
 											<TelegramShareButton
-												url={`https://chhayakart.com/product/${product.id}`}
+												url={`https://chhayakart.com/product/${product.id}/${product.slug}`}
 											>
 												<TelegramIcon size={32} round={true} />{" "}
 												<span>Telegram</span>
@@ -630,7 +630,7 @@ const ListCard = ({
 										</li>
 										<li>
 											<FacebookShareButton
-												url={`https://chhayakart.com/product/${product.id}`}
+												url={`https://chhayakart.com/product/${product.id}/${product.slug}`}
 											>
 												<FacebookIcon size={32} round={true} />{" "}
 												<span>Facebook</span>
@@ -641,7 +641,7 @@ const ListCard = ({
 												type="button"
 												onClick={() => {
 													navigator.clipboard.writeText(
-														`https://chhayakart.com/product/${product.id}`
+														`https://chhayakart.com/product/${product.id}/${product.slug}`
 													);
 													toast.success("Copied Succesfully!!");
 												}}
