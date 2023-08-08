@@ -503,11 +503,21 @@ const Checkout = () => {
 	}, [isOrderPlaced]);
 
 	useEffect(() => {
+    var delivery_charges=0;
+    var iscodAllowed = true;
 		console.log("xyzq", cart);
-		if (cart.checkout !== null) {
+		if (cart.checkout!== null) {
 			console.log("xyzr", cart);
 			var sub_total = 0;
 			sub_total = cart.checkout.sub_total;
+      for (let i = 0; i < cart.cart.data.cart.length - 1; i++) {
+        delivery_charges+= cart.cart.data.cart[i].delivery_charges;
+        if(cart.cart.data.cart[i].delivery_charges==0)
+        {
+          iscodAllowed = false;
+        }
+      }
+
 			let orderVal = {
 				product_variant_id: cart.checkout.product_variant_id,
 				quantity: cart.checkout.quantity,
@@ -526,32 +536,37 @@ const Checkout = () => {
 						: 0,
 				delivery_charge: {
 					total_delivery_charge:
-						cart.checkout.delivery_charge.total_delivery_charge,
+          delivery_charges,
 				},
 				total_amount:
 					cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
 						? Math.ceil(
 								cart.checkout.sub_total +
 									0.92 * cart.checkout.taxes +
-									cart.checkout.delivery_charge.total_delivery_charge -
+									delivery_charges -
 									Math.floor(0.08 * cart.checkout.sub_total)
 						  )
 						: cart.checkout.sub_total > 9999
 						? Math.ceil(
 								cart.checkout.sub_total +
 									0.88 * cart.checkout.taxes +
-									cart.checkout.delivery_charge.total_delivery_charge -
+									delivery_charges -
 									Math.floor(0.12 * cart.checkout.sub_total)
 						  )
 						: Math.ceil(
 								cart.checkout.sub_total +
 									cart.checkout.taxes +
-									cart.checkout.delivery_charge.total_delivery_charge
+									delivery_charges
 						  ),
-				cod_allowed: 1,
+              cod_allowed: iscodAllowed ? 1 : 0,
 			};
 			setOrderSummary(orderVal);
-			if (sub_total <= 199) {
+
+      if (
+				sub_total <= 199 ||
+				parseInt(delivery_charges) < 1 ||
+				!iscodAllowed
+			) {
 				setIsCodAllowed(false);
 			} else {
 				setIsCodAllowed(true);
