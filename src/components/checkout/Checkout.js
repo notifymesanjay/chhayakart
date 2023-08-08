@@ -502,60 +502,62 @@ const Checkout = () => {
 		}
 	}, [isOrderPlaced]);
 
-	// useEffect(() => {
-
-	//   if (cart.checkout !== null) {
-	//     var sub_total = 0;
-	//     sub_total = cart.checkout.sub_total;
-	//     let orderVal = {
-	//       product_variant_id: cart.checkout.product_variant_id,
-	//       quantity: cart.checkout.quantity,
-	//       sub_total: cart.checkout.sub_total,
-	//       taxes:
-	//         cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
-	//           ? Math.ceil( 0.92 * cart.checkout.taxes)
-	//           : cart.checkout.sub_total > 9999
-	//           ? Math.ceil( 0.88 * cart.checkout.taxes)
-	//           : Math.ceil(cart.checkout.taxes),
-	//       discount:
-	//         cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
-	//           ? Math.floor(0.08 * cart.checkout.sub_total)
-	//           : cart.checkout.sub_total > 9999
-	//           ? Math.floor(0.12 * cart.checkout.sub_total)
-	//           : 0,
-	//       delivery_charge: {
-	//         total_delivery_charge:
-	//           cart.checkout.delivery_charge.total_delivery_charge,
-	//       },
-	//       total_amount:
-	//         cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
-	//           ? Math.ceil(
-	//               cart.checkout.sub_total +
-	//                 0.92 * cart.checkout.taxes +
-	//                 cart.checkout.delivery_charge.total_delivery_charge -
-	//                 Math.floor(0.08 * cart.checkout.sub_total)
-	//             )
-	//           : cart.checkout.sub_total > 9999
-	//           ? Math.ceil(
-	//               cart.checkout.sub_total +
-	//                 0.88 * cart.checkout.taxes+
-	//                 cart.checkout.delivery_charge.total_delivery_charge -
-	//                 Math.floor(0.12 * cart.checkout.sub_total)
-	//             )
-	//           : Math.ceil(
-	//               cart.checkout.sub_total + cart.checkout.taxes +
-	//                 cart.checkout.delivery_charge.total_delivery_charge
-	//             ),
-	//       cod_allowed: 1,
-	//     };
-	//     // setOrderSummary(orderVal);
-	//     if (sub_total <= 199) {
-	//       setIsCodAllowed(false);
-	//     } else {
-	//       setIsCodAllowed(true);
-	//     }
-	//   }
-	// }, [cart]);
+	useEffect(() => {
+		console.log("xyzq", cart);
+		if (cart.checkout !== null) {
+			console.log("xyzr", cart);
+			var sub_total = 0;
+			sub_total = cart.checkout.sub_total;
+			let orderVal = {
+				product_variant_id: cart.checkout.product_variant_id,
+				quantity: cart.checkout.quantity,
+				sub_total: cart.checkout.sub_total,
+				taxes:
+					cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
+						? Math.ceil(0.92 * cart.checkout.taxes)
+						: cart.checkout.sub_total > 9999
+						? Math.ceil(0.88 * cart.checkout.taxes)
+						: Math.ceil(cart.checkout.taxes),
+				discount:
+					cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
+						? Math.floor(0.08 * cart.checkout.sub_total)
+						: cart.checkout.sub_total > 9999
+						? Math.floor(0.12 * cart.checkout.sub_total)
+						: 0,
+				delivery_charge: {
+					total_delivery_charge:
+						cart.checkout.delivery_charge.total_delivery_charge,
+				},
+				total_amount:
+					cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
+						? Math.ceil(
+								cart.checkout.sub_total +
+									0.92 * cart.checkout.taxes +
+									cart.checkout.delivery_charge.total_delivery_charge -
+									Math.floor(0.08 * cart.checkout.sub_total)
+						  )
+						: cart.checkout.sub_total > 9999
+						? Math.ceil(
+								cart.checkout.sub_total +
+									0.88 * cart.checkout.taxes +
+									cart.checkout.delivery_charge.total_delivery_charge -
+									Math.floor(0.12 * cart.checkout.sub_total)
+						  )
+						: Math.ceil(
+								cart.checkout.sub_total +
+									cart.checkout.taxes +
+									cart.checkout.delivery_charge.total_delivery_charge
+						  ),
+				cod_allowed: 1,
+			};
+			setOrderSummary(orderVal);
+			if (sub_total <= 199) {
+				setIsCodAllowed(false);
+			} else {
+				setIsCodAllowed(true);
+			}
+		}
+	}, [cart]);
 
 	useEffect(() => {
 		if (isUserLoggedIn) {
