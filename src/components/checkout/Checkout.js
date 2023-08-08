@@ -360,6 +360,7 @@ const Checkout = () => {
 	const handleOrderSummary = () => {
 		var sub_total = 0;
 		var totalDeliveryCharge = 0;
+		var iscodAllowed = true;
 		if (cookies.get("jwt_token") === undefined) {
 			if (localStorage.getItem("cart")) {
 				const cartVal = JSON.parse(localStorage.getItem("cart"));
@@ -370,6 +371,9 @@ const Checkout = () => {
 						taxes = 0;
 
 					for (let i = 0; i < cartVal.length - 1; i++) {
+						if (cartVal[i].delivery_charges == 0) {
+							iscodAllowed = false;
+						}
 						allProductVariantId +=
 							cartVal[i].product_variant_id.toString() + ",";
 						allQuantity += cartVal[i].qty.toString() + ",";
@@ -394,6 +398,10 @@ const Checkout = () => {
 					totalDeliveryCharge += parseInt(
 						cartVal[cartVal.length - 1].delivery_charges
 					);
+
+					if (cartVal[cartVal.length - 1].delivery_charges == 0) {
+						iscodAllowed = false;
+					}
 
 					taxes += parseFloat(
 						parseInt(cartVal[cartVal.length - 1].qty) *
@@ -434,7 +442,7 @@ const Checkout = () => {
 								  )
 								: Math.ceil(subTotal + taxes + totalDeliveryCharge),
 
-						cod_allowed: 1,
+						cod_allowed: iscodAllowed ? 1 : 0,
 					};
 					const trackingService = new TrackingService();
 					try {
@@ -447,10 +455,11 @@ const Checkout = () => {
 					sub_total = subTotal;
 				}
 			}
+
 			if (
 				sub_total <= 199 ||
 				parseInt(totalDeliveryCharge) < 1 ||
-				!cart.cart.data.isCodAllowed
+				!iscodAllowed
 			) {
 				setIsCodAllowed(false);
 			} else {
@@ -466,6 +475,12 @@ const Checkout = () => {
 				.then((resp) => resp.json())
 				.then((res) => {
 					if (res.status === 1) {
+						for (let i = 0; i < res.data.cart.length - 1; i++) {
+							if (res.data.cart[i].cod_allowed == 0) {
+								setIsCodAllowed(false);
+								break;
+							}
+						}
 						setIsLoader(false);
 						dispatch({ type: ActionTypes.SET_CART, payload: res });
 					}

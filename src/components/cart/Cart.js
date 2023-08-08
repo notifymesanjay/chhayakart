@@ -232,9 +232,18 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 						)
 						.then((resp) => resp.json())
 						.then((res) => {
-							if (res.status === 1)
-								dispatch({ type: ActionTypes.SET_CART, payload: res });
-							else dispatch({ type: ActionTypes.SET_CART, payload: null });
+							if (res.status === 1) {
+								if (product.delivery_charges == 0) {
+									dispatch({
+										type: ActionTypes.SET_CART,
+										payload: { ...res, isCodAllowed: true },
+									});
+								} else
+									dispatch({
+										type: ActionTypes.SET_CART,
+										payload: { res, isCodAllowed: false },
+									});
+							} else dispatch({ type: ActionTypes.SET_CART, payload: null });
 						})
 						.catch((error) => console.log(error));
 					await api
