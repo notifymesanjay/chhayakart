@@ -104,7 +104,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 								} else
 									dispatch({
 										type: ActionTypes.SET_CART,
-										payload: { res, isCodAllowed: true },
+										payload: { ...res, isCodAllowed: true },
 									});
 						});
 					await api
@@ -241,7 +241,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 								} else
 									dispatch({
 										type: ActionTypes.SET_CART,
-										payload: { res, isCodAllowed: false },
+										payload: { ...res, isCodAllowed: false },
 									});
 							} else dispatch({ type: ActionTypes.SET_CART, payload: null });
 						})
@@ -413,6 +413,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 					taxes = 0,
 					delivery_charges = 0;
 				var isCodAllowed = true;
+				console.log(cart, "aks");
 				for (let i = 0; i < cart.cart.data.cart.length; i++) {
 					const trackingService = new TrackingService();
 					trackingService.viewCart(

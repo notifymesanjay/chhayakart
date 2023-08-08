@@ -38,7 +38,7 @@ const SelectedCategoryProducts = ({
 	const [bulkVal, setBulkVal] = useState(0);
 	const trackingService = new TrackingService();
 
-	const addtoCart = async (product_variant_id, qty) => {
+	const addtoCart = async (product, product_variant_id, qty) => {
 		trackingService.trackCart(
 			product,
 			qty,
@@ -85,6 +85,20 @@ const SelectedCategoryProducts = ({
 
 	const handleAddToCart = (product, index) => {
 		if (cookies.get("jwt_token") !== undefined) {
+			console.log("xyzu", product);
+			console.log(
+				product.variants.length > 1
+					? JSON.parse(
+							CryptoJS.AES.decrypt(
+								document.getElementById(
+									`select-product${index}-variant-section`
+								).value,
+								secret_key
+							).toString(CryptoJS.enc.Utf8)
+					  ).id
+					: document.getElementById(`default-product${index}-variant-id`).value,
+				""
+			);
 			setIsProductAdded(true);
 			setProductVal(1);
 			addtoCart(
