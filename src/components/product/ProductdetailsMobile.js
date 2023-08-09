@@ -35,9 +35,9 @@ import {
 import LoginUser from "../login/login-user";
 import RelateProduct from "./related-products";
 import { useResponsive } from "../shared/use-responsive";
-import Product from "./product";
 
 import TrackingService from "../../services/trackingService";
+import DskpProductDetail from "./dskp-product-detail";
 
 function SamplePrevArrow(props) {
 	const { className, style, onClick } = props;
@@ -372,7 +372,7 @@ const Productdetails = ({
 							</div>
 						</div>
 					) : (
-						<Product
+						<DskpProductDetail
 							images={images}
 							mainimage={mainimage}
 							productbrand={productbrand}
