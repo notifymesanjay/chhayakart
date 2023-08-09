@@ -369,7 +369,6 @@ const Checkout = () => {
 						allQuantity = "",
 						subTotal = 0,
 						taxes = 0;
-
 					for (let i = 0; i < cartVal.length - 1; i++) {
 						if (cartVal[i].delivery_charges == 0) {
 							iscodAllowed = false;
@@ -503,31 +502,39 @@ const Checkout = () => {
 	}, [isOrderPlaced]);
 
 	useEffect(() => {
-    var delivery_charges=0;
-    var iscodAllowed = true;
+		var delivery_charges = 0;
+		var iscodAllowed = true;
+		var taxes = 0;
 		console.log("xyzq", cart);
-		if (cart.checkout!== null) {
+		if (cart.checkout !== null) {
 			console.log("xyzr", cart);
 			var sub_total = 0;
 			sub_total = cart.checkout.sub_total;
-      for (let i = 0; i < cart.cart.data.cart.length - 1; i++) {
-        delivery_charges+= cart.cart.data.cart[i].delivery_charges;
-        if(cart.cart.data.cart[i].delivery_charges==0)
-        {
-          iscodAllowed = false;
-        }
-      }
-
+			if (cart.cart != undefined && cart.cart.data != undefined) {
+				for (let i = 0; i < cart.cart.data.cart.length; i++) {
+					delivery_charges += cart.cart.data.cart[i].delivery_charges;
+					taxes +=
+						((cart.cart.data.cart[i].taxes != null
+							? cart.cart.data.cart[i].taxes
+							: 5) /
+							100) *
+						(parseInt(cart.cart.data.cart[i].qty) *
+							parseInt(cart.cart.data.cart[i].discounted_price));
+					if (cart.cart.data.cart[i].delivery_charges == 0) {
+						iscodAllowed = false;
+					}
+				}
+			}
 			let orderVal = {
 				product_variant_id: cart.checkout.product_variant_id,
 				quantity: cart.checkout.quantity,
 				sub_total: cart.checkout.sub_total,
 				taxes:
 					cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
-						? Math.ceil(0.92 * cart.checkout.taxes)
+						? Math.ceil(0.92 * taxes)
 						: cart.checkout.sub_total > 9999
-						? Math.ceil(0.88 * cart.checkout.taxes)
-						: Math.ceil(cart.checkout.taxes),
+						? Math.ceil(0.88 * taxes)
+						: Math.ceil(taxes),
 				discount:
 					cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
 						? Math.floor(0.08 * cart.checkout.sub_total)
@@ -535,38 +542,29 @@ const Checkout = () => {
 						? Math.floor(0.12 * cart.checkout.sub_total)
 						: 0,
 				delivery_charge: {
-					total_delivery_charge:
-          delivery_charges,
+					total_delivery_charge: delivery_charges,
 				},
 				total_amount:
 					cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
 						? Math.ceil(
 								cart.checkout.sub_total +
-									0.92 * cart.checkout.taxes +
+									0.92 * taxes +
 									delivery_charges -
 									Math.floor(0.08 * cart.checkout.sub_total)
 						  )
 						: cart.checkout.sub_total > 9999
 						? Math.ceil(
 								cart.checkout.sub_total +
-									0.88 * cart.checkout.taxes +
+									0.88 * taxes +
 									delivery_charges -
 									Math.floor(0.12 * cart.checkout.sub_total)
 						  )
-						: Math.ceil(
-								cart.checkout.sub_total +
-									cart.checkout.taxes +
-									delivery_charges
-						  ),
-              cod_allowed: iscodAllowed ? 1 : 0,
+						: Math.ceil(cart.checkout.sub_total + taxes + delivery_charges),
+				cod_allowed: iscodAllowed ? 1 : 0,
 			};
 			setOrderSummary(orderVal);
 
-      if (
-				sub_total <= 199 ||
-				parseInt(delivery_charges) < 1 ||
-				!iscodAllowed
-			) {
+			if (sub_total <= 199 || parseInt(delivery_charges) < 1 || !iscodAllowed) {
 				setIsCodAllowed(false);
 			} else {
 				setIsCodAllowed(true);

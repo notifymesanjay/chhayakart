@@ -87,6 +87,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 			.then(async (result) => {
 				if (result.status === 1) {
 					toast.success(result.message);
+
 					await api
 						.getCart(
 							cookies.get("jwt_token"),
@@ -96,16 +97,10 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 						.then((resp) => resp.json())
 						.then((res) => {
 							if (res.status === 1)
-								if (product.delivery_charges == 0) {
-									dispatch({
-										type: ActionTypes.SET_CART,
-										payload: { ...res, isCodAllowed: false },
-									});
-								} else
-									dispatch({
-										type: ActionTypes.SET_CART,
-										payload: { ...res, isCodAllowed: true },
-									});
+								dispatch({
+									type: ActionTypes.SET_CART,
+									payload: res,
+								});
 						});
 					await api
 						.getCart(
@@ -233,16 +228,10 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 						.then((resp) => resp.json())
 						.then((res) => {
 							if (res.status === 1) {
-								if (product.delivery_charges == 0) {
-									dispatch({
-										type: ActionTypes.SET_CART,
-										payload: { ...res, isCodAllowed: true },
-									});
-								} else
-									dispatch({
-										type: ActionTypes.SET_CART,
-										payload: { ...res, isCodAllowed: false },
-									});
+								dispatch({
+									type: ActionTypes.SET_CART,
+									payload: res,
+								});
 							} else dispatch({ type: ActionTypes.SET_CART, payload: null });
 						})
 						.catch((error) => console.log(error));
@@ -413,7 +402,6 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 					taxes = 0,
 					delivery_charges = 0;
 				var isCodAllowed = true;
-				console.log(cart, "aks");
 				for (let i = 0; i < cart.cart.data.cart.length; i++) {
 					const trackingService = new TrackingService();
 					trackingService.viewCart(
@@ -440,9 +428,10 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 					if (cart.cart.data.cart[i].delivery_charges == 0) {
 						isCodAllowed = false;
 					}
-					delivery_charges += cart.cart.data.cart[i].delivery_charges
-						? cart.cart.data.cart[i].delivery_charges
-						: 40;
+					delivery_charges +=
+						cart.cart.data.cart[i].delivery_charges != undefined
+							? cart.cart.data.cart[i].delivery_charges
+							: 40;
 					product["product_variant_id"] =
 						cart.cart.data.cart[i].product_variant_id;
 					product["qty"] = cart.cart.data.cart[i].qty;
@@ -454,7 +443,6 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 					product["unit"] = cart.cart.data.cart[i].unit;
 					allProducts.push(product);
 				}
-
 				let orderVal = {
 					product_variant_id: cart.checkout.product_variant_id,
 					quantity: cart.checkout.quantity,
