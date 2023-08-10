@@ -17,6 +17,7 @@ const ProductListCarousel = ({
 	const sliderRef = useRef();
 	const { isSmScreen } = useResponsive();
 	const shop = useSelector((state) => state.shop);
+	// const history = useHistory();
 	const [subCategories, setSubCategories] = useState([]);
 
 	useEffect(() => {
@@ -73,6 +74,7 @@ const ProductListCarousel = ({
 							key={index1}
 							onClick={() => {
 								setSelectedFilter(subctg.id);
+								// history.push(`/subCategory/${subctg.category_ids}/${subctg.id}_${subctg.title}`);								
 							}}
 						>
 							<p className={styles.title}>{subctg.title}</p>
