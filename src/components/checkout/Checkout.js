@@ -354,6 +354,7 @@ const Checkout = () => {
 				});
 			setShow(false);
 			navigate("/");
+			// navigate("/Success");
 		}
 	};
 

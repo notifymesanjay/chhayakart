@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../shared/use-responsive";
 import Gaon from "../Gaon.png";
 import styles from "./category.module.scss";
-import gana from "../gana.jpg";
+import gana from "../gana.webp";
 
 const ShopByCategory = ({
 	categories = [],
@@ -51,17 +51,16 @@ const ShopByCategory = ({
 						) : (
 							<div className="container">
 								<div className={styles.cardWrapper}>
-									{/* <div className="ganeshAdd">
+									<div className={styles.ganeshAdd}>
 										<img
 											className={`${styles.ganeshAd} lazyload`}
 											data-src={gana}
 											alt="Ganesh Icon"
 											onClick={() => {
-												navigate("/subCategory/96");
+												navigate("/subCategory/96/75_GANESH%20IDOL");
 											}}
-										/>{" "}
-										SPECIAL OFFERS ON GANESH IDOL
-									</div> */}
+										/>
+									</div>
 									<div className={styles.headerWrapper}>
 										<h1 className={styles.header}>SHOP BY CATEGORY</h1>
 
