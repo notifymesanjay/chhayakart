@@ -70,7 +70,7 @@ const ShopByRegion = ({ regionList = [], setSelectedFilter = () => {} }) => {
                 <div
                   className={styles.imageWrapper}
                   onClick={() => {
-                    navigate(`/subCategory/${subCategories[0].category_id}/${ctg.subtitle}`);
+                    navigate(`/subCategory/${subCategories[0].category_id}/${ctg.id}_${ctg.subtitle}`);
                     setSelectedFilter(ctg.id);
                   }}
                 >
