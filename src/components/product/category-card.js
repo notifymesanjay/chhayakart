@@ -21,7 +21,7 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
                 className={styles.subCategoryCard}
                 key={index1}
                 onClick={() => {
-                  navigate(`/subCategory/${subCategory.category_id}`);
+                  navigate(`/subCategory/${subCategory.category_id}/${sub_ctg.title}`);
                   setSelectedFilter(sub_ctg.id);
                 }}
               >
@@ -59,7 +59,7 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
                     className={styles.subCategoryCard}
                     key={index1}
                     onClick={() => {
-                      navigate(`/subCategory/${subCategory.category_id}`);
+                      navigate(`/subCategory/${subCategory.category_id}/${sub_ctg.title}`);
                       setSelectedFilter(sub_ctg.id);
                     }}
                   >
