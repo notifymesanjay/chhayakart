@@ -186,9 +186,7 @@ const DskpHeader = () => {
 							</div>
 						)}
 					</div>
-					{/* <div>
-            cart
-          </div> */}
+					<div>cart</div>
 				</div>
 			</div>
 

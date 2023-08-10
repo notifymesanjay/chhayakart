@@ -88,7 +88,7 @@ const Order = () => {
 	};
 	return (
 		<div className="order-list">
-			<div className="heading">All Orders</div>
+			<div className="heading"> </div>
 
 			{orders === null ? (
 				<div className="my-5">
