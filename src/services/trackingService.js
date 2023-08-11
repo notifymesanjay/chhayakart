@@ -170,14 +170,14 @@ class TrackingService {
 					value: order.total_amount,
 					email: userEmail,
 					currency: "INR",
-					transaction_id:data!=undefined? data.order_id:"",
+					transaction_id:data!=undefined && data!=null? data.order_id:"",
 					product_id:order.product_variant_id
 				},
 				amount: order.total_amount,
 				email: userEmail,
 				currency: "INR",
 				payment_type: type,
-				transactionId: data.order_id,
+				transactionId: data!=undefined && data!=null? data.order_id:"",
 				site: deviceType,
 			});
 		}
