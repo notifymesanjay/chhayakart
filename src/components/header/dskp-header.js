@@ -14,6 +14,7 @@ import { removelocalstorageOTP } from "../../utils/manageLocalStorage";
 import { ActionTypes } from "../../model/action-type";
 import Cart from "../cart/Cart";
 import { IoCartOutline } from "react-icons/io5";
+import TemHeader from "./HeadTemp";
 
 const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 	const user = useSelector((state) => state.user);
@@ -204,38 +205,8 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 						)}
 					</div>
 					<div>
-						{city.city === null ? (
-							<button
-								aria-label="cart"
-								type="button"
-								className="icon mx-4 me-sm-5 position-relative"
-							>
-								<IoCartOutline />
-							</button>
-						) : (
-							<button
-								aria-label="cart"
-								type="button"
-								className="icon mx-4 me-sm-5 position-relative"
-								data-bs-toggle="offcanvas"
-								data-bs-target="#cartoffcanvasExample"
-								aria-controls="cartoffcanvasExample"
-							>
-								<IoCartOutline />
-
-								{productsInCart > 0 ? (
-									<span className="position-absolute start-100 translate-middle badge rounded-pill fs-5">
-										{productsInCart}
-										<span className="visually-hidden">unread messages</span>
-									</span>
-								) : null}
-							</button>
-						)}
+						<TemHeader />
 					</div>
-					<Cart
-						productTriggered={productTriggered}
-						setProductTriggered={setProductTriggered}
-					/>
 				</div>
 			</div>
 
