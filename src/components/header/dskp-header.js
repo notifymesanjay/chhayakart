@@ -12,8 +12,6 @@ import api from "../../api/api";
 import Cookies from "universal-cookie";
 import { removelocalstorageOTP } from "../../utils/manageLocalStorage";
 import { ActionTypes } from "../../model/action-type";
-import Cart from "../cart/Cart";
-import { IoCartOutline } from "react-icons/io5";
 import TemHeader from "./HeadTemp";
 
 const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
@@ -26,7 +24,7 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 	const [isSignInDropDown, setIsSignInDropDown] = useState(false);
 	const [isHelpDropDown, setIsHelpDropDown] = useState(false);
 	const [isLogin, setIsLogin] = useState(false);
-	const city = useSelector((state) => state.city);
+
 	const [productsInCart, setProductsInCart] = useState(0);
 	const cart = useSelector((state) => state.cart);
 	const handleWishlist = () => {
@@ -205,7 +203,10 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 						)}
 					</div>
 					<div>
-						<TemHeader />
+						<TemHeader
+							productTriggered={productTriggered}
+							setProductTriggered={setProductTriggered}
+						/>
 					</div>
 				</div>
 			</div>

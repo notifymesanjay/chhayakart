@@ -16,10 +16,11 @@
   padding: 0 15px;
 
   .categoryImgWrapper {
-    width: calc(20% - 6px);
+    width: calc(23% - 87px);
 
     img{
-      width: 100%;
+          width: 300px;
+            height: 100%;
       object-fit: fill;
     }
   }
@@ -31,11 +32,12 @@
   .subCategoryWrapper{
     justify-content: center;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
+    margin-left: 163px;
   }
 
   .subCategoryCard{
-    width: 185px;
+    width: 255px;
     cursor: pointer;
   }
 
@@ -47,16 +49,16 @@
   }
 
   .subCategoryImg{
-    min-width: 170px;
+    min-width: 240px;
     min-height: 170px;
     height: 170px;
-    width: 170px;
+    width: 240px;
   }
 }
 
 .cardWrapper {
   background-color: white;
-  padding: 15px 0;
+  padding: 14px 0;
   margin-top: 15px;
   border-radius: 8px;
 }

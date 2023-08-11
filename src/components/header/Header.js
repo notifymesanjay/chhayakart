@@ -556,7 +556,10 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 			)}
 		</>
 	) : (
-		<DskpHeader />
+		<DskpHeader
+			productTriggered={productTriggered}
+			setProductTriggered={setProductTriggered}
+		/>
 	);
 };
 
