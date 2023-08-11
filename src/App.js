@@ -218,11 +218,16 @@ function App() {
 										/>
 									}
 								></Route>
-								{/* <Route
+								<Route
 									exact={true}
 									path="/product"
-									element={<ProductDetails />}
-								></Route> */}
+									element={
+										<ProductDetails
+											productTriggered={productTriggered}
+											setProductTriggered={setProductTriggered}
+										/>
+									}
+								></Route>
 								<Route
 									exact={true}
 									path="/product/:id/:slug"

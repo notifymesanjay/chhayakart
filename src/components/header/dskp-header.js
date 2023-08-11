@@ -2,7 +2,7 @@ import React from "react";
 import CkLogo from "../../public/images/logo/chhayakart-white-mini-logo.png";
 import styles from "./dskp-header.module.scss";
 import { useRef } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useOnHoverOutside } from "./useOnHoverOutside";
 import LoginUser from "../login/login-user";
 import { useNavigate } from "react-router-dom";
@@ -13,8 +13,10 @@ import Cookies from "universal-cookie";
 import { removelocalstorageOTP } from "../../utils/manageLocalStorage";
 import { ActionTypes } from "../../model/action-type";
 import Cart from "../cart/Cart";
+import { IoCartOutline } from "react-icons/io5";
+import TemHeader from "./HeadTemp";
 
-const DskpHeader = () => {
+const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 	const user = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	const cookies = new Cookies();
@@ -24,7 +26,9 @@ const DskpHeader = () => {
 	const [isSignInDropDown, setIsSignInDropDown] = useState(false);
 	const [isHelpDropDown, setIsHelpDropDown] = useState(false);
 	const [isLogin, setIsLogin] = useState(false);
-
+	const city = useSelector((state) => state.city);
+	const [productsInCart, setProductsInCart] = useState(0);
+	const cart = useSelector((state) => state.cart);
 	const handleWishlist = () => {
 		if (user.status === "loading") {
 			toast.error("You have to login first to see Wishlist !");
@@ -65,6 +69,20 @@ const DskpHeader = () => {
 	const closeHelpMenu = () => {
 		setIsHelpDropDown(false);
 	};
+	useEffect(() => {
+		if (cookies.get("jwt_token") === undefined) {
+			if (localStorage.getItem("cart")) {
+				const cartVal = JSON.parse(localStorage.getItem("cart"));
+				if (cartVal) {
+					setProductsInCart(cartVal.length);
+				}
+			}
+		} else {
+			if (cart.cart !== null) {
+				setProductsInCart(cart.cart.total);
+			}
+		}
+	}, [cart, productTriggered]);
 
 	useOnHoverOutside(signInRef, closeSignInMenu);
 	useOnHoverOutside(helpRef, closeHelpMenu);
@@ -186,7 +204,9 @@ const DskpHeader = () => {
 							</div>
 						)}
 					</div>
-					<div>cart</div>
+					<div>
+						<TemHeader />
+					</div>
 				</div>
 			</div>
 
