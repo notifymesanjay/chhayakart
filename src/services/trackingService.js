@@ -170,7 +170,7 @@ class TrackingService {
 					value: order.total_amount,
 					email: userEmail,
 					currency: "INR",
-					transaction_id: data.order_id,
+					transaction_id:data!=undefined? data.order_id:"",
 					product_id:order.product_variant_id
 				},
 				amount: order.total_amount,
