@@ -33,6 +33,7 @@ import NotFound from "./components/404/NotFound";
 import SubCategory from "./components/product/sub-category";
 import DskpFooter from "./components/footer/new-footer";
 import { useResponsive } from "./components/shared/use-responsive";
+import Success from "./components/checkout/Success";
 
 function App() {
 	//initialize cookies
@@ -156,11 +157,11 @@ function App() {
 									element={<Checkout />}
 								></Route>
 
-								{/* <Route
+								<Route
 									exact={true}
 									path="/success"
 									element={<Success />}
-								></Route> */}
+								></Route>
 
 								<Route
 									exact={true}

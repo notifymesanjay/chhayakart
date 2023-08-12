@@ -9,7 +9,7 @@ import { ActionTypes } from "../../model/action-type";
 import animate1 from "../../utils/order_placed_back_animation.json";
 import animate2 from "../../utils/order_success_tick_animation.json";
 import "./checkout.css";
-
+import Success from "./Success";
 const OrderPlaced = ({ city, show, setShow = () => {} }) => {
 	const cookies = new Cookies();
 	const navigate = useNavigate();
@@ -51,11 +51,7 @@ const OrderPlaced = ({ city, show, setShow = () => {} }) => {
 			keyboard={true}
 			className="success_modal"
 		>
-			<Lottie
-				className="lottie-content"
-				animationData={animate1}
-				loop={true}
-			></Lottie>
+			<Lottie className="lottie-content" animationData={animate1}></Lottie>
 			<Modal.Header closeButton className="flex-column-reverse success_header">
 				<Modal.Title>
 					<Lottie animationData={animate2} loop={true}></Lottie>

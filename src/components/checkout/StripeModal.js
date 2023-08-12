@@ -120,7 +120,7 @@ const StripeModal = (props) => {
 	const [show, setShow] = useState(false);
 	const handleClose = () => {
 		setShow(false);
-		navigate("/");
+		// navigate("/");
 		// navigate("/Success");
 	};
 	return (

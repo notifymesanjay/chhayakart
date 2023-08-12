@@ -353,8 +353,8 @@ const Checkout = () => {
 					}
 				});
 			setShow(false);
-			navigate("/");
-			// navigate("/Success");
+			// navigate("/");
+			navigate("/Success");
 		}
 	};
 
@@ -498,7 +498,7 @@ const Checkout = () => {
 			setShow(true);
 			setTimeout(() => {
 				handleClose();
-			}, 10000);
+			}, 800);
 		}
 	}, [isOrderPlaced]);
 
@@ -612,7 +612,7 @@ const Checkout = () => {
 						alt="cover"
 					></img>
 					<div className="title">
-						<h3>Checkout</h3>
+						{/* <h3>CHECKOUT TOTAL</h3> */}
 						<span>home / </span>
 						<span className="active">checkout</span>
 					</div>

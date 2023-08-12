@@ -1,0 +1,28 @@
+.title {
+	font-size: 30px;
+	font-family: -webkit-body;
+	text-align: center;
+	margin-top: 20px;
+}
+// cover {
+// 	height: 200px;
+// }
+// .cover .title {
+// 	position: relative;
+// 	bottom: 50%;
+// 	text-align: center;
+// 	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+// }
+// .cover .title span {
+// 	font-size: 1.985rem;
+// 	font-weight: 600;
+// 	color: #fff;
+// }
+.cover img {
+	height: 300px;
+	width: 100%;
+	filter: brightness(80%);
+	z-index: -1;
+	background-size: cover;
+	background-position: center center;
+}
