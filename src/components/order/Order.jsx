@@ -108,7 +108,7 @@ const Order = () => {
 									<th>product name</th>
 									<th>date</th>
 									<th>total</th>
-									<th>action</th>
+									{/* <th>action</th> */}
 								</tr>
 							</thead>
 							<tbody>
