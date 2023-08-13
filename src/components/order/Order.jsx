@@ -123,7 +123,7 @@ const Order = () => {
 									</div>
 								) : (
 									<>
-										{orders.map((order, index) => (
+										{orders[0].map((order, index) => (
 											<tr
 												key={index}
 												className={
@@ -140,7 +140,7 @@ const Order = () => {
 												</th>
 												<th>{order.created_at.substring(0, 10)}</th>
 												<th className="total">
-													<FaRupeeSign fontSize={"1.7rem"} /> {order.total}
+													<FaRupeeSign fontSize={"1.7rem"} /> {order.final_total}
 												</th>
 												{/* <th className="button-container">
 													<button
