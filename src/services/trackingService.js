@@ -24,7 +24,6 @@ class TrackingService {
 							item_name: product.name,
 							price: totalAmount / totalQuantity,
 							amount: totalAmount,
-							currency: "INR",
 							item_category: product.category_id,
 							title: product.name,
 							quantity: totalQuantity,
@@ -89,7 +88,7 @@ class TrackingService {
 		}
 	}
 
-	initiateCheckout(order, userEmail) {
+	initiateCheckout(order,items, userEmail) {
 		var deviceType = this.getDeviceType(window.navigator.userAgent);
 
 		if (window.dataLayer) {
@@ -100,6 +99,7 @@ class TrackingService {
 					value: order.total_amount,
 					email: userEmail ? userEmail : "", // Can be an empty string
 					site: deviceType,
+					items:items,
 					checkout: {
 						actionField: {
 							taxes: order.taxes,
@@ -125,7 +125,7 @@ class TrackingService {
 		}
 	}
 
-	checkout(order, userEmail) {
+	checkout(order, items,userEmail) {
 		var deviceType = this.getDeviceType(window.navigator.userAgent);
 
 		if (window.dataLayer) {
@@ -136,6 +136,7 @@ class TrackingService {
 					value: order.total_amount,
 					email: userEmail ? userEmail : "", // Can be an empty string
 					site: deviceType,
+					items:items,
 					checkout: {
 						actionField: {
 							taxes: order.taxes,
@@ -161,17 +162,22 @@ class TrackingService {
 		}
 	}
 
-	paymentSuccess(order, type, data, userEmail) {
+	paymentSuccess(order,items, type, data, userEmail) {
 		var deviceType = this.getDeviceType(window.navigator.userAgent);
 		if (window.dataLayer) {
+
 			window.dataLayer.push({
 				event: "purchase",
 				ecommerce: {
-					value: order.total_amount,
+					value: order.sub_total,
+					tax: order.taxes,
+					shipping: order.delivery_charge.total_delivery_charge,
 					email: userEmail,
 					currency: "INR",
 					transaction_id:data!=undefined && data!=null? data.order_id:"",
-					product_id:order.product_variant_id
+					product_id:order.product_variant_id,
+					coupon:"",
+					items:items,
 				},
 				amount: order.total_amount,
 				email: userEmail,
@@ -180,6 +186,7 @@ class TrackingService {
 				transactionId: data!=undefined && data!=null? data.order_id:"",
 				site: deviceType,
 			});
+
 		}
 	}
 

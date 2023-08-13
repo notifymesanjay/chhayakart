@@ -143,7 +143,7 @@ const Order = () => {
 													<FaRupeeSign fontSize={"1.7rem"} /> {order.total}
 												</th>
 												<th className="button-container">
-													<button
+													{/* <button
 														type="button"
 														id={`track - ${order.order_id} `}
 														data-bs-toggle="modal"
@@ -155,7 +155,7 @@ const Order = () => {
 														}}
 													>
 														track order
-													</button>
+													</button> */}
 													<button
 														type="button"
 														id={`invoice - ${order.order_id} `}

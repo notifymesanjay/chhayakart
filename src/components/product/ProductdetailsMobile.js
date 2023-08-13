@@ -281,7 +281,7 @@ const Productdetails = ({
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
-					toast.success(result.message);
+					// toast.success(result.message);
 					await api
 						.getCart(
 							cookies.get("jwt_token"),

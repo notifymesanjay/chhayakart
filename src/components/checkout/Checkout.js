@@ -31,6 +31,7 @@ const Checkout = () => {
 	const setting = useSelector((state) => state.setting);
 	const city = useSelector((state) => state.city);
 
+
 	const cookies = new Cookies();
 	const Razorpay = useRazorpay();
 	const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const Checkout = () => {
 	const [timeSlots, setTimeSlots] = useState(null);
 	const [selectedAddress, setSelectedAddress] = useState(null);
 	const [expectedDate, setExpectedDate] = useState(new Date());
+	const  [items, setItems] = useState([]);
 	const [expectedTime, setExpectedTime] = useState({
 		id: 1,
 		title: "Morning 9:00 A.M - 1:00 P.M",
@@ -89,7 +91,7 @@ const Checkout = () => {
 			.then((result) => {
 				setLoadingPlaceOrder(false);
 				if (result.status === 1) {
-					toast.success(result.message);
+					// toast.success(result.message);
 					setIsOrderPlaced(true);
 					setShow(true);
 				} else {
@@ -160,7 +162,7 @@ const Checkout = () => {
 			.then((result) => {
 				setLoadingPlaceOrder(false);
 				if (result.status === 1) {
-					toast.success(result.message);
+					// toast.success(result.message);
 					setIsOrderPlaced(true);
 					setShow(true);
 				} else {
@@ -190,11 +192,12 @@ const Checkout = () => {
 		handler.openIframe();
 	};
 
-	const placeOrder = (delivery_time) => {
+	const placeOrder = (items,delivery_time) => {
 		try {
 			const trackingService = new TrackingService();
 			trackingService.initiateCheckout(
 				orderSummary,
+				items,
 				user.status === "loading" ? "" : user.user.email
 			);
 		} catch (ex) {}
@@ -220,12 +223,13 @@ const Checkout = () => {
 						try {
 							trackingService.paymentSuccess(
 								orderSummary,
+								items,
 								"COD",
 								result.data,
 								user.status === "loading" ? "" : user.user.email
 							);
 						} catch (ex) {}
-						toast.success("Order Successfully Placed!");
+						// toast.success("Order Successfully Placed!");
 						setLoadingPlaceOrder(false);
 						setIsOrderPlaced(true);
 						setShow(true);
@@ -233,6 +237,7 @@ const Checkout = () => {
 						try {
 							trackingService.paymentSuccess(
 								orderSummary,
+								items,
 								"Razorpay",
 								result.data,
 								user.status === "loading" ? "" : user.user.email
@@ -269,6 +274,7 @@ const Checkout = () => {
 						try {
 							trackingService.paymentSuccess(
 								orderSummary,
+								items,
 								"Paystack",
 								result.data,
 								user.status === "loading" ? "" : user.user.email
@@ -286,6 +292,7 @@ const Checkout = () => {
 						try {
 							trackingService.paymentSuccess(
 								orderSummary,
+								items,
 								"Stripe",
 								result.data,
 								user.status === "loading" ? "" : user.user.email
@@ -327,7 +334,7 @@ const Checkout = () => {
 			} else {
 				setLoadingPlaceOrder(true);
 				if (paymentMethod) {
-					await placeOrder(delivery_time);
+					await placeOrder(items,delivery_time);
 				}
 			}
 		}
@@ -362,6 +369,7 @@ const Checkout = () => {
 		var sub_total = 0;
 		var totalDeliveryCharge = 0;
 		var iscodAllowed = true;
+		var tempItems =[];
 		if (cookies.get("jwt_token") === undefined) {
 			if (localStorage.getItem("cart")) {
 				const cartVal = JSON.parse(localStorage.getItem("cart"));
@@ -384,8 +392,24 @@ const Checkout = () => {
 							parseInt(cartVal[i].qty) *
 								parseInt(cartVal[i].discounted_price) *
 								(cartVal[i].taxes / 100)
-						);
+						);	
+
+						tempItems.push({
+		item_id: cartVal[i].product_id,
+		item_name: cartVal[i].name,
+		coupon: "",
+		discount: (cartVal[i].price - cartVal[i].discounted_price)*(100/cartVal[i].price),
+		index: i,
+		item_brand: "chhayakart",
+		item_variant: cartVal[i].product_variant_id,
+		price: cartVal[i].discounted_price,
+		quantity: cartVal[i].qty
+	  }
+);
+
 					}
+
+					setItems(tempItems);
 
 					allProductVariantId +=
 						cartVal[cartVal.length - 1].product_variant_id.toString();
@@ -448,6 +472,7 @@ const Checkout = () => {
 					try {
 						trackingService.checkout(
 							orderVal,
+							items,
 							user.status === "loading" ? "" : user.user.email
 						);
 					} catch (ex) {}
@@ -475,12 +500,29 @@ const Checkout = () => {
 				.then((resp) => resp.json())
 				.then((res) => {
 					if (res.status === 1) {
+						var tempItems=[];
 						for (let i = 0; i < res.data.cart.length - 1; i++) {
+
+							tempItems.push({
+								item_id: res.data.cart[i].product_id,
+								item_name: res.data.cart[i].name,
+								coupon: "",
+								discount: (res.data.cart[i].price - res.data.cart[i].discounted_price)*(100/res.data.cart[i].price),
+								index: i,
+								item_brand: "chhayakart",
+								item_category: "",
+								item_variant:  res.data.cart[i].product_variant_id,
+								price: res.data.cart[i].discounted_price,
+								quantity: res.data.cart[i].qty
+							  }
+						);
+
 							if (res.data.cart[i].cod_allowed == 0) {
 								setIsCodAllowed(false);
-								break;
 							}
 						}
+
+						setItems(tempItems);
 						setIsLoader(false);
 						dispatch({ type: ActionTypes.SET_CART, payload: res });
 					}
@@ -645,6 +687,7 @@ const Checkout = () => {
 										cart={orderSummary}
 										isUserLoggedIn={isUserLoggedIn}
 										user={user}
+										items={items}
 										paymentMethod={paymentMethod}
 										handlePlaceOrder={handlePlaceOrder}
 										loadingPlaceOrder={loadingPlaceOrder}
