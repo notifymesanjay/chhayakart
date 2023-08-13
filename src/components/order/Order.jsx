@@ -123,7 +123,7 @@ const Order = () => {
 									</div>
 								) : (
 									<>
-										{orders[0].map((order, index) => (
+										{orders.map((order, index) => (
 											<tr
 												key={index}
 												className={
