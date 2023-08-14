@@ -354,7 +354,7 @@ const ProductDetails = ({
 			)}  */}
 
 			<div className="related-product-wrapper">
-				<h4 className="relatedProductsHeader">You might also like</h4>
+				<h4 className="relatedProductsHeader">You might like</h4>
 				<div className="related-product-container">
 					{relatedProducts === null ? (
 						<div className="d-flex justify-content-center">

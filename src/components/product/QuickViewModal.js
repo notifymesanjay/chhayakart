@@ -545,7 +545,7 @@ const QuickViewModal = (props) => {
 												>
 													{getProductVariants(product)}
 												</select>
-
+												{/* 
 												<button
 													type="button"
 													id={`Add-to-cart-quickview`}
@@ -553,12 +553,12 @@ const QuickViewModal = (props) => {
 													onClick={handleAddToCart}
 												>
 													Add to Cart
-												</button>
+												</button> */}
 
 												{isLoader ? (
 													<Loader screen="full" background="none" />
 												) : null}
-
+												{/* 
 												<div
 													id={`input-cart-quickview`}
 													className="input-to-cart visually-hidden"
@@ -582,7 +582,7 @@ const QuickViewModal = (props) => {
 													>
 														<BsPlus fill="#fff" />{" "}
 													</button>
-												</div>
+												</div> */}
 
 												{favorite.favorite &&
 												favorite.favorite.data.some(
