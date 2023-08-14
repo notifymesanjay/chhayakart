@@ -10,7 +10,7 @@ import No_Orders from "../../utils/zero-state-screens/No_Orders.svg";
 import ReactToPrint from "react-to-print";
 import { toast } from "react-toastify";
 
-const Order = () => {
+const Order = ({ displayAll = true, setCategoryId = () => {} }) => {
 	const [orderId, setOrderId] = useState();
 	const [totalOrders, settotalOrders] = useState(null);
 	const [offset, setoffset] = useState(0);
@@ -31,6 +31,8 @@ const Order = () => {
 					setisLoader(false);
 					setorders(result.data);
 					settotalOrders(result.total);
+
+					// setCategoryId(result.data.slice(0, 1));
 				}
 			});
 	};
@@ -123,27 +125,28 @@ const Order = () => {
 									</div>
 								) : (
 									<>
-										{orders.slice(0, 1).map((order, index) => (
-											<tr
-												key={index}
-												className={
-													index === orders.length - 1 ? "last-column" : ""
-												}
-											>
-												<th>{`#${order.order_id} `}</th>
-												<th className="product-name d-table-cell verticall-center flex-column justify-content-center">
-													{order.items.map((item, ind) => (
-														<div className="column-container">
-															<span key={ind}>{item.product_name},</span>
-														</div>
-													))}
-												</th>
-												<th>{order.created_at.substring(0, 10)}</th>
-												<th className="total">
-													<FaRupeeSign fontSize={"1.7rem"} />{" "}
-													{order.final_total}
-												</th>
-												{/* <th className="button-container">
+										{(displayAll ? orders : orders.slice(0, 1)).map(
+											(order, index) => (
+												<tr
+													key={index}
+													className={
+														index === orders.length - 1 ? "last-column" : ""
+													}
+												>
+													<th>{`#${order.order_id} `}</th>
+													<th className="product-name d-table-cell verticall-center flex-column justify-content-center">
+														{order.items.map((item, ind) => (
+															<div className="column-container">
+																<span key={ind}>{item.product_name},</span>
+															</div>
+														))}
+													</th>
+													<th>{order.created_at.substring(0, 10)}</th>
+													<th className="total">
+														<FaRupeeSign fontSize={"1.7rem"} />{" "}
+														{order.final_total}
+													</th>
+													{/* <th className="button-container">
 													<button
 														type="button"
 														id={`track - ${order.order_id} `}
@@ -172,15 +175,16 @@ const Order = () => {
 														Get Invoice
 													</button>
 												</th> */}
-											</tr>
-										))}
+												</tr>
+											)
+										)}
 									</>
 								)}
 							</tbody>
 						</table>
 					)}
 
-					{orders.length !== 0 ? (
+					{displayAll && orders.length !== 0 ? (
 						<Pagination
 							activePage={currPage}
 							itemsCountPerPage={total_orders_per_page}
