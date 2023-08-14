@@ -411,9 +411,9 @@ const ProductDetails = ({
 								<ResponsiveCarousel
 									items={5}
 									itemsInTablet={3}
-									itemsInMobile={1}
+									itemsInMobile={1.5}
 									infinite={false}
-									autoPlaySpeed={4000}
+									autoPlaySpeed={2000}
 									showArrows={false}
 									showDots={false}
 									autoPlay={true}
