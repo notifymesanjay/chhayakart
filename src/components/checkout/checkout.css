@@ -66,6 +66,7 @@
 .checkout-component .below199 {
 	padding-top: 6px;
 	text-align: center;
+	font-size: 12px;
 }
 .checkout-container .checkout-component .heading {
 	background: var(--secondary-color);

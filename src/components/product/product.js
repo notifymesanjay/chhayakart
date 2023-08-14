@@ -390,12 +390,12 @@ const Product = ({
 									/>
 								</div>
 								<br />
-								<div className="productFeaturesContianer" index="1">
+								{/* <div className="productFeaturesContianer" index="1">
 									<CollapsibleButton
 										title="Product Feature & Details"
 										content={productdata.features}
 									/>
-								</div>
+								</div> */}
 							</div>
 
 							{productdata.tags !== "" ? (

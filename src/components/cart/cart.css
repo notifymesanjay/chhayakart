@@ -41,13 +41,14 @@
 .cart-sidebar-container .cart-sidebar-header-discount {
 	display: flex;
 	justify-content: center;
-	justify-content: space-around;
-	padding-top: 10px;
+	/* justify-content: space-around; */
+	padding-top: 0px;
 	background-color: lavender;
-	height: 45px;
-	width: 398px;
+	height: auto;
+	width: 111%;
 	margin-left: -18px;
 }
+
 .cart-sidebar-container .cart-sidebar-header {
 	display: -webkit-box;
 	display: -ms-flexbox;

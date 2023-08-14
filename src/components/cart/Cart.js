@@ -86,7 +86,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
-					toast.success(result.message);
+					// toast.success(result.message);
 
 					await api
 						.getCart(
@@ -218,7 +218,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
-					toast.success(result.message);
+					// toast.success(result.message);
 					await api
 						.getCart(
 							cookies.get("jwt_token"),
@@ -501,7 +501,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 			aria-labelledby="cartoffcanvasExampleLabel"
 		>
 			<div className="cart-sidebar-header-discount">
-				<h2>
+				<h3>
 					Additional 12% Cash discount on order above{" "}
 					<FaRupeeSign fill="var(--secondary-color )" />
 					9,999
@@ -509,7 +509,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 					Additional 8% Cash discount on order above
 					<FaRupeeSign fill="var(--secondary-color )" />
 					4,999
-				</h2>
+				</h3>
 			</div>
 			<div className="cart-sidebar-header">
 				<h5>your cart</h5>

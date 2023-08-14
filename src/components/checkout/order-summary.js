@@ -9,6 +9,7 @@ const OrderSummary = ({
 	isUserLoggedIn,
 	cart,
 	user,
+	items,
 	paymentMethod,
 	handlePlaceOrder = () => {},
 	loadingPlaceOrder,
@@ -82,7 +83,7 @@ const OrderSummary = ({
 													className="checkout"
 													onClick={(e) => {
 														e.preventDefault();
-														handlePlaceOrder();
+														handlePlaceOrder(items);
 													}}
 													data-bs-toggle="modal"
 													data-bs-target="#stripeModal"
@@ -95,7 +96,7 @@ const OrderSummary = ({
 													className="checkout"
 													onClick={(e) => {
 														e.preventDefault();
-														handlePlaceOrder();
+														handlePlaceOrder(items);
 													}}
 												>
 													place order

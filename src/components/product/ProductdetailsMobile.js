@@ -281,7 +281,7 @@ const Productdetails = ({
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
-					toast.success(result.message);
+					// toast.success(result.message);
 					await api
 						.getCart(
 							cookies.get("jwt_token"),
@@ -412,7 +412,7 @@ const Productdetails = ({
 										items={5}
 										itemsInTablet={3}
 										infinite={false}
-										autoPlaySpeed={4000}
+										autoPlaySpeed={3000}
 										showArrows={false}
 										showDots={false}
 										autoPlay={true}
