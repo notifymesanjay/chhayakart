@@ -160,7 +160,12 @@ function App() {
 								<Route
 									exact={true}
 									path="/success"
-									element={<Success />}
+									element={
+										<Success
+											productTriggered={productTriggered}
+											setProductTriggered={setProductTriggered}
+										/>
+									}
 								></Route>
 
 								<Route

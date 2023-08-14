@@ -385,17 +385,6 @@ const ProductDetails = ({
 					)}
 				</div>
 
-				{/* <div className="description-wrapper">
-					<h5 className="title">Product Description</h5>
-					<div>
-						<div
-							className="description product_description"
-							style={{ overflow: "hidden" }}
-							dangerouslySetInnerHTML={{ __html: productdata.description }}
-						></div>
-					</div>
-				</div> */}
-
 				<div className="related-product-wrapper">
 					<h4 className="relatedProductsHeader">You might also like</h4>
 					<div className="related-product-container">
