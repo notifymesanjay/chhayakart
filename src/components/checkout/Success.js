@@ -43,7 +43,7 @@ export default function Success({
 					city.city.latitude,
 					city.city.longitude,
 					{
-						category_id: 0,
+						category_id: 63,
 					}
 				)
 				.then((response) => response.json())
