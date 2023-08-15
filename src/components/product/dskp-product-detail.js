@@ -36,6 +36,7 @@ const DskpProductDetail = ({
 	mainimage = "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQ9V9HCp5iiSLSve8c-OsHCt_xBkp0Q4j-RrM-m1IIS9IOMb6nzs8gipQGg_TCe4mOsxTGXJ8l5vY02K4A",
 	productbrand,
 	setmainimage = () => {},
+	slug,
 	addtoCart = () => {},
 	productdata,
 	productTriggered,
@@ -443,21 +444,21 @@ const DskpProductDetail = ({
 						<ul className="share-product">
 							<li className="share-product-icon">
 								<WhatsappShareButton
-									url={`${share_parent_url}/${productdata.id}`}
+									url={`${share_parent_url}/${productdata.id}/${slug}`}
 								>
 									<WhatsappIcon size={32} round={true} />
 								</WhatsappShareButton>
 							</li>
 							<li className="share-product-icon">
 								<TelegramShareButton
-									url={`${share_parent_url}/${productdata.id}`}
+									url={`${share_parent_url}/${productdata.id}/${slug}`}
 								>
 									<TelegramIcon size={32} round={true} />
 								</TelegramShareButton>
 							</li>
 							<li className="share-product-icon">
 								<FacebookShareButton
-									url={`${share_parent_url}/${productdata.id}`}
+									url={`${share_parent_url}/${productdata.id}/${slug}`}
 								>
 									<FacebookIcon size={32} round={true} />
 								</FacebookShareButton>
@@ -467,7 +468,7 @@ const DskpProductDetail = ({
 									type="button"
 									onClick={() => {
 										navigator.clipboard.writeText(
-											`${share_parent_url}/${productdata.id}`
+											`${share_parent_url}/${productdata.id}/${slug}`
 										);
 										//popup commented
 										//	toast.success("Copied Succesfully!!");

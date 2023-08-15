@@ -378,6 +378,7 @@ const Productdetails = ({
 							productbrand={productbrand}
 							setmainimage={setmainimage}
 							addtoCart={addtoCart}
+							slug={slug}
 							productdata={productdata}
 							productTriggered={productTriggered}
 							setProductTriggered={setProductTriggered}

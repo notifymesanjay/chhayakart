@@ -39,6 +39,7 @@ const ProductMobile = ({
 	mainimage,
 	setmainimage = () => {},
 	addtoCart = () => {},
+	slug,
 	productdata,
 	productTriggered,
 	setProductTriggered = () => {},
