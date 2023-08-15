@@ -47,7 +47,7 @@ const DskpProductDetail = ({
 	const dispatch = useDispatch();
 	const favorite = useSelector((state) => state.favorite);
 	const city = useSelector((state) => state.city);
-
+	const share_parent_url = "https://chhayakart.com/product";
 	const [isCart, setIsCart] = useState(false);
 	const [productInCartCount, setProductInCartCount] = useState(0);
 	const user = useSelector((state) => state.user);
@@ -68,9 +68,9 @@ const DskpProductDetail = ({
 	const [isOpenBulk, setIsOpenBulk] = useState(false);
 	const [isBulkOrder, setIsBulkOrder] = useState(false);
 	//Add to favorite
-	const addToFavorite = async (product_id) => {
+	const addToFavorite = async (productdata) => {
 		await api
-			.addToFavotite(cookies.get("jwt_token"), product_id)
+			.addToFavotite(cookies.get("jwt_token"), productdata.id)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
@@ -91,9 +91,9 @@ const DskpProductDetail = ({
 				}
 			});
 	};
-	const removefromFavorite = async (product_id) => {
+	const removefromFavorite = async (productdata) => {
 		await api
-			.removeFromFavorite(cookies.get("jwt_token"), product_id)
+			.removeFromFavorite(cookies.get("jwt_token"), productdata.id)
 			.then((response) => response.json())
 			.then(async (result) => {
 				if (result.status === 1) {
@@ -364,21 +364,30 @@ const DskpProductDetail = ({
 
 				<div className={styles.bodyWrapper}>
 					{/* {Object.keys(productbrand).length === 0 ? null : ( */}
-					<div>
-						<span className={styles.brandLabel}>Brand:</span>
-						<span className={styles.brandValue}>LG</span>
-					</div>
-					{/* )} */}
 
-					<p className={styles.productName}>
-						LG 81.28 cm (32 inch) HD LED Smart TV, 32LM562BPTA
-					</p>
+					<p className={styles.productName}>{productdata.name}</p>
+					{/* )} */}
+					<div>
+						<span className={styles.brandLabel}>Brand: ORGANIC PRODUCTION</span>
+						<span className={styles.brandValue}> {productbrand.name}</span>
+					</div>
 					<p className={styles.discountedPrice}>
 						<FontAwesomeIcon
 							className={styles.rupeeIcon}
 							icon={faIndianRupee}
 						/>{" "}
-						53,900 <span className={styles.discountPercentage}>36% Off</span>
+						{productdata.variants[0].discounted_price}
+						<span className={styles.discountPercentage}>
+							{Math.round(
+								parseFloat(
+									((productdata.variants[0].price -
+										productdata.variants[0].discounted_price) *
+										100) /
+										productdata.variants[0].price
+								)
+							)}
+							% off
+						</span>
 					</p>
 					<p className={styles.actualPrice}>
 						M.R.P:{" "}
@@ -387,10 +396,89 @@ const DskpProductDetail = ({
 								className={styles.rupeeIcon}
 								icon={faIndianRupee}
 							/>{" "}
-							85,900
+							{parseFloat(productdata.variants[0].price)}
 						</span>{" "}
 						(Incl. of all taxes)
 					</p>
+					{favorite.favorite &&
+					favorite.favorite.data.some(
+						(element) => element.id === productdata.id
+					) ? (
+						<button
+							type="button"
+							className="wishlist-product"
+							onClick={() => {
+								if (cookies.get("jwt_token") !== undefined) {
+									addToFavorite(productdata.id);
+								} else {
+									toast.error(
+										"OOps! You need to login first to add to favourites"
+									);
+								}
+							}}
+						>
+							<BsHeartFill fill="green" />
+						</button>
+					) : (
+						<button
+							key={productdata.id}
+							type="button"
+							className="wishlist-product"
+							onClick={() => {
+								if (cookies.get("jwt_token") !== undefined) {
+									removefromFavorite(productdata.id);
+								} else {
+									toast.error(
+										"OOps! You need to login first to add to favourites"
+									);
+								}
+							}}
+						>
+							<BsHeart />
+						</button>
+					)}
+					<div className="share-product-container">
+						<span>Share Product :</span>
+
+						<ul className="share-product">
+							<li className="share-product-icon">
+								<WhatsappShareButton
+									url={`${share_parent_url}/${productdata.id}`}
+								>
+									<WhatsappIcon size={32} round={true} />
+								</WhatsappShareButton>
+							</li>
+							<li className="share-product-icon">
+								<TelegramShareButton
+									url={`${share_parent_url}/${productdata.id}`}
+								>
+									<TelegramIcon size={32} round={true} />
+								</TelegramShareButton>
+							</li>
+							<li className="share-product-icon">
+								<FacebookShareButton
+									url={`${share_parent_url}/${productdata.id}`}
+								>
+									<FacebookIcon size={32} round={true} />
+								</FacebookShareButton>
+							</li>
+							<li className="share-product-icon">
+								<button
+									type="button"
+									onClick={() => {
+										navigator.clipboard.writeText(
+											`${share_parent_url}/${productdata.id}`
+										);
+										//popup commented
+										//	toast.success("Copied Succesfully!!");
+									}}
+								>
+									{" "}
+									<BiLink size={30} />
+								</button>
+							</li>
+						</ul>
+					</div>
 					<hr />
 					{/* description starts here  */}
 					<div className={styles.descriptionWrapper}>
@@ -402,51 +490,9 @@ const DskpProductDetail = ({
 								overflow: descriptionHeight.overflow,
 							}}
 						>
-							<p className={styles.descriptionBody}>
-								Carry and flaunt it wherever you go, at just 1.7 kgs and a
-								thinness of 19.9 mm, the only weight you'll feel is its
-								performance.Carry and flaunt it wherever you go, at just 1.7 kgs
-								and a thinness of 19.9 mm, the only weight you'll feel is its
-								performance.Carry and flaunt it wherever you go, at just 1.7 kgs
-								and a thinness of 19.9 mm, the only weight you'll feel is its
-								performance.Carry and flaunt it wherever you go, at just 1.7 kgs
-								and a thinness of 19.9 mm, the only weight you'll feel is its
-								performance.Carry and flaunt it wherever you go, at just 1.7 kgs
-								and a thinness of 19.9 mm, the only weight you'll feel is its
-								performance.Carry and flaunt it wherever you go, at just 1.7 kgs
-								and a thinness of 19.9 mm, the only weight you'll feel is its
-								performance. Carry and flaunt it wherever you go, at just 1.7
-								kgs and a thinness of 19.9 mm, the only weight you'll feel is
-								its performance.Carry and flaunt it wherever you go, at just 1.7
-								kgs and a thinness of 19.9 mm, the only weight you'll feel is
-								its performance.Carry and flaunt it wherever you go, at just 1.7
-								kgs and a thinness of 19.9 mm, the only weight you'll feel is
-								its performance.Carry and flaunt it wherever you go, at just 1.7
-								kgs and a thinness of 19.9 mm, the only weight you'll feel is
-								its performance.Carry and flaunt it wherever you go, at just 1.7
-								kgs and a thinness of 19.9 mm, the only weight you'll feel is
-								its performance.Carry and flaunt it wherever you go, at just 1.7
-								kgs and a thinness of 19.9 mm, the only weight you'll feel is
-								its performance.Carry and flaunt it wherever you go, at just 1.7
-								kgs and a thinness of 19.9 mm, the only weight you'll feel is
-								its performance.Carry and flaunt it wherever you go, at just 1.7
-								kgs and a thinness of 19.9 mm, the only weight you'll feel is
-								its performance.Carry and flaunt it wherever you go, at just 1.7
-								kgs and a thinness of 19.9 mm, the only weight you'll feel is
-								its performance.Carry and flaunt it wherever you go, at just 1.7
-								kgs and a thinness of 19.9 mm, the only weight you'll feel is
-								its performance.Carry and flaunt it wherever you go, at just 1.7
-								kgs and a thinness of 19.9 mm, the only weight you'll feel is
-								its performance.Carry and flaunt it wherever you go, at just 1.7
-								kgs and a thinness of 19.9 mm, the only weight you'll feel is
-								its performance. as Dashboardada setaddressClickdas Dashboardasd
-								addToCartStickerDivasda sda Dashboardadadadasd
-								addToCartStickerDivasdas asyncasa sa sa showArrowsas s asyncasas
-								as addToCartStickerDivasdaas addToCartStickerDivasdaasd asyncasd
-								asyncdas Dashboardadasa showArrowsasad asyncasaa a
-								showArrowsasadasd accepta a a showArrowsasadasda as asyncasdas
-								acceptsda sd addas datas acceptsdaa
-							</p>
+							<div
+								dangerouslySetInnerHTML={{ __html: productdata.description }}
+							></div>
 						</div>
 						<button
 							className={styles.viewMoreBtn}
