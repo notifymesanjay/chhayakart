@@ -104,9 +104,7 @@ const TemHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 		<>
 			<header className="site-header  desktop-shadow-disable mobile-shadow-enable bg-white  mobile-nav-enable border-bottom">
 				<div
-					className={
-						isSticky ? "sticky header-main  w-100" : "header-main  w-100"
-					}
+					className={isSticky ? " header-main  w-100" : "header-main  w-100"}
 				>
 					<div className="container">
 						<div className="d-flex row-reverse justify-content-lg-between justify-content-center">
