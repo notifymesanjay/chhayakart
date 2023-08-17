@@ -157,7 +157,12 @@ const RelateProduct = ({
 							});
 							setSelectedProductId(related_product.id);
 							navigate(
-								"/product/" + related_product.id + "/" + related_product.slug
+								"/product/" +
+									related_product.id +
+									"/" +
+									(related_product.slug.includes("/")
+										? related_product.slug.split("/")[0]
+										: related_product.slug)
 							);
 						}}
 					/>

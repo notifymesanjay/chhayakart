@@ -312,7 +312,14 @@ const ProductCard = ({
 									payload: product.id,
 								});
 								setSelectedProductId(product.id);
-								navigate("/product/" + product.id + "/" + product.slug);
+								navigate(
+									"/product/" +
+										product.id +
+										"/" +
+										(product.slug.includes("/")
+											? product.slug.split("/")[0]
+											: product.slug)
+								);
 								window.location.reload();
 							}}
 						/>
@@ -418,7 +425,16 @@ const ProductCard = ({
 							</div>
 
 							<div className={styles.shareWrapper}>
-								<Share slug={product.id} share_url={share_url} />
+								<Share
+									slug={
+										product.id +
+										"/" +
+										(product.slug.includes("/")
+											? product.slug.split("/")[0]
+											: product.slug)
+									}
+									share_url={share_url}
+								/>
 							</div>
 						</div>
 					</>

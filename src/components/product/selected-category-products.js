@@ -306,7 +306,12 @@ const SelectedCategoryProducts = ({
 			<div
 				className={styles.imageWrapper}
 				onClick={() => {
-					navigate(`/product/${product.id}/${product.slug}`);
+					navigate(`/product/${product.id}/${
+						product.slug.includes("/")
+							? product.slug.split("/")[0]
+							: product.slug
+					}			
+					`);
 					dispatch({
 						type: ActionTypes.SET_SELECTED_PRODUCT,
 						payload: product.id,
