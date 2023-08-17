@@ -413,21 +413,34 @@ const Product = ({
 							<ul className="share-product">
 								<li className="share-product-icon">
 									<WhatsappShareButton
-										url={`https://chhayakart.com/product/${productdata.id}/${productdata.slug}`}
+										url={`https://chhayakart.com/product/${productdata.id}/${
+											productdata.slug.includes("/")
+												? productdata.slug.split("/")[0]
+												: productdata.slug
+										}									
+										`}
 									>
 										<WhatsappIcon size={32} round={true} />{" "}
 									</WhatsappShareButton>
 								</li>
 								<li className="share-product-icon">
 									<TelegramShareButton
-										url={`https://chhayakart.com/product/${productdata.id}/${productdata.slug}`}
+										url={`https://chhayakart.com/product/${productdata.id}/${
+											productdata.slug.includes("/")
+												? productdata.slug.split("/")[0]
+												: productdata.slug
+										}`}
 									>
 										<TelegramIcon size={32} round={true} />{" "}
 									</TelegramShareButton>
 								</li>
 								<li className="share-product-icon">
 									<FacebookShareButton
-										url={`https://chhayakart.com/product/${productdata.id}/${productdata.slug}`}
+										url={`https://chhayakart.com/product/${productdata.id}/${
+											productdata.slug.includes("/")
+												? productdata.slug.split("/")[0]
+												: productdata.slug
+										}`}
 									>
 										<FacebookIcon size={32} round={true} />{" "}
 									</FacebookShareButton>
@@ -437,7 +450,11 @@ const Product = ({
 										type="button"
 										onClick={() => {
 											navigator.clipboard.writeText(
-												`https://chhayakart.com/product/${productdata.id}/${productdata.slug}`
+												`https://chhayakart.com/product/${productdata.id}/${
+													productdata.slug.includes("/")
+														? productdata.slug.split("/")[0]
+														: productdata.slug
+												}`
 											);
 											toast.success("Copied Succesfully!!");
 										}}

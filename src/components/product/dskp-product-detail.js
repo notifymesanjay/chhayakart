@@ -444,21 +444,27 @@ const DskpProductDetail = ({
 						<ul className="share-product">
 							<li className="share-product-icon">
 								<WhatsappShareButton
-									url={`${share_parent_url}/${productdata.id}/${slug}`}
+									url={`${share_parent_url}/${productdata.id}/${
+										slug.includes("/") ? slug.split("/")[0] : slug
+									}`}
 								>
 									<WhatsappIcon size={32} round={true} />
 								</WhatsappShareButton>
 							</li>
 							<li className="share-product-icon">
 								<TelegramShareButton
-									url={`${share_parent_url}/${productdata.id}/${slug}`}
+									url={`${share_parent_url}/${productdata.id}/${
+										slug.includes("/") ? slug.split("/")[0] : slug
+									}`}
 								>
 									<TelegramIcon size={32} round={true} />
 								</TelegramShareButton>
 							</li>
 							<li className="share-product-icon">
 								<FacebookShareButton
-									url={`${share_parent_url}/${productdata.id}/${slug}`}
+									url={`${share_parent_url}/${productdata.id}/${
+										slug.includes("/") ? slug.split("/")[0] : slug
+									}`}
 								>
 									<FacebookIcon size={32} round={true} />
 								</FacebookShareButton>
@@ -468,7 +474,9 @@ const DskpProductDetail = ({
 									type="button"
 									onClick={() => {
 										navigator.clipboard.writeText(
-											`${share_parent_url}/${productdata.id}/${slug}`
+											`${share_parent_url}/${productdata.id}/${
+												slug.includes("/") ? slug.split("/")[0] : slug
+											}`
 										);
 										//popup commented
 										//	toast.success("Copied Succesfully!!");
