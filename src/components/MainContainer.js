@@ -58,7 +58,7 @@ const MainContainer = ({
 		if (searchText !== "") {
 			dispatch({
 				type: ActionTypes.SET_FILTER_SEARCH,
-				payload: search,
+				payload: searchValue,
 			});
 		}
 	};

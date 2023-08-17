@@ -1,9 +1,35 @@
-import React from "react";
-import styles from "./new-footer.module.scss";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import api from "../../api/api";
+import { ActionTypes } from "../../model/action-type";
+import styles from "./new-footer.module.scss";
 
 const Footer = ({ setSelectedFilter = () => {} }) => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	const fetchCategory = () => {
+		api
+			.getCategory()
+			.then((response) => response.json())
+			.then((result) => {
+				if (result.status === 1) {
+					const dataToBeSorted = result.data;
+					//sorting of items lexographically..
+					result.data = [...dataToBeSorted].sort((a, b) =>
+						a.name > b.name ? 1 : -1
+					);
+					dispatch({ type: ActionTypes.SET_CATEGORY, payload: result.data });
+				}
+			})
+			.catch((error) => {});
+	};
+
+	useEffect(() => {
+		fetchCategory();
+	}, []);
+	
 	return (
 		<div className={styles.footerWrapper}>
 			<div className={styles.subFooter1}>

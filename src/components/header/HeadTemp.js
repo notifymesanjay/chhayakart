@@ -102,7 +102,7 @@ const TemHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 
 	return (
 		<>
-			<header className="site-header  desktop-shadow-disable mobile-shadow-enable bg-white  mobile-nav-enable border-bottom">
+			<header className="site-header  desktop-shadow-disable mobile-shadow-disable bg-white  mobile-nav-enable">
 				<div
 					className={isSticky ? " header-main  w-100" : "header-main  w-100"}
 				>
