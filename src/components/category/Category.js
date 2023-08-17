@@ -39,9 +39,7 @@ const ShopByCategory = ({
                         >
                           <img
                             className={`${styles.categoryImg} lazyload`}
-                            src={`${ctg.image_url.split(".webp")[0]}_desktop.webp${
-                              ctg.image_url.split(".webp")[1]
-                            }`}
+                            src={ctg.image_url}
                             alt={ctg.subtitle}
                           />
                         </div>
