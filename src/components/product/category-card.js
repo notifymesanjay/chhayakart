@@ -54,7 +54,7 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
               <img
                 src={`${
                   subCategory.category_image.split(".webp")[0]
-                }_desktop.webp${subCategory.category_image.split(".webp")[1]}`}
+                }_desktop.webp`}
                 alt="category-img"
               />
 
@@ -82,10 +82,7 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
                         src={`${
                           sub_ctg.image_url &&
                           sub_ctg.image_url.split(".webp")[0]
-                        }_desktop.webp${
-                          sub_ctg.image_url &&
-                          sub_ctg.image_url.split(".webp")[1]
-                        }`}
+                        }_desktop.webp`}
                         alt="Catogery"
                       />
                     </div>
