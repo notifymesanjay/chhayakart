@@ -26,7 +26,11 @@ const Share = ({ share_url, slug }) => {
 
 			<ul className="dropdown-menu">
 				<li className="dropDownLi">
-					<WhatsappShareButton url={`${share_url}/product/${slug}`}>
+					<WhatsappShareButton
+						url={`${share_url}/product/${slug}
+					
+					`}
+					>
 						<WhatsappIcon size={32} round={true} /> <span>WhatsApp</span>
 					</WhatsappShareButton>
 				</li>

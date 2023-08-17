@@ -516,7 +516,14 @@ const ListCard = ({
 									payload: product.id,
 								});
 								setSelectedProductId(product.id);
-								navigate("/product/" + product.id + "/" + product.slug);
+								navigate(
+									"/product/" +
+										product.id +
+										"/" +
+										(product.slug.includes("/")
+											? product.slug.split("/")[0]
+											: product.slug)
+								);
 							}}
 						/>
 					</div>
@@ -614,7 +621,11 @@ const ListCard = ({
 									<ul className="dropdown-menu">
 										<li>
 											<WhatsappShareButton
-												url={`https://chhayakart.com/product/${product.id}/${product.slug}`}
+												url={`https://chhayakart.com/product/${product.id}/${
+													product.slug.includes("/")
+														? product.slug.split("/")[0]
+														: product.slug
+												}`}
 											>
 												<WhatsappIcon size={32} round={true} />{" "}
 												<span>WhatsApp</span>
@@ -622,7 +633,11 @@ const ListCard = ({
 										</li>
 										<li>
 											<TelegramShareButton
-												url={`https://chhayakart.com/product/${product.id}/${product.slug}`}
+												url={`https://chhayakart.com/product/${product.id}/${
+													product.slug.includes("/")
+														? product.slug.split("/")[0]
+														: product.slug
+												}`}
 											>
 												<TelegramIcon size={32} round={true} />{" "}
 												<span>Telegram</span>
@@ -630,7 +645,11 @@ const ListCard = ({
 										</li>
 										<li>
 											<FacebookShareButton
-												url={`https://chhayakart.com/product/${product.id}/${product.slug}`}
+												url={`https://chhayakart.com/product/${product.id}/${
+													product.slug.includes("/")
+														? product.slug.split("/")[0]
+														: product.slug
+												}`}
 											>
 												<FacebookIcon size={32} round={true} />{" "}
 												<span>Facebook</span>
@@ -641,7 +660,11 @@ const ListCard = ({
 												type="button"
 												onClick={() => {
 													navigator.clipboard.writeText(
-														`https://chhayakart.com/product/${product.id}/${product.slug}`
+														`https://chhayakart.com/product/${product.id}/${
+															product.slug.includes("/")
+																? product.slug.split("/")[0]
+																: product.slug
+														}`
 													);
 													toast.success("Copied Succesfully!!");
 												}}
@@ -671,7 +694,14 @@ const ListCard = ({
 								payload: product.id,
 							});
 							setSelectedProductId(product.id);
-							navigate("/product/" + product.id + "/" + product.slug);
+							navigate(
+								"/product/" +
+									product.id +
+									"/" +
+									(product.slug.includes("/")
+										? product.slug.split("/")[0]
+										: product.slug)
+							);
 						}}
 					>
 						{product.name}
