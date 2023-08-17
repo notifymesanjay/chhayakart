@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import styles from "./region.module.scss";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useResponsive } from "../shared/use-responsive";
 
 const ShopByRegion = ({ regionList = [], setSelectedFilter = () => {} }) => {
   const navigate = useNavigate();
+  const { isSmScreen } = useResponsive();
   const shop = useSelector((state) => state.shop);
   const [subCategories, setSubCategories] = useState([]);
 
@@ -70,13 +72,21 @@ const ShopByRegion = ({ regionList = [], setSelectedFilter = () => {} }) => {
                 <div
                   className={styles.imageWrapper}
                   onClick={() => {
-                    navigate(`/subCategory/${subCategories[0].category_id}/${ctg.id}_${ctg.title}`);
+                    navigate(
+                      `/subCategory/${subCategories[0].category_id}/${ctg.id}_${ctg.title}`
+                    );
                     setSelectedFilter(ctg.id);
                   }}
                 >
                   <img
                     className={`${styles.categoryImg} lazyload`}
-                    data-src={ctg.image_url}
+                    data-src={`${
+                      isSmScreen
+                        ? ctg.image_url
+                        : ctg.image_url.split(".webp")[0] +
+                          "_desktop.webp" +
+                          ctg.image_url.split(".webp")[1]
+                    }`}
                     alt={ctg.subtitle}
                   />
                 </div>

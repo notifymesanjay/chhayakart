@@ -7,6 +7,7 @@ $color-green: #51bd88;
   min-height: 100vh;
   padding: 10px;
   background-color: rgba(0, 0, 0, 0.16);
+  margin-top: 65px;
 }
 
 .productCard {
@@ -171,5 +172,8 @@ $color-green: #51bd88;
 @media only screen and (max-width: 575px) {
   .productCard {
     width: 100%;
+  }
+  .productListWrapper {
+    margin-top: -2px;
   }
 }
