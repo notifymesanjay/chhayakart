@@ -16,7 +16,7 @@
 
 .mainImage {
 	height: 400px;
-	width: -webkit-fill-availabl;
+	width: 400px;
 }
 
 .subImages {
@@ -29,7 +29,7 @@
 	width: auto;
 
 	.subImg {
-		width: -webkit-fill-available;
+		width: 100px;
 		height: -webkit-fill-available;
 	}
 }
@@ -73,32 +73,34 @@
 }
 
 .productName {
-	font-size: 20px;
+	font-size: 25px;
 	font-weight: bold;
-	margin-bottom: 5px;
+	margin-top: 15px;
 }
 
 .discountedPrice {
-	font-size: 24px;
-	font-weight: bold;
+	font-size: 27px;
+	font-weight: bolder;
 }
 
 .rupeeIcon {
-	font-size: 18px;
+	font-size: 22px;
 }
 
 .discountPercentage {
 	background-color: rgba(242, 92, 197, 0.2);
-	font-size: 14px;
+	font-size: 17px;
 	color: #f25cc5;
 	padding: 2px 5px;
 	border-radius: 4px;
+	margin-left: 2px;
 }
 
 .actualPrice {
-	color: #bebebe;
+	color: #636363;
 	font-size: 18px;
 	margin-bottom: 20px;
+	font-weight: 500;
 
 	.rupeeIcon {
 		font-size: 16px;
@@ -107,7 +109,7 @@
 
 	.strikeOff {
 		text-decoration: line-through;
-		color: #bebebe;
+		color: #636363;
 	}
 }
 
@@ -200,4 +202,25 @@
 
 .addToCartActive {
 	color: white;
+}
+.share-product-container {
+	margin-top: 36px;
+}
+.product-details-view
+	.detail-wrapper
+	.bottom-section
+	.share-product-container
+	span {
+	font-size: 14px;
+	font-weight: 700;
+}
+.share-product-container,
+.share-product {
+	display: flex;
+	list-style: none;
+	align-items: center;
+}
+
+.share-product {
+	margin: 0 !important;
 }

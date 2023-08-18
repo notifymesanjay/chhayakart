@@ -10,7 +10,7 @@ import {
 	WhatsappIcon,
 	WhatsappShareButton,
 } from "react-share";
-import { BsHeart, BsHeartFill, BsPlus } from "react-icons/bs";
+import { BsHeart, BsHeartFill, BsPlus, BsShare } from "react-icons/bs";
 import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
@@ -368,10 +368,11 @@ const DskpProductDetail = ({
 
 					<p className={styles.productName}>{productdata.name}</p>
 					{/* )} */}
-					<div>
-						<span className={styles.brandLabel}>Brand: ORGANIC PRODUCTION</span>
+					{/* <div>
+						<span className={styles.brandLabel}> SOLD BY</span>
 						<span className={styles.brandValue}> {productbrand.name}</span>
-					</div>
+					</div> */}
+
 					<p className={styles.discountedPrice}>
 						<FontAwesomeIcon
 							className={styles.rupeeIcon}
@@ -401,93 +402,127 @@ const DskpProductDetail = ({
 						</span>{" "}
 						(Incl. of all taxes)
 					</p>
-					{favorite.favorite &&
-					favorite.favorite.data.some(
-						(element) => element.id === productdata.id
-					) ? (
-						<button
-							type="button"
-							className="wishlist-product"
-							onClick={() => {
-								if (cookies.get("jwt_token") !== undefined) {
-									addToFavorite(productdata.id);
-								} else {
-									toast.error(
-										"OOps! You need to login first to add to favourites"
-									);
-								}
-							}}
-						>
-							<BsHeartFill fill="green" />
-						</button>
-					) : (
-						<button
-							key={productdata.id}
-							type="button"
-							className="wishlist-product"
-							onClick={() => {
-								if (cookies.get("jwt_token") !== undefined) {
-									removefromFavorite(productdata.id);
-								} else {
-									toast.error(
-										"OOps! You need to login first to add to favourites"
-									);
-								}
-							}}
-						>
-							<BsHeart />
-						</button>
-					)}
-					<div className="share-product-container">
-						<span>Share Product :</span>
+					<hr />
 
-						<ul className="share-product">
-							<li className="share-product-icon">
-								<WhatsappShareButton
-									url={`${share_parent_url}/${productdata.id}/${
-										slug.includes("/") ? slug.split("/")[0] : slug
-									}`}
-								>
-									<WhatsappIcon size={32} round={true} />
-								</WhatsappShareButton>
-							</li>
-							<li className="share-product-icon">
-								<TelegramShareButton
-									url={`${share_parent_url}/${productdata.id}/${
-										slug.includes("/") ? slug.split("/")[0] : slug
-									}`}
-								>
-									<TelegramIcon size={32} round={true} />
-								</TelegramShareButton>
-							</li>
-							<li className="share-product-icon">
-								<FacebookShareButton
-									url={`${share_parent_url}/${productdata.id}/${
-										slug.includes("/") ? slug.split("/")[0] : slug
-									}`}
-								>
-									<FacebookIcon size={32} round={true} />
-								</FacebookShareButton>
-							</li>
-							<li className="share-product-icon">
-								<button
-									type="button"
-									onClick={() => {
-										navigator.clipboard.writeText(
-											`${share_parent_url}/${productdata.id}/${
-												slug.includes("/") ? slug.split("/")[0] : slug
-											}`
-										);
-										//popup commented
-										//	toast.success("Copied Succesfully!!");
-									}}
-								>
-									{" "}
-									<BiLink size={30} />
-								</button>
-							</li>
-						</ul>
+					<button
+						class="btn btn-primary"
+						type="button"
+						data-bs-toggle="offcanvas"
+						data-bs-target="#offcanvasExample"
+						aria-controls="offcanvasExample"
+					>
+						<BsShare />
+					</button>
+
+					<div
+						class="offcanvas offcanvas-start"
+						tabindex="-1"
+						id="offcanvasExample"
+						aria-labelledby="offcanvasExampleLabel"
+					>
+						<div class="offcanvas-body">
+							<div>
+								<h2> Share This product</h2>
+							</div>
+
+							<div>
+								<div className="share-product-container">
+									Share Product :
+									<ul className="share-product">
+										<li className="share-product-icon">
+											<WhatsappShareButton
+												url={`${share_parent_url}/${productdata.id}/${
+													slug.includes("/") ? slug.split("/")[0] : slug
+												}`}
+											>
+												<WhatsappIcon size={32} round={true} />
+											</WhatsappShareButton>
+										</li>
+										<li className="share-product-icon">
+											<TelegramShareButton
+												url={`${share_parent_url}/${productdata.id}/${
+													slug.includes("/") ? slug.split("/")[0] : slug
+												}`}
+											>
+												<TelegramIcon size={32} round={true} />
+											</TelegramShareButton>
+										</li>
+										<li className="share-product-icon">
+											<FacebookShareButton
+												url={`${share_parent_url}/${productdata.id}/${
+													slug.includes("/") ? slug.split("/")[0] : slug
+												}`}
+											>
+												<FacebookIcon size={32} round={true} />
+											</FacebookShareButton>
+										</li>
+										{/* <li className="share-product-icon">
+									<button
+										type="button"
+										onClick={() => {
+											navigator.clipboard.writeText(
+												`${share_parent_url}/${productdata.id}/${
+													slug.includes("/") ? slug.split("/")[0] : slug
+												}`
+											);
+											//popup commented
+											//	toast.success("Copied Succesfully!!");
+										}}
+									>
+										{" "}
+										<BiLink size={30} />
+									</button>
+								</li> */}
+									</ul>
+								</div>
+							</div>
+						</div>
 					</div>
+
+					<div>
+						<span className={styles.brandLabel}> SOLD BY</span>
+						<span className={styles.brandValue}> {productbrand.name}</span>
+					</div>
+					<div className={styles.favIconWrapper}>
+						{favorite.favorite &&
+						favorite.favorite.data.some(
+							(element) => element.id === productdata.id
+						) ? (
+							<button
+								type="button"
+								className="wishlist-product"
+								onClick={() => {
+									if (cookies.get("jwt_token") !== undefined) {
+										addToFavorite(productdata.id);
+									} else {
+										toast.error(
+											"OOps! You need to login first to add to favourites"
+										);
+									}
+								}}
+							>
+								<BsHeartFill fill="green" />
+							</button>
+						) : (
+							<button
+								key={productdata.id}
+								type="button"
+								className="wishlist-product"
+								onClick={() => {
+									if (cookies.get("jwt_token") !== undefined) {
+										removefromFavorite(productdata.id);
+									} else {
+										toast.error(
+											"OOps! You need to login first to add to favourites"
+										);
+									}
+								}}
+							>
+								<BsHeart />
+							</button>
+						)}
+					</div>
+
 					<hr />
 					{/* description starts here  */}
 					<div className={styles.descriptionWrapper}>
