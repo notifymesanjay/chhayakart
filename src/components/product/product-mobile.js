@@ -21,7 +21,7 @@ import {
 	DecrementProduct,
 	IncrementProduct,
 } from "../../services/cartService";
-import { BsPlus } from "react-icons/bs";
+import { BsPlus, BsShare } from "react-icons/bs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faAngleDoubleRight,
@@ -237,7 +237,7 @@ const ProductMobile = ({
 						}}
 					>
 						{" "}
-						<BiLink size={30} />
+						<BsShare size={30} />
 					</button>
 				</div>
 				<div>
