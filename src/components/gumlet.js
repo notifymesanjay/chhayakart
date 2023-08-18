@@ -27,8 +27,8 @@ const loadGumletScript = () => {
 	});
 };
 
-useEffect(() => {
-	loadGumletScript();
-});
+// useEffect(() => {
+// 	loadGumletScript();
+// });
 
 export default loadGumletScript;

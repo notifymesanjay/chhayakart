@@ -1,6 +1,6 @@
-.categoryWrapper {
-	padding: 0 15px;
-}
+// .categoryWrapper {
+// 	padding: 0 110px;
+// }
 
 .categoryImg {
 	width: 120px;
@@ -89,6 +89,7 @@
 	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
+	padding: 0 15px;
 
 	.categoryImg {
 		border-radius: 0;
@@ -112,5 +113,30 @@
 			min-height: 90px;
 			min-width: 100%;
 		}
+	}
+}
+
+@media only screen and (width: 1304px) {
+	// .categoryWrapper {
+	// 	padding: 0 110px;
+	// }
+
+	.categoryWrapper {
+		display: flex;
+		gap: 19px;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+		padding: 0 110px;
+	}
+}
+@media only screen and (width: 1448px) {
+	.categoryWrapper {
+		padding: 0 110px;
+		display: flex;
+		gap: 19px;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
 	}
 }

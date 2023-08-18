@@ -671,7 +671,7 @@ const ListCard = ({
 												className="react-share__ShareButton"
 											>
 												{" "}
-												<BiLink /> <span>Copy Link</span>
+												<BsShare /> <span>Copy Link</span>
 											</button>
 										</li>
 									</ul>
@@ -1005,7 +1005,7 @@ const ListCard = ({
 											className="react-share__ShareButton"
 										>
 											{" "}
-											<BiLink /> Copy Link
+											<BsShare /> Copy Link
 										</button>
 									</li>
 								</ul>

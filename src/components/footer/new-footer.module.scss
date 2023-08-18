@@ -1,56 +1,52 @@
 .footerWrapper {
-  background-color: #6e6e6e;
-  padding: 15px 45px 0;
+	background-color: #6e6e6e;
+	padding-top: 9px;
 }
 .subFooter1 {
-text-align: center;
-  background-color: #6e6e6e;
-  border-bottom: 1px solid #000000;
-margin-bottom: 10px;
-
-
+	text-align: center;
+	background-color: #6e6e6e;
+	border-bottom: 1px solid #000000;
+	margin-bottom: 10px;
 }
-.text{
-  color :white;
-  padding: 5px;
-  font-size: 14px;
+.text {
+	color: white;
+	padding: 5px;
+	font-size: 14px;
 }
 
 .linksWrapper {
-  width: 65%;
-  margin: 0 auto 15px;
-  display: flex;
-  gap:90px;
-  justify-content: space-around;
+	width: 65%;
+	margin: 0 auto 15px;
+	display: flex;
+	gap: 90px;
+	justify-content: space-around;
 }
 
 .links {
-  font-size: 14px;
-  margin-bottom: 5px;
-  cursor: pointer;
-  font-family :Arial, Helvetica, sans-serif;
-  color: white;
+	font-size: 14px;
+	margin-bottom: 5px;
+	cursor: pointer;
+	font-family: Arial, Helvetica, sans-serif;
+	color: white;
 }
 
 .links:hover {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 
 .subFooter {
-  border-top: 1px solid #000000;
-  padding: 10px 0;
+	border-top: 1px solid #000000;
 }
 
 .copyRight {
-  margin-bottom: 0;
-  text-align: center;
-  font-size: 14px;
-  color: white;
-  background-color: #000000;
+	margin-bottom: 0;
+	text-align: center;
+	font-size: 14px;
+	color: white;
+	background-color: #000000;
 }
 
 .chhayakartTxt {
-  color: #f25cc5;
-  font-weight: bold;
-
+	color: #f25cc5;
+	font-weight: bold;
 }

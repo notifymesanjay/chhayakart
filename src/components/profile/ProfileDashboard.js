@@ -290,7 +290,7 @@ const ProfileDashboard = () => {
 						</span>
 						<IoIosArrowForward />
 					</button>
-					<button
+					{/* <button
 						type="button"
 						className="navigation-container-button "
 						onClick={handleDeleteAcount}
@@ -304,7 +304,7 @@ const ProfileDashboard = () => {
 							Delete Account
 						</span>
 						<IoIosArrowForward />
-					</button>
+					</button> */}
 				</div>
 			</>
 		);

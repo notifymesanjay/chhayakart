@@ -21,11 +21,7 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 								key={index1}
 								onClick={() => {
 									navigate(
-										`/subCategory/${subCategory.category_id}/${sub_ctg.id}_${
-											sub_ctg.title.includes("/")
-												? sub_ctg.title.split("/")[0]
-												: sub_ctg.title
-										}`
+										`/subCategory/${subCategory.category_id}/${sub_ctg.id}_${sub_ctg.title}`
 									);
 									setSelectedFilter(sub_ctg.id);
 								}}
@@ -55,7 +51,12 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 					</div>
 					<div className={styles.categoryWrapper}>
 						<div className={styles.categoryImgWrapper}>
-							<img src={subCategory.category_image} alt="category-img" />
+							<img
+								src={`${
+									subCategory.category_image.split(".webp")[0]
+								}_desktop.webp`}
+								alt="category-img"
+							/>
 
 							{/* <div className={styles.viewAll}>
 								{" "}
@@ -70,13 +71,7 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 										key={index1}
 										onClick={() => {
 											navigate(
-												`/subCategory/${subCategory.category_id}/${
-													sub_ctg.id
-												}_${
-													sub_ctg.title.includes("/")
-														? sub_ctg.title.split("/")[0]
-														: sub_ctg.title
-												}`
+												`/subCategory/${subCategory.category_id}/${sub_ctg.id}_${sub_ctg.title}`
 											);
 											setSelectedFilter(sub_ctg.id);
 										}}
@@ -84,13 +79,16 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 										<div className={styles.imageWrapper}>
 											<img
 												className={styles.subCategoryImg}
-												src={sub_ctg.image_url}
+												src={`${
+													sub_ctg.image_url &&
+													sub_ctg.image_url.split(".webp")[0]
+												}_desktop.webp`}
 												alt="Catogery"
 											/>
 										</div>
-										<div className={styles.cardBody}>
+										{/* <div className={styles.cardBody}>
 											<p className={styles.title}>{sub_ctg.title}</p>
-										</div>
+										</div> */}
 									</div>
 								))}
 							</div>

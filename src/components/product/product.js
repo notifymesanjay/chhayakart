@@ -460,7 +460,7 @@ const Product = ({
 										}}
 									>
 										{" "}
-										<BiLink size={30} />
+										<BsShare size={30} />
 									</button>
 								</li>
 							</ul>
