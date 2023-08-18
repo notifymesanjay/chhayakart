@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link
+			rel="icon"
+			property="og:image"
+			href="https://admin.chhayakart.com/storage/logo/1680098508_37047.png"
+		/>
+		<meta
+			prefix="og: http://ogp.me/ns#"
+			property="og:image"
+			content="https://admin.chhayakart.com/storage/logo/1680098508_37047.png"
+		/>
 
-<head>
-  <meta charset="utf-8" />
-  <link rel="icon" property="og:image" href="https://admin.chhayakart.com/storage/logo/1680098508_37047.png" />
-  <meta
-  prefix='og: http://ogp.me/ns#'
-  property='og:image'
-  content='https://admin.chhayakart.com/storage/logo/1680098508_37047.png'
-/>
- 
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
- 
- 
-  <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Self-Help Groups, Women Entrepreneurs & Rural Manufacturers Ecommerce Platform" />
-  <meta name='author' content='ChhayaKart' />
-  <link rel="apple-touch-icon" href="../public/chhayakert-pink-mini-logo.png" />
-  <meta
-  name='keywords'
-  content='chhayakart,self-help groups,women entrepreneurs,rural manufactures products,gao ki dukaan,desi dukaan'
-  
-/>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<!--  
+		<meta name="theme-color" content="#000000" />
+		<meta
+			name="description"
+			content="Self-Help Groups, Women Entrepreneurs & Rural Manufacturers Ecommerce Platform"
+		/>
+		<meta name="author" content="ChhayaKart" />
+		<link
+			rel="apple-touch-icon"
+			href="../public/chhayakert-pink-mini-logo.png"
+		/>
+		<meta
+			name="keywords"
+			content="chhayakart,self-help groups,women entrepreneurs,rural manufactures products,gao ki dukaan,desi dukaan"
+		/>
+
+		<!--  
   help form dk 
     <meta
       name='description'
@@ -32,7 +39,7 @@
         "Donatekart is India's most trusted and transparent donation platform. It enables donors to reach people in need and donate to the cause directly. We have worked with over 1400+ NGOs and raised products worth 200 crores from 7+ Lakhs unique donors."
       }
     /> -->
-    <!-- <meta property='og:type' content='website' />
+		<!-- <meta property='og:type' content='website' />
     <meta
       prefix='og: http://ogp.me/ns#'
       property='og:image'
@@ -49,14 +56,16 @@
 
   -->
 
-  
-  <!--
+		<!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-  <!--
+		<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+		/>
+		<!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -66,91 +75,131 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
 
-    
-  <title>ChhayaKart | Gaon Ki Dukaan</title>
-  <!-- Start Single Page Apps for GitHub Pages -->
-  <script type="text/javascript">
-    // Single Page Apps for GitHub Pages
-    // MIT License
-    // https://github.com/rafgraph/spa-github-pages
-    // This script checks to see if a redirect is present in the query string,
-    // converts it back into the correct url and adds it to the
-    // browser's history using window.history.replaceState(...),
-    // which won't cause the browser to attempt to load the new url.
-    // When the single page app is loaded further down in this file,
-    // the correct url will be waiting in the browser's history for
-    // the single page app to route accordingly.
-    (function(l) {
-      if (l.search[1] === '/' ) {
-        var decoded = l.search.slice(1).split('&').map(function(s) { 
-          return s.replace(/~and~/g, '&')
-        }).join('?');
-        window.history.replaceState(null, null,
-            l.pathname.slice(0, -1) + decoded + l.hash
-        );
-      }
-    }(window.location))
-  </script>
-  <!-- End Single Page Apps for GitHub Pages -->
+		<title>ChhayaKart | Gaon Ki Dukaan</title>
+		<!-- Start Single Page Apps for GitHub Pages -->
+		<script type="text/javascript">
+			// Single Page Apps for GitHub Pages
+			// MIT License
+			// https://github.com/rafgraph/spa-github-pages
+			// This script checks to see if a redirect is present in the query string,
+			// converts it back into the correct url and adds it to the
+			// browser's history using window.history.replaceState(...),
+			// which won't cause the browser to attempt to load the new url.
+			// When the single page app is loaded further down in this file,
+			// the correct url will be waiting in the browser's history for
+			// the single page app to route accordingly.
+			(function (l) {
+				if (l.search[1] === "/") {
+					var decoded = l.search
+						.slice(1)
+						.split("&")
+						.map(function (s) {
+							return s.replace(/~and~/g, "&");
+						})
+						.join("?");
+					window.history.replaceState(
+						null,
+						null,
+						l.pathname.slice(0, -1) + decoded + l.hash
+					);
+				}
+			})(window.location);
+		</script>
+		<!-- End Single Page Apps for GitHub Pages -->
 
-  <!-- Facebook Pixel Code -->
-  <script>
-    !function (f, b, e, v, n, t, s) {
-      if (f.fbq) return; n = f.fbq = function () {
-        n.callMethod ?
-        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-      };
-      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-      n.queue = []; t = b.createElement(e); t.async = !0;
-      t.src = v; s = b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t, s)
-    }(window, document, 'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '154637470974173');
-    fbq('track', 'PageView');
-  </script>
-  <noscript>
-    <img height="1" width="1" src="https://www.facebook.com/tr?id=154637470974173&ev=PageView
-  &noscript=1" alt="Facebook Ads"/>
-  </noscript>
-  <!-- End Facebook Pixel Code -->
+		<!-- Facebook Pixel Code -->
+		<script>
+			!(function (f, b, e, v, n, t, s) {
+				if (f.fbq) return;
+				n = f.fbq = function () {
+					n.callMethod
+						? n.callMethod.apply(n, arguments)
+						: n.queue.push(arguments);
+				};
+				if (!f._fbq) f._fbq = n;
+				n.push = n;
+				n.loaded = !0;
+				n.version = "2.0";
+				n.queue = [];
+				t = b.createElement(e);
+				t.async = !0;
+				t.src = v;
+				s = b.getElementsByTagName(e)[0];
+				s.parentNode.insertBefore(t, s);
+			})(
+				window,
+				document,
+				"script",
+				"https://connect.facebook.net/en_US/fbevents.js"
+			);
+			fbq("init", "154637470974173");
+			fbq("track", "PageView");
+		</script>
+		<noscript>
+			<img
+				height="1"
+				width="1"
+				src="https://www.facebook.com/tr?id=154637470974173&ev=PageView
+  &noscript=1"
+				alt="Facebook Ads"
+			/>
+		</noscript>
+		<!-- End Facebook Pixel Code -->
 
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-N237PT3J');</script>
-  <!-- End Google Tag Manager -->
+		<!-- Google Tag Manager -->
+		<script>
+			(function (w, d, s, l, i) {
+				w[l] = w[l] || [];
+				w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+				var f = d.getElementsByTagName(s)[0],
+					j = d.createElement(s),
+					dl = l != "dataLayer" ? "&l=" + l : "";
+				j.async = true;
+				j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+				f.parentNode.insertBefore(j, f);
+			})(window, document, "script", "dataLayer", "GTM-N237PT3J");
+		</script>
+		<!-- End Google Tag Manager -->
 
+		<!-- gumlet -->
 
-  <!-- gumlet -->
+		<script type="text/javascript">
+			window.GUMLET_CONFIG = {
+				hosts: [
+					{
+						current: "https://admin.chhayakart.com",
+						gumlet: "chhayakart.gumlet.io",
+					},
+				],
+				lazy_load: true,
+			};
+			(function () {
+				d = document;
+				s = d.createElement("script");
+				s.src = "https://cdn.gumlet.com/gumlet.js/2.1/gumlet.min.js";
+				s.async = 1;
+				d.getElementsByTagName("head")[0].appendChild(s);
+			})();
+		</script>
 
-  <!-- <script type="text/javascript">
-    window.GUMLET_CONFIG = {
-      hosts: [{
-        current: "https://admin.chhayakart.com",
-        gumlet: "chhayakart.gumlet.io"
-      }],
-      lazy_load: true
-    };
-    (function () { d = document; s = d.createElement("script"); s.src = "https://cdn.gumlet.com/gumlet.js/2.1/gumlet.min.js"; s.async = 1; d.getElementsByTagName("head")[0].appendChild(s); })();
-  </script> -->
+		<!--  gumlet end -->
+	</head>
 
-  <!--  gumlet end -->
+	<body>
+		<!-- Google Tag Manager (noscript) -->
+		<noscript
+			><iframe
+				src="https://www.googletagmanager.com/ns.html?id=GTM-N237PT3J"
+				height="0"
+				width="0"
+				style="display: none; visibility: hidden"
+			></iframe
+		></noscript>
+		<!-- End Google Tag Manager (noscript) -->
 
-</head>
-
-<body >
-
- <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N237PT3J"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-  
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
-  <!--
+		<noscript>You need to enable JavaScript to run this app.</noscript>
+		<div id="root"></div>
+		<!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -160,8 +209,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-
-</body>
-
+		<!-- <script src="https://cdn.tailwindcss.com"></script> -->
+	</body>
 </html>
