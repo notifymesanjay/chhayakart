@@ -50,7 +50,13 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 						<h1 className={styles.header}>{subCategory.category_name}</h1>
 					</div>
 					<div className={styles.categoryWrapper}>
-						<div className={styles.categoryImgWrapper}>
+						<div
+							className={styles.categoryImgWrapper}
+							onClick={() => {
+								navigate(`/subCategory/${subCategory.category_id}`);
+								setSelectedFilter(0);
+							}}
+						>
 							<img
 								src={`${
 									subCategory.category_image.split(".webp")[0]
