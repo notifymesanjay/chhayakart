@@ -64,7 +64,7 @@ const MainContainer = ({
 	};
 
 	const search = () => {
-		if (curr_url.pathname !== "/products") {
+		if (searchText.length > 3 && curr_url.pathname !== "/products") {
 			navigate("/products");
 		}
 	};
