@@ -13,12 +13,14 @@ import ListCard from "./list-card";
 import ProductFilterDropDown from "./product-filter-dropdown";
 import ProductFilter from "./product-filter";
 import { useResponsive } from "../shared/use-responsive";
+import { useNavigate } from "react-router-dom";
 const total_products_per_page = 12;
 
 const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
 	const dispatch = useDispatch();
 	const sliderRef = useRef();
 	const closeCanvas = useRef();
+	const navigate = useNavigate();
 	const { isSmScreen } = useResponsive();
 
 	const category = useSelector((state) => state.category);
@@ -104,6 +106,7 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
 					setproductresult(result.data);
 					settotalProducts(result.total);
 				} else {
+					navigate('/');
 					setproductresult([]);
 					settotalProducts(0);
 				}
@@ -232,6 +235,7 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
 
 					settotalProducts(result.total);
 				} else {
+					navigate('/');
 					setproductresult([]);
 					settotalProducts(0);
 				}

@@ -86,7 +86,7 @@ const TemHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 
   return (
     <>
-      <header className="site-header  desktop-shadow-disable mobile-shadow-enable bg-white  mobile-nav-enable border-bottom">
+      <header className="site-header  desktop-shadow-disable mobile-shadow-disable bg-white  mobile-nav-enable">
         <div className={"header-main  w-100"}>
           <div className="container">
             <div className="d-flex row-reverse justify-content-lg-between justify-content-center">
