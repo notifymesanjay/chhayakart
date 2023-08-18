@@ -40,6 +40,10 @@
 	width: 100%;
 }
 
+.shareIcon {
+	float: right;
+}
+
 .bodyWrapper::-webkit-scrollbar {
 	width: 0px;
 }
@@ -63,12 +67,13 @@
 
 .brandLabel {
 	color: black;
-	font-size: 18px;
+	font-size: 24px;
+	font-weight: 900;
 }
 
 .brandValue {
 	color: #f25cc5;
-	font-size: 18px;
+	font-size: 20px;
 	margin-left: 5px;
 }
 
@@ -116,7 +121,7 @@
 .descriptionWrapper {
 	.subHeader {
 		margin-top: 20px;
-		font-size: 20px;
+		font-size: 25px;
 		font-weight: bold;
 	}
 
@@ -152,11 +157,11 @@
 
 .addSectionWrapper {
 	display: flex;
-	margin-left: 11.3%;
+	margin-left: 11.7%;
 	border-radius: 12px;
 	background-color: #e2e9e9;
 	align-items: center;
-	width: 36%;
+	width: 32%;
 }
 
 .viewCartSticker {
@@ -219,8 +224,20 @@
 	display: flex;
 	list-style: none;
 	align-items: center;
+	gap: 30px;
+	margin-top: 50px;
 }
 
 .share-product {
 	margin: 0 !important;
+}
+.shareProduct {
+	display: flex;
+}
+.shareProductContainer {
+	display: flex;
+	justify-content: space-between;
+}
+.sellerName {
+	display: grid;
 }
