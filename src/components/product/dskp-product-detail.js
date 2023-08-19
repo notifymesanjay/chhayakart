@@ -68,54 +68,54 @@ const DskpProductDetail = ({
 	});
 	const [isOpenBulk, setIsOpenBulk] = useState(false);
 	const [isBulkOrder, setIsBulkOrder] = useState(false);
-	//Add to favorite
-	const addToFavorite = async (productdata) => {
-		await api
-			.addToFavotite(cookies.get("jwt_token"), productdata.id)
-			.then((response) => response.json())
-			.then(async (result) => {
-				if (result.status === 1) {
-					toast.success(result.message);
-					await api
-						.getFavorite(
-							cookies.get("jwt_token"),
-							city.city.latitude,
-							city.city.longitude
-						)
-						.then((resp) => resp.json())
-						.then((res) => {
-							if (res.status === 1)
-								dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
-						});
-				} else {
-					toast.error(result.message);
-				}
-			});
-	};
-	const removefromFavorite = async (productdata) => {
-		await api
-			.removeFromFavorite(cookies.get("jwt_token"), productdata.id)
-			.then((response) => response.json())
-			.then(async (result) => {
-				if (result.status === 1) {
-					toast.success(result.message);
-					await api
-						.getFavorite(
-							cookies.get("jwt_token"),
-							city.city.latitude,
-							city.city.longitude
-						)
-						.then((resp) => resp.json())
-						.then((res) => {
-							if (res.status === 1)
-								dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
-							else dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
-						});
-				} else {
-					toast.error(result.message);
-				}
-			});
-	};
+	//  Add to favorite
+	// const addToFavorite = async (productdata) => {
+	// 	await api
+	// 		.addToFavotite(cookies.get("jwt_token"), productdata.id)
+	// 		.then((response) => response.json())
+	// 		.then(async (result) => {
+	// 			if (result.status === 1) {
+	// 				toast.success(result.message);
+	// 				await api
+	// 					.getFavorite(
+	// 						cookies.get("jwt_token"),
+	// 						city.city.latitude,
+	// 						city.city.longitude
+	// 					)
+	// 					.then((resp) => resp.json())
+	// 					.then((res) => {
+	// 						if (res.status === 1)
+	// 							dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
+	// 					});
+	// 			} else {
+	// 				toast.error(result.message);
+	// 			}
+	// 		});
+	// };
+	// const removefromFavorite = async (productdata) => {
+	// 	await api
+	// 		.removeFromFavorite(cookies.get("jwt_token"), productdata.id)
+	// 		.then((response) => response.json())
+	// 		.then(async (result) => {
+	// 			if (result.status === 1) {
+	// 				toast.success(result.message);
+	// 				await api
+	// 					.getFavorite(
+	// 						cookies.get("jwt_token"),
+	// 						city.city.latitude,
+	// 						city.city.longitude
+	// 					)
+	// 					.then((resp) => resp.json())
+	// 					.then((res) => {
+	// 						if (res.status === 1)
+	// 							dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
+	// 						else dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
+	// 					});
+	// 			} else {
+	// 				toast.error(result.message);
+	// 			}
+	// 		});
+	// };
 
 	// const AddProductToCart1 = (quantity) => {
 	// 	if (cookies.get("jwt_token") !== undefined) {
@@ -333,6 +333,10 @@ const DskpProductDetail = ({
 		console.log("xyz23", isOpenBulk);
 	}, [isOpenBulk]);
 
+	//Add to favorite
+	const addToFavorite = async (productdata) => {};
+
+	const removefromFavorite = async (productdata) => {};
 	return (
 		<>
 			<div className={styles.detailWrapper}>
@@ -455,7 +459,7 @@ const DskpProductDetail = ({
 											}}
 										>
 											{" "}
-											<BsShare size={20} />
+											<BiLink size={20} />
 										</button>
 									</li> */}
 										</ul>
@@ -591,7 +595,78 @@ const DskpProductDetail = ({
 				</div>
 			</div>
 
-			{/* <div className={styles.favIconWrapper}>
+			<div className={styles.favIconWrapper}>
+				<div
+					id={`input-cart-productdetail`}
+					className="input-to-cart visually-hidden"
+				>
+					<button
+						type="button"
+						className="wishlist-button"
+						onClick={() => {
+							var val = parseInt(
+								document.getElementById(`input-productdetail`).innerHTML
+							);
+							if (val === 1) {
+								document.getElementById(`input-productdetail`).innerHTML = 0;
+								document
+									.getElementById(`Add-to-cart-productdetail`)
+									.classList.remove("visually-hidden");
+								document
+									.getElementById(`input-cart-productdetail`)
+									.classList.toggle("visually-hidden");
+								removefromCart(
+									productdata.id,
+									JSON.parse(
+										document.getElementById(
+											`select-product-variant-productdetail`
+										).value
+									).id
+								);
+							} else {
+								document.getElementById(`input-productdetail`).innerHTML =
+									val - 1;
+								addtoCart(
+									productdata.id,
+									JSON.parse(
+										document.getElementById(
+											`select-product-variant-productdetail`
+										).value
+									).id,
+									document.getElementById(`input-productdetail`).innerHTML
+								);
+							}
+						}}
+					>
+						<BiMinus fill="#fff" />
+					</button>
+					<span id={`input-productdetail`}></span>
+					<button
+						type="button"
+						className="wishlist-button"
+						onClick={() => {
+							var val =
+								document.getElementById(`input-productdetail`).innerHTML;
+							if (val < productdata.total_allowed_quantity) {
+								document.getElementById(`input-productdetail`).innerHTML =
+									parseInt(val) + 1;
+								addtoCart(
+									productdata.id,
+									JSON.parse(
+										document.getElementById(
+											`select-product-variant-productdetail`
+										).value
+									).id,
+									document.getElementById(`input-productdetail`).innerHTML
+								);
+							}
+						}}
+					>
+						<BsPlus fill="#fff" />{" "}
+					</button>
+				</div>
+
+				{/* <button type='button' className='wishlist-product' onClick={() => addToFavorite(productdata.id)}><BsHeart /></button> */}
 				{favorite.favorite &&
 				favorite.favorite.data.some(
 					(element) => element.id === productdata.id
@@ -599,15 +674,7 @@ const DskpProductDetail = ({
 					<button
 						type="button"
 						className="wishlist-product"
-						onClick={() => {
-							if (cookies.get("jwt_token") !== undefined) {
-								addToFavorite(productdata.id);
-							} else {
-								toast.error(
-									"OOps! You need to login first to add to favourites"
-								);
-							}
-						}}
+						onClick={() => removefromFavorite(productdata.id)}
 					>
 						<BsHeartFill fill="green" />
 					</button>
@@ -616,20 +683,12 @@ const DskpProductDetail = ({
 						key={productdata.id}
 						type="button"
 						className="wishlist-product"
-						onClick={() => {
-							if (cookies.get("jwt_token") !== undefined) {
-								removefromFavorite(productdata.id);
-							} else {
-								toast.error(
-									"OOps! You need to login first to add to favourites"
-								);
-							}
-						}}
+						onClick={() => addToFavorite(productdata.id)}
 					>
 						<BsHeart />
 					</button>
 				)}
-			</div> */}
+			</div>
 		</>
 	);
 };
