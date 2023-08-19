@@ -11,16 +11,14 @@ const SubCategory = ({
   selectedFilter,
   setSelectedFilter = () => {},
 }) => {
-  const { slug,title } =  useParams();
+  const { slug, title } = useParams();
 
-useEffect(()=>{
-  if(title)
-  var subCatrId= title.split("_")[0];
-  if(subCatrId)
-{  setSelectedFilter(parseInt(subCatrId));
-}
-  
-},[])
+  useEffect(() => {
+    if (title) var subCatrId = title.split("_")[0];
+    if (subCatrId) {
+      setSelectedFilter(parseInt(subCatrId));
+    }
+  }, []);
 
   return (
     <div className={styles.productListWrapper}>

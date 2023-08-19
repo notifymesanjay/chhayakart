@@ -43,6 +43,8 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
 	const [pagination, setpagination] = useState(null);
 	const [isLoader, setisLoader] = useState(false);
 	const [showViewModal, setShowViewModal] = useState(false);
+	const [noProductsFound, setNoProductsFound] = useState(false);
+	const [isLastKeyWord, setIsLastKeyWord] = useState(false);
 
 	const getBrandsApi = () => {
 		api
@@ -96,6 +98,7 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
 			.then((result) => {
 				setisLoader(false);
 				if (result.status === 1) {
+					setNoProductsFound(false);
 					setminmaxTotalPrice({
 						total_min_price: result.total_min_price,
 						total_max_price: result.total_max_price,
@@ -106,7 +109,7 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
 					setproductresult(result.data);
 					settotalProducts(result.total);
 				} else {
-					navigate('/');
+					setNoProductsFound(true);
 					setproductresult([]);
 					settotalProducts(0);
 				}
@@ -115,6 +118,12 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
 				setisLoader(false);
 			});
 	};
+
+	useEffect(() => {
+		if(noProductsFound && isLastKeyWord){
+			navigate('/');
+		}
+	}, [noProductsFound, isLastKeyWord])
 
 	useEffect(() => {
 		if (city.city !== null) {
@@ -133,16 +142,22 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
 				filter.price_filter !== null &&
 				filter.search !== null
 			) {
-				filterProductsFromApi({
-					category_id: filter.category_id,
-					brand_ids: filter.brand_ids.toString(),
-					min_price: filter.price_filter.min_price,
-					max_price: filter.price_filter.max_price,
-					sort: filter.sort_filter,
-					search: filter.search,
-					limit: total_products_per_page,
-					offset: offset,
-				});
+				const filterWords = filter.search.split(' ');
+				for(let i=0; i<filterWords.length; i++){
+					filterProductsFromApi({
+						category_id: filter.category_id,
+						brand_ids: filter.brand_ids.toString(),
+						min_price: filter.price_filter.min_price,
+						max_price: filter.price_filter.max_price,
+						sort: filter.sort_filter,
+						search: filterWords[i],
+						limit: total_products_per_page,
+						offset: offset,
+					});
+					if(i === filterWords.length-1){
+						setIsLastKeyWord(true);
+					}
+				}
 			} else if (filter.brand_ids.length !== 0) {
 				filterProductsFromApi({
 					brand_ids: filter.brand_ids.toString(),
@@ -158,12 +173,18 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
 					offset: offset,
 				});
 			} else if (filter.search !== null) {
-				filterProductsFromApi({
-					search: filter.search,
-					sort: filter.sort_filter,
-					limit: total_products_per_page,
-					offset: offset,
-				});
+				const filterWords = filter.search.split(' ');
+				for(let i=0; i<filterWords.length; i++){
+					filterProductsFromApi({
+						search: filterWords[i],
+						sort: filter.sort_filter,
+						limit: total_products_per_page,
+						offset: offset,
+					});
+					if(i === filterWords.length-1){
+						setIsLastKeyWord(true);
+					}
+				}
 			} else {
 				filterProductsFromApi({
 					min_price: filter.price_filter.min_price,
@@ -217,6 +238,7 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
 			.then((result) => {
 				setisLoader(false);
 				if (result.status === 1) {
+					setNoProductsFound(false);
 					setminmaxTotalPrice({
 						total_min_price: result.total_min_price,
 						total_max_price: result.total_max_price,
@@ -235,7 +257,7 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
 
 					settotalProducts(result.total);
 				} else {
-					navigate('/');
+					setNoProductsFound(true);
 					setproductresult([]);
 					settotalProducts(0);
 				}

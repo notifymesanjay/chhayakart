@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 import { BiMinus } from "react-icons/bi";
@@ -300,6 +300,10 @@ const SelectedCategoryProducts = ({
 			</option>
 		));
 	};
+
+	useEffect(() => {
+		setIsProductAdded(false);
+	}, [product]);
 
 	return (
 		<div className={`${styles.productCard} ${styles.cardWrapper}`} key={index}>
