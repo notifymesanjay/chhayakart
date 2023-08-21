@@ -46,7 +46,7 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
 		}
 	};
 
-	const handleOrders = () => {
+	const MyProfile = () => {
 		if (user.status === "loading") {
 			toast.error("You have to login first to track your Orders !");
 		} else {
@@ -54,6 +54,15 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
 		}
 	};
 
+	const [orderClick, setorderClick] = useState(false);
+
+	const handleOrders = () => {
+		if (user.status === "loading") {
+			toast.error("You have to login first to track your Orders !");
+		} else {
+			navigate("/orders");
+		}
+	};
 	return (
 		<div>
 			<div className={styles.headerWrapper}>
@@ -109,9 +118,18 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
 					data-bs-dismiss="offcanvas"
 					aria-label="Close"
 					ref={closeRef}
+					onClick={MyProfile}
+				>
+					My Profile
+				</li>
+				<li
+					className={styles.listItem}
+					data-bs-dismiss="offcanvas"
+					aria-label="Close"
+					ref={closeRef}
 					onClick={handleOrders}
 				>
-					My Orders
+					Orders
 				</li>
 				<li
 					className={styles.listItem}

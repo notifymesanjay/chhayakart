@@ -172,7 +172,7 @@ const MainContainer = ({
 											<AiOutlineClose fill="white" fontSize={"3.5rem"} />
 										</button>
 										<img
-											data-src={setting.setting.popup_image}
+											src={setting.setting.popup_image}
 											className="lazyload"
 											alt="image"
 											onClick={() => {
