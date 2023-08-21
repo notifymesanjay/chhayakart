@@ -348,7 +348,8 @@ const DskpProductDetail = ({
 								>
 									<img
 										className={styles.subImg}
-										data-src={image}
+										// data-src={image}
+										src={image}
 										alt="product"
 									/>
 								</div>
