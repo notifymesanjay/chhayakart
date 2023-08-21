@@ -69,53 +69,53 @@ const DskpProductDetail = ({
 	const [isOpenBulk, setIsOpenBulk] = useState(false);
 	const [isBulkOrder, setIsBulkOrder] = useState(false);
 	//  Add to favorite
-	// const addToFavorite = async (productdata) => {
-	// 	await api
-	// 		.addToFavotite(cookies.get("jwt_token"), productdata.id)
-	// 		.then((response) => response.json())
-	// 		.then(async (result) => {
-	// 			if (result.status === 1) {
-	// 				toast.success(result.message);
-	// 				await api
-	// 					.getFavorite(
-	// 						cookies.get("jwt_token"),
-	// 						city.city.latitude,
-	// 						city.city.longitude
-	// 					)
-	// 					.then((resp) => resp.json())
-	// 					.then((res) => {
-	// 						if (res.status === 1)
-	// 							dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
-	// 					});
-	// 			} else {
-	// 				toast.error(result.message);
-	// 			}
-	// 		});
-	// };
-	// const removefromFavorite = async (productdata) => {
-	// 	await api
-	// 		.removeFromFavorite(cookies.get("jwt_token"), productdata.id)
-	// 		.then((response) => response.json())
-	// 		.then(async (result) => {
-	// 			if (result.status === 1) {
-	// 				toast.success(result.message);
-	// 				await api
-	// 					.getFavorite(
-	// 						cookies.get("jwt_token"),
-	// 						city.city.latitude,
-	// 						city.city.longitude
-	// 					)
-	// 					.then((resp) => resp.json())
-	// 					.then((res) => {
-	// 						if (res.status === 1)
-	// 							dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
-	// 						else dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
-	// 					});
-	// 			} else {
-	// 				toast.error(result.message);
-	// 			}
-	// 		});
-	// };
+	const addToFavorite = async (productdata) => {
+		await api
+			.addToFavotite(cookies.get("jwt_token"), productdata.id)
+			.then((response) => response.json())
+			.then(async (result) => {
+				if (result.status === 1) {
+					toast.success(result.message);
+					await api
+						.getFavorite(
+							cookies.get("jwt_token"),
+							city.city.latitude,
+							city.city.longitude
+						)
+						.then((resp) => resp.json())
+						.then((res) => {
+							if (res.status === 1)
+								dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
+						});
+				} else {
+					toast.error(result.message);
+				}
+			});
+	};
+	const removefromFavorite = async (productdata) => {
+		await api
+			.removeFromFavorite(cookies.get("jwt_token"), productdata.id)
+			.then((response) => response.json())
+			.then(async (result) => {
+				if (result.status === 1) {
+					toast.success(result.message);
+					await api
+						.getFavorite(
+							cookies.get("jwt_token"),
+							city.city.latitude,
+							city.city.longitude
+						)
+						.then((resp) => resp.json())
+						.then((res) => {
+							if (res.status === 1)
+								dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
+							else dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
+						});
+				} else {
+					toast.error(result.message);
+				}
+			});
+	};
 
 	// const AddProductToCart1 = (quantity) => {
 	// 	if (cookies.get("jwt_token") !== undefined) {
@@ -333,10 +333,6 @@ const DskpProductDetail = ({
 		console.log("xyz23", isOpenBulk);
 	}, [isOpenBulk]);
 
-	//Add to favorite
-	const addToFavorite = async (productdata) => {};
-
-	const removefromFavorite = async (productdata) => {};
 	return (
 		<>
 			<div className={styles.detailWrapper}>
@@ -513,26 +509,6 @@ const DskpProductDetail = ({
 						>
 							{viewMore.description ? "View More" : "View Less"}
 						</button>
-						{/* <h2 className={styles.subHeader}>Feature & Details</h2> */}
-						{/* <div
-            className={styles.descriptionBodyWrapper}
-            style={{
-              height: featureHeight.height,
-              overflow: featureHeight.overflow,
-            }}
-          >
-            <p className={styles.descriptionBody}>
-              Carry and flaunt it wherever you go, at just 1.7 kgs and 
-            </p>
-          </div>
-          <button
-            className={styles.viewMoreBtn}
-            onClick={() => {
-              expandDetails("feature");
-            }}
-          >
-            {viewMore.feature ? "View More" : "View Less"}
-          </button> */}
 					</div>
 				</div>
 			</div>
@@ -595,7 +571,7 @@ const DskpProductDetail = ({
 				</div>
 			</div>
 
-			<div className={styles.favIconWrapper}>
+			{/* <div className={styles.favIconWrapper}>
 				<div
 					id={`input-cart-productdetail`}
 					className="input-to-cart visually-hidden"
@@ -666,7 +642,7 @@ const DskpProductDetail = ({
 					</button>
 				</div>
 
-				{/* <button type='button' className='wishlist-product' onClick={() => addToFavorite(productdata.id)}><BsHeart /></button> */}
+				{/* <button type='button' className='wishlist-product' onClick={() => addToFavorite(productdata.id)}><BsHeart /></button> 
 				{favorite.favorite &&
 				favorite.favorite.data.some(
 					(element) => element.id === productdata.id
@@ -684,6 +660,46 @@ const DskpProductDetail = ({
 						type="button"
 						className="wishlist-product"
 						onClick={() => addToFavorite(productdata.id)}
+					>
+						<BsHeart />
+					</button>
+				)}
+			</div> */}
+
+			<div>
+				{favorite.favorite &&
+				favorite.favorite.data.some(
+					(element) => element.id === productdata.id
+				) ? (
+					<button
+						type="button"
+						className="wishlist-product"
+						onClick={() => {
+							if (cookies.get("jwt_token") !== undefined) {
+								removefromFavorite(productdata);
+							} else {
+								toast.error(
+									"OOps! You need to login first to add to favourites"
+								);
+							}
+						}}
+					>
+						<BsHeartFill fill="green" />
+					</button>
+				) : (
+					<button
+						key={productdata.id}
+						type="button"
+						className="wishlist-product"
+						onClick={() => {
+							if (cookies.get("jwt_token") !== undefined) {
+								addToFavorite(productdata);
+							} else {
+								toast.error(
+									"OOps! You need to login first to add to favourites"
+								);
+							}
+						}}
 					>
 						<BsHeart />
 					</button>
