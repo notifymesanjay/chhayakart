@@ -9,7 +9,7 @@ import ynks from "../ynks.webp";
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
 import { useSelector } from "react-redux";
 import { useResponsive } from "../shared/use-responsive";
-
+import { useNavigate, Link } from "react-router-dom";
 export default function Success({
 	productTriggered,
 	setProductTriggered = () => {},
@@ -18,7 +18,7 @@ export default function Success({
 	const city = useSelector((state) => state.city);
 	const { isMobile } = useResponsive();
 	const [categoryId, setCategoryId] = useState({});
-
+	const navigate = useNavigate();
 	useEffect(() => {
 		if (city.city !== null) {
 			// api
@@ -75,11 +75,21 @@ export default function Success({
 				></img>
 				{/* <span>THANKS.... </span> */}
 				<div className={styles.title}>
-					<h1 className="title">YOUR ORDER DETAILS WITH CHHAYAKART</h1>
+					<h1 className="title">YOUR RECENT ORDER WITH CHHAYAKART</h1>
 				</div>
 			</div>
-			<Order displayAll={false} setCategoryId={setCategoryId} />
-
+			<div className={styles.transactionHistory}>
+				<Order displayAll={false} setCategoryId={setCategoryId} />
+				<span
+					className={styles.transactionHistory}
+					onClick={() => {
+						navigate("/profile");
+					}}
+				>
+					{" "}
+					click here for Previous order history
+				</span>
+			</div>
 			<div className="related-product-wrapper">
 				<h4 className="relatedProductsHeader">You might also like</h4>
 				<div className="related-product-container">

@@ -293,7 +293,7 @@ const Wishlist = () => {
 							data-bs-dismiss="offcanvas"
 							aria-label="Close"
 							onClick={() => {
-								navigate("/products");
+								navigate("/subCategory/94");
 							}}
 						>
 							start shopping
