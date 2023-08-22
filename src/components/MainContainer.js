@@ -42,9 +42,9 @@ const MainContainer = ({
 			.then((response) => response.json())
 			.then((result) => {
 				if (result.status === 1) {
-					const dataToBeSorted = result.data.category;
+					const dataToBeSorted = [...result.data.category];
 					//sorting of items lexographically..
-					result.data.category = [...dataToBeSorted].sort((a, b) =>
+					result.data.category = dataToBeSorted.sort((a, b) =>
 						a.name > b.name ? 1 : -1
 					);
 					dispatch({ type: ActionTypes.SET_SHOP, payload: result.data });
@@ -77,16 +77,16 @@ const MainContainer = ({
 
 	useEffect(() => {
 		if (shop.shop.category.length > 0) {
-			const categoryList = shop.shop.category;
+			const categoryList = [...shop.shop.category];
 			let finalCategoryList = [];
-			categoryList.map((category) => {
+			for(let i=0; i<categoryList.length; i++){
 				if (
-					category.has_child &&
-					category.name.toLowerCase() !== shopByRegion.toLowerCase()
+					categoryList[i].has_child &&
+					categoryList[i].name.toLowerCase() !== shopByRegion.toLowerCase()
 				) {
-					finalCategoryList.push(category);
+					finalCategoryList.push(categoryList[i]);
 				}
-			});
+			}
 			finalCategoryList.sort((a, b) => a.id - b.id);
 			setCategories(finalCategoryList);
 		}

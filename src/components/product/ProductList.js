@@ -142,7 +142,7 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
 				filter.price_filter !== null &&
 				filter.search !== null
 			) {
-				const filterWords = filter.search.split(' ');
+				const filterWords = [...filter.search.split(' ')];
 				for(let i=0; i<filterWords.length; i++){
 					filterProductsFromApi({
 						category_id: filter.category_id,
@@ -173,7 +173,7 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
 					offset: offset,
 				});
 			} else if (filter.search !== null) {
-				const filterWords = filter.search.split(' ');
+				const filterWords = [...filter.search.split(' ')];
 				for(let i=0; i<filterWords.length; i++){
 					filterProductsFromApi({
 						search: filterWords[i],
@@ -286,8 +286,6 @@ const ProductList = ({ productTriggered, setProductTriggered = () => {} }) => {
 					className="hide-desktop col-3 offcanvas offcanvas-start"
 					tabIndex="-1"
 					id="filteroffcanvasExample"
-					aria-labelledby="filteroffcanvasExampleLabel"
-					data-bs-backdrop="false"
 				>
 					<div className="canvas-header">
 						<div className="site-brand">

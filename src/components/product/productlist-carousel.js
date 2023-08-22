@@ -29,7 +29,7 @@ const ProductListCarousel = ({
         categoryId,
         user.status === "loading" ? "" : user.user.email
       );
-      const sectionList = shop.shop.sections;
+      const sectionList = [...shop.shop.sections];
       let finalList = [];
       for (let i = 0; i < sectionList.length; i++) {
         let obj = {};

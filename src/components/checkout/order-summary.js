@@ -14,9 +14,6 @@ const OrderSummary = ({
 	handlePlaceOrder = () => {},
 	loadingPlaceOrder,
 }) => {
-	useEffect(() => {
-		console.log("xyze", isUserLoggedIn);
-	}, [isUserLoggedIn]);
 	return (
 		<div className="order-summary-wrapper checkout-component">
 			<span className="heading">order summary</span>

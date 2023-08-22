@@ -18,22 +18,22 @@ const ProductContainer = ({ setSelectedFilter = () => {} }) => {
 
 	useEffect(() => {
 		if (shop.shop.category != null && shop.shop.category.length > 0) {
-			const categoryList = shop.shop.category;
+			const categoryList = [...shop.shop.category];
 			let finalCategoryList = [];
 			let finalShopByRegionList = [];
-			categoryList.map((category) => {
+			for(let i=0; i<categoryList.length; i++){
 				if (
-					category.has_child &&
-					category.name.toLowerCase() !== shopByRegionName.toLowerCase()
+					categoryList[i].has_child &&
+					categoryList[i].name.toLowerCase() !== shopByRegionName.toLowerCase()
 				) {
-					finalCategoryList.push(category);
+					finalCategoryList.push(categoryList[i]);
 				} else if (
-					category.has_child &&
-					category.name.toLowerCase() === shopByRegionName.toLowerCase()
+					categoryList[i].has_child &&
+					categoryList[i].name.toLowerCase() === shopByRegionName.toLowerCase()
 				) {
-					finalShopByRegionList.push(category);
+					finalShopByRegionList.push(categoryList[i]);
 				}
-			});
+			}
 			setShopByRegionList(finalShopByRegionList);
 			setCategories(finalCategoryList);
 		}
@@ -41,7 +41,7 @@ const ProductContainer = ({ setSelectedFilter = () => {} }) => {
 
 	useEffect(() => {
 		if (shop.shop.sections.length > 0 && categories.length > 0) {
-			const sectionList = shop.shop.sections;
+			const sectionList = [...shop.shop.sections];
 			let finalSectionList = [];
 			for (let i = 0; i < sectionList.length; i++) {
 				let obj = {};
@@ -69,7 +69,7 @@ const ProductContainer = ({ setSelectedFilter = () => {} }) => {
 					finalSectionList[flag]["sub_category"].push(obj["sub_category"][0]);
 				}
 			}
-			const categoryList = shop.shop.category;
+			const categoryList = [...shop.shop.category];
 			if (categoryList.length > 0) {
 				for (let i = 0; i < finalSectionList.length; i++) {
 					for (let j = 0; j < finalSectionList[i].sub_category.length; j++) {
