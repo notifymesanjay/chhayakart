@@ -378,7 +378,7 @@ const Checkout = ({ productTriggered = false }) => {
 						subTotal = 0,
 						taxes = 0;
 					for (let i = 0; i < cartVal.length - 1; i++) {
-						if (cartVal[i].delivery_charges == 0) {
+						if (cartVal[i].delivery_charges == 0 || cartVal[i].delivery_charges == 50) {
 							iscodAllowed = false;
 						}
 						allProductVariantId +=
@@ -422,7 +422,7 @@ const Checkout = ({ productTriggered = false }) => {
 						cartVal[cartVal.length - 1].delivery_charges
 					);
 
-					if (cartVal[cartVal.length - 1].delivery_charges == 0) {
+					if (cartVal[cartVal.length - 1].delivery_charges == 0 || cartVal[cartVal.length - 1].delivery_charges == 50) {
 						iscodAllowed = false;
 					}
 
@@ -566,7 +566,7 @@ const Checkout = ({ productTriggered = false }) => {
 							100) *
 						(parseInt(cart.cart.data.cart[i].qty) *
 							parseInt(cart.cart.data.cart[i].discounted_price));
-					if (cart.cart.data.cart[i].delivery_charges == 0) {
+					if (cart.cart.data.cart[i].delivery_charges == 0 || cart.cart.data.cart[i].delivery_charges == 50) {
 						iscodAllowed = false;
 					}
 				}
