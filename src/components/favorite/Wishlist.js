@@ -16,12 +16,18 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import Loader from "../loader/Loader";
 import LoginUser from "../login/login-user";
 import TrackingService from "../../services/trackingService";
+import {
+	AddProductToCart,
+	DecrementProduct,
+	IncrementProduct,
+} from "../../services/cartService";
 
 const Wishlist = () => {
 	const closeCanvas = useRef();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const cookies = new Cookies();
+	const [showAddtocart, setshowAddtocart] = useState(true);
 
 	const favorite = useSelector((state) => state.favorite);
 	const city = useSelector((state) => state.city);
@@ -122,6 +128,7 @@ const Wishlist = () => {
 
 	//Add to Cart
 	const addtoCart = async (product, product_variant_id, qty) => {
+		debugger;
 		const trackingService = new TrackingService();
 		trackingService.trackCart(
 			product,
@@ -232,9 +239,10 @@ const Wishlist = () => {
 			document
 				.getElementById(`input-cart-wishlist${index}`)
 				.classList.add("active");
+
 			document.getElementById(`input-wishlist${index}`).innerHTML = 1;
 			addtoCart(
-				product.id,
+				product,
 				JSON.parse(
 					document.getElementById(`selectedVariant${index}-wishlist`).value
 				).id,
@@ -244,6 +252,14 @@ const Wishlist = () => {
 			setIsLogin(true);
 		}
 	};
+
+	// useEffect(() => {
+	// 	favorite.favorite.data.map((product, index) => {
+	// 		document
+	// 			.getElementById(`input-cart-wishlist${index}`)
+	// 			.classList.remove("active");
+	// 	});
+	// }, [favorite]);
 
 	return (
 		<section id="wishlist" className="wishlist">
@@ -277,7 +293,7 @@ const Wishlist = () => {
 							data-bs-dismiss="offcanvas"
 							aria-label="Close"
 							onClick={() => {
-								navigate("/products");
+								navigate("/subCategory/94");
 							}}
 						>
 							start shopping
@@ -360,88 +376,94 @@ const Wishlist = () => {
 															add to cart
 														</button>
 
-														<div
-															className="counter"
-															id={`input-cart-wishlist${index}`}
-														>
-															<button
-																type="button"
-																onClick={() => {
-																	var val = parseInt(
-																		document.getElementById(
-																			`input-wishlist${index}`
-																		).innerHTML
-																	);
-																	if (val === 1) {
-																		document.getElementById(
-																			`input-wishlist${index}`
-																		).innerHTML = 0;
-																		document
-																			.getElementById(
-																				`input-cart-wishlist${index}`
-																			)
-																			.classList.remove("active");
-																		document
-																			.getElementById(
-																				`Add-to-cart-wishlist${index}`
-																			)
-																			.classList.add("active");
-																		removefromCart(
-																			product.id,
-																			JSON.parse(
-																				document.getElementById(
-																					`selectedVariant${index}-wishlist`
-																				).value
-																			).id
-																		);
-																	} else {
-																		document.getElementById(
-																			`input-wishlist${index}`
-																		).innerHTML = val - 1;
-																		addtoCart(
-																			product.id,
-																			JSON.parse(
-																				document.getElementById(
-																					`selectedVariant${index}-wishlist`
-																				).value
-																			).id,
+														{
+															<div
+																className="counter"
+																id={`input-cart-wishlist${index}`}
+															>
+																<button
+																	inactive
+																	type="button"
+																	onClick={() => {
+																		debugger;
+																		var val = parseInt(
 																			document.getElementById(
 																				`input-wishlist${index}`
 																			).innerHTML
 																		);
-																	}
-																}}
-															>
-																<BiMinus fill="#fff" />
-															</button>
-															<span id={`input-wishlist${index}`}></span>
-															<button
-																type="button"
-																onClick={() => {
-																	var val = document.getElementById(
-																		`input-wishlist${index}`
-																	).innerHTML;
-																	if (val < product.total_allowed_quantity) {
-																		document.getElementById(
-																			`input-wishlist${index}`
-																		).innerHTML = parseInt(val) + 1;
-																		addtoCart(
-																			product.id,
-																			JSON.parse(
-																				document.getElementById(
-																					`selectedVariant${index}-wishlist`
-																				).value
-																			).id,
+																		if (val === 1) {
 																			document.getElementById(
 																				`input-wishlist${index}`
-																			).innerHTML
-																		);
-																	}
-																}}
-															>
-																<BsPlus fill="#fff" />
-															</button>
-														</div>
+																			).innerHTML = 0;
+																			document
+																				.getElementById(
+																					`input-cart-wishlist${index}`
+																				)
+																				.classList.remove("active");
+																			document
+																				.getElementById(
+																					`Add-to-cart-wishlist${index}`
+																				)
+																				.classList.add("active");
+																			removefromCart(
+																				product.id,
+																				JSON.parse(
+																					document.getElementById(
+																						`selectedVariant${index}-wishlist`
+																					).value
+																				).id
+																			);
+																		} else {
+																			document.getElementById(
+																				`input-wishlist${index}`
+																			).innerHTML = val - 1;
+																			addtoCart(
+																				product,
+																				JSON.parse(
+																					document.getElementById(
+																						`selectedVariant${index}-wishlist`
+																					).value
+																				).id,
+																				document.getElementById(
+																					`input-wishlist${index}`
+																				).innerHTML
+																			);
+																		}
+																	}}
+																>
+																	<BiMinus fill="#fff" />
+																</button>
+																<span id={`input-wishlist${index}`}></span>
+																<button
+																	inactive
+																	type="button"
+																	onClick={() => {
+																		debugger;
+																		var val = document.getElementById(
+																			`input-wishlist${index}`
+																		).innerHTML;
+																		if (val < product.total_allowed_quantity) {
+																			document.getElementById(
+																				`input-wishlist${index}`
+																			).innerHTML = parseInt(val) + 1;
+																			addtoCart(
+																				product,
+																				JSON.parse(
+																					document.getElementById(
+																						`selectedVariant${index}-wishlist`
+																					).value
+																				).id,
+																				document.getElementById(
+																					`input-wishlist${index}`
+																				).innerHTML
+																			);
+																		}
+																	}}
+																>
+																	<BsPlus fill="#fff" />
+																</button>
+															</div>
+														}
 													</th>
 
 													<th className="remove last-column">

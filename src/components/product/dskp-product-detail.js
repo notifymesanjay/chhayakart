@@ -464,6 +464,45 @@ const DskpProductDetail = ({
 								</div>
 							</div>
 						</div>
+						<div className={styles.shareIcon}>
+							{favorite.favorite &&
+							favorite.favorite.data.some(
+								(element) => element.id === productdata.id
+							) ? (
+								<button
+									type="button"
+									className="wishlist-product"
+									onClick={() => {
+										if (cookies.get("jwt_token") !== undefined) {
+											removefromFavorite(productdata);
+										} else {
+											toast.error(
+												"OOps! You need to login first to add to favourites"
+											);
+										}
+									}}
+								>
+									<BsHeartFill fill="green" />
+								</button>
+							) : (
+								<button
+									key={productdata.id}
+									type="button"
+									className="wishlist-product"
+									onClick={() => {
+										if (cookies.get("jwt_token") !== undefined) {
+											addToFavorite(productdata);
+										} else {
+											toast.error(
+												"OOps! You need to login first to add to favourites"
+											);
+										}
+									}}
+								>
+									<BsHeart />
+								</button>
+							)}
+						</div>
 					</p>
 
 					<p className={styles.actualPrice}>
@@ -666,46 +705,6 @@ const DskpProductDetail = ({
 					</button>
 				)}
 			</div> */}
-
-			<div>
-				{favorite.favorite &&
-				favorite.favorite.data.some(
-					(element) => element.id === productdata.id
-				) ? (
-					<button
-						type="button"
-						className="wishlist-product"
-						onClick={() => {
-							if (cookies.get("jwt_token") !== undefined) {
-								removefromFavorite(productdata);
-							} else {
-								toast.error(
-									"OOps! You need to login first to add to favourites"
-								);
-							}
-						}}
-					>
-						<BsHeartFill fill="green" />
-					</button>
-				) : (
-					<button
-						key={productdata.id}
-						type="button"
-						className="wishlist-product"
-						onClick={() => {
-							if (cookies.get("jwt_token") !== undefined) {
-								addToFavorite(productdata);
-							} else {
-								toast.error(
-									"OOps! You need to login first to add to favourites"
-								);
-							}
-						}}
-					>
-						<BsHeart />
-					</button>
-				)}
-			</div>
 		</>
 	);
 };
