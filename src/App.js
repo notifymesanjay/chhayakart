@@ -83,9 +83,9 @@ function App() {
 				.then((response) => response.json())
 				.then((result) => {
 					if (result.status === 1) {
-						const dataToBeSorted = result.data.category;
+						const dataToBeSorted = [...result.data.category];
 						//sorting of items lexographically..
-						result.data.category = [...dataToBeSorted].sort((a, b) =>
+						result.data.category = dataToBeSorted.sort((a, b) =>
 							a.name > b.name ? 1 : -1
 						);
 						dispatch({ type: ActionTypes.SET_SHOP, payload: result.data });
