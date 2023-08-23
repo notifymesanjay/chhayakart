@@ -42,8 +42,11 @@
 
 .shareIcon {
 	float: right;
+	padding-left: 20px;
 }
-
+.favIcon {
+	float: right;
+}
 .bodyWrapper::-webkit-scrollbar {
 	width: 0px;
 }
