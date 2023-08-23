@@ -14,11 +14,10 @@
 }
 /*  */
 .order-list .order-list-table {
-	width: 50%;
+	width: 100%;
 	margin-top: 10px;
 	background-color: #fff;
 	border-radius: 8px;
-	margin-left: 25%;
 }
 
 .order-list .order-list-table thead {

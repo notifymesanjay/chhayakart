@@ -5,7 +5,6 @@ import {
 	faSearch,
 	faStore,
 	faUser,
-	
 } from "@fortawesome/free-solid-svg-icons";
 import Menu from "./menu";
 import styles from "./mobile-menu.module.scss";
@@ -16,10 +15,9 @@ import {
 	IoCartOutline,
 	IoHeartOutline,
 	IoNotificationsOutline,
-	IoLogoWhatsapp
-
+	IoLogoWhatsapp,
 } from "react-icons/io5";
-import {WhatsappIcon} from "react-share";
+import { WhatsappIcon } from "react-share";
 import Cookies from "universal-cookie";
 import { toast } from "react-toastify";
 // import ChatOnWhatsapp from "../whatsappChatFeature";
@@ -51,13 +49,13 @@ const menuItems = [
 		),
 		link: "/subCategory/94",
 	},
-	  {
-	  	id: 3,
-	  	name: "View Cart",
-	  	tagId: "viewcart",
-	  	icon: <IoLogoWhatsapp />,
-	  	link: `https://api.whatsapp.com/send?phone=919420920320&text= ${window.location.href}\n I'm interested to know more about chhayakart. Can you help?`
-	  },
+	{
+		id: 3,
+		name: " Contact Us ",
+		tagId: "Contact Us",
+		icon: <IoLogoWhatsapp />,
+		link: `https://api.whatsapp.com/send?phone=919420920320&text= ${window.location.href}\n I'm interested to know more about chhayakart. Can you help?`,
+	},
 	// {
 	// 	id: 3,
 	// 	name: "View Cart",
@@ -65,7 +63,7 @@ const menuItems = [
 	// 	icon: <IoLogoWhatsapp />,
 	// 	link: "/ChatOnWhatsapp",
 	// },
-	 {
+	{
 		id: 4,
 		name: "Wishlist",
 		tagId: "wishlist",
@@ -97,14 +95,13 @@ const MobileMenu = ({ selectedMenu = 0 }) => {
 							if (
 								cookies.get("jwt_token") === undefined &&
 								menu.id !== 1 &&
-								menu.id !== 2  &&
+								menu.id !== 2 &&
 								menu.id !== 3
 							) {
 								toast.error("OOPS! You have to login first to see your cart!");
 							} else {
-								if(menu.id === 3)
-								{
-window.location.href=menu.link;
+								if (menu.id === 3) {
+									window.location.href = menu.link;
 								}
 								navigate(menu.link);
 							}
