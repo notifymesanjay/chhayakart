@@ -378,7 +378,10 @@ const Checkout = ({ productTriggered = false }) => {
 						subTotal = 0,
 						taxes = 0;
 					for (let i = 0; i < cartVal.length - 1; i++) {
-						if (cartVal[i].delivery_charges == 0 || cartVal[i].delivery_charges == 50) {
+						if (
+							cartVal[i].delivery_charges == 0 ||
+							cartVal[i].delivery_charges == 50
+						) {
 							iscodAllowed = false;
 						}
 						allProductVariantId +=
@@ -386,7 +389,10 @@ const Checkout = ({ productTriggered = false }) => {
 						allQuantity += cartVal[i].qty.toString() + ",";
 						subTotal +=
 							parseInt(cartVal[i].qty) * parseInt(cartVal[i].discounted_price);
-						totalDeliveryCharge += parseInt(cartVal[i].delivery_charges);
+						totalDeliveryCharge = Math.max(
+							totalDeliveryCharge,
+							parseInt(cartVal[i].delivery_charges)
+						);
 						taxes += parseFloat(
 							parseInt(cartVal[i].qty) *
 								parseInt(cartVal[i].discounted_price) *
@@ -418,11 +424,14 @@ const Checkout = ({ productTriggered = false }) => {
 						parseInt(cartVal[cartVal.length - 1].qty) *
 						parseInt(cartVal[cartVal.length - 1].discounted_price);
 
-					totalDeliveryCharge += parseInt(
-						cartVal[cartVal.length - 1].delivery_charges
+					totalDeliveryCharge = Math.max(
+						totalDeliveryCharge,
+						parseInt(cartVal[cartVal.length - 1].delivery_charges)
 					);
-
-					if (cartVal[cartVal.length - 1].delivery_charges == 0 || cartVal[cartVal.length - 1].delivery_charges == 50) {
+					if (
+						cartVal[cartVal.length - 1].delivery_charges == 0 ||
+						cartVal[cartVal.length - 1].delivery_charges == 50
+					) {
 						iscodAllowed = false;
 					}
 
@@ -566,7 +575,10 @@ const Checkout = ({ productTriggered = false }) => {
 							100) *
 						(parseInt(cart.cart.data.cart[i].qty) *
 							parseInt(cart.cart.data.cart[i].discounted_price));
-					if (cart.cart.data.cart[i].delivery_charges == 0 || cart.cart.data.cart[i].delivery_charges == 50) {
+					if (
+						cart.cart.data.cart[i].delivery_charges == 0 ||
+						cart.cart.data.cart[i].delivery_charges == 50
+					) {
 						iscodAllowed = false;
 					}
 				}
