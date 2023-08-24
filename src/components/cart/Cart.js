@@ -288,7 +288,11 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 						if (cartVal[i].delivery_charges == 0) {
 							isCodAllowed = false;
 						}
-						totalDeliveryCharge += parseInt(cartVal[i].delivery_charges);
+						// totalDeliveryCharge += parseInt(cartVal[i].delivery_charges);
+						totalDeliveryCharge = Math.max(
+							totalDeliveryCharge,
+							parseInt(cartVal[i].delivery_charges)
+						);
 						taxes += parseFloat(
 							(cartVal[i].taxes / 100) *
 								(parseInt(cartVal[i].qty) *
@@ -319,8 +323,9 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 					subTotal +=
 						parseInt(cartVal[cartVal.length - 1].qty) *
 						parseInt(cartVal[cartVal.length - 1].discounted_price);
-					totalDeliveryCharge += parseInt(
-						cartVal[cartVal.length - 1].delivery_charges
+					totalDeliveryCharge = Math.max(
+						totalDeliveryCharge,
+						parseInt(cartVal[cartVal.length - 1].delivery_charges)
 					);
 					taxes += parseFloat(
 						(cartVal[cartVal.length - 1].taxes / 100) *
