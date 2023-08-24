@@ -364,34 +364,37 @@ const Checkout = ({ productTriggered = false }) => {
 		}
 	};
 
-  const handleOrderSummary = () => {
-    var sub_total = 0;
-    var totalDeliveryCharge = 0;
-    var iscodAllowed = true;
-    var tempItems = [];
-    if (cookies.get("jwt_token") === undefined) {
-      if (localStorage.getItem("cart")) {
-        const cartVal = [...JSON.parse(localStorage.getItem("cart"))];
-        if (cartVal.length > 0) {
-          let allProductVariantId = "",
-            allQuantity = "",
-            subTotal = 0,
-            taxes = 0;
-          for (let i = 0; i < cartVal.length - 1; i++) {
-            if (cartVal[i].delivery_charges == 0) {
-              iscodAllowed = false;
-            }
-            allProductVariantId +=
-              cartVal[i].product_variant_id.toString() + ",";
-            allQuantity += cartVal[i].qty.toString() + ",";
-            subTotal +=
-              parseInt(cartVal[i].qty) * parseInt(cartVal[i].discounted_price);
-            totalDeliveryCharge += parseInt(cartVal[i].delivery_charges);
-            taxes += parseFloat(
-              parseInt(cartVal[i].qty) *
-                parseInt(cartVal[i].discounted_price) *
-                (cartVal[i].taxes / 100)
-            );
+	const handleOrderSummary = () => {
+		var sub_total = 0;
+		var totalDeliveryCharge = 0;
+		var iscodAllowed = true;
+		var tempItems = [];
+		if (cookies.get("jwt_token") === undefined) {
+			if (localStorage.getItem("cart")) {
+				const cartVal = JSON.parse(localStorage.getItem("cart"));
+				if (cartVal.length > 0) {
+					let allProductVariantId = "",
+						allQuantity = "",
+						subTotal = 0,
+						taxes = 0;
+					for (let i = 0; i < cartVal.length - 1; i++) {
+						if (
+							cartVal[i].delivery_charges == 0 ||
+							cartVal[i].delivery_charges == 50
+						) {
+							iscodAllowed = false;
+						}
+						allProductVariantId +=
+							cartVal[i].product_variant_id.toString() + ",";
+						allQuantity += cartVal[i].qty.toString() + ",";
+						subTotal +=
+							parseInt(cartVal[i].qty) * parseInt(cartVal[i].discounted_price);
+						totalDeliveryCharge += parseInt(cartVal[i].delivery_charges);
+						taxes += parseFloat(
+							parseInt(cartVal[i].qty) *
+								parseInt(cartVal[i].discounted_price) *
+								(cartVal[i].taxes / 100)
+						);
 
 						tempItems.push({
 							item_id: cartVal[i].product_id,
@@ -422,7 +425,10 @@ const Checkout = ({ productTriggered = false }) => {
 						cartVal[cartVal.length - 1].delivery_charges
 					);
 
-					if (cartVal[cartVal.length - 1].delivery_charges == 0) {
+					if (
+						cartVal[cartVal.length - 1].delivery_charges == 0 ||
+						cartVal[cartVal.length - 1].delivery_charges == 50
+					) {
 						iscodAllowed = false;
 					}
 
@@ -547,66 +553,71 @@ const Checkout = ({ productTriggered = false }) => {
 		}
 	}, [isOrderPlaced]);
 
-  useEffect(() => {
-    var delivery_charges = 0;
-    var iscodAllowed = true;
-    var taxes = 0;
-    if (cart.checkout !== null) {
-      var sub_total = 0;
-      sub_total = cart.checkout.sub_total;
-      if (cart.cart != undefined && cart.cart.data != undefined) {
-        for (let i = 0; i < cart.cart.data.cart.length; i++) {
-          delivery_charges += cart.cart.data.cart[i].delivery_charges;
-          taxes +=
-            ((cart.cart.data.cart[i].taxes != null
-              ? cart.cart.data.cart[i].taxes
-              : 5) /
-              100) *
-            (parseInt(cart.cart.data.cart[i].qty) *
-              parseInt(cart.cart.data.cart[i].discounted_price));
-          if (cart.cart.data.cart[i].delivery_charges == 0) {
-            iscodAllowed = false;
-          }
-        }
-      }
-      let orderVal = {
-        product_variant_id: cart.checkout.product_variant_id,
-        quantity: cart.checkout.quantity,
-        sub_total: cart.checkout.sub_total,
-        taxes:
-          cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
-            ? Math.ceil(0.92 * taxes)
-            : cart.checkout.sub_total > 9999
-            ? Math.ceil(0.88 * taxes)
-            : Math.ceil(taxes),
-        discount:
-          cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
-            ? Math.floor(0.08 * cart.checkout.sub_total)
-            : cart.checkout.sub_total > 9999
-            ? Math.floor(0.12 * cart.checkout.sub_total)
-            : 0,
-        delivery_charge: {
-          total_delivery_charge: delivery_charges,
-        },
-        total_amount:
-          cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
-            ? Math.ceil(
-                cart.checkout.sub_total +
-                  0.92 * taxes +
-                  delivery_charges -
-                  Math.floor(0.08 * cart.checkout.sub_total)
-              )
-            : cart.checkout.sub_total > 9999
-            ? Math.ceil(
-                cart.checkout.sub_total +
-                  0.88 * taxes +
-                  delivery_charges -
-                  Math.floor(0.12 * cart.checkout.sub_total)
-              )
-            : Math.ceil(cart.checkout.sub_total + taxes + delivery_charges),
-        cod_allowed: iscodAllowed ? 1 : 0,
-      };
-      setOrderSummary(orderVal);
+	useEffect(() => {
+		var delivery_charges = 0;
+		var iscodAllowed = true;
+		var taxes = 0;
+		console.log("xyzq", cart);
+		if (cart.checkout !== null) {
+			console.log("xyzr", cart);
+			var sub_total = 0;
+			sub_total = cart.checkout.sub_total;
+			if (cart.cart != undefined && cart.cart.data != undefined) {
+				for (let i = 0; i < cart.cart.data.cart.length; i++) {
+					delivery_charges += cart.cart.data.cart[i].delivery_charges;
+					taxes +=
+						((cart.cart.data.cart[i].taxes != null
+							? cart.cart.data.cart[i].taxes
+							: 5) /
+							100) *
+						(parseInt(cart.cart.data.cart[i].qty) *
+							parseInt(cart.cart.data.cart[i].discounted_price));
+					if (
+						cart.cart.data.cart[i].delivery_charges == 0 ||
+						cart.cart.data.cart[i].delivery_charges == 50
+					) {
+						iscodAllowed = false;
+					}
+				}
+			}
+			let orderVal = {
+				product_variant_id: cart.checkout.product_variant_id,
+				quantity: cart.checkout.quantity,
+				sub_total: cart.checkout.sub_total,
+				taxes:
+					cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
+						? Math.ceil(0.92 * taxes)
+						: cart.checkout.sub_total > 9999
+						? Math.ceil(0.88 * taxes)
+						: Math.ceil(taxes),
+				discount:
+					cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
+						? Math.floor(0.08 * cart.checkout.sub_total)
+						: cart.checkout.sub_total > 9999
+						? Math.floor(0.12 * cart.checkout.sub_total)
+						: 0,
+				delivery_charge: {
+					total_delivery_charge: delivery_charges,
+				},
+				total_amount:
+					cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
+						? Math.ceil(
+								cart.checkout.sub_total +
+									0.92 * taxes +
+									delivery_charges -
+									Math.floor(0.08 * cart.checkout.sub_total)
+						  )
+						: cart.checkout.sub_total > 9999
+						? Math.ceil(
+								cart.checkout.sub_total +
+									0.88 * taxes +
+									delivery_charges -
+									Math.floor(0.12 * cart.checkout.sub_total)
+						  )
+						: Math.ceil(cart.checkout.sub_total + taxes + delivery_charges),
+				cod_allowed: iscodAllowed ? 1 : 0,
+			};
+			setOrderSummary(orderVal);
 
 			if (sub_total <= 199 || parseInt(delivery_charges) < 1 || !iscodAllowed) {
 				setIsCodAllowed(false);
@@ -616,31 +627,31 @@ const Checkout = ({ productTriggered = false }) => {
 		}
 	}, [cart]);
 
-  useEffect(() => {
-    if (isUserLoggedIn) {
-      const cartVal = [...JSON.parse(localStorage.getItem("cart"))];
-      setIsLoader(true);
-      if (cartVal) {
-        for (let i = 0; i < cartVal.length; i++) {
-          api
-            .addToCart(
-              cookies.get("jwt_token"),
-              cartVal[i].product_id,
-              cartVal[i].product_variant_id,
-              cartVal[i].qty
-            )
-            .then((response) => response.json())
-            .then((result) => {
-              if (result.status === 1 && i === cartVal.length - 1) {
-                handleOrderSummary();
-              }
-            });
-        }
-      }
-    } else {
-      setIsLoader(false);
-    }
-  }, [isUserLoggedIn]);
+	useEffect(() => {
+		if (isUserLoggedIn) {
+			const cartVal = [...JSON.parse(localStorage.getItem("cart"))];
+			setIsLoader(true);
+			if (cartVal) {
+				for (let i = 0; i < cartVal.length; i++) {
+					api
+						.addToCart(
+							cookies.get("jwt_token"),
+							cartVal[i].product_id,
+							cartVal[i].product_variant_id,
+							cartVal[i].qty
+						)
+						.then((response) => response.json())
+						.then((result) => {
+							if (result.status === 1 && i === cartVal.length - 1) {
+								handleOrderSummary();
+							}
+						});
+				}
+			}
+		} else {
+			setIsLoader(false);
+		}
+	}, [isUserLoggedIn]);
 
 	return (
 		<div>

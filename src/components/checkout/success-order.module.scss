@@ -1,0 +1,53 @@
+.cardWrapper {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #f25cc5;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  max-width: 700px;
+  margin: 24px auto;
+}
+
+.transactionHeader {
+  color: #000;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+  margin-bottom: 0;
+}
+
+.border {
+  height: 2px;
+  width: 100%;
+  background-color: lightgray;
+  margin: 10px 0;
+}
+
+.orderWrapper {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.orderImg {
+  max-width: 125px;
+  margin-right: 24px;
+  border-radius: 8px;
+}
+
+.detailVal {
+  font-size: 16px;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 575px) {
+  .orderImg {
+    max-width: 100px;
+  }
+
+  .detailVal {
+    font-size: 14px;
+  }
+}
