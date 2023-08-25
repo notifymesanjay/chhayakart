@@ -16,6 +16,7 @@ import SuccessOrder from "./success-order";
 import { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import SpecificSubCategory from "../specific-sub-category";
 
 const totalVisible = 5;
 export default function Success({
@@ -154,13 +155,22 @@ export default function Success({
             }}
           >
             {" "}
-            See Past Orders<FontAwesomeIcon className={styles.arrowIcon} icon={faArrowRight} />
+            See Past Orders
+            <FontAwesomeIcon className={styles.arrowIcon} icon={faArrowRight} />
           </p>
         )}
       </div>
+
       <div className="related-product-wrapper">
-        <h4 className="relatedProductsHeader">You might also like</h4>
+        <SpecificSubCategory
+          categoryId={96}
+          subCategoryId={75}
+          productTriggered={productTriggered}
+          setProductTriggered={setProductTriggered}
+        />
+        {/* <h4 className="relatedProductsHeader">You might also like</h4>
         <div className="related-product-container">
+          
           {relatedProducts === null ? (
             <div className="d-flex justify-content-center">
               <div className="spinner-border" role="status">
@@ -169,7 +179,6 @@ export default function Success({
             </div>
           ) : (
             <div className="row">
-              {/* //<ResponsiveCarousel */}
               <ResponsiveCarousel
                 items={5}
                 itemsInTablet={3}
@@ -196,7 +205,7 @@ export default function Success({
               </ResponsiveCarousel>
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </>
   );
