@@ -393,6 +393,7 @@ const Checkout = ({ productTriggered = false }) => {
 							totalDeliveryCharge,
 							parseInt(cartVal[i].delivery_charges)
 						);
+						console.log("qwer", totalDeliveryCharge);
 						taxes += parseFloat(
 							parseInt(cartVal[i].qty) *
 								parseInt(cartVal[i].discounted_price) *

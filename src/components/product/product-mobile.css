@@ -679,7 +679,7 @@ option {
 }
 
 .related-product-wrapper {
-	margin: 20px auto;
+	margin: 4px auto;
 }
 .related-product-wrapper h5 {
 	box-sizing: border-box;
@@ -844,6 +844,9 @@ option {
 	.addToCartStickerDiv {
 		width: auto;
 		height: 4rem;
+	}
+	.ganeshCaurosel {
+		padding-top: 25px;
 	}
 
 	.productPricing,
@@ -1407,8 +1410,8 @@ option {
 	}
 }
 
-@media only screen and (max-width: 575px){
-	.product-details-view{
+@media only screen and (max-width: 575px) {
+	.product-details-view {
 		margin-top: 0;
 	}
 }

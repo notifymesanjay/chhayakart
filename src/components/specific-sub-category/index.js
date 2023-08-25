@@ -6,8 +6,8 @@ import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carouse
 import styles from "./specific-sub-category.module.scss";
 
 const SpecificSubCategory = ({
-	categoryId = 96,
-	subCategoryId = 75,
+	categoryId = 166,
+	subCategoryId = 81,
 	productTriggered = false,
 	setProductTriggered = () => {},
 }) => {
@@ -65,14 +65,14 @@ const SpecificSubCategory = ({
 		<div className={styles.productWrapper}>
 			{products.length > 0 ? (
 				<>
-					<h1 className={styles.header}>You Might Also Like</h1>
+					<h1 className={styles.header}>Season's Best Seller</h1>
 					<div className="row">
 						<ResponsiveCarousel
 							items={5}
 							itemsInTablet={3}
 							itemsInMobile={1.5}
 							infinite={false}
-							autoPlaySpeed={300}
+							autoPlaySpeed={1200}
 							showArrows={false}
 							showDots={false}
 							autoPlay={true}

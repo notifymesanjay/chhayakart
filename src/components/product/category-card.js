@@ -9,7 +9,7 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 
 	return isSmScreen ? (
 		<>
-			{subCategories.map((subCategory, index) => (
+			{subCategories.slice(0, 12).map((subCategory, index) => (
 				<div className={styles.homeCategoryWrapper} key={index}>
 					<div className={styles.headerWrapper}>
 						<h1 className={styles.header}>{subCategory.category_name}</h1>
@@ -44,7 +44,7 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 		</>
 	) : (
 		<div className="container">
-			{subCategories.map((subCategory) => (
+			{subCategories.slice(0, 12).map((subCategory) => (
 				<div className={styles.cardWrapper}>
 					<div className={styles.headerWrapper}>
 						<h1 className={styles.header}>{subCategory.category_name}</h1>

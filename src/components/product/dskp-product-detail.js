@@ -14,6 +14,7 @@ import { BsHeart, BsHeartFill, BsPlus, BsShare } from "react-icons/bs";
 import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
+import SpecificSubCategory from "../specific-sub-category";
 import api from "../../api/api";
 import { ActionTypes } from "../../model/action-type";
 import TrackingService from "../../services/trackingService";
@@ -606,6 +607,14 @@ const DskpProductDetail = ({
 						</Link>
 					</button>
 				</div>
+			</div>
+			<div className={styles.ganeshCaurosel}>
+				<SpecificSubCategory
+					categoryId={166}
+					subCategoryId={81}
+					productTriggered={productTriggered}
+					setProductTriggered={setProductTriggered}
+				/>
 			</div>
 
 			{/* <div className={styles.favIconWrapper}>

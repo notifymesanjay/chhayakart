@@ -275,7 +275,7 @@ const ProductDetails = ({
 						mainimage={mainimage}
 						productbrand={productbrand}
 						setmainimage={setmainimage}
-            slug={slug}
+						slug={slug}
 						addtoCart={addtoCart}
 						productdata={productdata}
 						productTriggered={productTriggered}
@@ -292,7 +292,7 @@ const ProductDetails = ({
 								productbrand={productbrand}
 								setmainimage={setmainimage}
 								addtoCart={addtoCart}
-                slug={slug}
+								slug={slug}
 								productdata={productdata}
 								productTriggered={productTriggered}
 								setProductTriggered={setProductTriggered}
@@ -367,6 +367,7 @@ const ProductDetails = ({
 					) : (
 						<div className="row">
 							{/* //<ResponsiveCarousel */}
+
 							<ResponsiveCarousel
 								items={5}
 								itemsInTablet={3}

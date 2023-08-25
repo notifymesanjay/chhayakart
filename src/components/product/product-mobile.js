@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BiLink, BiMinus } from "react-icons/bi";
-
+import SpecificSubCategory from "../specific-sub-category";
 import {
 	FaAngleDoubleRight,
 	FaChevronLeft,
@@ -373,6 +373,15 @@ const ProductMobile = ({
 						content={productdata.features}
 					/>
 				</div> */}
+			</div>
+			<br />
+			<div className="ganeshCaurosel">
+				<SpecificSubCategory
+					categoryId={166}
+					subCategoryId={81}
+					productTriggered={productTriggered}
+					setProductTriggered={setProductTriggered}
+				/>
 			</div>
 			<div className="addToCartStickerDiv">
 				{!isCart ? (
