@@ -433,10 +433,12 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 					if (cart.cart.data.cart[i].delivery_charges == 0) {
 						isCodAllowed = false;
 					}
-					delivery_charges +=
+					delivery_charges = Math.max(
+						delivery_charges,
 						cart.cart.data.cart[i].delivery_charges != undefined
 							? cart.cart.data.cart[i].delivery_charges
-							: 40;
+							: 40
+					);
 					product["product_variant_id"] =
 						cart.cart.data.cart[i].product_variant_id;
 					product["qty"] = cart.cart.data.cart[i].qty;

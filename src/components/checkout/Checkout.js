@@ -393,7 +393,7 @@ const Checkout = ({ productTriggered = false }) => {
 							totalDeliveryCharge,
 							parseInt(cartVal[i].delivery_charges)
 						);
-						console.log("qwer", totalDeliveryCharge);
+						console.log("kjh", totalDeliveryCharge);
 						taxes += parseFloat(
 							parseInt(cartVal[i].qty) *
 								parseInt(cartVal[i].discounted_price) *
@@ -568,7 +568,10 @@ const Checkout = ({ productTriggered = false }) => {
 			sub_total = cart.checkout.sub_total;
 			if (cart.cart != undefined && cart.cart.data != undefined) {
 				for (let i = 0; i < cart.cart.data.cart.length; i++) {
-					delivery_charges += cart.cart.data.cart[i].delivery_charges;
+					delivery_charges = Math.max(
+						delivery_charges,
+						cart.cart.data.cart[i].delivery_charges
+					);
 					taxes +=
 						((cart.cart.data.cart[i].taxes != null
 							? cart.cart.data.cart[i].taxes
