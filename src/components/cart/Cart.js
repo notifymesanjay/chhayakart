@@ -496,6 +496,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 
 	useEffect(() => {
 		handleOrderSummary();
+		console.log("zxcv", cart);
 	}, [cart, productTriggered]);
 
 	return (

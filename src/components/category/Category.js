@@ -5,7 +5,7 @@ import { useResponsive } from "../shared/use-responsive";
 import Gaon from "../Gaon.png";
 import styles from "./category.module.scss";
 import gana from "../gana.webp";
-
+import Banner from "../seasonBanner/bannerCarousel";
 const ShopByCategory = ({
 	categories = [],
 	setSelectedFilter = () => {},
@@ -19,6 +19,24 @@ const ShopByCategory = ({
 	return useMemo(
 		() => (
 			<>
+				{isSmScreen && (
+					<>
+						<div className={styles.ganeshAdd}>
+							<img
+								className={`${styles.ganeshAd} lazyload`}
+								data-src={gana}
+								alt="Ganesh Icon"
+								onClick={() => {
+									navigate("/subCategory/96/75_GANESH%20IDOL");
+								}}
+							/>
+						</div>
+						<br />
+						<div className={styles.seasonBanner}>
+							<Banner />
+						</div>
+					</>
+				)}
 				{shop.shop !== null && (
 					<>
 						{!isSmScreen ? (
@@ -52,16 +70,6 @@ const ShopByCategory = ({
 						) : (
 							<div className="container">
 								<div className={styles.cardWrapper}>
-									<div className={styles.ganeshAdd}>
-										<img
-											className={`${styles.ganeshAd} lazyload`}
-											data-src={gana}
-											alt="Ganesh Icon"
-											onClick={() => {
-												navigate("/subCategory/96/75_GANESH%20IDOL");
-											}}
-										/>
-									</div>
 									<div className={styles.headerWrapper}>
 										<h1 className={styles.header}>SHOP BY CATEGORY</h1>
 
