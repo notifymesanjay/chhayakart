@@ -429,7 +429,7 @@ const QuickViewModal = (props) => {
 														items={3}
 														itemsInTablet={3}
 														itemsInMobile={3}
-														infinite={false}
+														infinite={true}
 														autoPlay={true}
 														autoPlaySpeed={4000}
 														showArrows={false}

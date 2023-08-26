@@ -186,7 +186,7 @@ export default function Success({
 								items={5}
 								itemsInTablet={3}
 								itemsInMobile={1.5}
-								infinite={false}
+								infinite={true}
 								autoPlaySpeed={1000}
 								showArrows={false}
 								showDots={false}

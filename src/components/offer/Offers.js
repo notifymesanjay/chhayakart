@@ -77,7 +77,7 @@ const Offers = () => {
 									<ResponsiveCarousel
 										items={5}
 										itemsInTablet={3}
-										infinite={false}
+										infinite={true}
 										autoPlay={true}
 										autoPlaySpeed={4000}
 										showArrows={false}
