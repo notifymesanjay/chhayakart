@@ -85,7 +85,6 @@ const SelectedCategoryProducts = ({
 
 	const handleAddToCart = (product, index) => {
 		if (cookies.get("jwt_token") !== undefined) {
-			console.log("xyzu", product);
 			console.log(
 				product.variants.length > 1
 					? JSON.parse(
