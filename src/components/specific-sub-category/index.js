@@ -72,10 +72,10 @@ const SpecificSubCategory = ({
 							itemsInTablet={3}
 							itemsInMobile={1.5}
 							infinite={false}
-							autoPlaySpeed={1200}
+							autoPlaySpeed={2000}
 							showArrows={false}
 							showDots={false}
-							autoPlay={true}
+							autoPlay={false}
 							partialVisible={isMobile}
 							partialVisibilityGutter={16}
 						>
