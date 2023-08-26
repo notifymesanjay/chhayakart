@@ -419,7 +419,7 @@ const Productdetails = ({
 									<ResponsiveCarousel
 										items={5}
 										itemsInTablet={3}
-										infinite={false}
+										infinite={true}
 										autoPlaySpeed={3000}
 										showArrows={false}
 										showDots={false}

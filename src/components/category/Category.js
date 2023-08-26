@@ -31,10 +31,6 @@ const ShopByCategory = ({
 								}}
 							/>
 						</div>
-						<br />
-						<div className={styles.seasonBanner}>
-							<Banner />
-						</div>
 					</>
 				)}
 				{shop.shop !== null && (
@@ -99,6 +95,10 @@ const ShopByCategory = ({
 											</div>
 										))}
 									</div>
+								</div>
+
+								<div className={styles.seasonBanner}>
+									<Banner />
 								</div>
 							</div>
 						)}

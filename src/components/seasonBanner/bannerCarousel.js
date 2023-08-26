@@ -5,6 +5,7 @@ import banner2 from "../banner2.jpg";
 import banner3 from "../banner3.jpg";
 import banner4 from "../banner4.jpg";
 import { useResponsive } from "../shared/use-responsive";
+import { useNavigate } from "react-router-dom";
 import styles from "./bannercarousel.module.scss";
 const Banner = () => {
 	const bannerImg = [
@@ -15,6 +16,7 @@ const Banner = () => {
 	];
 	// useEffect(alert(banner1), []);
 	const { isMobile } = useResponsive();
+	const navigate = useNavigate();
 	return (
 		<div>
 			<ResponsiveCarousel
@@ -30,7 +32,14 @@ const Banner = () => {
 			>
 				{bannerImg.map((img) => (
 					<div key={img.id}>
-						<img className={styles.banner} src={img.image} alt={img.title} />
+						<img
+							className={styles.banner}
+							src={img.image}
+							alt={img.title}
+							onClick={() => {
+								navigate("/subCategory/166");
+							}}
+						/>
 					</div>
 				))}
 			</ResponsiveCarousel>
