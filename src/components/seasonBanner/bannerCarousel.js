@@ -24,10 +24,10 @@ const Banner = () => {
 				itemsInTablet={1}
 				itemsInMobile={1}
 				infinite={true}
-				autoPlaySpeed={1200}
+				autoPlaySpeed={3000}
 				showArrows={false}
 				showDots={true}
-				autoPlay={false}
+				autoPlay={true}
 				partialVisibilityGutter={false}
 			>
 				{bannerImg.map((img) => (
