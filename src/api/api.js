@@ -560,35 +560,25 @@ const api = {
 		return fetch(appUrl + appSubUrl + "/settings/time_slots", requestOptions);
 	},
 	placeOrder(
-		token,
-		product_variant_id,
-		quantity,
-		total,
-		delivery_charge,
-		final_total,
-		payment_method,
-		address_id,
-		deliveryTime,
-		discount,
-		status = 2
+		data
 	) {
 		var myHeaders = new Headers();
 		myHeaders.append(access_key_param, access_key);
-		myHeaders.append("Authorization", token_prefix + token);
+		myHeaders.append("Authorization", token_prefix + data.token);
 
 		var formdata = new FormData();
-		formdata.append("product_variant_id", product_variant_id);
-		formdata.append("quantity", quantity);
-		formdata.append("total", total);
+		formdata.append("product_variant_id", data.productVariants);
+		formdata.append("quantity", data.quantity);
+		formdata.append("total", data.subTotal);
         formdata.append("tax_percentage", 5);
-        formdata.append("tax_amount", total*.05);
-		formdata.append("delivery_charge", delivery_charge);
-		formdata.append("final_total", final_total);
-		formdata.append("payment_method", payment_method);
-		formdata.append("address_id", address_id);
-		formdata.append("delivery_time", deliveryTime);
-		formdata.append("discount", discount);
-		if (payment_method === "COD") {
+        formdata.append("tax_amount", data.taxes);
+		formdata.append("delivery_charge", data.deliveryCharge);
+		formdata.append("final_total", data.totalAmount);
+		formdata.append("payment_method", data.paymentMethod);
+		formdata.append("address_id", data.addressId);
+		formdata.append("delivery_time", data.deliveryTime);
+		formdata.append("discount", data.discount);
+		if (data.paymentMethod === "COD") {
 			formdata.append("status", 2);
 		} else {
 			formdata.append("status", 1);

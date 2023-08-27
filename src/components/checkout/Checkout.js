@@ -25,9 +25,7 @@ const stripePromise = loadStripe(
   "pk_test_51MKxDESEKxefYE6MZCHxEw4cFKiiLn2mV3Ek4Nx1UfcuNfE1Z6jgQrZrKpqTLju3n5SBjYJcwt1Jkw1bEoPXWRHB00XZ7D2f2F"
 );
 
-const Checkout = ({
-  productTriggered = false,
-}) => {
+const Checkout = ({ productTriggered = false }) => {
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user);
   const setting = useSelector((state) => state.setting);
@@ -202,20 +200,22 @@ const Checkout = ({
         user.status === "loading" ? "" : user.user.email
       );
     } catch (ex) {}
+    let orderData = {
+      token: cookies.get("jwt_token"),
+      productVariants: orderSummary.product_variant_id,
+      quantity: orderSummary.quantity,
+      subTotal: orderSummary.sub_total,
+      deliveryCharge: orderSummary.delivery_charge.total_delivery_charge,
+      totalAmount: orderSummary.total_amount,
+      paymentMethod: paymentMethod,
+      addressId: selectedAddress.id,
+      deliveryTime: delivery_time,
+      discount: orderSummary.discount,
+	  taxes: orderSummary.taxes
+    };
 
     api
-      .placeOrder(
-        cookies.get("jwt_token"),
-        orderSummary.product_variant_id,
-        orderSummary.quantity,
-        orderSummary.sub_total,
-        orderSummary.delivery_charge.total_delivery_charge,
-        orderSummary.total_amount,
-        paymentMethod,
-        selectedAddress.id,
-        delivery_time,
-        orderSummary.discount
-      )
+      .placeOrder(orderData)
       .then((response) => response.json())
       .then(async (result) => {
         if (result.status === 1) {
@@ -258,7 +258,7 @@ const Checkout = ({
                   handleRozarpayPayment(
                     result.data.order_id,
                     res.data.transaction_id,
-                    cart.cart.data.sub_total,
+                    orderSummary.total_amount,
                     user.user.name,
                     user.user.email,
                     user.user.mobile,
@@ -284,7 +284,7 @@ const Checkout = ({
 
             handlePayStackPayment(
               user.user.email,
-              cart.cart.data.sub_total,
+              orderSummary.total_amount,
               setting.payment_setting.paystack_currency_code,
               setting.setting.support_email
             );
@@ -380,7 +380,10 @@ const Checkout = ({
             subTotal = 0,
             taxes = 0;
           for (let i = 0; i < cartVal.length - 1; i++) {
-            if (cartVal[i].delivery_charges == 0) {
+            if (
+              cartVal[i].delivery_charges == 0 ||
+              cartVal[i].delivery_charges == 50
+            ) {
               iscodAllowed = false;
             }
             allProductVariantId +=
@@ -388,7 +391,11 @@ const Checkout = ({
             allQuantity += cartVal[i].qty.toString() + ",";
             subTotal +=
               parseInt(cartVal[i].qty) * parseInt(cartVal[i].discounted_price);
-            totalDeliveryCharge += parseInt(cartVal[i].delivery_charges);
+            totalDeliveryCharge = Math.max(
+              totalDeliveryCharge,
+              parseInt(cartVal[i].delivery_charges)
+            );
+            console.log("kjh", totalDeliveryCharge);
             taxes += parseFloat(
               parseInt(cartVal[i].qty) *
                 parseInt(cartVal[i].discounted_price) *
@@ -420,11 +427,14 @@ const Checkout = ({
             parseInt(cartVal[cartVal.length - 1].qty) *
             parseInt(cartVal[cartVal.length - 1].discounted_price);
 
-          totalDeliveryCharge += parseInt(
-            cartVal[cartVal.length - 1].delivery_charges
+          totalDeliveryCharge = Math.max(
+            totalDeliveryCharge,
+            parseInt(cartVal[cartVal.length - 1].delivery_charges)
           );
-
-          if (cartVal[cartVal.length - 1].delivery_charges == 0) {
+          if (
+            cartVal[cartVal.length - 1].delivery_charges == 0 ||
+            cartVal[cartVal.length - 1].delivery_charges == 50
+          ) {
             iscodAllowed = false;
           }
 
@@ -537,7 +547,7 @@ const Checkout = ({
   }, []);
 
   useEffect(() => {
-	handleOrderSummary();
+    handleOrderSummary();
   }, [productTriggered]);
 
   useEffect(() => {
@@ -560,7 +570,10 @@ const Checkout = ({
       sub_total = cart.checkout.sub_total;
       if (cart.cart != undefined && cart.cart.data != undefined) {
         for (let i = 0; i < cart.cart.data.cart.length; i++) {
-          delivery_charges += cart.cart.data.cart[i].delivery_charges;
+          delivery_charges = Math.max(
+            delivery_charges,
+            cart.cart.data.cart[i].delivery_charges
+          );
           taxes +=
             ((cart.cart.data.cart[i].taxes != null
               ? cart.cart.data.cart[i].taxes
@@ -568,7 +581,10 @@ const Checkout = ({
               100) *
             (parseInt(cart.cart.data.cart[i].qty) *
               parseInt(cart.cart.data.cart[i].discounted_price));
-          if (cart.cart.data.cart[i].delivery_charges == 0) {
+          if (
+            cart.cart.data.cart[i].delivery_charges == 0 ||
+            cart.cart.data.cart[i].delivery_charges == 50
+          ) {
             iscodAllowed = false;
           }
         }
@@ -724,13 +740,13 @@ const Checkout = ({
                 orderID={stripeOrderId}
                 client_secret={stripeClientSecret}
                 transaction_id={stripeTransactionId}
-                amount={cart.cart.data.sub_total}
+                amount={orderSummary.total_amount}
               >
                 <InjectCheckout
                   orderID={stripeOrderId}
                   client_secret={stripeClientSecret}
                   transaction_id={stripeTransactionId}
-                  amount={cart.cart.data.sub_total}
+                  amount={orderSummary.total_amount}
                 />
               </Elements>
             )}

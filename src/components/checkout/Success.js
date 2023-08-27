@@ -9,7 +9,16 @@ import ynks from "../ynks.webp";
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
 import { useSelector } from "react-redux";
 import { useResponsive } from "../shared/use-responsive";
+import { useNavigate, Link } from "react-router-dom";
+import Cookies from "universal-cookie";
+import Loader from "../loader/Loader";
+import SuccessOrder from "./success-order";
+import { useMemo } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import SpecificSubCategory from "../specific-sub-category";
 
+const totalVisible = 1;
 export default function Success({
 	productTriggered,
 	setProductTriggered = () => {},
@@ -18,6 +27,36 @@ export default function Success({
 	const city = useSelector((state) => state.city);
 	const { isMobile } = useResponsive();
 	const [categoryId, setCategoryId] = useState({});
+	const navigate = useNavigate();
+	const cookies = new Cookies();
+	const [isLoader, setIsLoader] = useState(false);
+	const [orders, setOrders] = useState([]);
+	const [cardToShow, setCardToShow] = useState(0);
+	const [totalOrders, setTotalOrders] = useState(0);
+	const inputRefs = useMemo(
+		() =>
+			Array(totalOrders)
+				.fill(0)
+				.map((_) => React.createRef()),
+		[totalOrders]
+	);
+	const topPos = (element) =>
+		element ? element.getBoundingClientRect().top - 140 : 0;
+
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			let cardRef = inputRefs[cardToShow];
+			if (cardRef) {
+				window.scrollBy({
+					left: 0,
+					top: topPos(cardRef.current),
+					behavior: "smooth",
+				});
+			}
+
+			return () => clearTimeout(timeout);
+		}, [100]);
+	}, [cardToShow]);
 
 	useEffect(() => {
 		if (city.city !== null) {
@@ -65,6 +104,19 @@ export default function Success({
 		}
 	}, [city]);
 
+	useEffect(() => {
+		api
+			.getOrders(cookies.get("jwt_token"), 20, 0)
+			.then((response) => response.json())
+			.then((result) => {
+				if (result.status === 1) {
+					setIsLoader(false);
+					setOrders(result.data);
+					setTotalOrders(result.data.length);
+				}
+			});
+	}, []);
+
 	return (
 		<>
 			<div className={styles.cover}>
@@ -74,14 +126,53 @@ export default function Success({
 					alt="order placed thankyou visit again"
 				></img>
 				{/* <span>THANKS.... </span> */}
-				<div className={styles.title}>
-					<h1 className="title">YOUR ORDER DETAILS WITH CHHAYAKART</h1>
-				</div>
+				{/* <h1 className={styles.title}>YOUR RECENT ORDER WITH CHHAYAKART</h1> */}
 			</div>
-			<Order displayAll={false} setCategoryId={setCategoryId} />
+			<div>
+				<div className={styles.transactionWrapper}>
+					{orders.length === 0 ? (
+						<Loader width="100%" height="350px" />
+					) : (
+						<>
+							{orders.slice(0, totalVisible).map((order, index) => (
+								<SuccessOrder
+									cardRef={inputRefs[index]}
+									order={order}
+									id={index}
+									show={cardToShow === index}
+									setCardToShow={setCardToShow}
+								/>
+							))}
+						</>
+					)}
+				</div>
+				{/* <Order displayAll={false} setCategoryId={setCategoryId} /> */}
+				{orders.length > totalVisible && (
+					<p
+						className={styles.transactionHistory}
+						onClick={() => {
+							navigate("/profile");
+						}}
+					>
+						{" "}
+						See Past Orders
+						<FontAwesomeIcon className={styles.arrowIcon} icon={faArrowRight} />
+					</p>
+				)}
+			</div>
 
 			<div className="related-product-wrapper">
-				<h4 className="relatedProductsHeader">You might also like</h4>
+				<br />
+
+				<SpecificSubCategory
+					categoryId={166}
+					subCategoryId={81}
+					productTriggered={productTriggered}
+					setProductTriggered={setProductTriggered}
+				/>
+
+				<br />
+				<h4 className="relatedProductsHeader">Similar Products </h4>
 				<div className="related-product-container">
 					{relatedProducts === null ? (
 						<div className="d-flex justify-content-center">
@@ -91,13 +182,12 @@ export default function Success({
 						</div>
 					) : (
 						<div className="row">
-							{/* //<ResponsiveCarousel */}
 							<ResponsiveCarousel
 								items={5}
 								itemsInTablet={3}
 								itemsInMobile={1.5}
-								infinite={false}
-								autoPlaySpeed={2000}
+								infinite={true}
+								autoPlaySpeed={1000}
 								showArrows={false}
 								showDots={false}
 								autoPlay={true}

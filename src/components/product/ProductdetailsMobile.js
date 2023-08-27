@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./productDetails.css";
-
+import SpecificSubCategory from "../specific-sub-category";
 // import { FaRupeeSign } from "react-icons/fa";
 import { BsHeart, BsShare, BsPlus, BsHeartFill } from "react-icons/bs";
 import { BiMinus, BiLink } from "react-icons/bi";
@@ -409,10 +409,17 @@ const Productdetails = ({
 								</div>
 							) : (
 								<div className="row">
+									<SpecificSubCategory
+										categoryId={166}
+										subCategoryId={81}
+										productTriggered={productTriggered}
+										setProductTriggered={setProductTriggered}
+									/>
+
 									<ResponsiveCarousel
 										items={5}
 										itemsInTablet={3}
-										infinite={false}
+										infinite={true}
 										autoPlaySpeed={3000}
 										showArrows={false}
 										showDots={false}

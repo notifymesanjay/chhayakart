@@ -288,7 +288,11 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 						if (cartVal[i].delivery_charges == 0) {
 							isCodAllowed = false;
 						}
-						totalDeliveryCharge += parseInt(cartVal[i].delivery_charges);
+						// totalDeliveryCharge += parseInt(cartVal[i].delivery_charges);
+						totalDeliveryCharge = Math.max(
+							totalDeliveryCharge,
+							parseInt(cartVal[i].delivery_charges)
+						);
 						taxes += parseFloat(
 							(cartVal[i].taxes / 100) *
 								(parseInt(cartVal[i].qty) *
@@ -319,8 +323,9 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 					subTotal +=
 						parseInt(cartVal[cartVal.length - 1].qty) *
 						parseInt(cartVal[cartVal.length - 1].discounted_price);
-					totalDeliveryCharge += parseInt(
-						cartVal[cartVal.length - 1].delivery_charges
+					totalDeliveryCharge = Math.max(
+						totalDeliveryCharge,
+						parseInt(cartVal[cartVal.length - 1].delivery_charges)
 					);
 					taxes += parseFloat(
 						(cartVal[cartVal.length - 1].taxes / 100) *
@@ -428,10 +433,12 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 					if (cart.cart.data.cart[i].delivery_charges == 0) {
 						isCodAllowed = false;
 					}
-					delivery_charges +=
+					delivery_charges = Math.max(
+						delivery_charges,
 						cart.cart.data.cart[i].delivery_charges != undefined
 							? cart.cart.data.cart[i].delivery_charges
-							: 40;
+							: 40
+					);
 					product["product_variant_id"] =
 						cart.cart.data.cart[i].product_variant_id;
 					product["qty"] = cart.cart.data.cart[i].qty;
@@ -491,6 +498,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 
 	useEffect(() => {
 		handleOrderSummary();
+		console.log("zxcv", cart);
 	}, [cart, productTriggered]);
 
 	return (

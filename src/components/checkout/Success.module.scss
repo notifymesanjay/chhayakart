@@ -1,8 +1,11 @@
 .title {
-	font-size: 30px;
-	font-family: -webkit-body;
-	text-align: center;
-	margin-top: 10px;
+  color: #000;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 0;
+  text-align: center;
+  margin-top: 15px;
 }
 // cover {
 // 	height: 200px;
@@ -19,10 +22,35 @@
 // 	color: #fff;
 // }
 .cover img {
-	height: 415px;
-	width: 100%;
-	filter: brightness(100%);
-	z-index: -1;
-	background-size: cover;
-	background-position: center center;
+  height: 415px;
+  width: 100%;
+  filter: brightness(100%);
+  z-index: -1;
+  background-size: cover;
+  background-position: center center;
+}
+.transactionHistory {
+  width: 100%;
+  max-width: 700px;
+  margin: -10px auto 0;
+  text-align: right;
+  cursor: pointer;
+  font-size: 18px;
+  color: #51bd88;
+  padding: 0 10px;
+}
+
+.transactionHistory:hover {
+  text-decoration: underline;
+}
+
+.arrowIcon,
+.arrowIcon > * {
+  color: #51bd88 !important;
+  margin-left: 5px;
+  font-size: 14px;
+}
+
+.transactionWrapper {
+  padding: 0 10px;
 }

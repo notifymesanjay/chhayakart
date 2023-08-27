@@ -14,6 +14,7 @@ import { BsHeart, BsHeartFill, BsPlus, BsShare } from "react-icons/bs";
 import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
+import SpecificSubCategory from "../specific-sub-category";
 import api from "../../api/api";
 import { ActionTypes } from "../../model/action-type";
 import TrackingService from "../../services/trackingService";
@@ -55,68 +56,68 @@ const DskpProductDetail = ({
   const user = useSelector((state) => state.user);
   const trackingService = new TrackingService();
 
-  const [descriptionHeight, setDescriptionHeight] = useState({
-    height: "50px",
-    overflow: "hidden",
-  });
-  const [featureHeight, setFeatureHeight] = useState({
-    height: "50px",
-    overflow: "hidden",
-  });
-  const [viewMore, setViewMore] = useState({
-    description: true,
-    feature: true,
-  });
-  const [isOpenBulk, setIsOpenBulk] = useState(false);
-  const [isBulkOrder, setIsBulkOrder] = useState(false);
-  //  Add to favorite
-  // const addToFavorite = async (productdata) => {
-  // 	await api
-  // 		.addToFavotite(cookies.get("jwt_token"), productdata.id)
-  // 		.then((response) => response.json())
-  // 		.then(async (result) => {
-  // 			if (result.status === 1) {
-  // 				toast.success(result.message);
-  // 				await api
-  // 					.getFavorite(
-  // 						cookies.get("jwt_token"),
-  // 						city.city.latitude,
-  // 						city.city.longitude
-  // 					)
-  // 					.then((resp) => resp.json())
-  // 					.then((res) => {
-  // 						if (res.status === 1)
-  // 							dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
-  // 					});
-  // 			} else {
-  // 				toast.error(result.message);
-  // 			}
-  // 		});
-  // };
-  // const removefromFavorite = async (productdata) => {
-  // 	await api
-  // 		.removeFromFavorite(cookies.get("jwt_token"), productdata.id)
-  // 		.then((response) => response.json())
-  // 		.then(async (result) => {
-  // 			if (result.status === 1) {
-  // 				toast.success(result.message);
-  // 				await api
-  // 					.getFavorite(
-  // 						cookies.get("jwt_token"),
-  // 						city.city.latitude,
-  // 						city.city.longitude
-  // 					)
-  // 					.then((resp) => resp.json())
-  // 					.then((res) => {
-  // 						if (res.status === 1)
-  // 							dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
-  // 						else dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
-  // 					});
-  // 			} else {
-  // 				toast.error(result.message);
-  // 			}
-  // 		});
-  // };
+	const [descriptionHeight, setDescriptionHeight] = useState({
+		height: "50px",
+		overflow: "hidden",
+	});
+	const [featureHeight, setFeatureHeight] = useState({
+		height: "50px",
+		overflow: "hidden",
+	});
+	const [viewMore, setViewMore] = useState({
+		description: true,
+		feature: true,
+	});
+	const [isOpenBulk, setIsOpenBulk] = useState(false);
+	const [isBulkOrder, setIsBulkOrder] = useState(false);
+	//  Add to favorite
+	const addToFavorite = async (productdata) => {
+		await api
+			.addToFavotite(cookies.get("jwt_token"), productdata.id)
+			.then((response) => response.json())
+			.then(async (result) => {
+				if (result.status === 1) {
+					toast.success(result.message);
+					await api
+						.getFavorite(
+							cookies.get("jwt_token"),
+							city.city.latitude,
+							city.city.longitude
+						)
+						.then((resp) => resp.json())
+						.then((res) => {
+							if (res.status === 1)
+								dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
+						});
+				} else {
+					toast.error(result.message);
+				}
+			});
+	};
+	const removefromFavorite = async (productdata) => {
+		await api
+			.removeFromFavorite(cookies.get("jwt_token"), productdata.id)
+			.then((response) => response.json())
+			.then(async (result) => {
+				if (result.status === 1) {
+					toast.success(result.message);
+					await api
+						.getFavorite(
+							cookies.get("jwt_token"),
+							city.city.latitude,
+							city.city.longitude
+						)
+						.then((resp) => resp.json())
+						.then((res) => {
+							if (res.status === 1)
+								dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
+							else dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
+						});
+				} else {
+					toast.error(result.message);
+				}
+			});
+	};
 
   // const AddProductToCart1 = (quantity) => {
   // 	if (cookies.get("jwt_token") !== undefined) {
@@ -330,39 +331,36 @@ const DskpProductDetail = ({
     }
   };
 
-  //Add to favorite
-  const addToFavorite = async (productdata) => {};
-
-  const removefromFavorite = async (productdata) => {};
-  return (
-    <>
-      <div className={styles.detailWrapper}>
-        <div>
-          {images.length > 0 &&
-            images.map((image, index) => (
-              <div key={index}>
-                <div
-                  className={styles.subImages}
-                  onClick={() => {
-                    setmainimage(image);
-                  }}
-                >
-                  <img
-                    className={styles.subImg}
-                    data-src={image}
-                    alt="product"
-                  />
-                </div>
-              </div>
-            ))}
-        </div>
-        <div className={styles.cardWrapper}>
-          <img
-            src={mainimage}
-            className={styles.mainImage}
-            alt="main-product"
-          />
-        </div>
+	return (
+		<>
+			<div className={styles.detailWrapper}>
+				<div>
+					{images.length > 0 &&
+						images.map((image, index) => (
+							<div key={index}>
+								<div
+									className={styles.subImages}
+									onClick={() => {
+										setmainimage(image);
+									}}
+								>
+									<img
+										className={styles.subImg}
+										// data-src={image}
+										src={image}
+										alt="product"
+									/>
+								</div>
+							</div>
+						))}
+				</div>
+				<div className={styles.cardWrapper}>
+					<img
+						src={mainimage}
+						className={styles.mainImage}
+						alt="main-product"
+					/>
+				</div>
 
         <div className={styles.bodyWrapper}>
           {/* {Object.keys(productbrand).length === 0 ? null : ( */}
@@ -459,12 +457,51 @@ const DskpProductDetail = ({
 											<BiLink size={20} />
 										</button>
 									</li> */}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </p>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div className={styles.shareIcon}>
+							{favorite.favorite &&
+							favorite.favorite.data.some(
+								(element) => element.id === productdata.id
+							) ? (
+								<button
+									type="button"
+									className="wishlist-product"
+									onClick={() => {
+										if (cookies.get("jwt_token") !== undefined) {
+											removefromFavorite(productdata);
+										} else {
+											toast.error(
+												"OOps! You need to login first to add to favourites"
+											);
+										}
+									}}
+								>
+									<BsHeartFill fill="green" />
+								</button>
+							) : (
+								<button
+									key={productdata.id}
+									type="button"
+									className="wishlist-product"
+									onClick={() => {
+										if (cookies.get("jwt_token") !== undefined) {
+											addToFavorite(productdata);
+										} else {
+											toast.error(
+												"OOps! You need to login first to add to favourites"
+											);
+										}
+									}}
+								>
+									<BsHeart />
+								</button>
+							)}
+						</div>
+					</p>
 
           <p className={styles.actualPrice}>
             M.R.P:{" "}
@@ -480,225 +517,199 @@ const DskpProductDetail = ({
 
           <hr />
 
-          <div className={styles.sellerName}>
-            <span className={styles.brandLabel}> Sold By</span>
-            <span className={styles.brandValue}>
-              {" "}
-              CHHAYAKART {productbrand.name}
-            </span>
-          </div>
-          <hr />
-          {/* description starts here  */}
-          <div className={styles.descriptionWrapper}>
-            <h2 className={styles.subHeader}>Description</h2>
-            <div
-              className={styles.descriptionBodyWrapper}
-              style={{
-                height: descriptionHeight.height,
-                overflow: descriptionHeight.overflow,
-              }}
-            >
-              <div
-                dangerouslySetInnerHTML={{ __html: productdata.description }}
-              ></div>
-            </div>
-            <button
-              className={styles.viewMoreBtn}
-              onClick={() => {
-                expandDetails("description");
-              }}
-            >
-              {viewMore.description ? "View More" : "View Less"}
-            </button>
-            {/* <h2 className={styles.subHeader}>Feature & Details</h2> */}
-            {/* <div
-            className={styles.descriptionBodyWrapper}
-            style={{
-              height: featureHeight.height,
-              overflow: featureHeight.overflow,
-            }}
-          >
-            <p className={styles.descriptionBody}>
-              Carry and flaunt it wherever you go, at just 1.7 kgs and 
-            </p>
-          </div>
-          <button
-            className={styles.viewMoreBtn}
-            onClick={() => {
-              expandDetails("feature");
-            }}
-          >
-            {viewMore.feature ? "View More" : "View Less"}
-          </button> */}
-          </div>
-        </div>
-      </div>
+					<div className={styles.sellerName}>
+						<span className={styles.brandLabel}> Sold By</span>
+						<span className={styles.brandValue}> {productbrand.name}</span>
+					</div>
+					<hr />
+					{/* description starts here  */}
+					<div className={styles.descriptionWrapper}>
+						<h2 className={styles.subHeader}>Description</h2>
+						<div
+							className={styles.descriptionBodyWrapper}
+							style={{
+								height: descriptionHeight.height,
+								overflow: descriptionHeight.overflow,
+							}}
+						>
+							<div
+								dangerouslySetInnerHTML={{ __html: productdata.description }}
+							></div>
+						</div>
+						<button
+							className={styles.viewMoreBtn}
+							onClick={() => {
+								expandDetails("description");
+							}}
+						>
+							{viewMore.description ? "View More" : "View Less"}
+						</button>
+					</div>
+				</div>
+			</div>
 
-      <div className={styles.addSectionWrapper}>
-        <div className={styles.viewCartSticker}>
-          {!isCart ? (
-            <button
-              color="#f25cc5"
-              id={`Add-to-cart-productdetail`}
-              className={`${styles.addToCartActive} ${styles.button}`}
-              onClick={() => DirectAddProductToCart(1)}
-            >
-              <IoCartOutline className={styles.artAdd} /> Add to Cart
-            </button>
-          ) : (
-            <>
-              <div
-                id={`input-cart-productdetail`}
-                className={styles.inputToCart}
-              >
-                <button
-                  type="button"
-                  className="wishlist-button"
-                  onClick={() => {
-                    handleDecrement();
-                  }}
-                >
-                  <BiMinus />
-                </button>
-                <span id={`input-productdetail`}>{productInCartCount}</span>
-                <button
-                  type="button"
-                  className={styles.wishlistButton}
-                  onClick={() => {
-                    handleIncrement();
-                  }}
-                >
-                  <BsPlus />{" "}
-                </button>
-              </div>
-            </>
-          )}
-        </div>
-        <br />
-        <div className={styles.viewCartSticker}>
-          <button
-            className={styles.button}
-            type="button"
-            onClick={() => DirectAddProductToCart(1)}
-          >
-            <FontAwesomeIcon
-              icon={faAngleDoubleRight}
-              className={styles.faAngleDoubleRight}
-            />
-            <Link to="/checkout" className={styles.buynowButton}>
-              Buy Now
-            </Link>
-          </button>
-        </div>
-      </div>
+			<div className={styles.addSectionWrapper}>
+				<div className={styles.viewCartSticker}>
+					{!isCart ? (
+						<button
+							color="#f25cc5"
+							id={`Add-to-cart-productdetail`}
+							className={styles.addToCartActive}
+							onClick={() => DirectAddProductToCart(1)}
+						>
+							<IoCartOutline className={styles.artAdd} /> Add to Cart
+						</button>
+					) : (
+						<>
+							<div
+								id={`input-cart-productdetail`}
+								className={styles.inputToCart}
+							>
+								<button
+									type="button"
+									className="wishlist-button"
+									onClick={() => {
+										handleDecrement();
+									}}
+								>
+									<BiMinus />
+								</button>
+								<span id={`input-productdetail`}>{productInCartCount}</span>
+								<button
+									type="button"
+									className={styles.wishlistButton}
+									onClick={() => {
+										handleIncrement();
+									}}
+								>
+									<BsPlus />{" "}
+								</button>
+							</div>
+						</>
+					)}
+				</div>
+				<br />
+				<div className={styles.viewCartSticker}>
+					<button
+						className={styles.button}
+						type="button"
+						onClick={() => DirectAddProductToCart(1)}
+					>
+						<FontAwesomeIcon
+							icon={faAngleDoubleRight}
+							className={styles.faAngleDoubleRight}
+						/>
+						<Link to="/checkout" className={styles.buynowButton}>
+							Buy Now
+						</Link>
+					</button>
+				</div>
+			</div>
+			<div className={styles.ganeshCaurosel}>
+				<SpecificSubCategory
+					categoryId={166}
+					subCategoryId={81}
+					productTriggered={productTriggered}
+					setProductTriggered={setProductTriggered}
+				/>
+			</div>
 
-      <div className={styles.favIconWrapper}>
-        <div
-          id={`input-cart-productdetail`}
-          className="input-to-cart visually-hidden"
-        >
-          <button
-            type="button"
-            className="wishlist-button"
-            onClick={() => {
-              var val = parseInt(
-                document.getElementById(`input-productdetail`).innerHTML
-              );
-              if (val === 1) {
-                document.getElementById(`input-productdetail`).innerHTML = 0;
-                document
-                  .getElementById(`Add-to-cart-productdetail`)
-                  .classList.remove("visually-hidden");
-                document
-                  .getElementById(`input-cart-productdetail`)
-                  .classList.toggle("visually-hidden");
-                removefromCart(
-                  productdata.id,
-                  JSON.parse(
-                    document.getElementById(
-                      `select-product-variant-productdetail`
-                    ).value
-                  ).id
-                );
-              } else {
-                document.getElementById(`input-productdetail`).innerHTML =
-                  val - 1;
-                addtoCart(
-                  productdata.id,
-                  JSON.parse(
-                    document.getElementById(
-                      `select-product-variant-productdetail`
-                    ).value
-                  ).id,
-                  document.getElementById(`input-productdetail`).innerHTML
-                );
-              }
-            }}
-          >
-            <BiMinus fill="#fff" />
-          </button>
-          <span id={`input-productdetail`}></span>
-          <button
-            type="button"
-            className="wishlist-button"
-            onClick={() => {
-              var val =
-                document.getElementById(`input-productdetail`).innerHTML;
-              if (val < productdata.total_allowed_quantity) {
-                document.getElementById(`input-productdetail`).innerHTML =
-                  parseInt(val) + 1;
-                addtoCart(
-                  productdata.id,
-                  JSON.parse(
-                    document.getElementById(
-                      `select-product-variant-productdetail`
-                    ).value
-                  ).id,
-                  document.getElementById(`input-productdetail`).innerHTML
-                );
-              }
-            }}
-          >
-            <BsPlus fill="#fff" />{" "}
-          </button>
-        </div>
+			{/* <div className={styles.favIconWrapper}>
+				<div
+					id={`input-cart-productdetail`}
+					className="input-to-cart visually-hidden"
+				>
+					<button
+						type="button"
+						className="wishlist-button"
+						onClick={() => {
+							var val = parseInt(
+								document.getElementById(`input-productdetail`).innerHTML
+							);
+							if (val === 1) {
+								document.getElementById(`input-productdetail`).innerHTML = 0;
+								document
+									.getElementById(`Add-to-cart-productdetail`)
+									.classList.remove("visually-hidden");
+								document
+									.getElementById(`input-cart-productdetail`)
+									.classList.toggle("visually-hidden");
+								removefromCart(
+									productdata.id,
+									JSON.parse(
+										document.getElementById(
+											`select-product-variant-productdetail`
+										).value
+									).id
+								);
+							} else {
+								document.getElementById(`input-productdetail`).innerHTML =
+									val - 1;
+								addtoCart(
+									productdata.id,
+									JSON.parse(
+										document.getElementById(
+											`select-product-variant-productdetail`
+										).value
+									).id,
+									document.getElementById(`input-productdetail`).innerHTML
+								);
+							}
+						}}
+					>
+						<BiMinus fill="#fff" />
+					</button>
+					<span id={`input-productdetail`}></span>
+					<button
+						type="button"
+						className="wishlist-button"
+						onClick={() => {
+							var val =
+								document.getElementById(`input-productdetail`).innerHTML;
+							if (val < productdata.total_allowed_quantity) {
+								document.getElementById(`input-productdetail`).innerHTML =
+									parseInt(val) + 1;
+								addtoCart(
+									productdata.id,
+									JSON.parse(
+										document.getElementById(
+											`select-product-variant-productdetail`
+										).value
+									).id,
+									document.getElementById(`input-productdetail`).innerHTML
+								);
+							}
+						}}
+					>
+						<BsPlus fill="#fff" />{" "}
+					</button>
+				</div>
 
-        {/* <button type='button' className='wishlist-product' onClick={() => addToFavorite(productdata.id)}><BsHeart /></button> */}
-        {favorite.favorite &&
-        favorite.favorite.data.some(
-          (element) => element.id === productdata.id
-        ) ? (
-          <button
-            type="button"
-            className="wishlist-product"
-            onClick={() => removefromFavorite(productdata.id)}
-          >
-            <BsHeartFill fill="green" />
-          </button>
-        ) : (
-          <button
-            key={productdata.id}
-            type="button"
-            className="wishlist-product"
-            onClick={() => addToFavorite(productdata.id)}
-          >
-            <BsHeart />
-          </button>
-        )}
-      </div>
-      {isOpenBulk && (
-        <BulkOrder
-          isOpenBulk={isOpenBulk}
-          setIsOpenBulk={setIsOpenBulk}
-          product={productdata}
-          onSubmit={IncrementProduct1}
-          onSubmit1={DirectAddProductToCart}
-          productVal={productInCartCount}
-          isBulkOrder={isBulkOrder}
-        />
-      )}
-    </>
-  );
+				{/* <button type='button' className='wishlist-product' onClick={() => addToFavorite(productdata.id)}><BsHeart /></button> 
+				{favorite.favorite &&
+				favorite.favorite.data.some(
+					(element) => element.id === productdata.id
+				) ? (
+					<button
+						type="button"
+						className="wishlist-product"
+						onClick={() => removefromFavorite(productdata.id)}
+					>
+						<BsHeartFill fill="green" />
+					</button>
+				) : (
+					<button
+						key={productdata.id}
+						type="button"
+						className="wishlist-product"
+						onClick={() => addToFavorite(productdata.id)}
+					>
+						<BsHeart />
+					</button>
+				)}
+			</div> */}
+		</>
+	);
 };
 
 export default DskpProductDetail;

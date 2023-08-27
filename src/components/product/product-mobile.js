@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BiLink, BiMinus } from "react-icons/bi";
-
+import SpecificSubCategory from "../specific-sub-category";
 import {
   FaAngleDoubleRight,
   FaChevronLeft,
@@ -365,42 +365,51 @@ const ProductMobile = ({
 						content={productdata.features}
 					/>
 				</div> */}
-      </div>
-      <div className="addToCartStickerDiv">
-        {!isCart ? (
-          <button
-            color="#f25cc5"
-            id={`Add-to-cart-productdetail`}
-            className="add-to-cartActive"
-            onClick={() => DirectAddProductToCart(1)}
-          >
-            <IoCartOutline className="cartAdd" /> Add to Cart
-          </button>
-        ) : (
-          <>
-            <div id={`input-cart-productdetail`} className="input-to-cart">
-              <button
-                type="button"
-                className="wishlist-button"
-                onClick={() => {
-                  handleDecrement();
-                }}
-              >
-                <BiMinus />
-              </button>
-              <span id={`input-productdetail`}>{productInCartCount}</span>
-              <button
-                type="button"
-                className="wishlist-button"
-                onClick={() => {
-                  handleIncrement();
-                }}
-              >
-                <BsPlus />{" "}
-              </button>
-            </div>
-          </>
-        )}
+			</div>
+			<br />
+			<div className="ganeshCaurosel">
+				<SpecificSubCategory
+					categoryId={166}
+					subCategoryId={81}
+					productTriggered={productTriggered}
+					setProductTriggered={setProductTriggered}
+				/>
+			</div>
+			<div className="addToCartStickerDiv">
+				{!isCart ? (
+					<button
+						color="#f25cc5"
+						id={`Add-to-cart-productdetail`}
+						className="add-to-cartActive"
+						onClick={() => DirectAddProductToCart(1)}
+					>
+						<IoCartOutline className="cartAdd" /> Add to Cart
+					</button>
+				) : (
+					<>
+						<div id={`input-cart-productdetail`} className="input-to-cart">
+							<button
+								type="button"
+								className="wishlist-button"
+								onClick={() => {
+									handleDecrement();
+								}}
+							>
+								<BiMinus />
+							</button>
+							<span id={`input-productdetail`}>{productInCartCount}</span>
+							<button
+								type="button"
+								className="wishlist-button"
+								onClick={() => {
+									handleIncrement();
+								}}
+							>
+								<BsPlus />{" "}
+							</button>
+						</div>
+					</>
+				)}
 
         <div>
           <ChatOnWhatsapp></ChatOnWhatsapp>

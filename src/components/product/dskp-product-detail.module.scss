@@ -42,8 +42,11 @@
 
 .shareIcon {
 	float: right;
+	padding-left: 20px;
 }
-
+.favIcon {
+	float: right;
+}
 .bodyWrapper::-webkit-scrollbar {
 	width: 0px;
 }
@@ -251,4 +254,8 @@
 }
 .sellerName {
 	display: grid;
+}
+
+.ganeshCaurosel {
+	margin-top: 30px;
 }

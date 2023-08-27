@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 import { BiMinus } from "react-icons/bi";
@@ -85,7 +85,6 @@ const SelectedCategoryProducts = ({
 
 	const handleAddToCart = (product, index) => {
 		if (cookies.get("jwt_token") !== undefined) {
-			console.log("xyzu", product);
 			console.log(
 				product.variants.length > 1
 					? JSON.parse(
@@ -300,6 +299,10 @@ const SelectedCategoryProducts = ({
 			</option>
 		));
 	};
+
+	useEffect(() => {
+		setIsProductAdded(false);
+	}, [product]);
 
 	return (
 		<div className={`${styles.productCard} ${styles.cardWrapper}`} key={index}>
