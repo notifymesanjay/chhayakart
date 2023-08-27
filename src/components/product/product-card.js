@@ -31,6 +31,7 @@ const ProductCard = ({
 	const cookies = new Cookies();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const user = useSelector((state) => state.user);
 	const city = useSelector((state) => state.city);
 	const favorite = useSelector((state) => state.favorite);
 
@@ -150,7 +151,7 @@ const ProductCard = ({
 		const trackingService = new TrackingService();
 		trackingService.trackCart(
 			product,
-			parseInt(val) + 1,
+			1,
 			user.status === "loading" ? "" : user.user.email
 		);
 		if (cookies.get("jwt_token") !== undefined) {

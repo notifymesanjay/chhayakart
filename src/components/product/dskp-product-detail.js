@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { BiLink, BiMinus } from "react-icons/bi";
 import { FaRupeeSign } from "react-icons/fa";
 import {
-	FacebookIcon,
-	FacebookShareButton,
-	TelegramIcon,
-	TelegramShareButton,
-	WhatsappIcon,
-	WhatsappShareButton,
+  FacebookIcon,
+  FacebookShareButton,
+  TelegramIcon,
+  TelegramShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
 } from "react-share";
 import { BsHeart, BsHeartFill, BsPlus, BsShare } from "react-icons/bs";
 import { toast } from "react-toastify";
@@ -19,41 +19,42 @@ import api from "../../api/api";
 import { ActionTypes } from "../../model/action-type";
 import TrackingService from "../../services/trackingService";
 import {
-	AddProductToCart,
-	DecrementProduct,
-	IncrementProduct,
+  AddProductToCart,
+  DecrementProduct,
+  IncrementProduct,
 } from "../../services/cartService";
 import styles from "./dskp-product-detail.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-	faAngleDoubleRight,
-	faIndianRupee,
+  faAngleDoubleRight,
+  faIndianRupee,
 } from "@fortawesome/free-solid-svg-icons";
 import { IoCartOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import BulkOrder from "./bulk-order";
 
 const DskpProductDetail = ({
-	images,
-	mainimage = "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQ9V9HCp5iiSLSve8c-OsHCt_xBkp0Q4j-RrM-m1IIS9IOMb6nzs8gipQGg_TCe4mOsxTGXJ8l5vY02K4A",
-	productbrand,
-	setmainimage = () => {},
-	slug,
-	addtoCart = () => {},
-	productdata,
-	productTriggered,
-	setProductTriggered = () => {},
-	removefromCart = () => {},
-	getProductVariants = () => {},
+  images,
+  mainimage = "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQ9V9HCp5iiSLSve8c-OsHCt_xBkp0Q4j-RrM-m1IIS9IOMb6nzs8gipQGg_TCe4mOsxTGXJ8l5vY02K4A",
+  productbrand,
+  setmainimage = () => {},
+  slug,
+  addtoCart = () => {},
+  productdata,
+  productTriggered,
+  setProductTriggered = () => {},
+  removefromCart = () => {},
+  getProductVariants = () => {},
 }) => {
-	const cookies = new Cookies();
-	const dispatch = useDispatch();
-	const favorite = useSelector((state) => state.favorite);
-	const city = useSelector((state) => state.city);
-	const share_parent_url = "https://chhayakart.com/product";
-	const [isCart, setIsCart] = useState(false);
-	const [productInCartCount, setProductInCartCount] = useState(0);
-	const user = useSelector((state) => state.user);
-	const trackingService = new TrackingService();
+  const cookies = new Cookies();
+  const dispatch = useDispatch();
+  const favorite = useSelector((state) => state.favorite);
+  const city = useSelector((state) => state.city);
+  const share_parent_url = "https://chhayakart.com/product";
+  const [isCart, setIsCart] = useState(false);
+  const [productInCartCount, setProductInCartCount] = useState(0);
+  const user = useSelector((state) => state.user);
+  const trackingService = new TrackingService();
 
 	const [descriptionHeight, setDescriptionHeight] = useState({
 		height: "50px",
@@ -118,221 +119,217 @@ const DskpProductDetail = ({
 			});
 	};
 
-	// const AddProductToCart1 = (quantity) => {
-	// 	if (cookies.get("jwt_token") !== undefined) {
-	// 		setIsCart(true);
-	// 		setProductInCartCount(1);
-	// 		addtoCart(
-	// 			productdata,
-	// 			JSON.parse(
-	// 				document.getElementById(`select-product-variant-productdetail`).value
-	// 			).id,
-	// 			1
-	// 		);
-	// 	} else {
-	// 		trackingService.trackCart(
-	// 			productdata,
-	// 			1,
-	// 			user.status === "loading" ? "" : user.user.email
-	// 		);
-	// 		const isAdded = AddProductToCart(productdata, 1);
-	// 		if (isAdded) {
-	// 			setIsCart(true);
-	// 			setProductInCartCount(1);
-	// 			setProductTriggered(!productTriggered);
-	// 		}
-	// 	}
-	// };
+  // const AddProductToCart1 = (quantity) => {
+  // 	if (cookies.get("jwt_token") !== undefined) {
+  // 		setIsCart(true);
+  // 		setProductInCartCount(1);
+  // 		addtoCart(
+  // 			productdata,
+  // 			JSON.parse(
+  // 				document.getElementById(`select-product-variant-productdetail`).value
+  // 			).id,
+  // 			1
+  // 		);
+  // 	} else {
+  // 		trackingService.trackCart(
+  // 			productdata,
+  // 			1,
+  // 			user.status === "loading" ? "" : user.user.email
+  // 		);
+  // 		const isAdded = AddProductToCart(productdata, 1);
+  // 		if (isAdded) {
+  // 			setIsCart(true);
+  // 			setProductInCartCount(1);
+  // 			setProductTriggered(!productTriggered);
+  // 		}
+  // 	}
+  // };
 
-	// const handleDecrement = () => {
-	// 	var val = productInCartCount;
+  // const handleDecrement = () => {
+  // 	var val = productInCartCount;
 
-	// 	if (cookies.get("jwt_token") !== undefined) {
-	// 		if (val === 1) {
-	// 			setProductInCartCount(0);
-	// 			setIsCart(false);
-	// 			removefromCart(
-	// 				productdata,
-	// 				JSON.parse(
-	// 					document.getElementById(`select-product-variant-productdetail`)
-	// 						.value
-	// 				).id
-	// 			);
-	// 		} else {
-	// 			setProductInCartCount(val - 1);
-	// 			addtoCart(
-	// 				productdata,
-	// 				JSON.parse(
-	// 					document.getElementById(`select-product-variant-productdetail`)
-	// 						.value
-	// 				).id,
-	// 				val - 1
-	// 			);
-	// 		}
-	// 	} else {
-	// 		trackingService.trackCart(
-	// 			productdata,
-	// 			parseInt(val) - 1,
-	// 			user.status === "loading" ? "" : user.user.email
-	// 		);
+  // 	if (cookies.get("jwt_token") !== undefined) {
+  // 		if (val === 1) {
+  // 			setProductInCartCount(0);
+  // 			setIsCart(false);
+  // 			removefromCart(
+  // 				productdata,
+  // 				JSON.parse(
+  // 					document.getElementById(`select-product-variant-productdetail`)
+  // 						.value
+  // 				).id
+  // 			);
+  // 		} else {
+  // 			setProductInCartCount(val - 1);
+  // 			addtoCart(
+  // 				productdata,
+  // 				JSON.parse(
+  // 					document.getElementById(`select-product-variant-productdetail`)
+  // 						.value
+  // 				).id,
+  // 				val - 1
+  // 			);
+  // 		}
+  // 	} else {
+  // 		trackingService.trackCart(
+  // 			productdata,
+  // 			parseInt(val) - 1,
+  // 			user.status === "loading" ? "" : user.user.email
+  // 		);
 
-	// 		const isDecremented = DecrementProduct(productdata.id, productdata);
-	// 		if (isDecremented) {
-	// 			setProductInCartCount(val - 1);
-	// 		} else {
-	// 			setProductInCartCount(0);
-	// 			setIsCart(false);
-	// 		}
-	// 		setProductTriggered(!productTriggered);
-	// 	}
-	// };
+  // 		const isDecremented = DecrementProduct(productdata.id, productdata);
+  // 		if (isDecremented) {
+  // 			setProductInCartCount(val - 1);
+  // 		} else {
+  // 			setProductInCartCount(0);
+  // 			setIsCart(false);
+  // 		}
+  // 		setProductTriggered(!productTriggered);
+  // 	}
+  // };
 
-	// const handleIncrement = () => {
-	// 	var val = productInCartCount;
+  // const handleIncrement = () => {
+  // 	var val = productInCartCount;
 
-	// 	if (cookies.get("jwt_token") !== undefined) {
-	// 		if (val < productdata.total_allowed_quantity) {
-	// 			setProductInCartCount(val + 1);
-	// 			addtoCart(
-	// 				productdata,
-	// 				JSON.parse(
-	// 					document.getElementById(`select-product-variant-productdetail`)
-	// 						.value
-	// 				).id,
-	// 				val + 1
-	// 			);
-	// 		}
-	// 	} else {
-	// 		trackingService.trackCart(
-	// 			productdata,
-	// 			parseInt(val) + 1,
-	// 			user.status === "loading" ? "" : user.user.email
-	// 		);
+  // 	if (cookies.get("jwt_token") !== undefined) {
+  // 		if (val < productdata.total_allowed_quantity) {
+  // 			setProductInCartCount(val + 1);
+  // 			addtoCart(
+  // 				productdata,
+  // 				JSON.parse(
+  // 					document.getElementById(`select-product-variant-productdetail`)
+  // 						.value
+  // 				).id,
+  // 				val + 1
+  // 			);
+  // 		}
+  // 	} else {
+  // 		trackingService.trackCart(
+  // 			productdata,
+  // 			parseInt(val) + 1,
+  // 			user.status === "loading" ? "" : user.user.email
+  // 		);
 
-	// 		const isIncremented = IncrementProduct(
-	// 			productdata.id,
-	// 			productdata,
-	// 			1,
-	// 			false
-	// 		);
-	// 		if (isIncremented) {
-	// 			setProductInCartCount(val + 1);
-	// 		}
-	// 		setProductTriggered(!productTriggered);
-	// 	}
-	// };
+  // 		const isIncremented = IncrementProduct(
+  // 			productdata.id,
+  // 			productdata,
+  // 			1,
+  // 			false
+  // 		);
+  // 		if (isIncremented) {
+  // 			setProductInCartCount(val + 1);
+  // 		}
+  // 		setProductTriggered(!productTriggered);
+  // 	}
+  // };
 
-	const DirectAddProductToCart = (qunatity) => {
-		if (cookies.get("jwt_token") !== undefined) {
-			setIsCart(true);
-			setProductTriggered(!productTriggered);
-			setProductInCartCount(parseInt(qunatity));
-			addtoCart(productdata, productdata.variants[0].id, parseInt(qunatity));
-		} else {
-			const isAdded = AddProductToCart(productdata, parseInt(qunatity));
+  const DirectAddProductToCart = (qunatity) => {
+    if (cookies.get("jwt_token") !== undefined) {
+      setIsCart(true);
+      setProductTriggered(!productTriggered);
+      setProductInCartCount(parseInt(qunatity));
+      addtoCart(productdata, productdata.variants[0].id, parseInt(qunatity));
+    } else {
+      const isAdded = AddProductToCart(productdata, parseInt(qunatity));
 
-			trackingService.trackCart(
-				productdata,
-				parseInt(qunatity),
-				user.status === "loading" ? "" : user.user.email
-			);
-			if (isAdded) {
-				setIsCart(true);
-				setProductInCartCount(parseInt(qunatity));
-				setProductTriggered(!productTriggered);
-			}
-		}
-	};
+      trackingService.trackCart(
+        productdata,
+        parseInt(qunatity),
+        user.status === "loading" ? "" : user.user.email
+      );
+      if (isAdded) {
+        setIsCart(true);
+        setProductInCartCount(parseInt(qunatity));
+        setProductTriggered(!productTriggered);
+      }
+    }
+  };
 
-	const handleDecrement = () => {
-		var val = productInCartCount;
-		if (cookies.get("jwt_token") !== undefined) {
-			if (val > 0) {
-				if (val === 1) {
-					setProductInCartCount(0);
-					setIsCart(false);
-					removefromCart(productdata, productdata.variants[0].id);
-				} else {
-					setProductInCartCount(val - 1);
-					addtoCart(productdata, productdata.variants[0].id, val - 1);
-				}
-			}
-		} else {
-			trackingService.trackCart(
-				productdata,
-				parseInt(val) - 1,
-				user.status === "loading" ? "" : user.user.email
-			);
+  const handleDecrement = () => {
+    var val = productInCartCount;
+    if (cookies.get("jwt_token") !== undefined) {
+      if (val > 0) {
+        if (val === 1) {
+          setProductInCartCount(0);
+          setIsCart(false);
+          removefromCart(productdata, productdata.variants[0].id);
+        } else {
+          setProductInCartCount(val - 1);
+          addtoCart(productdata, productdata.variants[0].id, val - 1);
+        }
+      }
+    } else {
+      trackingService.trackCart(
+        productdata,
+        parseInt(val) - 1,
+        user.status === "loading" ? "" : user.user.email
+      );
 
-			const isDecremented = DecrementProduct(productdata.id, productdata);
-			if (isDecremented) {
-				setProductInCartCount(val - 1);
-			} else {
-				setProductInCartCount(0);
-				setIsCart(false);
-			}
-			setProductTriggered(!productTriggered);
-		}
-	};
+      const isDecremented = DecrementProduct(productdata.id, productdata);
+      if (isDecremented) {
+        setProductInCartCount(val - 1);
+      } else {
+        setProductInCartCount(0);
+        setIsCart(false);
+      }
+      setProductTriggered(!productTriggered);
+    }
+  };
 
-	const IncrementProduct1 = (val, index) => {
-		if (cookies.get("jwt_token") !== undefined) {
-			if (parseInt(val) < parseInt(productdata.total_allowed_quantity)) {
-				setProductInCartCount(parseInt(val) + 1);
-				addtoCart(productdata, productdata.variants[0].id, parseInt(val) + 1);
-			} else {
-				toast.error("Maximum Quantity Exceeded");
-			}
-		} else {
-			trackingService.trackCart(
-				productdata,
-				parseInt(val) + 1,
-				user.status === "loading" ? "" : user.user.email
-			);
+  const IncrementProduct1 = (val, index) => {
+    if (cookies.get("jwt_token") !== undefined) {
+      if (parseInt(val) < parseInt(productdata.total_allowed_quantity)) {
+        setProductInCartCount(parseInt(val) + 1);
+        addtoCart(productdata, productdata.variants[0].id, parseInt(val) + 1);
+      } else {
+        toast.error("Maximum Quantity Exceeded");
+      }
+    } else {
+      trackingService.trackCart(
+        productdata,
+        parseInt(val) + 1,
+        user.status === "loading" ? "" : user.user.email
+      );
 
-			console.log("xyz", val, productdata);
-			const isIncremented = IncrementProduct(
-				productdata.id,
-				productdata,
-				val + 1,
-				true
-			);
-			if (isIncremented) {
-				setProductInCartCount(val + 1);
-			}
-			setProductTriggered(!productTriggered);
-		}
-	};
-	const handleIncrement = () => {
-		var val = productInCartCount;
-		if (val >= Math.ceil(parseInt(productdata.total_allowed_quantity) / 2)) {
-			setIsOpenBulk(true);
-			setIsBulkOrder(false);
-		} else {
-			IncrementProduct1(val, 0);
-		}
-	};
+      const isIncremented = IncrementProduct(
+        productdata.id,
+        productdata,
+        val + 1,
+        true
+      );
+      if (isIncremented) {
+        setProductInCartCount(val + 1);
+      }
+      setProductTriggered(!productTriggered);
+    }
+  };
+  const handleIncrement = () => {
+    var val = productInCartCount;
+    if (val >= Math.ceil(parseInt(productdata.total_allowed_quantity) / 2)) {
+      setIsOpenBulk(true);
+      setIsBulkOrder(false);
+    } else {
+      IncrementProduct1(val, 0);
+    }
+  };
 
-	const expandDetails = (type = "") => {
-		if (type === "description") {
-			if (viewMore.description) {
-				setDescriptionHeight({ height: "100%", overflow: "auto" });
-			} else {
-				setDescriptionHeight({ height: "50px", overflow: "hidden" });
-			}
-			setViewMore((prev) => ({ ...prev, description: !viewMore.description }));
-		} else if (type === "feature") {
-			if (viewMore.feature) {
-				setFeatureHeight({ height: "100%", overflow: "auto" });
-			} else {
-				setFeatureHeight({ height: "50px", overflow: "hidden" });
-			}
-			setViewMore((prev) => ({ ...prev, feature: !viewMore.feature }));
-		}
-	};
-	useEffect(() => {
-		console.log("xyz23", isOpenBulk);
-	}, [isOpenBulk]);
+  const expandDetails = (type = "") => {
+    if (type === "description") {
+      if (viewMore.description) {
+        setDescriptionHeight({ height: "100%", overflow: "auto" });
+      } else {
+        setDescriptionHeight({ height: "50px", overflow: "hidden" });
+      }
+      setViewMore((prev) => ({ ...prev, description: !viewMore.description }));
+    } else if (type === "feature") {
+      if (viewMore.feature) {
+        setFeatureHeight({ height: "100%", overflow: "auto" });
+      } else {
+        setFeatureHeight({ height: "50px", overflow: "hidden" });
+      }
+      setViewMore((prev) => ({ ...prev, feature: !viewMore.feature }));
+    }
+  };
 
 	return (
 		<>
@@ -365,85 +362,85 @@ const DskpProductDetail = ({
 					/>
 				</div>
 
-				<div className={styles.bodyWrapper}>
-					{/* {Object.keys(productbrand).length === 0 ? null : ( */}
+        <div className={styles.bodyWrapper}>
+          {/* {Object.keys(productbrand).length === 0 ? null : ( */}
 
-					<p className={styles.productName}>{productdata.name}</p>
-					{/* )} */}
-					{/* <div>
+          <p className={styles.productName}>{productdata.name}</p>
+          {/* )} */}
+          {/* <div>
 						<span className={styles.brandLabel}> SOLD BY</span>
 						<span className={styles.brandValue}> {productbrand.name}</span>
 					</div> */}
 
-					<p className={styles.discountedPrice}>
-						<FontAwesomeIcon
-							className={styles.rupeeIcon}
-							icon={faIndianRupee}
-						/>{" "}
-						{productdata.variants[0].discounted_price}
-						<span className={styles.discountPercentage}>
-							{Math.round(
-								parseFloat(
-									((productdata.variants[0].price -
-										productdata.variants[0].discounted_price) *
-										100) /
-										productdata.variants[0].price
-								)
-							)}
-							% off
-						</span>
-						<div className={styles.shareIcon}>
-							<button
-								class="btn btn-primary"
-								type="button"
-								data-bs-toggle="offcanvas"
-								data-bs-target="#offcanvasExample"
-								aria-controls="offcanvasExample"
-							>
-								<BsShare size={20} fill="white" />
-							</button>
-							<div
-								class="offcanvas offcanvas-start"
-								tabindex="-1"
-								id="offcanvasExample"
-								aria-labelledby="offcanvasExampleLabel"
-							>
-								<div class="offcanvas-body">
-									<div>
-										<h2> Share This product</h2>
-									</div>
-									<br />
+          <p className={styles.discountedPrice}>
+            <FontAwesomeIcon
+              className={styles.rupeeIcon}
+              icon={faIndianRupee}
+            />{" "}
+            {productdata.variants[0].discounted_price}
+            <span className={styles.discountPercentage}>
+              {Math.round(
+                parseFloat(
+                  ((productdata.variants[0].price -
+                    productdata.variants[0].discounted_price) *
+                    100) /
+                    productdata.variants[0].price
+                )
+              )}
+              % off
+            </span>
+            <div className={styles.shareIcon}>
+              <button
+                class="btn btn-primary"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasExample"
+                aria-controls="offcanvasExample"
+              >
+                <BsShare size={20} fill="white" />
+              </button>
+              <div
+                class="offcanvas offcanvas-start"
+                tabindex="-1"
+                id="offcanvasExample"
+                aria-labelledby="offcanvasExampleLabel"
+              >
+                <div class="offcanvas-body">
+                  <div>
+                    <h2> Share This product</h2>
+                  </div>
+                  <br />
 
-									<div className="share-product-container">
-										<ul className="share-product">
-											<li className="share-product-icon">
-												<WhatsappShareButton
-													url={`${share_parent_url}/${productdata.id}/${
-														slug.includes("/") ? slug.split("/")[0] : slug
-													}`}
-												>
-													<WhatsappIcon size={32} round={true} />
-												</WhatsappShareButton>
-											</li>
-											<li className="share-product-icon">
-												<TelegramShareButton
-													url={`${share_parent_url}/${productdata.id}/${
-														slug.includes("/") ? slug.split("/")[0] : slug
-													}`}
-												>
-													<TelegramIcon size={32} round={true} />
-												</TelegramShareButton>
-											</li>
-											<li className="share-product-icon">
-												<FacebookShareButton
-													url={`${share_parent_url}/${productdata.id}/${
-														slug.includes("/") ? slug.split("/")[0] : slug
-													}`}
-												>
-													<FacebookIcon size={32} round={true} />
-												</FacebookShareButton>
-											</li>
-											{/* <li className="share-product-icon">
+                  <div className="share-product-container">
+                    <ul className="share-product">
+                      <li className="share-product-icon">
+                        <WhatsappShareButton
+                          url={`${share_parent_url}/${productdata.id}/${
+                            slug.includes("/") ? slug.split("/")[0] : slug
+                          }`}
+                        >
+                          <WhatsappIcon size={32} round={true} />
+                        </WhatsappShareButton>
+                      </li>
+                      <li className="share-product-icon">
+                        <TelegramShareButton
+                          url={`${share_parent_url}/${productdata.id}/${
+                            slug.includes("/") ? slug.split("/")[0] : slug
+                          }`}
+                        >
+                          <TelegramIcon size={32} round={true} />
+                        </TelegramShareButton>
+                      </li>
+                      <li className="share-product-icon">
+                        <FacebookShareButton
+                          url={`${share_parent_url}/${productdata.id}/${
+                            slug.includes("/") ? slug.split("/")[0] : slug
+                          }`}
+                        >
+                          <FacebookIcon size={32} round={true} />
+                        </FacebookShareButton>
+                      </li>
+                      {/* <li className="share-product-icon">
 										<button
 											type="button"
 											onClick={() => {
@@ -506,19 +503,19 @@ const DskpProductDetail = ({
 						</div>
 					</p>
 
-					<p className={styles.actualPrice}>
-						M.R.P:{" "}
-						<span className={styles.strikeOff}>
-							<FontAwesomeIcon
-								className={styles.rupeeIcon}
-								icon={faIndianRupee}
-							/>{" "}
-							{parseFloat(productdata.variants[0].price)}
-						</span>{" "}
-						(Incl. of all taxes)
-					</p>
+          <p className={styles.actualPrice}>
+            M.R.P:{" "}
+            <span className={styles.strikeOff}>
+              <FontAwesomeIcon
+                className={styles.rupeeIcon}
+                icon={faIndianRupee}
+              />{" "}
+              {parseFloat(productdata.variants[0].price)}
+            </span>{" "}
+            (Incl. of all taxes)
+          </p>
 
-					<hr />
+          <hr />
 
 					<div className={styles.sellerName}>
 						<span className={styles.brandLabel}> Sold By</span>

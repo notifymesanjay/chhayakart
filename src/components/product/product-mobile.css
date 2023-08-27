@@ -793,13 +793,6 @@ option {
 		width: 100%;
 		height: 100%;
 	}
-
-	.defaultProductQuantity {
-		height: 100%;
-		background-color: #817c7cab;
-		color: black;
-		border-right: 1px solid black;
-	}
 	.productQuantityBtn {
 		height: 100%;
 		background-color: #f5f0f0ab;
@@ -809,6 +802,14 @@ option {
 	}
 	.productQuantityBtn:last-child {
 		border-right: none !important;
+	}
+
+	.defaultProductQuantity {
+		height: 100%;
+		background-color: #817c7cab;
+		color: black;
+		padding: 10px 16px 10px 20px;
+		border-right: 1px solid black;
 	}
 
 	.productDetailsContainer {
@@ -1394,7 +1395,6 @@ option {
 @media (max-width: 375px) {
 	.productQuantityBtn {
 		height: 100%;
-		background-color: #f5f0f0ab;
 		color: black;
 		border-right: 1px solid black;
 		padding: 10px 20px 10px 25px;
@@ -1403,7 +1403,6 @@ option {
 @media (max-width: 393px) {
 	.productQuantityBtn {
 		height: 100%;
-		background-color: #f5f0f0ab;
 		color: black;
 		border-right: 1px solid black;
 		padding: 10px 16px 10px 20px;
@@ -1413,5 +1412,9 @@ option {
 @media only screen and (max-width: 575px) {
 	.product-details-view {
 		margin-top: 0;
+	}
+
+	.product-card .image-container .imageWrapper {
+		height: 320px;
 	}
 }
