@@ -115,6 +115,7 @@ const DskpHeader = ({
             navigate("/");
           }}
         />
+		{/* location changes starts here */}
         <button
           type="button"
           onClick={() => {
@@ -158,6 +159,7 @@ const DskpHeader = ({
             </div>
           </div>
         </button>
+		{/* location changes ends here */}
         <div className={styles.linkWrapper}>
           {/* <p>ASKCK</p> */}
           <div
@@ -272,7 +274,7 @@ const DskpHeader = ({
           </div>
         </div>
       </div>
-
+		{/* Location Modal Window */}
       {showLocation && (
         <CkModal show={showLocation} onHide={closeLocation}>
           <Location
@@ -282,6 +284,7 @@ const DskpHeader = ({
             setShowLocation={setShowLocation}
           />
         </CkModal>
+		// Location Modal Window ends here
       )}
 
       {isLogin && (
