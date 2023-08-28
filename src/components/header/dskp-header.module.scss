@@ -84,3 +84,40 @@
     color: red;
   }
 }
+
+.locationWrapper {
+  background-color: transparent;
+  color: white;
+}
+
+.iconWrapper {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.deliveryDescription {
+  font-size: 14px;
+  color: white;
+}
+
+.locationIcon {
+  font-size: 14px;
+}
+
+.locationIcon > * {
+  color: white;
+}
+
+.caretIcon {
+  margin-left: 5px;
+}
+
+.caretIcon > * {
+  color: white;
+}
+
+.currentLocation{
+  font-size: 14px;
+  color: white;
+}

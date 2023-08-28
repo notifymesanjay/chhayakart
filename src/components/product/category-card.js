@@ -3,6 +3,8 @@ import styles from "./category-card.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../shared/use-responsive";
 
+const arr = [[{},{},{}], [{},{},{}]];
+
 const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 	const navigate = useNavigate();
 	const { isSmScreen } = useResponsive();
@@ -40,6 +42,7 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 						))}
 					</div>
 				</div>
+
 			))}
 		</>
 	) : (

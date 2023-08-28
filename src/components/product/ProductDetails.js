@@ -28,6 +28,7 @@ const ProductDetails = ({
 	const { slug } = useParams();
 	const city = useSelector((state) => state.city);
 	const [product, setProduct] = useState(0);
+	const [isMaharastra, setIsMaharastra] = useState(false);
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -146,6 +147,9 @@ const ProductDetails = ({
 		if (city.city !== null) {
 			if (product !== 0) {
 				getProductDatafromApi();
+			}
+			if(city.city.formatted_address.includes('Maharashtra')){
+				setIsMaharastra(true);
 			}
 		}
 	}, [city, product]);
@@ -282,6 +286,7 @@ const ProductDetails = ({
 						setProductTriggered={setProductTriggered}
 						removefromCart={removefromCart}
 						getProductVariants={getProductVariants}
+						isMaharastra={isMaharastra}
 					/>
 				) : (
 					<div className="container" style={{ gap: "20px" }}>
