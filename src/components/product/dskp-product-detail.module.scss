@@ -182,15 +182,26 @@
 	margin-right: 3px;
 	font-weight: bold;
 	color: white;
-	padding: 2px;
+	padding: 10px 15px;
+	height: 54px;
 }
 
 .inputToCart {
-	background-color: white;
+	background-color: transparent;
 	font-size: 2rem;
-
 	font-weight: bold;
 	color: white;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.wishlist-button{
+	padding: 0;
+}
+
+.button{
+	padding: 5px;
 }
 
 .artAdd * {

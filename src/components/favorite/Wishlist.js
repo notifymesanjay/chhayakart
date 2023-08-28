@@ -29,102 +29,104 @@ const Wishlist = () => {
 	const cookies = new Cookies();
 	const [showAddtocart, setshowAddtocart] = useState(true);
 
-	const favorite = useSelector((state) => state.favorite);
-	const city = useSelector((state) => state.city);
-	const sizes = useSelector((state) => state.productSizes);
+  const favorite = useSelector((state) => state.favorite);
+  const city = useSelector((state) => state.city);
+  const sizes = useSelector((state) => state.productSizes);
 
-	const [productSizes, setproductSizes] = useState(null);
-	const [isfavoriteEmpty, setisfavoriteEmpty] = useState(false);
-	const [isLoader, setisLoader] = useState(false);
-	const [isLogin, setIsLogin] = useState(false);
-	const user = useSelector((state) => state.user);
-	useEffect(() => {
-		if (sizes.sizes === null || sizes.status === "loading") {
-			if (city.city !== null && favorite.favorite !== null) {
-				api
-					.getProductbyFilter(
-						city.city.id,
-						city.city.latitude,
-						city.city.longitude
-					)
-					.then((response) => response.json())
-					.then((result) => {
-						if (result.status === 1) {
-							setproductSizes(result.sizes);
-							dispatch({
-								type: ActionTypes.SET_PRODUCT_SIZES,
-								payload: result.sizes,
-							});
-						}
-					});
-			}
-		} else {
-			setproductSizes(sizes.sizes);
-		}
+  const [productSizes, setproductSizes] = useState(null);
+  const [isfavoriteEmpty, setisfavoriteEmpty] = useState(false);
+  const [isLoader, setisLoader] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+  const user = useSelector((state) => state.user);
+  useEffect(() => {
+    if (sizes.sizes === null || sizes.status === "loading") {
+      if (city.city !== null && favorite.favorite !== null) {
+        api
+          .getProductbyFilter(
+            city.city.id,
+            city.city.latitude,
+            city.city.longitude
+          )
+          .then((response) => response.json())
+          .then((result) => {
+            if (result.status === 1) {
+              setproductSizes(result.sizes);
+              dispatch({
+                type: ActionTypes.SET_PRODUCT_SIZES,
+                payload: result.sizes,
+              });
+            } else {
+              navigate("/");
+            }
+          });
+      }
+    } else {
+      setproductSizes(sizes.sizes);
+    }
 
-		if (favorite.favorite === null && favorite.status === "fulfill") {
-			setisfavoriteEmpty(true);
-		} else {
-			setisfavoriteEmpty(false);
-		}
-	}, [favorite]);
+    if (favorite.favorite === null && favorite.status === "fulfill") {
+      setisfavoriteEmpty(true);
+    } else {
+      setisfavoriteEmpty(false);
+    }
+  }, [favorite]);
 
-	const getProductVariantsSelection = (
-		product_id,
-		product_variant_id,
-		div_id,
-		index
-	) => {
-		api
-			.getProductbyId(
-				city.city.id,
-				city.city.latitude,
-				city.city.longitude,
-				product_id
-			)
-			.then((response) => response.json())
-			.then((result) => {
-				if (result.status === 1) {
-					var select = document.createElement("SELECT");
+  const getProductVariantsSelection = (
+    product_id,
+    product_variant_id,
+    div_id,
+    index
+  ) => {
+    api
+      .getProductbyId(
+        city.city.id,
+        city.city.latitude,
+        city.city.longitude,
+        product_id
+      )
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 1) {
+          var select = document.createElement("SELECT");
 
-					select.setAttribute("id", `selectedVariant${index}-wishlist`);
-					select.addEventListener("change", (e) => {
-						document.getElementById(`input-wishlist${index}`).innerHTML = 0;
-						document
-							.getElementById(`input-cart-wishlist${index}`)
-							.classList.remove("active");
-						document
-							.getElementById(`Add-to-cart-wishlist${index}`)
-							.classList.add("active");
-						document.getElementById(`price-wishlist${index}`).innerHTML =
-							JSON.parse(e.target.value).price;
-					});
+          select.setAttribute("id", `selectedVariant${index}-wishlist`);
+          select.addEventListener("change", (e) => {
+            document.getElementById(`input-wishlist${index}`).innerHTML = 0;
+            document
+              .getElementById(`input-cart-wishlist${index}`)
+              .classList.remove("active");
+            document
+              .getElementById(`Add-to-cart-wishlist${index}`)
+              .classList.add("active");
+            document.getElementById(`price-wishlist${index}`).innerHTML =
+              JSON.parse(e.target.value).price;
+          });
 
-					result.data.variants.forEach((variant, ind) => {
-						var opt = document.createElement("option");
-						opt.setAttribute("key", ind);
-						opt.value = JSON.stringify(variant);
+          result.data.variants.forEach((variant, ind) => {
+            var opt = document.createElement("option");
+            opt.setAttribute("key", ind);
+            opt.value = JSON.stringify(variant);
 
-						//get unit_id
-						var unit_id = 0;
-						productSizes.forEach((psize) => {
-							if (
-								parseInt(psize.size) === parseInt(variant.measurement) &&
-								psize.short_code === variant.stock_unit_name
-							) {
-								unit_id = psize.unit_id;
-							}
-						});
-						opt.innerHTML = `${unit_id} ${variant.stock_unit_name} Rs.${variant.price}`;
-						select.appendChild(opt);
-					});
+            //get unit_id
+            var unit_id = 0;
+            productSizes.forEach((psize) => {
+              if (
+                parseInt(psize.size) === parseInt(variant.measurement) &&
+                psize.short_code === variant.stock_unit_name
+              ) {
+                unit_id = psize.unit_id;
+              }
+            });
+            opt.innerHTML = `${unit_id} ${variant.stock_unit_name} Rs.${variant.price}`;
+            select.appendChild(opt);
+          });
 
-					if (document.getElementById(div_id).childNodes.length === 0)
-						document.getElementById(div_id).appendChild(select);
-				}
-			})
-			.catch((error) => {});
-	};
+          if (document.getElementById(div_id).childNodes.length === 0)
+            document.getElementById(div_id).appendChild(select);
+        }
+      })
+      .catch((error) => {});
+  };
 
 	//Add to Cart
 	const addtoCart = async (product, product_variant_id, qty) => {
@@ -153,77 +155,77 @@ const Wishlist = () => {
 						.then((res) => {
 							setisLoader(false);
 
-							if (res.status === 1)
-								dispatch({ type: ActionTypes.SET_CART, payload: res });
-						});
-				} else {
-					setisLoader(false);
-					toast.error(result.message);
-				}
-			});
-	};
+              if (res.status === 1)
+                dispatch({ type: ActionTypes.SET_CART, payload: res });
+            });
+        } else {
+          setisLoader(false);
+          toast.error(result.message);
+        }
+      });
+  };
 
-	//remove from Cart
-	const removefromCart = async (product_id, product_variant_id) => {
-		setisLoader(true);
-		await api
-			.removeFromCart(cookies.get("jwt_token"), product_id, product_variant_id)
-			.then((response) => response.json())
-			.then(async (result) => {
-				if (result.status === 1) {
-					//popup commented
-					//  toast.success(result.message);
-					await api
-						.getCart(
-							cookies.get("jwt_token"),
-							city.city.latitude,
-							city.city.longitude
-						)
-						.then((resp) => resp.json())
-						.then((res) => {
-							setisLoader(false);
-							if (res.status === 1)
-								dispatch({ type: ActionTypes.SET_CART, payload: res });
-							else dispatch({ type: ActionTypes.SET_CART, payload: null });
-						})
-						.catch((error) => {});
-				} else {
-					setisLoader(false);
-					toast.error(result.message);
-				}
-			})
-			.catch((error) => {});
-	};
+  //remove from Cart
+  const removefromCart = async (product_id, product_variant_id) => {
+    setisLoader(true);
+    await api
+      .removeFromCart(cookies.get("jwt_token"), product_id, product_variant_id)
+      .then((response) => response.json())
+      .then(async (result) => {
+        if (result.status === 1) {
+          //popup commented
+          //  toast.success(result.message);
+          await api
+            .getCart(
+              cookies.get("jwt_token"),
+              city.city.latitude,
+              city.city.longitude
+            )
+            .then((resp) => resp.json())
+            .then((res) => {
+              setisLoader(false);
+              if (res.status === 1)
+                dispatch({ type: ActionTypes.SET_CART, payload: res });
+              else dispatch({ type: ActionTypes.SET_CART, payload: null });
+            })
+            .catch((error) => {});
+        } else {
+          setisLoader(false);
+          toast.error(result.message);
+        }
+      })
+      .catch((error) => {});
+  };
 
-	//remove from favorite
-	const removefromFavorite = async (product_id) => {
-		setisLoader(true);
-		await api
-			.removeFromFavorite(cookies.get("jwt_token"), product_id)
-			.then((response) => response.json())
-			.then(async (result) => {
-				if (result.status === 1) {
-					//popup commented
-					//   toast.success(result.message);
-					await api
-						.getFavorite(
-							cookies.get("jwt_token"),
-							city.city.latitude,
-							city.city.longitude
-						)
-						.then((resp) => resp.json())
-						.then((res) => {
-							setisLoader(false);
-							if (res.status === 1)
-								dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
-							else dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
-						});
-				} else {
-					setisLoader(false);
-					toast.error(result.message);
-				}
-			});
-	};
+  //remove from favorite
+  const removefromFavorite = async (product_id) => {
+    setisLoader(true);
+    await api
+      .removeFromFavorite(cookies.get("jwt_token"), product_id)
+      .then((response) => response.json())
+      .then(async (result) => {
+        if (result.status === 1) {
+          //popup commented
+          //   toast.success(result.message);
+          await api
+            .getFavorite(
+              cookies.get("jwt_token"),
+              city.city.latitude,
+              city.city.longitude
+            )
+            .then((resp) => resp.json())
+            .then((res) => {
+              setisLoader(false);
+              if (res.status === 1)
+                dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
+              else dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
+            });
+        } else {
+          setisLoader(false);
+          toast.error(result.message);
+        }
+      });
+  };
 
 	const handleAddToCart = (index, product) => {
 		const trackingService = new TrackingService();
@@ -316,65 +318,65 @@ const Wishlist = () => {
 										<span> product in this list</span>
 									</div>
 
-									<table className="products-table table">
-										<thead>
-											<tr>
-												<th className="first-column">Product</th>
-												<th>price</th>
-												<th>Add to cart</th>
-												<th className="last-column">remove</th>
-											</tr>
-										</thead>
+                  <table className="products-table table">
+                    <thead>
+                      <tr>
+                        <th className="first-column">Product</th>
+                        <th>price</th>
+                        <th>Add to cart</th>
+                        <th className="last-column">remove</th>
+                      </tr>
+                    </thead>
 
-										<tbody>
-											{favorite.favorite.data.map((product, index) => (
-												<tr key={index} className="">
-													<th className="products-image-container first-column">
-														<div className="image-container">
-															<img
-																data-src={product.image_url}
-																alt="product"
-																className="lazyload"
-															></img>
-														</div>
+                    <tbody>
+                      {favorite.favorite.data.map((product, index) => (
+                        <tr key={index} className="">
+                          <th className="products-image-container first-column">
+                            <div className="image-container">
+                              <img
+                                data-src={product.image_url}
+                                alt="product"
+                                className="lazyload"
+                              ></img>
+                            </div>
 
-														<div className="">
-															<span>{product.name}</span>
+                            <div className="">
+                              <span>{product.name}</span>
 
-															<div
-																id={`selectedVariant${index}-wrapper-wishlist`}
-															></div>
-															{getProductVariantsSelection(
-																product.id,
-																product.variants[0]?.id,
-																`selectedVariant${index}-wrapper-wishlist`,
-																index
-															)}
-														</div>
-													</th>
+                              <div
+                                id={`selectedVariant${index}-wrapper-wishlist`}
+                              ></div>
+                              {getProductVariantsSelection(
+                                product.id,
+                                product.variants[0]?.id,
+                                `selectedVariant${index}-wrapper-wishlist`,
+                                index
+                              )}
+                            </div>
+                          </th>
 
-													<th className="price">
-														<FaRupeeSign fill="var(--secondary-color)" />
-														<span id={`price-wishlist${index}`}>
-															{parseFloat(
-																product.variants.length > 0
-																	? product.variants[0].discounted_price
-																	: 0
-															)}
-														</span>
-													</th>
+                          <th className="price">
+                            <FaRupeeSign fill="var(--secondary-color)" />
+                            <span id={`price-wishlist${index}`}>
+                              {parseFloat(
+                                product.variants.length > 0
+                                  ? product.variants[0].discounted_price
+                                  : 0
+                              )}
+                            </span>
+                          </th>
 
-													<th className="quantity">
-														<button
-															type="button"
-															id={`Add-to-cart-wishlist${index}`}
-															className="add-to-cart active"
-															onClick={() => {
-																handleAddToCart(index, product);
-															}}
-														>
-															add to cart
-														</button>
+                          <th className="quantity">
+                            <button
+                              type="button"
+                              id={`Add-to-cart-wishlist${index}`}
+                              className="add-to-cart active"
+                              onClick={() => {
+                                handleAddToCart(index, product);
+                              }}
+                            >
+                              add to cart
+                            </button>
 
 														{
 															<div
@@ -466,33 +468,33 @@ const Wishlist = () => {
 														}
 													</th>
 
-													<th className="remove last-column">
-														<button
-															type="button"
-															onClick={() => removefromFavorite(product.id)}
-														>
-															<RiDeleteBinLine
-																fill="red"
-																fontSize={"2.985rem"}
-															/>
-														</button>
-													</th>
-												</tr>
-											))}
-										</tbody>
-									</table>
-								</div>
-							</>
-						)}
-					</>
-				)}
-			</div>
+                          <th className="remove last-column">
+                            <button
+                              type="button"
+                              onClick={() => removefromFavorite(product.id)}
+                            >
+                              <RiDeleteBinLine
+                                fill="red"
+                                fontSize={"2.985rem"}
+                              />
+                            </button>
+                          </th>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            )}
+          </>
+        )}
+      </div>
 
-			{isLogin && (
-				<LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
-			)}
-		</section>
-	);
+      {isLogin && (
+        <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
+      )}
+    </section>
+  );
 };
 
 export default Wishlist;
