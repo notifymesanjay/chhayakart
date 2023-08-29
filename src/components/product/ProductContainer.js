@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../shared/use-responsive";
 import Loader from "../loader/Loader";
 import CategoryCard from "./category-card";
 import ShopByRegion from "./region";
 import "./product.css";
-
+import DurgaCopy from "../DurgaCopy.webp";
 const shopByRegionName = "SHOP BY REGION";
 
 const ProductContainer = ({ setSelectedFilter = () => {} }) => {
@@ -15,7 +16,7 @@ const ProductContainer = ({ setSelectedFilter = () => {} }) => {
 	const [categories, setCategories] = useState([]);
 	const [subCategories, setSubCategories] = useState([]);
 	const [shopByRegionList, setShopByRegionList] = useState([]);
-
+	const navigate = useNavigate();
 	useEffect(() => {
 		if (shop.shop.category != null && shop.shop.category.length > 0) {
 			const categoryList = shop.shop.category;
@@ -107,6 +108,7 @@ const ProductContainer = ({ setSelectedFilter = () => {} }) => {
 							setSelectedFilter={setSelectedFilter}
 						/>
 					)}
+
 					{!isSmScreen && shopByRegionList.length > 0 && (
 						<ShopByRegion
 							regionList={shopByRegionList}
@@ -114,6 +116,18 @@ const ProductContainer = ({ setSelectedFilter = () => {} }) => {
 						/>
 					)}
 				</>
+			)}
+			{isSmScreen && (
+				<div className="durgaAdd">
+					<img
+						className="durgaAd"
+						src={DurgaCopy}
+						alt="Durga Offer"
+						onClick={() => {
+							navigate("/");
+						}}
+					/>
+				</div>
 			)}
 		</div>
 	);
