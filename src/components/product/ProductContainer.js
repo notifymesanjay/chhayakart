@@ -6,7 +6,7 @@ import Loader from "../loader/Loader";
 import CategoryCard from "./category-card";
 import ShopByRegion from "./region";
 import "./product.css";
-import DurgaCopy from "../DurgaCopy.webp";
+import DurgaCopy from "../DurgaCopy.jpg";
 const shopByRegionName = "SHOP BY REGION";
 
 const ProductContainer = ({ setSelectedFilter = () => {} }) => {
