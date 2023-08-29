@@ -6,6 +6,7 @@ import Gaon from "../Gaon.png";
 import styles from "./category.module.scss";
 import gana from "../gana.webp";
 import Banner from "../seasonBanner/bannerCarousel";
+
 const ShopByCategory = ({
 	categories = [],
 	setSelectedFilter = () => {},
