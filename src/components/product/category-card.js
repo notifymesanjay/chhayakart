@@ -2,10 +2,10 @@ import React from "react";
 import styles from "./category-card.module.scss";
 import { useHref, useNavigate } from "react-router-dom";
 import { useResponsive } from "../shared/use-responsive";
-import SBI from "../SBI.webp";
-import AU from "../AU.webp";
+import SBI from "../SBI.jpg";
+import AU from "../AU.jpg";
 
-import INDUSIND from "../INDUSIND.webp";
+import INDUSIND from "../INDUSIND.jpg";
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
 const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 	const navigate = useNavigate();
