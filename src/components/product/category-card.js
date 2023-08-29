@@ -16,19 +16,19 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
         id: 1,
         image: SBI,
         title: "banner1",
-        link: "https://api.earnow.in/l/c4HDPrmGOi",
+        link: "subCategory/96",
       },
       {
         id: 2,
         image: AU,
         title: "banner2 ",
-        link: "https://api.earnow.in/l/Q6hkysjezl",
+        link: "subCategory/96",
       },
       {
         id: 3,
         image: INDUSIND,
         title: "banner3",
-        link: "https://api.earnow.in/l/PkFqRHbgH9",
+        link: "subCategory/96",
       },
     ],
     [
@@ -36,19 +36,19 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
         id: 1,
         image: SBI,
         title: "banner1",
-        link: "https://api.earnow.in/l/c4HDPrmGOi",
+        link: "subCategory/96",
       },
       {
         id: 2,
         image: AU,
         title: "banner2 ",
-        link: "https://api.earnow.in/l/Q6hkysjezl",
+        link: "subCategory/96",
       },
       {
         id: 3,
         image: INDUSIND,
         title: "banner3",
-        link: "https://api.earnow.in/l/PkFqRHbgH9",
+        link: "subCategory/96",
       },
     ],
     [
@@ -56,19 +56,19 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
         id: 1,
         image: SBI,
         title: "banner1",
-        link: "https://api.earnow.in/l/c4HDPrmGOi",
+        link: "subCategory/96",
       },
       {
         id: 2,
         image: AU,
         title: "banner2 ",
-        link: "https://api.earnow.in/l/Q6hkysjezl",
+        link: "subCategory/96",
       },
       {
         id: 3,
         image: INDUSIND,
         title: "banner3",
-        link: "https://api.earnow.in/l/PkFqRHbgH9",
+        link: "subCategory/96",
       },
     ],
     [
@@ -76,19 +76,19 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
         id: 1,
         image: SBI,
         title: "banner1",
-        link: "https://api.earnow.in/l/c4HDPrmGOi",
+        link: "subCategory/96",
       },
       {
         id: 2,
         image: AU,
         title: "banner2 ",
-        link: "https://api.earnow.in/l/Q6hkysjezl",
+        link: "subCategory/96",
       },
       {
         id: 3,
         image: INDUSIND,
         title: "banner3",
-        link: "https://api.earnow.in/l/PkFqRHbgH9",
+        link: "subCategory/96",
       },
     ],
     [
@@ -96,19 +96,19 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
         id: 1,
         image: SBI,
         title: "banner1",
-        link: "https://api.earnow.in/l/c4HDPrmGOi",
+        link: "subCategory/96",
       },
       {
         id: 2,
         image: AU,
         title: "banner2 ",
-        link: "https://api.earnow.in/l/Q6hkysjezl",
+        link: "subCategory/96",
       },
       {
         id: 3,
         image: INDUSIND,
         title: "banner3",
-        link: "https://api.earnow.in/l/PkFqRHbgH9",
+        link: "subCategory/96",
       },
     ],
     [
@@ -116,19 +116,19 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
         id: 1,
         image: SBI,
         title: "banner1",
-        link: "https://api.earnow.in/l/c4HDPrmGOi",
+        link: "subCategory/96",
       },
       {
         id: 2,
         image: AU,
         title: "banner2 ",
-        link: "https://api.earnow.in/l/Q6hkysjezl",
+        link: "subCategory/96",
       },
       {
         id: 3,
         image: INDUSIND,
         title: "banner3",
-        link: "https://api.earnow.in/l/PkFqRHbgH9",
+        link: "subCategory/96",
       },
     ],
   ];
@@ -157,7 +157,11 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
       {subCategories.slice(0, 12).map((subCategory, index) => (
         <div key={index}>
           {index % 2 === 0 && (
-            <div className={styles.BankBanner}>
+            <div
+              className={`${styles.BankBanner} ${
+                index === 0 && styles.hideBanner
+              }`}
+            >
               <ResponsiveCarousel
                 items={1}
                 itemsInTablet={1}
@@ -169,15 +173,16 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
                 autoPlay={true}
                 partialVisibilityGutter={false}
               >
-                {dynamicBanners[index/2].map((img) => (
+                {dynamicBanners[index / 2].map((img) => (
                   <div key={img.id}>
-                    <a href={img.link}>
-                      <img
-                        className={styles.banner}
-                        src={img.image}
-                        alt={img.title}
-                      />
-                    </a>
+                    <img
+                      onClick={() => {
+                        navigate(img.link);
+                      }}
+                      className={styles.banner}
+                      src={img.image}
+                      alt={img.title}
+                    />
                   </div>
                 ))}
               </ResponsiveCarousel>
