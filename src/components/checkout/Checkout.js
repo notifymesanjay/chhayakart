@@ -41,6 +41,7 @@ const Checkout = ({ productTriggered = false }) => {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [expectedDate, setExpectedDate] = useState(new Date());
   const [items, setItems] = useState([]);
+
   const [expectedTime, setExpectedTime] = useState({
     id: 1,
     title: "Morning 9:00 A.M - 1:00 P.M",
@@ -542,6 +543,7 @@ const Checkout = ({ productTriggered = false }) => {
   };
 
   useEffect(() => {
+    expectedDate.setDate(expectedDate.getDate() + 6);
     fetchOrders();
     handleOrderSummary();
   }, []);
@@ -661,6 +663,7 @@ const Checkout = ({ productTriggered = false }) => {
       setIsLoader(false);
     }
   }, [isUserLoggedIn]);
+
 
   return (
     <div>
