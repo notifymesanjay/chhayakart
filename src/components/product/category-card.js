@@ -11,7 +11,7 @@ import Sabudanapremix from "../Sabudanapremix.webp";
 import INDUSIND from "../INDUSIND.webp";
 import allOffers from "../allOffers.webp";
 import order4999 from "../order4999.webp";
-import order9999 from "../order4999.webp";
+import order9999 from "../order9999.webp";
 import freeUpwasKit from "../freeUpwasKit.webp";
 import shirdiladdu from "../shirdiladdu.webp";
 import mahakalU from "../mahakalU.webp";
