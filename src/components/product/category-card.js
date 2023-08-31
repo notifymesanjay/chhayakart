@@ -4,23 +4,23 @@ import { useHref, useNavigate } from "react-router-dom";
 import { useResponsive } from "../shared/use-responsive";
 import SBI from "../SBI.webp";
 import AU from "../AU.webp";
-import ShingadaLaddo from "../ShingadaLaddo.jpg";
-import BatataSabudana from "../BatataSabudana.jpg";
-import KhajurDryfruit from "../KhajurDryfruit.jpg";
-import SabudanaPremix from "../SabudanaPremix.jpg";
+import shingadaLaddo from "../shingadaLaddo.webp";
+import batata from "../batata.webp";
+import KahjurDryfruit from "../KahjurDryfruit.webp";
+import Sabudanapremix from "../Sabudanapremix.webp";
 import INDUSIND from "../INDUSIND.webp";
-import allOffers from "../allOffers.jpg";
-import order4999 from "../order4999.jpg";
-import order9999 from "../order9999.jpg";
-import freeUpwasKit from "../freeUpwasKit.jpg";
-import shirdiladdu from "../shirdiladdu.jpg";
-import mahakalU from "../mahakalU.jpg";
-import maharashtrianChakli from "../maharashtrianChakli.jpg";
-import khurdai from "../khurdai.jpg";
-import vade from "../vade.jpg";
-import ragiPapad from "../ragiPapad.jpg";
-import crunchyPatra from "../crunchyPatra .jpg";
-import chatpataGahu from "../chatpataGahu.jpg";
+import allOffers from "../allOffers.webp";
+import order4999 from "../order4999.webp";
+import order9999 from "../order4999.webp";
+import freeUpwasKit from "../freeUpwasKit.webp";
+import shirdiladdu from "../shingadaLaddo.webp";
+import mahakalU from "../mahakalU.webp";
+import maharashtrianChakli from "../maharashtrianChakli.webp";
+import khurdai from "../khurdai.webp";
+import vade from "../vade.webp";
+import ragiPapad from "../ragiPapad.webp";
+import crunchyPatra from "../crunchyPatra.webp";
+import chatpataGahu from "../chatpataGahu.webp";
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
 const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 	const navigate = useNavigate();
@@ -49,25 +49,25 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 		[
 			{
 				id: 1,
-				image: ShingadaLaddo,
+				image: shingadaLaddo,
 				title: "banner1",
 				link: "subCategory/96",
 			},
 			{
 				id: 2,
-				image: BatataSabudana,
+				image: batata,
 				title: "banner2 ",
 				link: "subCategory/96",
 			},
 			{
 				id: 3,
-				image: SabudanaPremix,
+				image: Sabudanapremix,
 				title: "banner3",
 				link: "subCategory/96",
 			},
 			{
 				id: 4,
-				image: KhajurDryfruit,
+				image: KahjurDryfruit,
 				title: "banner4",
 				link: "subCategory/96",
 			},
@@ -103,13 +103,13 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 				id: 1,
 				image: shirdiladdu,
 				title: "shirdiladdu",
-				link: "subCategory/98/29_PRASAD",
+				link: "subCategory/98",
 			},
 			{
 				id: 2,
 				image: mahakalU,
 				title: "mahakalU ",
-				link: "subCategory/98/29_PRASAD",
+				link: "subCategory/98",
 			},
 		],
 		[
@@ -117,19 +117,19 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 				id: 1,
 				image: crunchyPatra,
 				title: "crunchyPatra",
-				link: "subCategory/100/41_HOMEMADE%20DESI%20SNACK",
+				link: "subCategory/100",
 			},
 			{
 				id: 2,
 				image: maharashtrianChakli,
 				title: "maharashtrianChakli ",
-				link: "subCategory/100/41_HOMEMADE%20DESI%20SNACK",
+				link: "subCategory/100",
 			},
 			{
 				id: 3,
 				image: chatpataGahu,
 				title: "chatpataGahu",
-				link: "subCategory/100/41_HOMEMADE%20DESI%20SNACK",
+				link: "subCategory/100",
 			},
 		],
 		[
