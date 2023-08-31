@@ -117,18 +117,6 @@ const ProductContainer = ({ setSelectedFilter = () => {} }) => {
 					)}
 				</>
 			)}
-			{isSmScreen && (
-				<div className="durgaAdd">
-					<img
-						className="durgaAd"
-						src={DurgaCopy}
-						alt="Durga Offer"
-						onClick={() => {
-							navigate("/");
-						}}
-					/>
-				</div>
-			)}
 		</div>
 	);
 };

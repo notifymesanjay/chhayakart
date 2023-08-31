@@ -192,7 +192,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 
   const deleteProduct = (product) => {
     if (cookies.get("jwt_token") !== undefined) {
-      removefromCart(product.product_id, product.product_variant_id);
+      removefromCart(product);
     } else {
       let isDeleted = DeleteProductFromCart(product.product_id);
       if (isDeleted) {
@@ -202,7 +202,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
   };
 
   //remove from Cart
-  const removefromCart = async (product, product_variant_id) => {
+  const removefromCart = async (product) => {
     trackingService.trackCart(
       product,
       0,
@@ -213,7 +213,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
       .removeFromCart(
         cookies.get("jwt_token"),
         product.product_id,
-        product_variant_id
+        product.product_variant_id
       )
       .then((response) => response.json())
       .then(async (result) => {
@@ -507,7 +507,6 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
 
   useEffect(() => {
     handleOrderSummary();
-    console.log("zxcv", cart);
   }, [cart, productTriggered]);
 
   return (
@@ -577,11 +576,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
                   <div key={index} className="cart-card">
                     <div className="left-wrapper">
                       <div className="image-container">
-                        <img
-                          data-src={product.image_url}
-                          className="lazyload"
-                          alt="product"
-                        ></img>
+                        <img src={product.image_url} alt="product"></img>
                       </div>
 
                       <div className="product-details">
