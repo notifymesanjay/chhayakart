@@ -212,7 +212,7 @@ const Checkout = ({ productTriggered = false }) => {
       addressId: selectedAddress.id,
       deliveryTime: delivery_time,
       discount: orderSummary.discount,
-	  taxes: orderSummary.taxes
+      taxes: orderSummary.taxes,
     };
 
     api
@@ -428,10 +428,15 @@ const Checkout = ({ productTriggered = false }) => {
             parseInt(cartVal[cartVal.length - 1].qty) *
             parseInt(cartVal[cartVal.length - 1].discounted_price);
 
-          totalDeliveryCharge = Math.max(
-            totalDeliveryCharge,
-            parseInt(cartVal[cartVal.length - 1].delivery_charges)
-          );
+          totalDeliveryCharge =
+            Math.max(
+              totalDeliveryCharge,
+              parseInt(cartVal[cartVal.length - 1].delivery_charges)
+            ) +
+              cartVal.length >
+            1
+              ? (cartVal.length - 1) * 9
+              : 0;
           if (
             cartVal[cartVal.length - 1].delivery_charges == 0 ||
             cartVal[cartVal.length - 1].delivery_charges == 50
@@ -591,6 +596,10 @@ const Checkout = ({ productTriggered = false }) => {
           }
         }
       }
+      delivery_charges +=
+        cart.cart.data.cart.length > 1
+          ? (cart.cart.data.cart.length - 1) * 9
+          : 0;
       let orderVal = {
         product_variant_id: cart.checkout.product_variant_id,
         quantity: cart.checkout.quantity,
@@ -663,7 +672,6 @@ const Checkout = ({ productTriggered = false }) => {
       setIsLoader(false);
     }
   }, [isUserLoggedIn]);
-
 
   return (
     <div>
