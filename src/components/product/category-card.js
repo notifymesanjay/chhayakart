@@ -13,7 +13,7 @@ import allOffers from "../allOffers.webp";
 import order4999 from "../order4999.webp";
 import order9999 from "../order4999.webp";
 import freeUpwasKit from "../freeUpwasKit.webp";
-import shirdiladdu from "../shingadaLaddo.webp";
+import shirdiladdu from "../shirdiladdu.webp";
 import mahakalU from "../mahakalU.webp";
 import maharashtrianChakli from "../maharashtrianChakli.webp";
 import khurdai from "../khurdai.webp";
@@ -21,6 +21,7 @@ import vade from "../vade.webp";
 import ragiPapad from "../ragiPapad.webp";
 import crunchyPatra from "../crunchyPatra.webp";
 import chatpataGahu from "../chatpataGahu.webp";
+
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
 const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 	const navigate = useNavigate();
@@ -51,25 +52,25 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 				id: 1,
 				image: shingadaLaddo,
 				title: "banner1",
-				link: "subCategory/96",
+				link: "subCategory/96/23_UPWAS%20Food",
 			},
 			{
 				id: 2,
 				image: batata,
 				title: "banner2 ",
-				link: "subCategory/96",
+				link: "subCategory/96/23_UPWAS%20Food",
 			},
 			{
 				id: 3,
 				image: Sabudanapremix,
 				title: "banner3",
-				link: "subCategory/96",
+				link: "subCategory/96/23_UPWAS%20Food",
 			},
 			{
 				id: 4,
 				image: KahjurDryfruit,
 				title: "banner4",
-				link: "subCategory/96",
+				link: "subCategory/96/23_UPWAS%20Food",
 			},
 		],
 		[
@@ -95,7 +96,7 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 				id: 4,
 				image: order9999,
 				title: "banner4",
-				link: "subCategory/96",
+				link: "/",
 			},
 		],
 		[
@@ -103,13 +104,13 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 				id: 1,
 				image: shirdiladdu,
 				title: "shirdiladdu",
-				link: "subCategory/98",
+				link: "subCategory/98/29_PRASAD",
 			},
 			{
 				id: 2,
 				image: mahakalU,
 				title: "mahakalU ",
-				link: "subCategory/98",
+				link: "subCategory/98/29_PRASAD",
 			},
 		],
 		[
@@ -117,19 +118,19 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 				id: 1,
 				image: crunchyPatra,
 				title: "crunchyPatra",
-				link: "subCategory/100",
+				link: "subCategory/100/41_HOMEMADE%20DESI%20SNACK",
 			},
 			{
 				id: 2,
 				image: maharashtrianChakli,
 				title: "maharashtrianChakli ",
-				link: "subCategory/100",
+				link: "subCategory/100/41_HOMEMADE%20DESI%20SNACK",
 			},
 			{
 				id: 3,
 				image: chatpataGahu,
 				title: "chatpataGahu",
-				link: "subCategory/100",
+				link: "subCategory/100/41_HOMEMADE%20DESI%20SNACK",
 			},
 		],
 		[
