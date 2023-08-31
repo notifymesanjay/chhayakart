@@ -6,7 +6,7 @@ import Gaon from "../Gaon.png";
 import styles from "./category.module.scss";
 import gana from "../gana.webp";
 import Banner from "../seasonBanner/bannerCarousel";
-
+import DurgaCopy from "../DurgaCopy.jpg";
 const ShopByCategory = ({
 	categories = [],
 	setSelectedFilter = () => {},
@@ -101,6 +101,18 @@ const ShopByCategory = ({
 								<div className={styles.seasonBanner}>
 									<Banner />
 								</div>
+								{isSmScreen && (
+									<div className="durgaAdd">
+										<img
+											className="durgaAd"
+											src={DurgaCopy}
+											alt="Durga Offer"
+											onClick={() => {
+												navigate("/");
+											}}
+										/>
+									</div>
+								)}
 							</div>
 						)}
 					</>
