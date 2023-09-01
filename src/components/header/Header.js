@@ -551,9 +551,9 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 				<Favorite />
 			</header>
 
-			{isLogin && (
+			{/* {isLogin && (
 				<LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
-			)}
+			)} */}
 		</>
 	) : (
 		<DskpHeader

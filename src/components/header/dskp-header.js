@@ -44,20 +44,20 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 	};
 
 	const handleLogout = () => {
-		api
-			.logout(cookies.get("jwt_token"))
-			.then((response) => response.json())
-			.then((result) => {
-				if (result.status === 1) {
-					cookies.remove("jwt_token");
-					removelocalstorageOTP();
-					dispatch({ type: ActionTypes.LOGOUT_AUTH, payload: null });
-					toast.success("You're Successfully Logged Out");
-					navigate("/");
-				} else {
-					toast.info(result.message);
-				}
-			});
+		// api
+		// 	.logout(cookies.get("jwt_token"))
+		// 	.then((response) => response.json())
+		// 	.then((result) => {
+		// 		if (result.status === 1) {
+		// 			cookies.remove("jwt_token");
+		// 			removelocalstorageOTP();
+		// 			dispatch({ type: ActionTypes.LOGOUT_AUTH, payload: null });
+		// 			toast.success("You're Successfully Logged Out");
+		// 			navigate("/");
+		// 		} else {
+		// 			toast.info(result.message);
+		// 		}
+		// 	});
 	};
 
 	const closeSignInMenu = () => {
@@ -151,8 +151,8 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 						<p className={styles.link}>Sign In</p>
 						{isSignInDropDown && (
 							<div className={styles.dropDownWrapper} name="dropDown">
-								<div className={styles.btnWrapper}>
-									{/* <p className={styles.label}>New to Chhayakart?</p> */}
+								{/* <div className={styles.btnWrapper}>
+									<p className={styles.label}>New to Chhayakart?</p>
 									<button
 										className={styles.signInBtn}
 										onClick={() => {
@@ -165,7 +165,7 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 											? "Sign In"
 											: `Hello ${user.user.name}`}
 									</button>
-								</div>
+								</div> */}
 								<div className={styles.optionWrapper}>
 									<p
 										className={styles.link}
@@ -193,11 +193,11 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 										Donate{" "}
 										<span className={styles.comingSoon}>( Coming Soon )</span>
 									</p>
-									{user.status !== "loading" && (
+									{/* {user.status !== "loading" && (
 										<p className={styles.link} onClick={handleLogout}>
 											Logout
 										</p>
-									)}
+									)} */}
 								</div>
 							</div>
 						)}
@@ -211,9 +211,9 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 				</div>
 			</div>
 
-			{isLogin && (
+			{/* {isLogin && (
 				<LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
-			)}
+			)} */}
 		</div>
 	);
 };

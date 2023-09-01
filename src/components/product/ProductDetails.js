@@ -418,9 +418,9 @@ const ProductDetails = ({
 					setIsOpenModal={setIsViewModal}
 				/>
 			)}
-			{isLogin && (
+			{/* {isLogin && (
 				<LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
-			)}
+			)} */}
 		</div>
 	);
 };

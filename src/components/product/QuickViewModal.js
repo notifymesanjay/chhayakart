@@ -688,9 +688,9 @@ const QuickViewModal = (props) => {
 				</div>
 			</CkModal>
 
-			{isLogin && (
+			{/* {isLogin && (
 				<LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
-			)}
+			)} */}
 		</div>
 	);
 };

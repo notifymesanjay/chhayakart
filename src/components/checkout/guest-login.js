@@ -22,7 +22,7 @@ const GuestLogin = ({ setIsUserLoggedIn = () => {} }) => {
 
         <div className="order-details">
           <div className="login-summary">
-            <Login
+            {/* <Login
               isCheckout={true}
               checkboxSelected={checkboxSelected}
               setError={setError}
@@ -35,7 +35,7 @@ const GuestLogin = ({ setIsUserLoggedIn = () => {} }) => {
               isOTP={isOTP}
               error={error}
               setIsUserLoggedIn={setIsUserLoggedIn}
-            />
+            /> */}
           </div>
         </div>
       </div>

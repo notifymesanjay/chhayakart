@@ -90,69 +90,69 @@ const ProfileDashboard = () => {
 		setusername("");
 	};
 	const handleLogout = () => {
-		confirmAlert({
-			title: "Logout!",
-			message: `Are you sure?
-             You want to logout?`,
-			buttons: [
-				{
-					label: "Ok",
-					onClick: async () => {
-						await api
-							.logout(cookies.get("jwt_token"))
-							.then((response) => response.json())
-							.then((result) => {
-								if (result.status === 1) {
-									cookies.remove("jwt_token");
-									removelocalstorageOTP();
-									dispatch({ type: ActionTypes.LOGOUT_AUTH, payload: null });
-									toast.success("You're Successfully Logged Out");
-									navigate("/");
-								} else {
-									toast.info(result.message);
-								}
-							});
-					},
-				},
-				{
-					label: "Cancel",
-					onClick: () => {},
-				},
-			],
-		});
+		// confirmAlert({
+		// 	title: "Logout!",
+		// 	message: `Are you sure?
+        //      You want to logout?`,
+		// 	buttons: [
+		// 		{
+		// 			label: "Ok",
+		// 			onClick: async () => {
+		// 				await api
+		// 					.logout(cookies.get("jwt_token"))
+		// 					.then((response) => response.json())
+		// 					.then((result) => {
+		// 						if (result.status === 1) {
+		// 							cookies.remove("jwt_token");
+		// 							removelocalstorageOTP();
+		// 							dispatch({ type: ActionTypes.LOGOUT_AUTH, payload: null });
+		// 							toast.success("You're Successfully Logged Out");
+		// 							navigate("/");
+		// 						} else {
+		// 							toast.info(result.message);
+		// 						}
+		// 					});
+		// 			},
+		// 		},
+		// 		{
+		// 			label: "Cancel",
+		// 			onClick: () => {},
+		// 		},
+		// 	],
+		// });
 	};
 
 	const handleDeleteAcount = () => {
-		confirmAlert({
-			title: "Delete account!",
-			message: `Are you sure?
-             You want to delete account?
-             You will not undone once delete account!`,
-			buttons: [
-				{
-					label: "Ok",
-					onClick: async () => {
-						await api
-							.deleteAccount(cookies.get("jwt_token"), gelocalstoragetOTP())
-							.then((response) => response.json())
-							.then((result) => {
-								if (result.status === 1) {
-									cookies.remove("jwt_token");
-									removelocalstorageOTP();
-									dispatch({ type: ActionTypes.LOGOUT_AUTH, payload: null });
-									toast.info("You're Account is Succesfully Deleted!!");
-								} else {
-									toast.info(result.message);
-								}
-							});
-					},
-				},
-				{
-					label: "Cancel",
-					onClick: () => {},
-				},
-			],
-		});
+		// confirmAlert({
+		// 	title: "Delete account!",
+		// 	message: `Are you sure?
+        //      You want to delete account?
+        //      You will not undone once delete account!`,
+		// 	buttons: [
+		// 		{
+		// 			label: "Ok",
+		// 			onClick: async () => {
+		// 				await api
+		// 					.deleteAccount(cookies.get("jwt_token"), gelocalstoragetOTP())
+		// 					.then((response) => response.json())
+		// 					.then((result) => {
+		// 						if (result.status === 1) {
+		// 							cookies.remove("jwt_token");
+		// 							removelocalstorageOTP();
+		// 							dispatch({ type: ActionTypes.LOGOUT_AUTH, payload: null });
+		// 							toast.info("You're Account is Succesfully Deleted!!");
+		// 						} else {
+		// 							toast.info(result.message);
+		// 						}
+		// 					});
+		// 			},
+		// 		},
+		// 		{
+		// 			label: "Cancel",
+		// 			onClick: () => {},
+		// 		},
+		// 	],
+		// });
 	};
 
 	const profileNav = () => {
@@ -274,7 +274,7 @@ const ProfileDashboard = () => {
 						</span>
 						<IoIosArrowForward />
 					</button>
-					<button
+					{/* <button
 						type="button"
 						className="navigation-container-button no-hover"
 						onClick={handleLogout}
@@ -285,11 +285,11 @@ const ProfileDashboard = () => {
 								className="mx-3"
 								fill={"var(--secondary-color)"}
 							/>
-							{/* <img src={logout} height='35px' className='logout-img' alt="" /> */}
+							<img src={logout} height='35px' className='logout-img' alt="" />
 							Logout
 						</span>
 						<IoIosArrowForward />
-					</button>
+					</button> */}
 					{/* <button
 						type="button"
 						className="navigation-container-button "

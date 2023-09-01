@@ -458,9 +458,9 @@ const Productdetails = ({
 					)}
 				</div>
 
-				{isLogin && (
+				{/* {isLogin && (
 					<LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
-				)}
+				)} */}
 			</div>
 		</div>
 	);

@@ -22,20 +22,20 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
 	const [isSubMenu, setIsSubMenu] = useState(false);
 
 	const handleLogout = () => {
-		api
-			.logout(cookies.get("jwt_token"))
-			.then((response) => response.json())
-			.then((result) => {
-				if (result.status === 1) {
-					cookies.remove("jwt_token");
-					removelocalstorageOTP();
-					dispatch({ type: ActionTypes.LOGOUT_AUTH, payload: null });
-					toast.success("You're Successfully Logged Out");
-					navigate("/");
-				} else {
-					toast.info(result.message);
-				}
-			});
+		// api
+		// 	.logout(cookies.get("jwt_token"))
+		// 	.then((response) => response.json())
+		// 	.then((result) => {
+		// 		if (result.status === 1) {
+		// 			cookies.remove("jwt_token");
+		// 			removelocalstorageOTP();
+		// 			dispatch({ type: ActionTypes.LOGOUT_AUTH, payload: null });
+		// 			toast.success("You're Successfully Logged Out");
+		// 			navigate("/");
+		// 		} else {
+		// 			toast.info(result.message);
+		// 		}
+		// 	});
 	};
 
 	const handleWishlist = () => {
@@ -209,7 +209,7 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
 						</li>
 					</ul>
 				)}
-				{user.status !== "loading" && (
+				{/* {user.status !== "loading" && (
 					<li
 						className={styles.listItem}
 						onClick={handleLogout}
@@ -219,7 +219,7 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
 					>
 						Logout
 					</li>
-				)}
+				)} */}
 			</ul>
 			<div className={styles.bottomSection}>
 				<div className={styles.downloadAppWrapper}>
