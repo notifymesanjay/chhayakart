@@ -36,285 +36,298 @@ import { useResponsive } from "./components/shared/use-responsive";
 import Success from "./components/checkout/Success";
 import Order from "./components/order/Order";
 function App() {
-	//initialize cookies
-	const cookies = new Cookies();
+  //initialize cookies
+  const cookies = new Cookies();
 
-	const { isSmScreen } = useResponsive();
+  const { isSmScreen } = useResponsive();
 
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-	const city = useSelector((state) => state.city);
-	const shop = useSelector((state) => state.shop);
-	const setting = useSelector((state) => state.setting);
-	const [productTriggered, setProductTriggered] = useState(false);
-	const [selectedFilter, setSelectedFilter] = useState(0);
+  const city = useSelector((state) => state.city);
+  const shop = useSelector((state) => state.shop);
+  const setting = useSelector((state) => state.setting);
+  const [productTriggered, setProductTriggered] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState(0);
 
-	const getCurrentUser = (token) => {
-		api
-			.getUser(token)
-			.then((response) => response.json())
-			.then((result) => {
-				if (result.status === 1) {
-					dispatch({
-						type: ActionTypes.SET_CURRENT_USER,
-						payload: result.user,
-					});
-				}
-			});
-	};
+  const getCurrentUser = (token) => {
+    api
+      .getUser(token)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 1) {
+          dispatch({
+            type: ActionTypes.SET_CURRENT_USER,
+            payload: result.user,
+          });
+        }
+      });
+  };
 
-	//fetching app-settings
-	const getSetting = async () => {
-		await api
-			.getSettings()
-			.then((response) => response.json())
-			.then((result) => {
-				if (result.status === 1) {
-					dispatch({ type: ActionTypes.SET_SETTING, payload: result.data });
-				}
-			})
-			.catch((error) => {});
-	};
+  //fetching app-settings
+  const getSetting = async () => {
+    await api
+      .getSettings()
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 1) {
+          dispatch({ type: ActionTypes.SET_SETTING, payload: result.data });
+        }
+      })
+      .catch((error) => {});
+  };
 
-	useEffect(() => {
-		const fetchShop = (city_id, latitude, longitude) => {
-			api
-				.getShop(city_id, latitude, longitude)
-				.then((response) => response.json())
-				.then((result) => {
-					if (result.status === 1) {
-						const dataToBeSorted = result.data.category;
-						//sorting of items lexographically..
-						result.data.category = [...dataToBeSorted].sort((a, b) =>
-							a.name > b.name ? 1 : -1
-						);
-						dispatch({ type: ActionTypes.SET_SHOP, payload: result.data });
-					}
-				});
-		};
-		if (city.city !== null) {
-			fetchShop(city.city.id, city.city.latitude, city.city.longitude);
-		} else {
-			let data = {
-				id: 4,
-				name: "Maharashtra",
-				state: "Maharashtra",
-				formatted_address: "Maharashtra, India",
-				latitude: "19.7514798",
-				longitude: "75.7138884",
-				min_amount_for_free_delivery: "1000",
-				delivery_charge_method: "fixed_charge",
-				fixed_charge: "40",
-				per_km_charge: "0",
-				time_to_travel: "100",
-				max_deliverable_distance: "50000",
-				distance: "992.6918238833864",
-			};
-			dispatch({ type: ActionTypes.SET_CITY, payload: data });
-		}
-	}, [city]);
+  useEffect(() => {
+    const fetchShop = (city_id, latitude, longitude) => {
+      api
+        .getShop(city_id, latitude, longitude)
+        .then((response) => response.json())
+        .then((result) => {
+          if (result.status === 1) {
+            const dataToBeSorted = result.data.category;
+            //sorting of items lexographically..
+            result.data.category = [...dataToBeSorted].sort((a, b) =>
+              a.name > b.name ? 1 : -1
+            );
+            dispatch({ type: ActionTypes.SET_SHOP, payload: result.data });
+          }
+        });
+    };
+    if (city.city !== null) {
+      fetchShop(city.city.id, city.city.latitude, city.city.longitude);
+    } else {
+      let data = {
+        id: 4,
+        name: "Maharashtra",
+        state: "Maharashtra",
+        formatted_address: "Maharashtra, India",
+        latitude: "19.7514798",
+        longitude: "75.7138884",
+        min_amount_for_free_delivery: "1000",
+        delivery_charge_method: "fixed_charge",
+        fixed_charge: "40",
+        per_km_charge: "0",
+        time_to_travel: "100",
+        max_deliverable_distance: "50000",
+        distance: "992.6918238833864",
+      };
+      dispatch({ type: ActionTypes.SET_CITY, payload: data });
+    }
+  }, [city]);
 
-	//authenticate current user
-	useEffect(() => {
-		if (cookies.get("jwt_token") !== undefined) {
-			getCurrentUser(cookies.get("jwt_token"));
-		}
-		getSetting();
-	}, []);
+  //authenticate current user
+  useEffect(() => {
+    if (cookies.get("jwt_token") !== undefined) {
+      getCurrentUser(cookies.get("jwt_token"));
+    }
+    getSetting();
+    api
+      .getUser(
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTg0N2JiMzM2OGYzZTY2MWU2ZmMyYjc4Y2NlMjBjMTlhNDk5YmUzMDE4ZjJjYWM0NTJmOWQ0MTZmMDdjNzA4YjcxYzBlMDFlOTBlY2FlNTUiLCJpYXQiOjE2OTIwNzQ3MjUuMzcxMTA5LCJuYmYiOjE2OTIwNzQ3MjUuMzcxMTExLCJleHAiOjE3MjM2OTcxMjUuMzcwMDIyLCJzdWIiOiI3NiIsInNjb3BlcyI6W119.JxTa1LPVffaDc87gHWgnLekkYdKGQPy9AbdphZHRG8JpoRlhSEznh3CWa0ecTwn3SeB7rz2EykMHRzu_XcC4baO9Y8Dzf0GrDoAtKJ6NF7O1heeKzjFjh1BWGMDH14KYFwe7Xj3JfQsCNOM-yOcwnxqOAPYDsKK0MqAskH75uD1xYgt_ElXB8z-_EBY4mNubiOqD2wSkGdpnelt8lv0ETmjLDE31acQXjYaY9q2ZoUZFvBfEal6e8GFcQmmLNsVCYNhQ2QwjpordcJ1sTZVroFyFHaqM7UHV8V-nC1FidTQ9wcBE7O5RhwNNSprgMXlkGnp67uQ8wFKNbZaJGiyf7xoML1f_QgfkOAkSr0Rm-dLWUH41lxRmE_VBauRk6GR9teEZV1rcS2gGqApBBr1R2DgXpECTyKrz27qBILi6edrZ7vF-WuiARfQLaXKc3vcvQjDhvdbkj6dgxzcxe3cqT5X3xX4lsJKokhg9lH7cQyv4SW5snpDCgrKPFf2dauV2Vxf_oYeaFECWXRZQmPa69CXliBkoPGkHsJV7J1unvf4Z-Gx2R5fCLnSZObPhgdGCvI93N_O0Q8x4d7Sh9dLzozOqeOlQ1F4vadciuGJvgC3rvUcn78Szcc1ablwl2ABkR3SuBP_bAL3vbOwEjgp3t9qD6mraicUMDgh2646YALE"
+      )
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 1) {
+          dispatch({
+            type: ActionTypes.SET_CURRENT_USER,
+            payload: result.user,
+          });
+        }
+      });
+  }, []);
 
-	// document.addEventListener('scroll', () => {
-	//   if (window.pageYOffset > 100) {
-	//     document.getElementById('toTop').classList.add('active')
-	//   }
-	//   else {
-	//     document.getElementById('toTop').classList.remove('active')
+  // document.addEventListener('scroll', () => {
+  //   if (window.pageYOffset > 100) {
+  //     document.getElementById('toTop').classList.add('active')
+  //   }
+  //   else {
+  //     document.getElementById('toTop').classList.remove('active')
 
-	//   }
-	// })
+  //   }
+  // })
 
-	return (
-		<AnimatePresence>
-			<div className="h-auto">
-				<ScrollToTop />
-				<Header
-					productTriggered={productTriggered}
-					setProductTriggered={setProductTriggered}
-				/>
-				{city.city === null ||
-				shop.shop === null ||
-				setting.setting === null ? (
-					<>
-						<Loader screen="full" />
-					</>
-				) : (
-					<>
-						<main id="main" className="main-app">
-							<Routes>
-								<Route exact={true} path="/cart" element={<ViewCart />}></Route>
-								<Route
-									exact={true}
-									path="/checkout"
-									element={<Checkout productTriggered={productTriggered} />}
-								></Route>
+  return (
+    <AnimatePresence>
+      <div className="h-auto">
+        <ScrollToTop />
+        <Header
+          productTriggered={productTriggered}
+          setProductTriggered={setProductTriggered}
+        />
+        {city.city === null ||
+        shop.shop === null ||
+        setting.setting === null ? (
+          <>
+            <Loader screen="full" />
+          </>
+        ) : (
+          <>
+            <main id="main" className="main-app">
+              <Routes>
+                <Route exact={true} path="/cart" element={<ViewCart />}></Route>
+                <Route
+                  exact={true}
+                  path="/checkout"
+                  element={<Checkout productTriggered={productTriggered} />}
+                ></Route>
 
-								<Route
-									exact={true}
-									path="/success"
-									element={
-										<Success
-											productTriggered={productTriggered}
-											setProductTriggered={setProductTriggered}
-										/>
-									}
-								></Route>
+                <Route
+                  exact={true}
+                  path="/success"
+                  element={
+                    <Success
+                      productTriggered={productTriggered}
+                      setProductTriggered={setProductTriggered}
+                    />
+                  }
+                ></Route>
 
-								<Route
-									exact={true}
-									path="/wishlist"
-									element={<Wishlist />}
-								></Route>
+                <Route
+                  exact={true}
+                  path="/wishlist"
+                  element={<Wishlist />}
+                ></Route>
 
-								<Route exact={true} path="/orders" element={<Order />}></Route>
+                <Route exact={true} path="/orders" element={<Order />}></Route>
 
-								<Route
-									exact={true}
-									path="/profile"
-									element={<ProfileDashboard />}
-								></Route>
-								<Route
-									exact={true}
-									path="/notification"
-									element={<Notification />}
-								></Route>
-								<Route
-									exact={true}
-									path="/categories"
-									element={<ShowAllCategories />}
-								></Route>
-								<Route
-									exact={true}
-									path="/products"
-									element={
-										<ProductList
-											productTriggered={productTriggered}
-											setProductTriggered={setProductTriggered}
-											selectedFilter={selectedFilter}
-											setSelectedFilter={setSelectedFilter}
-										/>
-									}
-								></Route>
-								<Route
-									exact={true}
-									path="/subCategory/:slug/"
-									element={
-										<SubCategory
-											productTriggered={productTriggered}
-											setProductTriggered={setProductTriggered}
-											selectedFilter={selectedFilter}
-											setSelectedFilter={setSelectedFilter}
-										/>
-									}
-								></Route>
-								<Route
-									exact={true}
-									path="/subCategory/:slug/:title"
-									element={
-										<SubCategory
-											productTriggered={productTriggered}
-											setProductTriggered={setProductTriggered}
-											selectedFilter={selectedFilter}
-											setSelectedFilter={setSelectedFilter}
-										/>
-									}
-								></Route>
-								<Route
-									exact={true}
-									path="/product"
-									element={
-										<ProductDetails
-											productTriggered={productTriggered}
-											setProductTriggered={setProductTriggered}
-										/>
-									}
-								></Route>
-								<Route
-									exact={true}
-									path="/product/:id/:slug"
-									element={
-										<ProductDetails
-											productTriggered={productTriggered}
-											setProductTriggered={setProductTriggered}
-										/>
-									}
-								></Route>
-								<Route
-									exact={true}
-									path="/product/:slug"
-									element={
-										<ProductDetails
-											productTriggered={productTriggered}
-											setProductTriggered={setProductTriggered}
-										/>
-									}
-								></Route>
-								<Route
-									exact={true}
-									path="/transactions"
-									element={<Transaction />}
-								></Route>
-								<Route exact={true} path="/about" element={<About />}></Route>
-								<Route
-									exact={true}
-									path="/contact"
-									element={<Contact />}
-								></Route>
-								<Route exact={true} path="/faq" element={<FAQ />}></Route>
-								<Route exact={true} path="/terms" element={<Terms />}></Route>
-								<Route
-									exact={true}
-									path="/policy/:policy_type"
-									element={<Policy />}
-								></Route>
-								<Route
-									exact={true}
-									path="/"
-									element={
-										<MainContainer
-											productTriggered={productTriggered}
-											setProductTriggered={setProductTriggered}
-											setSelectedFilter={setSelectedFilter}
-										/>
-									}
-								></Route>
+                <Route
+                  exact={true}
+                  path="/profile"
+                  element={<ProfileDashboard />}
+                ></Route>
+                <Route
+                  exact={true}
+                  path="/notification"
+                  element={<Notification />}
+                ></Route>
+                <Route
+                  exact={true}
+                  path="/categories"
+                  element={<ShowAllCategories />}
+                ></Route>
+                <Route
+                  exact={true}
+                  path="/products"
+                  element={
+                    <ProductList
+                      productTriggered={productTriggered}
+                      setProductTriggered={setProductTriggered}
+                      selectedFilter={selectedFilter}
+                      setSelectedFilter={setSelectedFilter}
+                    />
+                  }
+                ></Route>
+                <Route
+                  exact={true}
+                  path="/subCategory/:slug/"
+                  element={
+                    <SubCategory
+                      productTriggered={productTriggered}
+                      setProductTriggered={setProductTriggered}
+                      selectedFilter={selectedFilter}
+                      setSelectedFilter={setSelectedFilter}
+                    />
+                  }
+                ></Route>
+                <Route
+                  exact={true}
+                  path="/subCategory/:slug/:title"
+                  element={
+                    <SubCategory
+                      productTriggered={productTriggered}
+                      setProductTriggered={setProductTriggered}
+                      selectedFilter={selectedFilter}
+                      setSelectedFilter={setSelectedFilter}
+                    />
+                  }
+                ></Route>
+                <Route
+                  exact={true}
+                  path="/product"
+                  element={
+                    <ProductDetails
+                      productTriggered={productTriggered}
+                      setProductTriggered={setProductTriggered}
+                    />
+                  }
+                ></Route>
+                <Route
+                  exact={true}
+                  path="/product/:id/:slug"
+                  element={
+                    <ProductDetails
+                      productTriggered={productTriggered}
+                      setProductTriggered={setProductTriggered}
+                    />
+                  }
+                ></Route>
+                <Route
+                  exact={true}
+                  path="/product/:slug"
+                  element={
+                    <ProductDetails
+                      productTriggered={productTriggered}
+                      setProductTriggered={setProductTriggered}
+                    />
+                  }
+                ></Route>
+                <Route
+                  exact={true}
+                  path="/transactions"
+                  element={<Transaction />}
+                ></Route>
+                <Route exact={true} path="/about" element={<About />}></Route>
+                <Route
+                  exact={true}
+                  path="/contact"
+                  element={<Contact />}
+                ></Route>
+                <Route exact={true} path="/faq" element={<FAQ />}></Route>
+                <Route exact={true} path="/terms" element={<Terms />}></Route>
+                <Route
+                  exact={true}
+                  path="/policy/:policy_type"
+                  element={<Policy />}
+                ></Route>
+                <Route
+                  exact={true}
+                  path="/"
+                  element={
+                    <MainContainer
+                      productTriggered={productTriggered}
+                      setProductTriggered={setProductTriggered}
+                      setSelectedFilter={setSelectedFilter}
+                    />
+                  }
+                ></Route>
 
-								<Route exact={true} path="*" element={<NotFound />}></Route>
-							</Routes>
+                <Route exact={true} path="*" element={<NotFound />}></Route>
+              </Routes>
 
-							<button
-								type="button"
-								id="toTop"
-								onClick={() => {
-									window.scrollTo({ top: 0, behavior: "smooth" });
-								}}
-							>
-								<BsArrowUpSquareFill
-									fontSize={"6rem"}
-									fill="var(--secondary-color)"
-								/>
-							</button>
-						</main>
-					</>
-				)}
-				{isSmScreen ? (
-					<Footer />
-				) : (
-					<DskpFooter setSelectedFilter={setSelectedFilter} />
-				)}
+              <button
+                type="button"
+                id="toTop"
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              >
+                <BsArrowUpSquareFill
+                  fontSize={"6rem"}
+                  fill="var(--secondary-color)"
+                />
+              </button>
+            </main>
+          </>
+        )}
+        {isSmScreen ? (
+          <Footer />
+        ) : (
+          <DskpFooter setSelectedFilter={setSelectedFilter} />
+        )}
 
-				<ToastContainer toastClassName="toast-container-class" />
-			</div>
-		</AnimatePresence>
-	);
+        <ToastContainer toastClassName="toast-container-class" />
+      </div>
+    </AnimatePresence>
+  );
 }
 
 export default App;

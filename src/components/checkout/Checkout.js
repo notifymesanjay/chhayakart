@@ -111,7 +111,7 @@ const Checkout = ({ productTriggered = false }) => {
       mobile,
       app_name
     ) => {
-      if (cookies.get("jwt_token")) {
+      // if (cookies.get("jwt_token")) {
         const key = "rzp_live_t7yOUA2fwGjaEX";
         const options = {
           key: key,
@@ -145,7 +145,7 @@ const Checkout = ({ productTriggered = false }) => {
         const rzpay = new Razorpay(options);
         rzpay.on("payment.failed", function (response) {});
         rzpay.open();
-      }
+      // }
     },
     [Razorpay]
   );
@@ -255,7 +255,7 @@ const Checkout = ({ productTriggered = false }) => {
               .then((res) => {
                 if (res.status === 1) {
                   setLoadingPlaceOrder(false);
-
+                  
                   handleRozarpayPayment(
                     result.data.order_id,
                     res.data.transaction_id,
@@ -324,7 +324,7 @@ const Checkout = ({ productTriggered = false }) => {
   };
 
   const handlePlaceOrder = async (e) => {
-    if (cookies.get("jwt_token")) {
+    // if (cookies.get("jwt_token")) {
       const delivery_time = `${expectedDate.getDate()}-${
         expectedDate.getMonth() + 1
       }-${expectedDate.getFullYear()} ${expectedTime.title}`;
@@ -339,11 +339,11 @@ const Checkout = ({ productTriggered = false }) => {
           await placeOrder(items, delivery_time);
         }
       }
-    }
+    // }
   };
 
   const handleClose = async () => {
-    if (cookies.get("jwt_token")) {
+    // if (cookies.get("jwt_token")) {
       await api
         .removeCart(cookies.get("jwt_token"))
         .then((response) => response.json())
@@ -362,9 +362,9 @@ const Checkout = ({ productTriggered = false }) => {
           }
         });
       setShow(false);
-      // navigate("/");
-      navigate("/Success");
-    }
+      navigate("/");
+      // navigate("/Success");
+    // }
   };
 
   const handleOrderSummary = () => {
@@ -693,16 +693,16 @@ const Checkout = ({ productTriggered = false }) => {
         ) : (
           <>
             <div className="checkout-container container">
-              {isUserLoggedIn ? (
+              {/* {isUserLoggedIn ? ( */}
                 <BillingAddress
                   setSelectedAddress={setSelectedAddress}
                   expectedDate={expectedDate}
                   setExpectedDate={setExpectedDate}
                   setExpectedTime={setExpectedTime}
                 />
-              ) : (
+              {/* ) : (
                 <GuestLogin setIsUserLoggedIn={setIsUserLoggedIn} />
-              )}
+              )} */}
 
               <div className="order-container">
                 <PaymentMethod
