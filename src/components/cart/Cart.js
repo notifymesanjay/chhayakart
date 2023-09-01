@@ -327,11 +327,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
             Math.max(
               totalDeliveryCharge,
               parseInt(cartVal[cartVal.length - 1].delivery_charges)
-            ) +
-              cartVal.length >
-            1
-              ? (cartVal.length - 1) * 9
-              : 0;
+            ) + (cartVal.length > 1 ? (cartVal.length - 1) * 9 : 0);
           taxes += parseFloat(
             (cartVal[cartVal.length - 1].taxes / 100) *
               (parseInt(cartVal[cartVal.length - 1].qty) *

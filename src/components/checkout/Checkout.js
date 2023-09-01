@@ -396,7 +396,6 @@ const Checkout = ({ productTriggered = false }) => {
               totalDeliveryCharge,
               parseInt(cartVal[i].delivery_charges)
             );
-            console.log("kjh", totalDeliveryCharge);
             taxes += parseFloat(
               parseInt(cartVal[i].qty) *
                 parseInt(cartVal[i].discounted_price) *
@@ -432,11 +431,8 @@ const Checkout = ({ productTriggered = false }) => {
             Math.max(
               totalDeliveryCharge,
               parseInt(cartVal[cartVal.length - 1].delivery_charges)
-            ) +
-              cartVal.length >
-            1
-              ? (cartVal.length - 1) * 9
-              : 0;
+            ) + (cartVal.length > 1 ? (cartVal.length - 1) * 9 : 0);
+
           if (
             cartVal[cartVal.length - 1].delivery_charges == 0 ||
             cartVal[cartVal.length - 1].delivery_charges == 50
