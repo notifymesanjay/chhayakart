@@ -29,6 +29,7 @@ import FAQ from "./components/faq/FAQ";
 import Loader from "./components/loader/Loader";
 import Terms from "./components/terms/Terms";
 import Policy from "./components/policy/Policy";
+import Return from "./components/policy/return";
 import NotFound from "./components/404/NotFound";
 import SubCategory from "./components/product/sub-category";
 import DskpFooter from "./components/footer/new-footer";
@@ -275,6 +276,7 @@ function App() {
 									path="/policy/:policy_type"
 									element={<Policy />}
 								></Route>
+								<Route exact={true} path="/return" element={<Return />}></Route>
 								<Route
 									exact={true}
 									path="/"
