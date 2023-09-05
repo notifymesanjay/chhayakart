@@ -335,6 +335,31 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 					</div>
 				</div>
 			))}
+			<div className={styles.BankBannerDesktop}>
+				<ResponsiveCarousel
+					items={1}
+					itemsInTablet={1}
+					itemsInMobile={1}
+					infinite={true}
+					autoPlaySpeed={3000}
+					showArrows={false}
+					showDots={true}
+					autoPlay={true}
+					partialVisibilityGutter={false}
+				>
+					{banners.map((img) => (
+						<div key={img.id}>
+							<a href={img.link}>
+								<img
+									className={styles.banner}
+									src={img.image}
+									alt={img.title}
+								/>
+							</a>
+						</div>
+					))}
+				</ResponsiveCarousel>
+			</div>
 		</div>
 	);
 };
