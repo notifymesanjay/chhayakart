@@ -21,7 +21,7 @@ const Address = (props) => {
       .then((result) => {
         if (result.status === 1) {
           let sortedData = result.data.sort((a, b) => b.id - a.id);
-          setaddresses([sortedData[0]]);
+          // setaddresses([sortedData[0]]);
           props.setselectedAddress(result.data[0]);
         } else if (
           result.status === 0 &&
@@ -61,7 +61,7 @@ const Address = (props) => {
               setisLoader(false);
               if (res.status === 1) {
                 let sortedData = res.data.sort((a, b) => b.id - a.id);
-                setaddresses([sortedData[0]]);
+                // setaddresses([sortedData[0]]);
               }
               if (res.status === 0 && res.message === "Address Not Found") {
                 setaddresses([]);

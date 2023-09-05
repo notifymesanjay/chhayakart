@@ -76,7 +76,7 @@ const NewAddress = (props) => {
         .then((result) => {
           if (result.status === 1) {
             toast.success("Succesfully Added Address!");
-
+            props.setaddresses([result.data]);
             api
               .getAddress(cookies.get("jwt_token"))
               .then((resp) => resp.json())
@@ -84,7 +84,7 @@ const NewAddress = (props) => {
                 props.setisLoader(false);
                 if (res.status === 1) {
                   let sortedData = res.data.sort((a, b) => b.id - a.id);
-                  props.setaddresses([sortedData[0]]);
+                  // props.setaddresses([sortedData[0]]);
                 }
               })
               .catch((error) => {});
@@ -116,6 +116,7 @@ const NewAddress = (props) => {
         .then((result) => {
           if (result.status === 1) {
             toast.success("Succesfully Updated Address!");
+            props.setaddresses([result.data]);
 
             api
               .getAddress(cookies.get("jwt_token"))
@@ -124,7 +125,7 @@ const NewAddress = (props) => {
                 props.setisLoader(false);
                 if (res.status === 1) {
                   let sortedData = res.data.sort((a, b) => b.id - a.id);
-                  props.setaddresses([sortedData[0]]);
+                  // props.setaddresses([sortedData[0]]);
                 }
               })
               .catch((error) => {});
