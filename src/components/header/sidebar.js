@@ -207,6 +207,17 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
 						>
 							Contact Us
 						</li>
+						<li
+							className={styles.listItem}
+							data-bs-dismiss="offcanvas"
+							aria-label="Close"
+							ref={closeRef}
+							onClick={() => {
+								navigate("/return&refund");
+							}}
+						>
+							Return & Refund
+						</li>
 					</ul>
 				)}
 				{user.status !== "loading" && (

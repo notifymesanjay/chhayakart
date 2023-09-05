@@ -1,10 +1,6 @@
 import styles from "./return.module.scss";
-import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import coverImg from "../../utils/cover-img.jpg";
-import { AiOutlineMail } from "react-icons/ai";
-import { BiPhoneCall, BiTimeFive } from "react-icons/bi";
-import { GoLocation } from "react-icons/go";
+import returnImg from "./returnImg.png";
 import Loader from "../loader/Loader";
 import { Link } from "react-router-dom";
 
@@ -19,7 +15,7 @@ const Return = () => {
 				<>
 					<div className="cover">
 						<img
-							data-src={coverImg}
+							data-src={returnImg}
 							className="img-fluid lazyload"
 							alt="cover"
 						></img>
@@ -34,7 +30,9 @@ const Return = () => {
 					<div className="container">
 						<div
 							className="contact-wrapper"
-							dangerouslySetInnerHTML={{ __html: setting.setting.contact_us }}
+							dangerouslySetInnerHTML={{
+								__html: setting.setting.returns_and_exchanges_policy,
+							}}
 						></div>
 					</div>
 				</>

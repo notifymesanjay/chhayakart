@@ -139,6 +139,14 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 									>
 										Contact Us
 									</p>
+									<p
+										className={styles.link}
+										onClick={() => {
+											navigate("/return&refund");
+										}}
+									>
+										Return & Refund
+									</p>
 								</div>
 							</div>
 						)}
