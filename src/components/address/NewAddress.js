@@ -83,8 +83,7 @@ const NewAddress = (props) => {
               .then((res) => {
                 props.setisLoader(false);
                 if (res.status === 1) {
-                  let sortedData = res.data.sort((a, b) => b.id - a.id);
-                  // props.setaddresses([sortedData[0]]);
+                  props.setaddresses(res.data);
                 }
               })
               .catch((error) => {});
@@ -124,8 +123,7 @@ const NewAddress = (props) => {
               .then((res) => {
                 props.setisLoader(false);
                 if (res.status === 1) {
-                  let sortedData = res.data.sort((a, b) => b.id - a.id);
-                  // props.setaddresses([sortedData[0]]);
+                  props.setaddresses(res.data);
                 }
               })
               .catch((error) => {});

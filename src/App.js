@@ -168,7 +168,7 @@ function App() {
 								<Route
 									exact={true}
 									path="/checkout"
-									element={<Checkout productTriggered={productTriggered} />}
+									element={<Checkout productTriggered={productTriggered} setProductTriggered={setProductTriggered} />}
 								></Route>
 
 								<Route

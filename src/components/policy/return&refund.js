@@ -14,11 +14,7 @@ const Return = () => {
 			) : (
 				<>
 					<div className="cover">
-						<img
-							data-src={returnImg}
-							className="img-fluid lazyload"
-							alt="cover"
-						></img>
+						<img src={returnImg} className={styles.coverImg} alt="cover"></img>
 						<div className="title">
 							<h3>Return</h3>
 							<span>

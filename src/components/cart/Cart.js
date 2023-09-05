@@ -395,49 +395,56 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
             cod_allowed: 1,
           };
           setCartProducts(allProducts);
+          let upwasKitVal = {
+            id: 231,
+            product_id: 231,
+            name: "UpwasKit",
+            tax_id: 1,
+            brand_id: 0,
+            slug: "upwaskit",
+            category_id: 86,
+            indicator: null,
+            manufacturer: "chhayakart",
+            made_in: "India",
+            status: 1,
+            is_unlimited_stock: 0,
+            total_allowed_quantity: 10000,
+            tax_included_in_price: 1,
+            longitude: "78.4410784",
+            latitude: "17.3671541",
+            max_deliverable_distance: 100000000,
+            is_deliverable: true,
+            is_favorite: false,
+            product_variant_id: 225,
+            variants: [
+              {
+                id: 225,
+                type: "packet",
+                status: 1,
+                measurement: 0,
+                price: 0,
+                discounted_price: 0,
+                stock: 10000,
+                delivery_charges: 40,
+                taxes: 5,
+                stock_unit_name: "1 Kit",
+                is_unlimited_stock: 0,
+                cart_count: 0,
+                taxable_amount: 0,
+              },
+            ],
+            image_url:
+              "https://admin.chhayakart.com/storage/products/1693903930_9651.webp",
+          };
           if (orderVal.sub_total > 999) {
             if (!isUpwasKitAvailable()) {
-              let upwasKitVal = {
-                id: 231,
-                name: "UpwasKit",
-                tax_id: 1,
-                brand_id: 0,
-                slug: "upwaskit",
-                category_id: 86,
-                indicator: null,
-                manufacturer: "chhayakart",
-                made_in: "India",
-                status: 1,
-                is_unlimited_stock: 0,
-                total_allowed_quantity: 10000,
-                tax_included_in_price: 1,
-                longitude: "78.4410784",
-                latitude: "17.3671541",
-                max_deliverable_distance: 100000000,
-                is_deliverable: true,
-                is_favorite: false,
-                variants: [
-                  {
-                    id: 225,
-                    type: "packet",
-                    status: 1,
-                    measurement: 0,
-                    price: 0,
-                    discounted_price: 0,
-                    stock: 10000,
-                    delivery_charges: 40,
-                    taxes: 5,
-                    stock_unit_name: "1 Kit",
-                    is_unlimited_stock: 0,
-                    cart_count: 0,
-                    taxable_amount: 0,
-                  },
-                ],
-                image_url:
-                  "https://admin.chhayakart.com/storage/products/1693903930_9651.webp",
-              };
+              console.log('xyz123');
               AddProductToCart(upwasKitVal, 1);
+              setProductTriggered(!productTriggered);
             }
+          }else{
+            DecrementProduct(upwasKitVal.product_id, upwasKitVal);
+            setProductTriggered(!productTriggered);
           }
           setOrderSummary(orderVal);
           setiscartEmpty(false);
@@ -540,49 +547,53 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
           cod_allowed: 1,
         };
         setCartProducts(allProducts);
+        let upwasKitVal = {
+          id: 231,
+          product_id: 231,
+          name: "UpwasKit",
+          tax_id: 1,
+          brand_id: 0,
+          slug: "upwaskit",
+          category_id: 86,
+          indicator: null,
+          manufacturer: "chhayakart",
+          made_in: "India",
+          status: 1,
+          is_unlimited_stock: 0,
+          total_allowed_quantity: 10000,
+          tax_included_in_price: 1,
+          longitude: "78.4410784",
+          latitude: "17.3671541",
+          max_deliverable_distance: 100000000,
+          is_deliverable: true,
+          is_favorite: false,
+          product_variant_id: 225,
+          variants: [
+            {
+              id: 225,
+              type: "packet",
+              status: 1,
+              measurement: 0,
+              price: 0,
+              discounted_price: 0,
+              stock: 10000,
+              delivery_charges: 40,
+              taxes: 5,
+              stock_unit_name: "1 Kit",
+              is_unlimited_stock: 0,
+              cart_count: 0,
+              taxable_amount: 0,
+            },
+          ],
+          image_url:
+            "https://admin.chhayakart.com/storage/products/1693903930_9651.webp",
+        };
         if (orderVal.sub_total > 999) {
           if (!isUpwasKitAvailable()) {
-            let upwasKitVal = {
-              id: 231,
-              name: "UpwasKit",
-              tax_id: 1,
-              brand_id: 0,
-              slug: "upwaskit",
-              category_id: 86,
-              indicator: null,
-              manufacturer: "chhayakart",
-              made_in: "India",
-              status: 1,
-              is_unlimited_stock: 0,
-              total_allowed_quantity: 10000,
-              tax_included_in_price: 1,
-              longitude: "78.4410784",
-              latitude: "17.3671541",
-              max_deliverable_distance: 100000000,
-              is_deliverable: true,
-              is_favorite: false,
-              variants: [
-                {
-                  id: 225,
-                  type: "packet",
-                  status: 1,
-                  measurement: 0,
-                  price: 0,
-                  discounted_price: 0,
-                  stock: 10000,
-                  delivery_charges: 40,
-                  taxes: 5,
-                  stock_unit_name: "1 Kit",
-                  is_unlimited_stock: 0,
-                  cart_count: 0,
-                  taxable_amount: 0,
-                },
-              ],
-              image_url:
-                "https://admin.chhayakart.com/storage/products/1693903930_9651.webp",
-            };
             addtoCart(upwasKitVal, upwasKitVal.variants[0].id, 1);
           }
+        }else{
+          removefromCart(upwasKitVal);
         }
         setOrderSummary(orderVal);
         setiscartEmpty(false);

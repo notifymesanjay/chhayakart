@@ -311,9 +311,9 @@ const Favorite = () => {
 					)}
 				</>
 			)}
-			{/* {isLogin && (
+			{isLogin && (
 				<LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
-			)} */}
+			)}
 		</div>
 	);
 };

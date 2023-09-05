@@ -13,11 +13,11 @@ export const authReducer = (state = initialState, { type, payload }) => {
                 status : "fulfill",
                 user: payload,
             }
-        // case ActionTypes.LOGOUT_AUTH:
-        //     return {
-        //         status:"loading",
-        //         user:null,
-        //     }
+        case ActionTypes.LOGOUT_AUTH:
+            return {
+                status:"loading",
+                user:null,
+            }
         
         default:
             return state;

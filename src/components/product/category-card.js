@@ -4,6 +4,7 @@ import { useHref, useNavigate } from "react-router-dom";
 import { useResponsive } from "../shared/use-responsive";
 import SBI from "../SBI.webp";
 import AU from "../AU.webp";
+import BOB from "../BOB.jpg";
 import shingadaLaddo from "../shingadaLaddo.webp";
 import batata from "../batata.webp";
 import KahjurDryfruit from "../KahjurDryfruit.webp";
@@ -173,6 +174,12 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 			title: "banner3",
 			link: "https://api.earnow.in/l/PkFqRHbgH9",
 		},
+		{
+			id: 4,
+			image: BOB,
+			title: "banner4",
+			link: "https://api.earnow.in/l/g88cIpdLqi",
+		},
 	];
 	return isSmScreen ? (
 		<>
@@ -328,6 +335,31 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 					</div>
 				</div>
 			))}
+			<div className={styles.BankBannerDesktop}>
+				<ResponsiveCarousel
+					items={1}
+					itemsInTablet={1}
+					itemsInMobile={1}
+					infinite={true}
+					autoPlaySpeed={3000}
+					showArrows={false}
+					showDots={true}
+					autoPlay={true}
+					partialVisibilityGutter={false}
+				>
+					{banners.map((img) => (
+						<div key={img.id}>
+							<a href={img.link}>
+								<img
+									className={styles.banner}
+									src={img.image}
+									alt={img.title}
+								/>
+							</a>
+						</div>
+					))}
+				</ResponsiveCarousel>
+			</div>
 		</div>
 	);
 };

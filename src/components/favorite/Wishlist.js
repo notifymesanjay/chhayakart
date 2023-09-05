@@ -490,9 +490,9 @@ const Wishlist = () => {
         )}
       </div>
 
-      {/* {isLogin && (
+      {isLogin && (
         <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
-      )} */}
+      )}
     </section>
   );
 };
