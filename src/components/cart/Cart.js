@@ -13,6 +13,7 @@ import EmptyCart from "../../utils/zero-state-screens/Empty_Cart.svg";
 import { useNavigate, Link } from "react-router-dom";
 import Loader from "../loader/Loader";
 import {
+  AddProductToCart,
   DecrementProduct,
   DeleteProductFromCart,
   IncrementProduct,
@@ -394,6 +395,50 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
             cod_allowed: 1,
           };
           setCartProducts(allProducts);
+          if (orderVal.sub_total > 999) {
+            if (!isUpwasKitAvailable()) {
+              let upwasKitVal = {
+                id: 231,
+                name: "UpwasKit",
+                tax_id: 1,
+                brand_id: 0,
+                slug: "upwaskit",
+                category_id: 86,
+                indicator: null,
+                manufacturer: "chhayakart",
+                made_in: "India",
+                status: 1,
+                is_unlimited_stock: 0,
+                total_allowed_quantity: 10000,
+                tax_included_in_price: 1,
+                longitude: "78.4410784",
+                latitude: "17.3671541",
+                max_deliverable_distance: 100000000,
+                is_deliverable: true,
+                is_favorite: false,
+                variants: [
+                  {
+                    id: 225,
+                    type: "packet",
+                    status: 1,
+                    measurement: 0,
+                    price: 0,
+                    discounted_price: 0,
+                    stock: 10000,
+                    delivery_charges: 40,
+                    taxes: 5,
+                    stock_unit_name: "1 Kit",
+                    is_unlimited_stock: 0,
+                    cart_count: 0,
+                    taxable_amount: 0,
+                  },
+                ],
+                image_url:
+                  "https://admin.chhayakart.com/storage/products/1693903930_9651.webp",
+              };
+              AddProductToCart(upwasKitVal, 1);
+            }
+          }
           setOrderSummary(orderVal);
           setiscartEmpty(false);
         } else {
@@ -495,10 +540,80 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
           cod_allowed: 1,
         };
         setCartProducts(allProducts);
+        if (orderVal.sub_total > 999) {
+          if (!isUpwasKitAvailable()) {
+            let upwasKitVal = {
+              id: 231,
+              name: "UpwasKit",
+              tax_id: 1,
+              brand_id: 0,
+              slug: "upwaskit",
+              category_id: 86,
+              indicator: null,
+              manufacturer: "chhayakart",
+              made_in: "India",
+              status: 1,
+              is_unlimited_stock: 0,
+              total_allowed_quantity: 10000,
+              tax_included_in_price: 1,
+              longitude: "78.4410784",
+              latitude: "17.3671541",
+              max_deliverable_distance: 100000000,
+              is_deliverable: true,
+              is_favorite: false,
+              variants: [
+                {
+                  id: 225,
+                  type: "packet",
+                  status: 1,
+                  measurement: 0,
+                  price: 0,
+                  discounted_price: 0,
+                  stock: 10000,
+                  delivery_charges: 40,
+                  taxes: 5,
+                  stock_unit_name: "1 Kit",
+                  is_unlimited_stock: 0,
+                  cart_count: 0,
+                  taxable_amount: 0,
+                },
+              ],
+              image_url:
+                "https://admin.chhayakart.com/storage/products/1693903930_9651.webp",
+            };
+            addtoCart(upwasKitVal, upwasKitVal.variants[0].id, 1);
+          }
+        }
         setOrderSummary(orderVal);
         setiscartEmpty(false);
       }
     }
+  };
+
+  const isUpwasKitAvailable = () => {
+    if (cookies.get("jwt_token") === undefined) {
+      if (localStorage.getItem("cart")) {
+        const cartVal = JSON.parse(localStorage.getItem("cart"));
+        if (cartVal && cartVal.length > 0) {
+          let i = 0;
+          while (i < cartVal.length) {
+            if (parseInt(cartVal[i].product_id) === 231) {
+              return true;
+            }
+            i++;
+          }
+          return false;
+        }
+      }
+    } else if (cart.cart !== null && cart.checkout !== null) {
+      for (let i = 0; i < cart.cart.data.cart.length; i++) {
+        if (parseInt(cart.cart.data.cart[i].product_id) === 231) {
+          return true;
+        }
+      }
+      return false;
+    }
+    return false;
   };
 
   useEffect(() => {
@@ -585,27 +700,29 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
                           {product.measurement} {product.unit}
                         </div>
 
-                        <div className="counter">
-                          <button
-                            type="button"
-                            onClick={() => {
-                              handleDecrement(product, index);
-                            }}
-                          >
-                            <BiMinus fill="#fff" />
-                          </button>
-                          <span id={`input-cart-sidebar${index}`}>
-                            {product.qty}
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              handleIncrement(product, index);
-                            }}
-                          >
-                            <BsPlus fill="#fff" />
-                          </button>
-                        </div>
+                        {product.product_id !== 231 && (
+                          <div className="counter">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                handleDecrement(product, index);
+                              }}
+                            >
+                              <BiMinus fill="#fff" />
+                            </button>
+                            <span id={`input-cart-sidebar${index}`}>
+                              {product.qty}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                handleIncrement(product, index);
+                              }}
+                            >
+                              <BsPlus fill="#fff" />
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </div>
 
@@ -621,15 +738,17 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
                         </span>
                       </div>
 
-                      <button
-                        type="button"
-                        className="remove-product"
-                        onClick={() => {
-                          deleteProduct(product);
-                        }}
-                      >
-                        delete
-                      </button>
+                      {product.product_id !== 231 && (
+                        <button
+                          type="button"
+                          className="remove-product"
+                          onClick={() => {
+                            deleteProduct(product);
+                          }}
+                        >
+                          delete
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}

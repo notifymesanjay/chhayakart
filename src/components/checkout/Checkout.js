@@ -20,6 +20,7 @@ import "./checkout.css";
 import GuestLogin from "./guest-login";
 import { escapeSelector } from "jquery";
 import TrackingService from "../../services/trackingService";
+import { AddProductToCart } from "../../services/cartService";
 
 const stripePromise = loadStripe(
   "pk_test_51MKxDESEKxefYE6MZCHxEw4cFKiiLn2mV3Ek4Nx1UfcuNfE1Z6jgQrZrKpqTLju3n5SBjYJcwt1Jkw1bEoPXWRHB00XZ7D2f2F"
@@ -487,6 +488,50 @@ const Checkout = ({ productTriggered = false }) => {
               user.status === "loading" ? "" : user.user.email
             );
           } catch (ex) {}
+          if (orderVal.sub_total > 999) {
+            if (!isUpwasKitAvailable()) {
+              let upwasKitVal = {
+                id: 231,
+                name: "UpwasKit",
+                tax_id: 1,
+                brand_id: 0,
+                slug: "upwaskit",
+                category_id: 86,
+                indicator: null,
+                manufacturer: "chhayakart",
+                made_in: "India",
+                status: 1,
+                is_unlimited_stock: 0,
+                total_allowed_quantity: 10000,
+                tax_included_in_price: 1,
+                longitude: "78.4410784",
+                latitude: "17.3671541",
+                max_deliverable_distance: 100000000,
+                is_deliverable: true,
+                is_favorite: false,
+                variants: [
+                  {
+                    id: 225,
+                    type: "packet",
+                    status: 1,
+                    measurement: 0,
+                    price: 0,
+                    discounted_price: 0,
+                    stock: 10000,
+                    delivery_charges: 40,
+                    taxes: 5,
+                    stock_unit_name: "1 Kit",
+                    is_unlimited_stock: 0,
+                    cart_count: 0,
+                    taxable_amount: 0,
+                  },
+                ],
+                image_url:
+                  "https://admin.chhayakart.com/storage/products/1693903930_9651.webp",
+              };
+              AddProductToCart(upwasKitVal, 1);
+            }
+          }
           setOrderSummary(orderVal);
           sub_total = subTotal;
         }
@@ -631,6 +676,63 @@ const Checkout = ({ productTriggered = false }) => {
             : Math.ceil(cart.checkout.sub_total + taxes + delivery_charges),
         cod_allowed: iscodAllowed ? 1 : 0,
       };
+
+      if (orderVal.sub_total > 999) {
+        if (!isUpwasKitAvailable()) {
+          let upwasKitVal = {
+            id: 231,
+            name: "UpwasKit",
+            tax_id: 1,
+            brand_id: 0,
+            slug: "upwaskit",
+            category_id: 86,
+            indicator: null,
+            manufacturer: "chhayakart",
+            made_in: "India",
+            status: 1,
+            is_unlimited_stock: 0,
+            total_allowed_quantity: 10000,
+            tax_included_in_price: 1,
+            longitude: "78.4410784",
+            latitude: "17.3671541",
+            max_deliverable_distance: 100000000,
+            is_deliverable: true,
+            is_favorite: false,
+            variants: [
+              {
+                id: 225,
+                type: "packet",
+                status: 1,
+                measurement: 0,
+                price: 0,
+                discounted_price: 0,
+                stock: 10000,
+                delivery_charges: 40,
+                taxes: 5,
+                stock_unit_name: "1 Kit",
+                is_unlimited_stock: 0,
+                cart_count: 0,
+                taxable_amount: 0,
+              },
+            ],
+            image_url:
+              "https://admin.chhayakart.com/storage/products/1693903930_9651.webp",
+          };
+          api
+            .addToCart(
+              cookies.get("jwt_token"),
+              upwasKitVal.product_id,
+              upwasKitVal.variants[0].id,
+              1
+            )
+            .then((response) => response.json())
+            .then((result) => {
+              if (result.status === 1) {
+                handleOrderSummary();
+              }
+            });
+        }
+      }
       setOrderSummary(orderVal);
 
       if (sub_total <= 199 || parseInt(delivery_charges) < 1 || !iscodAllowed) {
@@ -640,6 +742,32 @@ const Checkout = ({ productTriggered = false }) => {
       }
     }
   }, [cart]);
+
+  const isUpwasKitAvailable = () => {
+    if (cookies.get("jwt_token") === undefined) {
+      if (localStorage.getItem("cart")) {
+        const cartVal = JSON.parse(localStorage.getItem("cart"));
+        if (cartVal && cartVal.length > 0) {
+          let i = 0;
+          while (i < cartVal.length) {
+            if (parseInt(cartVal[i].product_id) === 231) {
+              return true;
+            }
+            i++;
+          }
+          return false;
+        }
+      }
+    } else if (cart.cart !== null && cart.checkout !== null) {
+      for (let i = 0; i < cart.cart.data.cart.length; i++) {
+        if (parseInt(cart.cart.data.cart[i].product_id) === 231) {
+          return true;
+        }
+      }
+      return false;
+    }
+    return false;
+  };
 
   useEffect(() => {
     if (isUserLoggedIn) {
