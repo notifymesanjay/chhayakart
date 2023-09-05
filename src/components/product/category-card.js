@@ -4,6 +4,7 @@ import { useHref, useNavigate } from "react-router-dom";
 import { useResponsive } from "../shared/use-responsive";
 import SBI from "../SBI.webp";
 import AU from "../AU.webp";
+import BOB from "../BOB.jpg";
 import shingadaLaddo from "../shingadaLaddo.webp";
 import batata from "../batata.webp";
 import KahjurDryfruit from "../KahjurDryfruit.webp";
@@ -172,6 +173,12 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 			image: INDUSIND,
 			title: "banner3",
 			link: "https://api.earnow.in/l/PkFqRHbgH9",
+		},
+		{
+			id: 4,
+			image: BOB,
+			title: "banner4",
+			link: "https://api.earnow.in/l/g88cIpdLqi",
 		},
 	];
 	return isSmScreen ? (
