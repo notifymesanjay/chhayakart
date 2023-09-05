@@ -112,39 +112,38 @@ const Checkout = ({ productTriggered = false }) => {
       app_name
     ) => {
       // if (cookies.get("jwt_token")) {
-        const key = "rzp_live_t7yOUA2fwGjaEX";
-        const options = {
-          key: key,
-          amount: amount * 100,
-          // currency: "INR",
+      const key = "rzp_live_t7yOUA2fwGjaEX";
+      const options = {
+        key: key,
+        amount: amount * 100,
+        // currency: "INR",
+        name: name,
+        description: app_name,
+        image: "https://admin.chhayakart.com/storage/logo/1680098508_37047.png",
+        order_id: razorpay_transaction_id,
+        handler: async (res) => {
+          if (res.razorpay_payment_id) {
+            setLoadingPlaceOrder(true);
+            await addRazorPayTransaction(res, order_id);
+            //Add Transaction
+          }
+        },
+        prefill: {
           name: name,
-          description: app_name,
-          image:
-            "https://admin.chhayakart.com/storage/logo/1680098508_37047.png",
-          order_id: razorpay_transaction_id,
-          handler: async (res) => {
-            if (res.razorpay_payment_id) {
-              setLoadingPlaceOrder(true);
-              await addRazorPayTransaction(res, order_id);
-              //Add Transaction
-            }
-          },
-          prefill: {
-            name: name,
-            email: email,
-            contact: mobile,
-          },
-          notes: {
-            address: "Razorpay Corporate Office",
-          },
-          theme: {
-            color: "#51BD88",
-          },
-        };
+          email: email,
+          contact: mobile,
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#51BD88",
+        },
+      };
 
-        const rzpay = new Razorpay(options);
-        rzpay.on("payment.failed", function (response) {});
-        rzpay.open();
+      const rzpay = new Razorpay(options);
+      rzpay.on("payment.failed", function (response) {});
+      rzpay.open();
       // }
     },
     [Razorpay]
@@ -324,45 +323,45 @@ const Checkout = ({ productTriggered = false }) => {
 
   const handlePlaceOrder = async (e) => {
     // if (cookies.get("jwt_token")) {
-      const delivery_time = `${expectedDate.getDate()}-${
-        expectedDate.getMonth() + 1
-      }-${expectedDate.getFullYear()} ${expectedTime.title}`;
+    const delivery_time = `${expectedDate.getDate()}-${
+      expectedDate.getMonth() + 1
+    }-${expectedDate.getFullYear()} ${expectedTime.title}`;
 
-      if (selectedAddress === null) {
-        toast.error("Please Select Delivery Address");
-      } else if (delivery_time === null) {
-        toast.error("Please Select Preffered Delivery Time");
-      } else {
-        setLoadingPlaceOrder(true);
-        if (paymentMethod) {
-          await placeOrder(items, delivery_time);
-        }
+    if (selectedAddress === null) {
+      toast.error("Please Select Delivery Address");
+    } else if (delivery_time === null) {
+      toast.error("Please Select Preffered Delivery Time");
+    } else {
+      setLoadingPlaceOrder(true);
+      if (paymentMethod) {
+        await placeOrder(items, delivery_time);
       }
+    }
     // }
   };
 
   const handleClose = async () => {
     // if (cookies.get("jwt_token")) {
-      await api
-        .removeCart(cookies.get("jwt_token"))
-        .then((response) => response.json())
-        .then(async (result) => {
-          if (result.status === 1) {
-            await api
-              .getCart(
-                cookies.get("jwt_token"),
-                city.city.latitude,
-                city.city.longitude
-              )
-              .then((resp) => resp.json())
-              .then((res) => {
-                dispatch({ type: ActionTypes.SET_CART, payload: null });
-              });
-          }
-        });
-      setShow(false);
-      navigate("/");
-      // navigate("/Success");
+    await api
+      .removeCart(cookies.get("jwt_token"))
+      .then((response) => response.json())
+      .then(async (result) => {
+        if (result.status === 1) {
+          await api
+            .getCart(
+              cookies.get("jwt_token"),
+              city.city.latitude,
+              city.city.longitude
+            )
+            .then((resp) => resp.json())
+            .then((res) => {
+              dispatch({ type: ActionTypes.SET_CART, payload: null });
+              // navigate("/Success");
+              navigate("/");
+            });
+        }
+      });
+    setShow(false);
     // }
   };
 
@@ -693,12 +692,12 @@ const Checkout = ({ productTriggered = false }) => {
           <>
             <div className="checkout-container container">
               {/* {isUserLoggedIn ? ( */}
-                <BillingAddress
-                  setSelectedAddress={setSelectedAddress}
-                  expectedDate={expectedDate}
-                  setExpectedDate={setExpectedDate}
-                  setExpectedTime={setExpectedTime}
-                />
+              <BillingAddress
+                setSelectedAddress={setSelectedAddress}
+                expectedDate={expectedDate}
+                setExpectedDate={setExpectedDate}
+                setExpectedTime={setExpectedTime}
+              />
               {/* ) : (
                 <GuestLogin setIsUserLoggedIn={setIsUserLoggedIn} />
               )} */}

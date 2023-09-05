@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../shared/use-responsive";
 import Gaon from "../Gaon.png";
 import styles from "./category.module.scss";
-import gana from "../gana.webp";
+// import gana from "../gana.webp";
+import gana from "../gana.jpg";
 import Banner from "../seasonBanner/bannerCarousel";
 import DurgaCopy from "../DurgaCopy.jpg";
 const ShopByCategory = ({
