@@ -255,14 +255,13 @@ const Checkout = ({ productTriggered = false }) => {
               .then((res) => {
                 if (res.status === 1) {
                   setLoadingPlaceOrder(false);
-                  
                   handleRozarpayPayment(
                     result.data.order_id,
                     res.data.transaction_id,
                     orderSummary.total_amount,
-                    user.user.name,
+                    selectedAddress.name,
                     user.user.email,
-                    user.user.mobile,
+                    selectedAddress.alternate_mobile,
                     setting.setting.app_name
                   );
                 } else {
