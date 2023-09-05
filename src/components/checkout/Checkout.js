@@ -358,12 +358,11 @@ const Checkout = ({ productTriggered = false }) => {
               .then((resp) => resp.json())
               .then((res) => {
                 dispatch({ type: ActionTypes.SET_CART, payload: null });
+                navigate("/Success");
               });
           }
         });
       setShow(false);
-      // navigate("/");
-      navigate("/Success");
     }
   };
 
