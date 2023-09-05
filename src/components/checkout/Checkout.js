@@ -358,7 +358,7 @@ const Checkout = ({ productTriggered = false }) => {
 							.then((resp) => resp.json())
 							.then((res) => {
 								dispatch({ type: ActionTypes.SET_CART, payload: null });
-								navigate("/");
+								navigate("/Success");
 							});
 					}
 				});
@@ -590,11 +590,12 @@ const Checkout = ({ productTriggered = false }) => {
 						iscodAllowed = false;
 					}
 				}
-			}
+
 			delivery_charges +=
 				cart.cart.data.cart.length > 1
 					? (cart.cart.data.cart.length - 1) * 9
 					: 0;
+        }          
 			let orderVal = {
 				product_variant_id: cart.checkout.product_variant_id,
 				quantity: cart.checkout.quantity,
