@@ -6,7 +6,8 @@ import Loader from "../loader/Loader";
 import CategoryCard from "./category-card";
 import ShopByRegion from "./region";
 import "./product.css";
-import DurgaCopy from "../DurgaCopy.jpg";
+import loan from "../loan.webp";
+
 const shopByRegionName = "SHOP BY REGION";
 
 const ProductContainer = ({ setSelectedFilter = () => {} }) => {
@@ -17,6 +18,7 @@ const ProductContainer = ({ setSelectedFilter = () => {} }) => {
 	const [subCategories, setSubCategories] = useState([]);
 	const [shopByRegionList, setShopByRegionList] = useState([]);
 	const navigate = useNavigate();
+
 	useEffect(() => {
 		if (shop.shop.category != null && shop.shop.category.length > 0) {
 			const categoryList = shop.shop.category;
@@ -107,6 +109,13 @@ const ProductContainer = ({ setSelectedFilter = () => {} }) => {
 							regionList={shopByRegionList}
 							setSelectedFilter={setSelectedFilter}
 						/>
+					)}
+					{isSmScreen && (
+						<div className="loanWrapper">
+							<a href="https://api.earnow.in/l/qCZvfTst0l">
+								<img className="loan" src={loan} alt="loan" />
+							</a>
+						</div>
 					)}
 
 					{!isSmScreen && shopByRegionList.length > 0 && (
