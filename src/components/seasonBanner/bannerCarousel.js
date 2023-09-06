@@ -8,16 +8,39 @@ import { useResponsive } from "../shared/use-responsive";
 import { useNavigate } from "react-router-dom";
 import styles from "./bannercarousel.module.scss";
 const Banner = () => {
-	const bannerImg = [
-		{ id: 1, image: banner1, title: "banner1" },
-		{ id: 2, image: banner2, title: "banner2 " },
-		{ id: 3, image: banner3, title: "banner3" },
-		{ id: 4, image: banner4, title: "banner4" },
-	];
+	const bannerImg = [{ id: 1, image: banner3, title: "banner1" }];
 	// useEffect(alert(banner1), []);
 	const { isMobile } = useResponsive();
+	const { isSmScreen } = useResponsive();
 	const navigate = useNavigate();
-	return (
+	return isSmScreen ? (
+		<div>
+			<ResponsiveCarousel
+				items={1}
+				itemsInTablet={1}
+				itemsInMobile={1}
+				infinite={true}
+				autoPlaySpeed={4000}
+				showArrows={false}
+				showDots={true}
+				autoPlay={true}
+				partialVisibilityGutter={false}
+			>
+				{bannerImg.map((img) => (
+					<div key={img.id}>
+						<img
+							className={styles.banner}
+							src={img.image}
+							alt={img.title}
+							onClick={() => {
+								navigate("/subCategory/166");
+							}}
+						/>
+					</div>
+				))}
+			</ResponsiveCarousel>
+		</div>
+	) : (
 		<div>
 			<ResponsiveCarousel
 				items={1}
@@ -33,7 +56,7 @@ const Banner = () => {
 				{bannerImg.map((img) => (
 					<div key={img.id}>
 						<img
-							className={styles.banner}
+							className={styles.bannerDesktop}
 							src={img.image}
 							alt={img.title}
 							onClick={() => {
