@@ -24,7 +24,7 @@ export const AddProductToCart = (product, quantity) => {
 				total_allowed_quantity: product.total_allowed_quantity,
 				unit: product.variants[0].stock_unit,
 				delivery_charges: product.variants[0].delivery_charges,
-				taxes : product.variants[0].taxes
+				taxes: product.variants[0].taxes,
 			},
 		];
 		localStorage.setItem("cart", JSON.stringify(updatedProductList));
@@ -69,7 +69,7 @@ export const AddProductToCart = (product, quantity) => {
 				total_allowed_quantity: product.total_allowed_quantity,
 				unit: product.variants[0].stock_unit,
 				delivery_charges: product.variants[0].delivery_charges,
-				taxes: product.variants[0].taxes
+				taxes: product.variants[0].taxes,
 			});
 			localStorage.setItem("cart", JSON.stringify(updatedProductList));
 			return true;
@@ -152,14 +152,14 @@ export const DeleteProductFromCart = (product_id) => {
 
 export const checkUpwasKitAvailable = () => {
 	let cart = JSON.parse(localStorage.getItem("cart"));
-	let i =0;
-	if(cart){
-		while(i<cart.length){
-			if(parseInt(cart[i].product_id) === 231){
+	let i = 0;
+	if (cart) {
+		while (i < cart.length) {
+			if (parseInt(cart[i].product_id) === 232) {
 				return true;
 			}
 			i++;
 		}
 	}
 	return false;
-}
+};
