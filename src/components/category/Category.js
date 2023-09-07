@@ -6,8 +6,10 @@ import Gaon from "../Gaon.png";
 import styles from "./category.module.scss";
 // import gana from "../gana.webp";
 import gana from "../gana.jpg";
+import ganaD from "../ganaD.webp";
 import Banner from "../seasonBanner/bannerCarousel";
 import DurgaCopy from "../DurgaCopy.jpg";
+import durgaD from "../durgaD.webp";
 const ShopByCategory = ({
 	categories = [],
 	setSelectedFilter = () => {},
@@ -43,7 +45,7 @@ const ShopByCategory = ({
 									<div className={styles.ganeshAddDesktop}>
 										<img
 											className={`${styles.ganeshAdDesktop} lazyload`}
-											data-src={gana}
+											data-src={ganaD}
 											alt="Ganesh Icon"
 											onClick={() => {
 												navigate("/subCategory/96/75_GANESH%20IDOL");
@@ -81,7 +83,7 @@ const ShopByCategory = ({
 									<div className={styles.durgaAddDesktop}>
 										<img
 											className={styles.durgaAdDesktop}
-											src={DurgaCopy}
+											src={durgaD}
 											alt="Durga Offer"
 											onClick={() => {
 												navigate("/");
