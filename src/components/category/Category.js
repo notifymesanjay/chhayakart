@@ -40,6 +40,16 @@ const ShopByCategory = ({
 						{!isSmScreen ? (
 							<div className="container">
 								<div className={styles.cardWrapper}>
+									<div className={styles.ganeshAddDesktop}>
+										<img
+											className={`${styles.ganeshAdDesktop} lazyload`}
+											data-src={gana}
+											alt="Ganesh Icon"
+											onClick={() => {
+												navigate("/subCategory/96/75_GANESH%20IDOL");
+											}}
+										/>
+									</div>
 									<div className={styles.headerWrapper}>
 										<h1 className={styles.header}>SHOP BY CATEGORY</h1>
 									</div>
@@ -64,6 +74,21 @@ const ShopByCategory = ({
 										))}
 									</div>
 								</div>
+								<div className={styles.seasonBannerDesktop}>
+									<Banner />
+								</div>
+								{!isSmScreen && (
+									<div className={styles.durgaAddDesktop}>
+										<img
+											className={styles.durgaAdDesktop}
+											src={DurgaCopy}
+											alt="Durga Offer"
+											onClick={() => {
+												navigate("/");
+											}}
+										/>
+									</div>
+								)}
 							</div>
 						) : (
 							<div className="container">
@@ -105,7 +130,7 @@ const ShopByCategory = ({
 								{isSmScreen && (
 									<div className="durgaAdd">
 										<img
-											className="durgaAd"
+											className={styles.durgaAd}
 											src={DurgaCopy}
 											alt="Durga Offer"
 											onClick={() => {

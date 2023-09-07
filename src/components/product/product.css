@@ -52,6 +52,14 @@
 	border: 2px solid rgb(255, 184, 117);
 	margin-top: 20px;
 }
+.loanDesktop {
+	height: 150px;
+	width: 100%;
+	border-radius: 15px;
+	margin-bottom: 20px;
+	border: 2px solid rgb(255, 184, 117);
+	margin-top: 20px;
+}
 
 .next-arrow {
 	position: absolute;

@@ -124,6 +124,13 @@ const ProductContainer = ({ setSelectedFilter = () => {} }) => {
 							setSelectedFilter={setSelectedFilter}
 						/>
 					)}
+					{!isSmScreen && (
+						<div className="loanWrapperDesktop">
+							<a href="https://api.earnow.in/l/qCZvfTst0l">
+								<img className="loanDesktop" src={loan} alt="loan" />
+							</a>
+						</div>
+					)}
 				</>
 			)}
 		</div>
