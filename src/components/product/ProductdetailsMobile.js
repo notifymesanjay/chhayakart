@@ -426,20 +426,24 @@ const Productdetails = ({
                     autoPlay={true}
                   >
                     {relatedProducts.map((related_product, index) => (
-                      <div className="col-md-3 col-lg-4" key={index}>
-                        <RelateProduct
-                          index={index}
-                          related_product={related_product}
-                          productTriggered={productTriggered}
-                          setIsViewModal={setIsViewModal}
-                          setselectedProduct={setselectedProduct}
-                          setSelectedProductId={setSelectedProductId}
-                          setProductTriggered={setProductTriggered}
-                          getProductVariants={getProductVariants}
-                          removefromCart={removefromCart}
-                          addtoCart={addtoCart}
-                        />
-                      </div>
+                      <>
+                        {related_product.id !== 234 && (
+                          <div className="col-md-3 col-lg-4" key={index}>
+                            <RelateProduct
+                              index={index}
+                              related_product={related_product}
+                              productTriggered={productTriggered}
+                              setIsViewModal={setIsViewModal}
+                              setselectedProduct={setselectedProduct}
+                              setSelectedProductId={setSelectedProductId}
+                              setProductTriggered={setProductTriggered}
+                              getProductVariants={getProductVariants}
+                              removefromCart={removefromCart}
+                              addtoCart={addtoCart}
+                            />
+                          </div>
+                        )}
+                      </>
                     ))}
                   </ResponsiveCarousel>
                 </div>

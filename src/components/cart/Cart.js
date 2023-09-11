@@ -396,8 +396,8 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
           };
           setCartProducts(allProducts);
           let upwasKitVal = {
-            id: 231,
-            product_id: 231,
+            id: 234,
+            product_id: 234,
             name: "UpwasKit",
             tax_id: 1,
             brand_id: 0,
@@ -548,8 +548,8 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
         };
         setCartProducts(allProducts);
         let upwasKitVal = {
-          id: 231,
-          product_id: 231,
+          id: 234,
+          product_id: 234,
           name: "UpwasKit",
           tax_id: 1,
           brand_id: 0,
@@ -608,7 +608,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
         if (cartVal && cartVal.length > 0) {
           let i = 0;
           while (i < cartVal.length) {
-            if (parseInt(cartVal[i].product_id) === 231) {
+            if (parseInt(cartVal[i].product_id) === 234) {
               return true;
             }
             i++;
@@ -618,7 +618,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
       }
     } else if (cart.cart !== null && cart.checkout !== null) {
       for (let i = 0; i < cart.cart.data.cart.length; i++) {
-        if (parseInt(cart.cart.data.cart[i].product_id) === 231) {
+        if (parseInt(cart.cart.data.cart[i].product_id) === 234) {
           return true;
         }
       }
@@ -711,7 +711,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
                           {product.measurement} {product.unit}
                         </div>
 
-                        {product.product_id !== 231 && (
+                        {product.product_id !== 234 && (
                           <div className="counter">
                             <button
                               type="button"
@@ -749,7 +749,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
                         </span>
                       </div>
 
-                      {product.product_id !== 231 && (
+                      {product.product_id !== 234 && (
                         <button
                           type="button"
                           className="remove-product"

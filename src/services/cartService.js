@@ -155,7 +155,7 @@ export const checkUpwasKitAvailable = () => {
 	let i =0;
 	if(cart){
 		while(i<cart.length){
-			if(parseInt(cart[i].product_id) === 231){
+			if(parseInt(cart[i].product_id) === 234){
 				return true;
 			}
 			i++;
