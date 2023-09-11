@@ -1,6 +1,7 @@
 import React from "react";
 import CkLogo from "../../public/images/logo/chhayakart-white-mini-logo.png";
 import styles from "./dskp-header.module.scss";
+import { IoPersonOutline, IoSearchOutline } from "react-icons/io5";
 import { useRef } from "react";
 import { useState, useEffect } from "react";
 import { useOnHoverOutside } from "./useOnHoverOutside";
@@ -13,6 +14,11 @@ import Cookies from "universal-cookie";
 import { removelocalstorageOTP } from "../../utils/manageLocalStorage";
 import { ActionTypes } from "../../model/action-type";
 import TemHeader from "./HeadTemp";
+import {
+	faShoppingCart,
+	faCartArrowDown,
+	faCartShopping,
+} from "@fortawesome/free-solid-svg-icons";
 
 const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 	const user = useSelector((state) => state.user);
@@ -20,9 +26,11 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 	const cookies = new Cookies();
 	const signInRef = useRef(null);
 	const helpRef = useRef(null);
+	const ourProductsRef = useRef(null);
 	const navigate = useNavigate();
 	const [isSignInDropDown, setIsSignInDropDown] = useState(false);
 	const [isHelpDropDown, setIsHelpDropDown] = useState(false);
+	const [isOurProductsDropDown, setIsOurProductsDropDown] = useState(false);
 	const [isLogin, setIsLogin] = useState(false);
 
 	const [productsInCart, setProductsInCart] = useState(0);
@@ -67,6 +75,9 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 	const closeHelpMenu = () => {
 		setIsHelpDropDown(false);
 	};
+	const closeOurProductsMenu = () => {
+		setIsOurProductsDropDown(false);
+	};
 	useEffect(() => {
 		if (cookies.get("jwt_token") === undefined) {
 			if (localStorage.getItem("cart")) {
@@ -84,6 +95,7 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 
 	useOnHoverOutside(signInRef, closeSignInMenu);
 	useOnHoverOutside(helpRef, closeHelpMenu);
+	useOnHoverOutside(ourProductsRef, closeOurProductsMenu);
 
 	return (
 		<div className={styles.headerWrapper}>
@@ -98,6 +110,85 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 				/>
 				<div className={styles.linkWrapper}>
 					{/* <p>ASKCK</p> */}
+					<p
+						className={styles.link}
+						onClick={() => {
+							navigate("/");
+						}}
+					>
+						Home
+					</p>
+					{/* <p className={styles.link}>Our Products v</p> */}
+					<div
+						className={styles.dropDown}
+						ref={ourProductsRef}
+						onMouseOver={() => setIsOurProductsDropDown(true)}
+					>
+						<p className={styles.link}> Your Essentials</p>
+						{isOurProductsDropDown && (
+							<div className={styles.dropDownWrapper} name="dropDown">
+								<div className={styles.optionWrapper}>
+									<p
+										className={styles.link}
+										onClick={() => {
+											navigate("/about");
+										}}
+									>
+										Season Special
+									</p>
+									<p
+										className={styles.link}
+										onClick={() => {
+											navigate("/terms");
+										}}
+									>
+										Puja Prasad
+									</p>
+									<p
+										className={styles.link}
+										onClick={() => {
+											navigate("/policy/Privacy_Policy");
+										}}
+									>
+										organic Foodgrain
+									</p>
+									<p
+										className={styles.link}
+										onClick={() => {
+											navigate("/contact");
+										}}
+									>
+										Mom's Essential
+									</p>
+								</div>
+							</div>
+						)}
+					</div>
+					<p
+						className={styles.link}
+						onClick={() => {
+							navigate("/contact");
+						}}
+					>
+						Ganesh Puja
+					</p>
+					<p
+						className={styles.link}
+						onClick={() => {
+							navigate("/subCategory/166/81_TOP%20SELLING");
+						}}
+					>
+						Top Selling
+					</p>
+					<p
+						className={styles.link}
+						onClick={() => {
+							navigate("/subCategory/103/51_LADDU");
+						}}
+					>
+						Nutritious
+					</p>
+
 					<div
 						className={styles.dropDown}
 						ref={helpRef}
@@ -210,8 +301,11 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 							</div>
 						)}
 					</div>
-					<div>
+					<div className={styles.iconsWrapper}>
+						<IoSearchOutline className={styles.Searchicon} size={16} />
+						<IoPersonOutline className={styles.person} size={16} />
 						<TemHeader
+							className={styles.cartIcon}
 							productTriggered={productTriggered}
 							setProductTriggered={setProductTriggered}
 						/>

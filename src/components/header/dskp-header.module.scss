@@ -1,86 +1,113 @@
 .headerWrapper {
-  min-height: 60px;
-  background-color: #f25cc5;
-  padding: 10px;
-  position: fixed;
-  width: 100%;
-  z-index: 99;
+	min-height: 60px;
+	background-color: #aca7aa;
+	padding: 10px;
+	position: fixed;
+	width: 100%;
+	z-index: 99;
 }
 
 .rowWrapper,
 .linkWrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .linkWrapper {
-  justify-content: flex-start;
-  gap: 24px;
+	justify-content: flex-start;
+	gap: 44px;
 }
 
 .logo {
-  height: 45px;
-  width: auto;
-  cursor: pointer;
+	height: 45px;
+	width: auto;
+	cursor: pointer;
 }
 
 .link {
-  font-size: 16px;
-  color: white;
-  cursor: pointer;
+	font-size: 16px;
+	color: white;
+	cursor: pointer;
+	padding-top: 8px;
+}
+.iconsWrapper {
+	display: flex;
+	gap: 14px;
+	.Searchicon {
+		margin-top: 16px;
+		color: white;
+	}
+	.person {
+		margin-top: 16px;
+		color: white;
+	}
+	.cartIcon {
+		color: white;
+	}
+}
+.Searchicon * {
+	margin-top: 15px;
+	color: white;
+}
+.person * {
+	margin-top: 15px;
+	color: white;
+}
+.cartIcon * {
+	color: white;
 }
 
 .dropDown {
-  position: relative;
+	position: relative;
 }
 
 .dropDownWrapper {
-  background-color: white;
-  z-index: 199;
-  position: absolute;
-  top: 30px;
-  right: 5px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  min-width: 225px;
-  text-align: center;
+	background-color: white;
+	z-index: 199;
+	position: absolute;
+	top: 30px;
+	right: 5px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+	min-width: 225px;
+	text-align: center;
 
-  .label {
-    color: #cccccc;
-    margin-bottom: 0;
-    font-size: 12px;
-  }
+	.label {
+		color: #cccccc;
+		margin-bottom: 0;
+		font-size: 12px;
+	}
 
-  .btnWrapper {
-    border-bottom: 1px solid #cccccc;
-    // margin: 0 0 10px;
-    padding: 10px;
-  }
+	.btnWrapper {
+		border-bottom: 1px solid #cccccc;
+		// margin: 0 0 10px;
+		padding: 10px;
+	}
 
-  .optionWrapper {
-    padding: 20px 20px 15px;
-    text-align: left;
-  }
+	.optionWrapper {
+		padding: 20px 20px 15px;
+		text-align: left;
+	}
 
-  .signInBtn {
-    background-color: #f25cc5;
-    padding: 10px 15px;
-    font-size: 14px;
-    color: white;
-    margin: 10px auto;
-    width: 70%;
-    border-radius: 8px;
-  }
+	.signInBtn {
+		background-color: #f25cc5;
+		padding: 10px 15px;
+		font-size: 14px;
+		color: white;
+		margin: 10px auto;
+		width: 70%;
+		border-radius: 8px;
+	}
 
-  .link {
-    color: black;
-    font-size: 14px;
-  }
+	.link {
+		color: black;
+		font-size: 14px;
+	}
 
-  .comingSoon {
-    margin-left: 5px;
-    font-size: 12px;
-    color: red;
-  }
+	.comingSoon {
+		margin-left: 5px;
+		font-size: 12px;
+		color: red;
+	}
 }
