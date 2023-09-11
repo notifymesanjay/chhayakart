@@ -6,8 +6,10 @@ import Gaon from "../Gaon.png";
 import styles from "./category.module.scss";
 // import gana from "../gana.webp";
 import gana from "../gana.jpg";
+import ganaD from "../ganaD.webp";
 import Banner from "../seasonBanner/bannerCarousel";
 import DurgaCopy from "../DurgaCopy.jpg";
+import durgaD from "../durgaD.webp";
 const ShopByCategory = ({
 	categories = [],
 	setSelectedFilter = () => {},
@@ -40,6 +42,16 @@ const ShopByCategory = ({
 						{!isSmScreen ? (
 							<div className="container">
 								<div className={styles.cardWrapper}>
+									<div className={styles.ganeshAddDesktop}>
+										<img
+											className={`${styles.ganeshAdDesktop} lazyload`}
+											data-src={ganaD}
+											alt="Ganesh Icon"
+											onClick={() => {
+												navigate("/subCategory/96/75_GANESH%20IDOL");
+											}}
+										/>
+									</div>
 									<div className={styles.headerWrapper}>
 										<h1 className={styles.header}>SHOP BY CATEGORY</h1>
 									</div>
@@ -64,6 +76,21 @@ const ShopByCategory = ({
 										))}
 									</div>
 								</div>
+								<div className={styles.seasonBannerDesktop}>
+									<Banner />
+								</div>
+								{!isSmScreen && (
+									<div className={styles.durgaAddDesktop}>
+										<img
+											className={styles.durgaAdDesktop}
+											src={durgaD}
+											alt="Durga Offer"
+											onClick={() => {
+												navigate("/");
+											}}
+										/>
+									</div>
+								)}
 							</div>
 						) : (
 							<div className="container">
@@ -105,7 +132,7 @@ const ShopByCategory = ({
 								{isSmScreen && (
 									<div className="durgaAdd">
 										<img
-											className="durgaAd"
+											className={styles.durgaAd}
 											src={DurgaCopy}
 											alt="Durga Offer"
 											onClick={() => {

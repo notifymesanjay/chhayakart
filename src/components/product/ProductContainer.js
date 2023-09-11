@@ -7,6 +7,7 @@ import CategoryCard from "./category-card";
 import ShopByRegion from "./region";
 import "./product.css";
 import loan from "../loan.webp";
+import loanD from "../loanD.webp";
 
 const shopByRegionName = "SHOP BY REGION";
 
@@ -123,6 +124,13 @@ const ProductContainer = ({ setSelectedFilter = () => {} }) => {
 							regionList={shopByRegionList}
 							setSelectedFilter={setSelectedFilter}
 						/>
+					)}
+					{!isSmScreen && (
+						<div className="loanWrapperDesktop">
+							<a href="https://api.earnow.in/l/qCZvfTst0l">
+								<img className="loanDesktop" src={loanD} alt="loan" />
+							</a>
+						</div>
 					)}
 				</>
 			)}
