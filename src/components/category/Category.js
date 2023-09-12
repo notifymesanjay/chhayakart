@@ -124,7 +124,7 @@ const ShopByCategory = ({
 											))}
 										</div>
 									</div>
-									<div className="durgaAdd">
+									<div>
 										<img
 											className={styles.durgaAd}
 											src={ShirdiLadduimg}
@@ -133,7 +133,9 @@ const ShopByCategory = ({
 												navigate("/subCategory/98/29_PRASAD");
 											}}
 										/>
-
+									</div>
+									<div className="durgaAdd">
+										{" "}
 										<img
 											className={styles.durgaAd}
 											src={SatyanarayanKit}
