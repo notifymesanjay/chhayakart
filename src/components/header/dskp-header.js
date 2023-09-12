@@ -176,19 +176,19 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 					<p
 						className={styles.link}
 						onClick={() => {
-							navigate("/subCategory/166/81_TOP%20SELLING");
+							navigate("/subCategory/94");
 						}}
 					>
 						Season Special
 					</p>
-					<p
+					{/* <p
 						className={styles.link}
 						onClick={() => {
 							navigate("/subCategory/166/81_TOP%20SELLING");
 						}}
 					>
 						Top Selling
-					</p>
+					</p> */}
 					{/* <p
 						className={styles.link}
 						onClick={() => {
