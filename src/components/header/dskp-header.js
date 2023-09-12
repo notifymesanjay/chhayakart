@@ -179,7 +179,7 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 							navigate("/subCategory/94");
 						}}
 					>
-						Season Special
+						Shop By Catogery
 					</p>
 					<p
 						className={styles.link}
@@ -312,7 +312,7 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 						)}
 					</div>
 					<div className={styles.iconsWrapper}>
-						<IoPersonOutline className={styles.person} size={20} />
+						{/* <IoPersonOutline className={styles.person} size={20} /> */}
 						<TemHeader
 							className={styles.cartIcon}
 							size={16}
