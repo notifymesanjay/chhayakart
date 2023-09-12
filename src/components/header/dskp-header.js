@@ -14,6 +14,7 @@ import Cookies from "universal-cookie";
 import { removelocalstorageOTP } from "../../utils/manageLocalStorage";
 import { ActionTypes } from "../../model/action-type";
 import TemHeader from "./HeadTemp";
+// import SearchInput from "./shared/inputs/search-input";
 import {
 	faShoppingCart,
 	faCartArrowDown,
@@ -119,7 +120,7 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 						Home
 					</p>
 					{/* <p className={styles.link}>Our Products v</p> */}
-					<div
+					{/* <div
 						className={styles.dropDown}
 						ref={ourProductsRef}
 						onMouseOver={() => setIsOurProductsDropDown(true)}
@@ -131,7 +132,7 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 									<p
 										className={styles.link}
 										onClick={() => {
-											navigate("/about");
+											navigate("/subCategory/96");
 										}}
 									>
 										Season Special
@@ -139,7 +140,7 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 									<p
 										className={styles.link}
 										onClick={() => {
-											navigate("/terms");
+											navigate("/subCategory/98");
 										}}
 									>
 										Puja Prasad
@@ -147,7 +148,7 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 									<p
 										className={styles.link}
 										onClick={() => {
-											navigate("/policy/Privacy_Policy");
+											navigate("/subCategory/104");
 										}}
 									>
 										organic Foodgrain
@@ -155,7 +156,7 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 									<p
 										className={styles.link}
 										onClick={() => {
-											navigate("/contact");
+											navigate("/subCategory/106");
 										}}
 									>
 										Mom's Essential
@@ -163,14 +164,22 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 								</div>
 							</div>
 						)}
-					</div>
-					<p
+					</div> */}
+					{/* <p
 						className={styles.link}
 						onClick={() => {
-							navigate("/contact");
+							navigate("/subCategory/96/75_GANESH%20IDOL");
 						}}
 					>
 						Ganesh Puja
+					</p> */}
+					<p
+						className={styles.link}
+						onClick={() => {
+							navigate("/subCategory/166/81_TOP%20SELLING");
+						}}
+					>
+						Season Special
 					</p>
 					<p
 						className={styles.link}
@@ -180,14 +189,14 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 					>
 						Top Selling
 					</p>
-					<p
+					{/* <p
 						className={styles.link}
 						onClick={() => {
 							navigate("/subCategory/103/51_LADDU");
 						}}
 					>
 						Nutritious
-					</p>
+					</p> */}
 
 					<div
 						className={styles.dropDown}
@@ -303,9 +312,16 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 					</div>
 					<div className={styles.iconsWrapper}>
 						<IoSearchOutline className={styles.Searchicon} size={16} />
+						{/* <SearchInput
+							inputClass={styles.searchBar}
+							onSearchText={onSearchText}
+							searchText={searchText}
+							onBtnClick={search}
+						/> */}
 						<IoPersonOutline className={styles.person} size={16} />
 						<TemHeader
 							className={styles.cartIcon}
+							size={16}
 							productTriggered={productTriggered}
 							setProductTriggered={setProductTriggered}
 						/>
