@@ -5,11 +5,14 @@ import { useResponsive } from "../shared/use-responsive";
 import Gaon from "../Gaon.png";
 import styles from "./category.module.scss";
 // import gana from "../gana.webp";
-import gana from "../gana.jpg";
+import durgaSeason from "../durgaSeason.jpg";
+import DurgaSeasonD from "../DurgaSeasonD.jpg";
 import ganaD from "../ganaD.webp";
 import Banner from "../seasonBanner/bannerCarousel";
 import DurgaCopy from "../DurgaCopy.jpg";
+import ShirdiLadduimg from "../ShirdiLadduimg.jpg";
 import durgaD from "../durgaD.webp";
+import SatyanarayanKit from "../SatyanarayanKit.jpg";
 const ShopByCategory = ({
 	categories = [],
 	setSelectedFilter = () => {},
@@ -23,20 +26,6 @@ const ShopByCategory = ({
 	return useMemo(
 		() => (
 			<>
-				{isSmScreen && (
-					<>
-						<div className={styles.ganeshAdd}>
-							<img
-								className={`${styles.ganeshAd} lazyload`}
-								data-src={gana}
-								alt="Ganesh Icon"
-								onClick={() => {
-									navigate("/subCategory/96/75_GANESH%20IDOL");
-								}}
-							/>
-						</div>
-					</>
-				)}
 				{shop.shop !== null && (
 					<>
 						{!isSmScreen ? (
@@ -45,10 +34,10 @@ const ShopByCategory = ({
 									<div className={styles.ganeshAddDesktop}>
 										<img
 											className={`${styles.ganeshAdDesktop} lazyload`}
-											data-src={ganaD}
+											data-src={DurgaSeasonD}
 											alt="Ganesh Icon"
 											onClick={() => {
-												navigate("/subCategory/96/75_GANESH%20IDOL");
+												navigate("/subCategory/98/70_SPECIAL%20PUJA%20KITS");
 											}}
 										/>
 									</div>
@@ -76,72 +65,91 @@ const ShopByCategory = ({
 										))}
 									</div>
 								</div>
-								<div className={styles.seasonBannerDesktop}>
+								{/* <div className={styles.seasonBannerDesktop}>
 									<Banner />
-								</div>
-								{!isSmScreen && (
-									<div className={styles.durgaAddDesktop}>
-										<img
-											className={styles.durgaAdDesktop}
-											src={durgaD}
-											alt="Durga Offer"
-											onClick={() => {
-												navigate("/");
-											}}
-										/>
-									</div>
-								)}
+								</div> */}
+								{/* 
+								<div className={styles.durgaAddDesktop}>
+									<img
+										className={styles.durgaAdDesktop}
+										src={durgaD}
+										alt="Durga Offer"
+										onClick={() => {
+											navigate("/");
+										}}
+									/>
+								</div> */}
 							</div>
 						) : (
-							<div className="container">
-								<div className={styles.cardWrapper}>
-									<div className={styles.headerWrapper}>
-										<h1 className={styles.header}>SHOP BY CATEGORY</h1>
+							<>
+								<div className={styles.ganeshAdd}>
+									<img
+										className={`${styles.ganeshAd} lazyload`}
+										data-src={durgaSeason}
+										alt="Ganesh Icon"
+										onClick={() => {
+											navigate("/subCategory/98/70_SPECIAL%20PUJA%20KITS");
+										}}
+									/>
+								</div>
+								<div className="container">
+									<div className={styles.cardWrapper}>
+										<div className={styles.headerWrapper}>
+											<h1 className={styles.header}>SHOP BY CATEGORY</h1>
 
-										<img
-											className={`${styles.gaonKiDukan} lazyload`}
-											data-src={Gaon}
-											alt="Gaon Ki Dukan"
-										/>
-									</div>
+											<img
+												className={`${styles.gaonKiDukan} lazyload`}
+												data-src={Gaon}
+												alt="Gaon Ki Dukan"
+											/>
+										</div>
 
-									<div className={styles.mobCategoryWrapper}>
-										{categories.slice(0, 12).map((ctg, index) => (
-											<div className={styles.category} key={index}>
-												<div
-													className={styles.imageWrapper}
-													onClick={() => {
-														navigate(`/subCategory/${ctg.id}`);
-														setSelectedFilter(0);
-													}}
-												>
-													<img
-														className={`${styles.categoryImg} lazyload`}
-														src={ctg.image_url}
-														alt={ctg.subtitle}
-													/>
+										<div className={styles.mobCategoryWrapper}>
+											{categories.slice(0, 12).map((ctg, index) => (
+												<div className={styles.category} key={index}>
+													<div
+														className={styles.imageWrapper}
+														onClick={() => {
+															navigate(`/subCategory/${ctg.id}`);
+															setSelectedFilter(0);
+														}}
+													>
+														<img
+															className={`${styles.categoryImg} lazyload`}
+															src={ctg.image_url}
+															alt={ctg.subtitle}
+														/>
+													</div>
 												</div>
-											</div>
-										))}
+											))}
+										</div>
 									</div>
-								</div>
-
-								<div className={styles.seasonBanner}>
-									<Banner />
-								</div>
-								{isSmScreen && (
-									<div className="durgaAdd">
+									<div>
 										<img
 											className={styles.durgaAd}
-											src={DurgaCopy}
+											src={ShirdiLadduimg}
 											alt="Durga Offer"
 											onClick={() => {
-												navigate("/");
+												navigate("/subCategory/98/29_PRASAD");
 											}}
 										/>
 									</div>
-								)}
-							</div>
+									<div className="durgaAdd">
+										{" "}
+										<img
+											className={styles.durgaAd}
+											src={SatyanarayanKit}
+											alt="Durga Offer"
+											onClick={() => {
+												navigate("/subCategory/98/70_SPECIAL%20PUJA%20KITS");
+											}}
+										/>
+									</div>
+									<div className={styles.seasonBanner}>
+										<Banner />
+									</div>
+								</div>
+							</>
 						)}
 					</>
 				)}
