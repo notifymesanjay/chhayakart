@@ -22,6 +22,10 @@ import vade from "../vade.webp";
 import ragiPapad from "../ragiPapad.webp";
 import crunchyPatra from "../crunchyPatra.webp";
 import chatpataGahu from "../chatpataGahu.webp";
+import PoojaGomutr from "../PoojaGomutr.jpg";
+import PoojaRose from "../PoojaRose.jpg";
+import GomutraTulsi from "../GomutraTulsi.jpg";
+import NimboliArk from "../NimboliArk.jpg";
 
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
 const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
@@ -115,14 +119,26 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 			},
 			{
 				id: 3,
-				image: shirdiladdu,
-				title: "shirdiladdu",
+				image: NimboliArk,
+				title: "NimboliArk",
 				link: "subCategory/98/29_PRASAD",
 			},
 			{
 				id: 4,
-				image: mahakalU,
-				title: "mahakalU ",
+				image: PoojaGomutr,
+				title: "PoojaGomutr ",
+				link: "subCategory/98/29_PRASAD",
+			},
+			{
+				id: 5,
+				image: PoojaRose,
+				title: "PoojaRose ",
+				link: "subCategory/98/29_PRASAD",
+			},
+			{
+				id: 6,
+				image: GomutraTulsi,
+				title: "GomutraTulsi ",
 				link: "subCategory/98/29_PRASAD",
 			},
 		],
