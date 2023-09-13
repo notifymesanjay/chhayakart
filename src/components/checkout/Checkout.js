@@ -548,6 +548,7 @@ const Checkout = ({
         }
       }
 
+<<<<<<< HEAD
       if (
         sub_total <= 199 ||
         parseInt(totalDeliveryCharge) < 1 ||
@@ -583,6 +584,43 @@ const Checkout = ({
                 price: res.data.cart[i].discounted_price,
                 quantity: res.data.cart[i].qty,
               });
+=======
+			if (
+				sub_total <= 249 ||
+				parseInt(totalDeliveryCharge) < 1 ||
+				!iscodAllowed
+			) {
+				setIsCodAllowed(false);
+			} else {
+				setIsCodAllowed(true);
+			}
+		} else {
+			api
+				.getCart(
+					cookies.get("jwt_token"),
+					city.city.latitude,
+					city.city.longitude
+				)
+				.then((resp) => resp.json())
+				.then((res) => {
+					if (res.status === 1) {
+						var tempItems = [];
+						for (let i = 0; i < res.data.cart.length - 1; i++) {
+							tempItems.push({
+								item_id: res.data.cart[i].product_id,
+								item_name: res.data.cart[i].name,
+								coupon: "",
+								discount:
+									(res.data.cart[i].price - res.data.cart[i].discounted_price) *
+									(100 / res.data.cart[i].price),
+								index: i,
+								item_brand: "chhayakart",
+								item_category: "",
+								item_variant: res.data.cart[i].product_variant_id,
+								price: res.data.cart[i].discounted_price,
+								quantity: res.data.cart[i].qty,
+							});
+>>>>>>> main
 
               if (res.data.cart[i].cod_allowed == 0) {
                 setIsCodAllowed(false);
@@ -688,6 +726,7 @@ const Checkout = ({
         cod_allowed: iscodAllowed ? 1 : 0,
       };
 
+<<<<<<< HEAD
       let upwasKitVal = {
         id: 234,
         product_id: 234,
@@ -757,6 +796,59 @@ const Checkout = ({
       }
     }
   }, [cart]);
+=======
+				delivery_charges +=
+					cart.cart.data.cart.length > 1
+						? (cart.cart.data.cart.length - 1) * 9
+						: 0;
+			}
+			let orderVal = {
+				product_variant_id: cart.checkout.product_variant_id,
+				quantity: cart.checkout.quantity,
+				sub_total: cart.checkout.sub_total,
+				taxes:
+					cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
+						? Math.ceil(0.92 * taxes)
+						: cart.checkout.sub_total > 9999
+						? Math.ceil(0.88 * taxes)
+						: Math.ceil(taxes),
+				discount:
+					cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
+						? Math.floor(0.08 * cart.checkout.sub_total)
+						: cart.checkout.sub_total > 9999
+						? Math.floor(0.12 * cart.checkout.sub_total)
+						: 0,
+				delivery_charge: {
+					total_delivery_charge: delivery_charges,
+				},
+				total_amount:
+					cart.checkout.sub_total > 4999 && cart.checkout.sub_total < 9999
+						? Math.ceil(
+								cart.checkout.sub_total +
+									0.92 * taxes +
+									delivery_charges -
+									Math.floor(0.08 * cart.checkout.sub_total)
+						  )
+						: cart.checkout.sub_total > 9999
+						? Math.ceil(
+								cart.checkout.sub_total +
+									0.88 * taxes +
+									delivery_charges -
+									Math.floor(0.12 * cart.checkout.sub_total)
+						  )
+						: Math.ceil(cart.checkout.sub_total + taxes + delivery_charges),
+				cod_allowed: iscodAllowed ? 1 : 0,
+			};
+			setOrderSummary(orderVal);
+
+			if (sub_total <= 249 || parseInt(delivery_charges) < 1 || !iscodAllowed) {
+				setIsCodAllowed(false);
+			} else {
+				setIsCodAllowed(true);
+			}
+		}
+	}, [cart]);
+>>>>>>> main
 
   const removefromCart = async (product) => {
     await api
