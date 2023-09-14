@@ -34,44 +34,44 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 	const [isOurProductsDropDown, setIsOurProductsDropDown] = useState(false);
 	const [isLogin, setIsLogin] = useState(false);
 
-  const [productsInCart, setProductsInCart] = useState(0);
-  const cart = useSelector((state) => state.cart);
-  const handleWishlist = () => {
-    if (user.status === "loading") {
-      toast.error("You have to login first to see Wishlist !");
-    } else {
-      navigate("/wishlist");
-    }
-  };
+	const [productsInCart, setProductsInCart] = useState(0);
+	const cart = useSelector((state) => state.cart);
+	const handleWishlist = () => {
+		if (user.status === "loading") {
+			toast.error("You have to login first to see Wishlist !");
+		} else {
+			navigate("/wishlist");
+		}
+	};
 
-  const handleOrders = () => {
-    if (user.status === "loading") {
-      toast.error("You have to login first to track your Orders !");
-    } else {
-      navigate("/profile");
-    }
-  };
+	const handleOrders = () => {
+		if (user.status === "loading") {
+			toast.error("You have to login first to track your Orders !");
+		} else {
+			navigate("/profile");
+		}
+	};
 
-  const handleLogout = () => {
-    api
-      .logout(cookies.get("jwt_token"))
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.status === 1) {
-          cookies.remove("jwt_token");
-          removelocalstorageOTP();
-          dispatch({ type: ActionTypes.LOGOUT_AUTH, payload: null });
-          toast.success("You're Successfully Logged Out");
-          navigate("/");
-        } else {
-          toast.info(result.message);
-        }
-      });
-  };
+	const handleLogout = () => {
+		api
+			.logout(cookies.get("jwt_token"))
+			.then((response) => response.json())
+			.then((result) => {
+				if (result.status === 1) {
+					cookies.remove("jwt_token");
+					removelocalstorageOTP();
+					dispatch({ type: ActionTypes.LOGOUT_AUTH, payload: null });
+					toast.success("You're Successfully Logged Out");
+					navigate("/");
+				} else {
+					toast.info(result.message);
+				}
+			});
+	};
 
-  const closeSignInMenu = () => {
-    setIsSignInDropDown(false);
-  };
+	const closeSignInMenu = () => {
+		setIsSignInDropDown(false);
+	};
 
 	const closeHelpMenu = () => {
 		setIsHelpDropDown(false);
@@ -323,11 +323,11 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 				</div>
 			</div>
 
-      {isLogin && (
-        <LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
-      )}
-    </div>
-  );
+			{isLogin && (
+				<LoginUser isOpenModal={isLogin} setIsOpenModal={setIsLogin} />
+			)}
+		</div>
+	);
 };
 
 export default DskpHeader;
