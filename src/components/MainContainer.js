@@ -1,6 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AiOutlineClose } from "react-icons/ai";
+import {
+	AiOutlineClose,
+	AiOutlineRadiusBottomleft,
+	AiOutlineRadiusSetting,
+} from "react-icons/ai";
 import { ActionTypes } from "../model/action-type";
 import TrackingService from "../services/trackingService";
 import api from "../api/api";
@@ -15,6 +19,11 @@ import ShopByRegion from "./product/region";
 import GetApp from "./homecontainer/get-app";
 import Footer from "./footer/new-footer";
 
+const scroller = {
+	width: "100%",
+	height: "2000px",
+	overflow: "auto",
+};
 const shopByRegion = "SHOP BY REGION";
 
 const MainContainer = ({
@@ -106,7 +115,7 @@ const MainContainer = ({
 	}, []);
 
 	return (
-		<>
+		<div style={scroller}>
 			{setting.setting === null ? (
 				<Loader screen="full" />
 			) : (
@@ -187,7 +196,7 @@ const MainContainer = ({
 					) : null}
 				</>
 			)}
-		</>
+		</div>
 	);
 };
 
