@@ -292,6 +292,7 @@ function App() {
 							</Routes>
 
 							<button
+								className="scroll"
 								type="button"
 								id="toTop"
 								onClick={() => {
