@@ -106,18 +106,6 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 		],
 		[
 			{
-				id: 1,
-				image: shirdiladdu,
-				title: "shirdiladdu",
-				link: "subCategory/98/29_PRASAD",
-			},
-			{
-				id: 2,
-				image: mahakalU,
-				title: "mahakalU ",
-				link: "subCategory/98/29_PRASAD",
-			},
-			{
 				id: 3,
 				image: NimboliArk,
 				title: "NimboliArk",
