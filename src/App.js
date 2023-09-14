@@ -36,6 +36,7 @@ import DskpFooter from "./components/footer/new-footer";
 import { useResponsive } from "./components/shared/use-responsive";
 import Success from "./components/checkout/Success";
 import Order from "./components/order/Order";
+
 function App() {
 	//initialize cookies
 	const cookies = new Cookies();
@@ -298,7 +299,7 @@ function App() {
 								}}
 							>
 								<BsArrowUpSquareFill
-									fontSize={"6rem"}
+									fontSize={"3rem"}
 									fill="var(--primary-color)"
 								/>
 							</button>

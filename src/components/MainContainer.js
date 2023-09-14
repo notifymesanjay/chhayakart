@@ -19,11 +19,6 @@ import ShopByRegion from "./product/region";
 import GetApp from "./homecontainer/get-app";
 import Footer from "./footer/new-footer";
 
-const scroller = {
-	width: "100%",
-	height: "2000px",
-	overflow: "auto",
-};
 const shopByRegion = "SHOP BY REGION";
 
 const MainContainer = ({
@@ -115,7 +110,7 @@ const MainContainer = ({
 	}, []);
 
 	return (
-		<div style={scroller}>
+		<div>
 			{setting.setting === null ? (
 				<Loader screen="full" />
 			) : (
