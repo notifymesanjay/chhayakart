@@ -36,6 +36,7 @@ import DskpFooter from "./components/footer/new-footer";
 import { useResponsive } from "./components/shared/use-responsive";
 import Success from "./components/checkout/Success";
 import Order from "./components/order/Order";
+
 function App() {
 	//initialize cookies
 	const cookies = new Cookies();
@@ -121,30 +122,11 @@ function App() {
 			getCurrentUser(cookies.get("jwt_token"));
 		}
 		getSetting();
-		api
-			.getUser(
-				"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTg0N2JiMzM2OGYzZTY2MWU2ZmMyYjc4Y2NlMjBjMTlhNDk5YmUzMDE4ZjJjYWM0NTJmOWQ0MTZmMDdjNzA4YjcxYzBlMDFlOTBlY2FlNTUiLCJpYXQiOjE2OTIwNzQ3MjUuMzcxMTA5LCJuYmYiOjE2OTIwNzQ3MjUuMzcxMTExLCJleHAiOjE3MjM2OTcxMjUuMzcwMDIyLCJzdWIiOiI3NiIsInNjb3BlcyI6W119.JxTa1LPVffaDc87gHWgnLekkYdKGQPy9AbdphZHRG8JpoRlhSEznh3CWa0ecTwn3SeB7rz2EykMHRzu_XcC4baO9Y8Dzf0GrDoAtKJ6NF7O1heeKzjFjh1BWGMDH14KYFwe7Xj3JfQsCNOM-yOcwnxqOAPYDsKK0MqAskH75uD1xYgt_ElXB8z-_EBY4mNubiOqD2wSkGdpnelt8lv0ETmjLDE31acQXjYaY9q2ZoUZFvBfEal6e8GFcQmmLNsVCYNhQ2QwjpordcJ1sTZVroFyFHaqM7UHV8V-nC1FidTQ9wcBE7O5RhwNNSprgMXlkGnp67uQ8wFKNbZaJGiyf7xoML1f_QgfkOAkSr0Rm-dLWUH41lxRmE_VBauRk6GR9teEZV1rcS2gGqApBBr1R2DgXpECTyKrz27qBILi6edrZ7vF-WuiARfQLaXKc3vcvQjDhvdbkj6dgxzcxe3cqT5X3xX4lsJKokhg9lH7cQyv4SW5snpDCgrKPFf2dauV2Vxf_oYeaFECWXRZQmPa69CXliBkoPGkHsJV7J1unvf4Z-Gx2R5fCLnSZObPhgdGCvI93N_O0Q8x4d7Sh9dLzozOqeOlQ1F4vadciuGJvgC3rvUcn78Szcc1ablwl2ABkR3SuBP_bAL3vbOwEjgp3t9qD6mraicUMDgh2646YALE"
-			)
-			.then((response) => response.json())
-			.then((result) => {
-				if (result.status === 1) {
-					dispatch({
-						type: ActionTypes.SET_CURRENT_USER,
-						payload: result.user,
-					});
-				}
-			});
 	}, []);
 
-	// document.addEventListener('scroll', () => {
-	//   if (window.pageYOffset > 100) {
-	//     document.getElementById('toTop').classList.add('active')
-	//   }
-	//   else {
-	//     document.getElementById('toTop').classList.remove('active')
-
-	//   }
-	// })
+	document.addEventListener("scroll", () => {
+		document.getElementById("toTop").classList.add("active");
+	});
 
 	return (
 		<AnimatePresence>
@@ -310,6 +292,7 @@ function App() {
 							</Routes>
 
 							<button
+								className="scroll"
 								type="button"
 								id="toTop"
 								onClick={() => {
@@ -317,8 +300,8 @@ function App() {
 								}}
 							>
 								<BsArrowUpSquareFill
-									fontSize={"6rem"}
-									fill="var(--secondary-color)"
+									fontSize={"3rem"}
+									fill="var(--primary-color)"
 								/>
 							</button>
 						</main>

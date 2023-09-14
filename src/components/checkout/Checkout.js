@@ -547,7 +547,6 @@ const Checkout = ({
           sub_total = subTotal;
         }
       }
-
       if (
         sub_total <= 199 ||
         parseInt(totalDeliveryCharge) < 1 ||

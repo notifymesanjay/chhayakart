@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap");
 
 :root {
-  /* --green: #27ae60;
+	/* --green: #27ae60;
   --black: #2c2c54;
   --blue: #0047AB;
   --orange: #ff7800;
@@ -12,165 +12,171 @@
   --boxSize: 8px;
   --gutter: 8px; */
 
-  --body-background: #f7f7f7;
-  --primary-color: #141a1f;
-  --secondary-color: #51bd88;
-  --sub-text-color: #8b8b8b;
-  --second-cards-color: #ffffff;
-  --text-field-color: #f8f8f8;
+	--body-background: #f7f7f7;
+	--primary-color: #141a1f;
+	--secondary-color: #51bd88;
+	--sub-text-color: #8b8b8b;
+	--second-cards-color: #ffffff;
+	--text-field-color: #f8f8f8;
 
-  --body-background-dark: #141414;
-  --primary-color-dark: #e5e5e5;
-  --gray-hover-color: #dcdcdc;
+	--body-background-dark: #141414;
+	--primary-color-dark: #e5e5e5;
+	--gray-hover-color: #dcdcdc;
 }
 
 * {
-  font-family: "Nunito", sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  outline: none;
-  border: none;
-  text-decoration: none;
-  text-transform: capitalize;
-  transition: all 0.2s linear;
-  color: var(--primary-color);
+	font-family: "Nunito", sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	outline: none;
+	border: none;
+	text-decoration: none;
+	text-transform: capitalize;
+	transition: all 0.2s linear;
+	color: var(--primary-color);
 }
 
 *::selection {
-  background: var(--secondary-color);
-  color: #fff;
+	background: var(--secondary-color);
+	color: #fff;
 }
 
 html {
-  font-size: 50%;
-  width: 100vw;
-  overflow-x: hidden;
-  scroll-padding-top: 6.5rem;
-  scroll-behavior: smooth;
+	font-size: 50%;
+	width: 100vw;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	scroll-padding-top: 6.5rem;
+	scroll-behavior: smooth;
 }
 
-html::-webkit-scrollbar {
-  width: 0;
+::-webkit-scrollbar {
+	-webkit-appearance: var(--sub-text-color);
+	width: 6px;
 }
-
+::-webkit-scrollbar-thumb {
+	border-radius: 5px;
+	background-color: #f25cc5;
+	-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
 button {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .main-app {
-  color: var(--primary-color);
-  background: var(--body-background);
-  padding: 1px 0 1px 0px;
-  /* min-height: 100vh; */
+	color: var(--primary-color);
+	background: var(--body-background);
+	padding: 1px 0 1px 0px;
+	/* min-height: 100vh; */
 }
 
 .toast-container-class {
-  font-size: 2rem;
-  right: 0;
+	font-size: 2rem;
+	right: 0;
 }
 
 .modal-dialog {
-  padding: 0;
+	padding: 0;
 }
 
 .modal-dialog-centered {
-  justify-content: center;
+	justify-content: center;
 }
 
 .modal-content {
-  padding: 30px;
-  border-radius: 10px;
+	padding: 30px;
+	border-radius: 10px;
 }
 
 body.modal-open {
-  overflow: auto;
+	overflow: auto;
 }
 
 .green-text {
-  color: var(--secondary-color);
+	color: var(--secondary-color);
 }
 
 .gray-text {
-  color: var(--sub-text-color);
-  font-size: 18px;
-  margin-bottom: -1px;
+	color: var(--sub-text-color);
+	font-size: 18px;
+	margin-bottom: -1px;
 }
 
 .react-confirm-alert-body h1 {
-  font-weight: bolder;
-  font-size: 2.455rem;
+	font-weight: bolder;
+	font-size: 2.455rem;
 }
 
 .react-confirm-alert-body {
-  font-weight: bold;
-  font-size: 1.755rem;
+	font-weight: bold;
+	font-size: 1.755rem;
 }
 
 .react-confirm-alert-button-group button:first-child {
-  background-color: var(--secondary-color);
+	background-color: var(--secondary-color);
 }
 .react-confirm-alert-button-group button:last-child {
-  background-color: #d23b3b;
+	background-color: #d23b3b;
 }
 
 #toTop {
-  display: none;
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  z-index: 10000;
-  background: none;
-  padding: 10px;
-  cursor: pointer;
-  box-sizing: border-box;
+	display: none;
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	z-index: 10000;
+	background: none;
+	padding: 10px;
+	cursor: pointer;
+	box-sizing: border-box;
 }
 
 @media (max-width: 479px) {
-  #toTop {
-    right: 20px;
-    bottom: 85px;
-  }
+	#toTop {
+		right: 20px;
+		bottom: 85px;
+	}
 }
 #toTop.active {
-  display: block;
+	display: block;
 }
 
 /* media queries */
 
 @media (max-width: 468px) {
-  /* html {
+	/* html {
     font-size: 40%;
   } */
-  .row {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
+	.row {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+	}
 }
 @media (max-width: 768px) {
-  /* .modal-dialog {
+	/* .modal-dialog {
     min-width: 90vw;
   } */
 
-  .modal-content {
-    padding: 15px;
-  }
+	.modal-content {
+		padding: 15px;
+	}
 }
 
 .see-all {
-  font-size: 18px;
-  text-transform: capitalize;
-  padding: 10px 25px;
-  cursor: pointer;
-  border-radius: 10px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  background-color: var(--secondary-color);
-  color: #fff;
+	font-size: 18px;
+	text-transform: capitalize;
+	padding: 10px 25px;
+	cursor: pointer;
+	border-radius: 10px;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+	background-color: var(--secondary-color);
+	color: #fff;
 }
 
 @media (max-width: 479px) {
-  .see-all {
-    font-size: 14px;
-  }
+	.see-all {
+		font-size: 14px;
+	}
 }

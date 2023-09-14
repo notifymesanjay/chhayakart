@@ -438,11 +438,11 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
           };
           if (orderVal.sub_total > 999) {
             if (!isUpwasKitAvailable()) {
-              console.log('xyz123');
+              console.log("xyz123");
               AddProductToCart(upwasKitVal, 1);
               setProductTriggered(!productTriggered);
             }
-          }else{
+          } else {
             DecrementProduct(upwasKitVal.product_id, upwasKitVal);
             setProductTriggered(!productTriggered);
           }
@@ -592,7 +592,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
           if (!isUpwasKitAvailable()) {
             addtoCart(upwasKitVal, upwasKitVal.variants[0].id, 1);
           }
-        }else{
+        } else {
           removefromCart(upwasKitVal);
         }
         setOrderSummary(orderVal);

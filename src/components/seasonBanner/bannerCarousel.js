@@ -1,15 +1,24 @@
 import React, { Fragment, useState, useEffect, useRef } from "react";
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
-import banner1 from "../banner1.jpg";
-import banner2 from "../banner2.jpg";
+import SHINGHADALADOO from "../SHINGHADALADOO.jpg";
+import BESANLADOO from "../BESANLADOO.jpg";
 import banner3 from "../banner3.jpg";
-import banner4 from "../banner4.jpg";
+import RAVALADOO from "../RAVALADOO.jpg";
+import MOONGDRYFRUITLADOO from "../MOONGDRYFRUITLADOO.jpg";
 import bannerGKit from "../bannerGKit.webp";
 import { useResponsive } from "../shared/use-responsive";
 import { useNavigate } from "react-router-dom";
 import styles from "./bannercarousel.module.scss";
 const Banner = () => {
-	const bannerImg = [{ id: 1, image: banner3, title: "banner1" }];
+	const bannerImg = [
+		{ id: 1, image: BESANLADOO, title: "banner1" },
+		{ id: 2, image: MOONGDRYFRUITLADOO, title: "banner2" },
+		,
+		{ id: 3, image: RAVALADOO, title: "banner3" },
+
+		{ id: 4, image: SHINGHADALADOO, title: "banner4" },
+		,
+	];
 	const bannerimg = [{ id: 1, image: bannerGKit, title: "Ganesh Kit" }];
 	// useEffect(alert(banner1), []);
 	const { isSmScreen } = useResponsive();
@@ -21,9 +30,9 @@ const Banner = () => {
 				itemsInTablet={1}
 				itemsInMobile={1}
 				infinite={true}
-				autoPlaySpeed={8000}
+				autoPlaySpeed={4000}
 				showArrows={false}
-				showDots={false}
+				showDots={true}
 				autoPlay={true}
 				partialVisibilityGutter={false}
 			>
@@ -34,7 +43,7 @@ const Banner = () => {
 							src={img.image}
 							alt={img.title}
 							onClick={() => {
-								navigate("/subCategory/166");
+								navigate("/subCategory/103/51_LADDU");
 							}}
 						/>
 					</div>
@@ -48,9 +57,9 @@ const Banner = () => {
 				itemsInTablet={1}
 				itemsInMobile={1}
 				infinite={true}
-				autoPlaySpeed={8000}
+				autoPlaySpeed={4000}
 				showArrows={false}
-				showDots={false}
+				showDots={true}
 				autoPlay={true}
 				partialVisibilityGutter={false}
 			>
@@ -61,7 +70,7 @@ const Banner = () => {
 							src={img.image}
 							alt={img.title}
 							onClick={() => {
-								navigate("/subCategory/166");
+								navigate("/subCategory/103/51_LADDU");
 							}}
 						/>
 					</div>

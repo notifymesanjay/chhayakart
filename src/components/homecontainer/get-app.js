@@ -13,6 +13,7 @@ const GetApp = () => {
 				</div>
 				<div className={styles.bodyWrapper}>
 					<h3 className={styles.header}>Get CHHAYAKART APP</h3>
+
 					<img
 						className={styles.logoImg}
 						src={ChhaykartPinkLogo}

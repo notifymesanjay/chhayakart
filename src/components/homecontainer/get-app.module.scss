@@ -1,31 +1,35 @@
 .cardWrapper {
-  background-color: white;
-  padding: 15px 7%;
-  margin: 10px 0 25px;
-  border-radius: 8px;
-  display: flex;
-  gap: 24px;
-  align-items: center;
+	background-color: white;
+	padding: 15px 7%;
+	margin: 10px 0 25px;
+	border-radius: 8px;
+	display: flex;
+	gap: 24px;
+	align-items: center;
 }
 
-.appImg{
-    height: 400px;
-    width: auto;
+.appImg {
+	height: 400px;
+	width: auto;
 }
 
 .logoImg {
-width: 300px;
-    height: auto;
+	width: 300px;
+	height: auto;
 }
 
-.appLogo{
-    width: 150px;
-    height: auto;
+.appLogo {
+	width: 150px;
+	height: auto;
 }
 
-.header{
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 25px;
-    font-family: 'math';
+.header {
+	font-size: 28px;
+	font-weight: bold;
+	margin-bottom: 25px;
+	font-family: "math";
+}
+
+.arrow {
+	float: right;
 }

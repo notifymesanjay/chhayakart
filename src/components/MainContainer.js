@@ -1,6 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AiOutlineClose } from "react-icons/ai";
+import {
+	AiOutlineClose,
+	AiOutlineRadiusBottomleft,
+	AiOutlineRadiusSetting,
+} from "react-icons/ai";
 import { ActionTypes } from "../model/action-type";
 import TrackingService from "../services/trackingService";
 import api from "../api/api";
@@ -106,7 +110,7 @@ const MainContainer = ({
 	}, []);
 
 	return (
-		<>
+		<div>
 			{setting.setting === null ? (
 				<Loader screen="full" />
 			) : (
@@ -187,7 +191,7 @@ const MainContainer = ({
 					) : null}
 				</>
 			)}
-		</>
+		</div>
 	);
 };
 
