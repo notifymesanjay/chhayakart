@@ -123,15 +123,9 @@ function App() {
 		getSetting();
 	}, []);
 
-	// document.addEventListener('scroll', () => {
-	//   if (window.pageYOffset > 100) {
-	//     document.getElementById('toTop').classList.add('active')
-	//   }
-	//   else {
-	//     document.getElementById('toTop').classList.remove('active')
-
-	//   }
-	// })
+	document.addEventListener("scroll", () => {
+		document.getElementById("toTop").classList.add("active");
+	});
 
 	return (
 		<AnimatePresence>
@@ -305,7 +299,7 @@ function App() {
 							>
 								<BsArrowUpSquareFill
 									fontSize={"6rem"}
-									fill="var(--secondary-color)"
+									fill="var(--primary-color)"
 								/>
 							</button>
 						</main>
