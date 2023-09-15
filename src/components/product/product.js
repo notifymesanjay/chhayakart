@@ -14,7 +14,7 @@ import {
 	DecrementProduct,
 	IncrementProduct,
 } from "../../services/cartService";
-import { BsHeart, BsHeartFill, BsPlus } from "react-icons/bs";
+import { BsHeart, BsHeartFill, BsPlus, BsShare } from "react-icons/bs";
 import {
 	FacebookIcon,
 	FacebookShareButton,

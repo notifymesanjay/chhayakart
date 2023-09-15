@@ -150,7 +150,7 @@ function App() {
 								<Route
 									exact={true}
 									path="/checkout"
-									element={<Checkout productTriggered={productTriggered} />}
+									element={<Checkout productTriggered={productTriggered} setProductTriggered={setProductTriggered} />}
 								></Route>
 
 								<Route
@@ -198,6 +198,11 @@ function App() {
 											setSelectedFilter={setSelectedFilter}
 										/>
 									}
+								></Route>
+								<Route
+									exact={true}
+									path="/return&refund"
+									element={<Return />}
 								></Route>
 								<Route
 									exact={true}
@@ -270,11 +275,6 @@ function App() {
 									exact={true}
 									path="/policy/:policy_type"
 									element={<Policy />}
-								></Route>
-								<Route
-									exact={true}
-									path="/return&refund"
-									element={<Return />}
 								></Route>
 								<Route
 									exact={true}

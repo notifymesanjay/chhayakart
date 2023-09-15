@@ -20,12 +20,16 @@ import "./checkout.css";
 import GuestLogin from "./guest-login";
 import { escapeSelector } from "jquery";
 import TrackingService from "../../services/trackingService";
+import { AddProductToCart, DecrementProduct } from "../../services/cartService";
 
 const stripePromise = loadStripe(
 	"pk_test_51MKxDESEKxefYE6MZCHxEw4cFKiiLn2mV3Ek4Nx1UfcuNfE1Z6jgQrZrKpqTLju3n5SBjYJcwt1Jkw1bEoPXWRHB00XZ7D2f2F"
 );
 
-const Checkout = ({ productTriggered = false }) => {
+const Checkout = ({
+	productTriggered = false,
+	setProductTriggered = () => {},
+}) => {
 	const cart = useSelector((state) => state.cart);
 	const user = useSelector((state) => state.user);
 	const setting = useSelector((state) => state.setting);
@@ -349,6 +353,7 @@ const Checkout = ({ productTriggered = false }) => {
 				.then((response) => response.json())
 				.then(async (result) => {
 					if (result.status === 1) {
+						navigate("/Success");
 						await api
 							.getCart(
 								cookies.get("jwt_token"),
@@ -358,7 +363,6 @@ const Checkout = ({ productTriggered = false }) => {
 							.then((resp) => resp.json())
 							.then((res) => {
 								dispatch({ type: ActionTypes.SET_CART, payload: null });
-								navigate("/Success");
 							});
 					}
 				});
@@ -488,6 +492,57 @@ const Checkout = ({ productTriggered = false }) => {
 							user.status === "loading" ? "" : user.user.email
 						);
 					} catch (ex) {}
+					let upwasKitVal = {
+						id: 234,
+						product_id: 234,
+						name: "UpwasKit",
+						tax_id: 1,
+						brand_id: 0,
+						slug: "upwaskit",
+						category_id: 86,
+						indicator: null,
+						manufacturer: "chhayakart",
+						made_in: "India",
+						status: 1,
+						is_unlimited_stock: 0,
+						total_allowed_quantity: 10000,
+						tax_included_in_price: 1,
+						longitude: "78.4410784",
+						latitude: "17.3671541",
+						max_deliverable_distance: 100000000,
+						is_deliverable: true,
+						is_favorite: false,
+						product_variant_id: 225,
+						variants: [
+							{
+								id: 225,
+								type: "packet",
+								status: 1,
+								measurement: 0,
+								price: 0,
+								discounted_price: 0,
+								stock: 10000,
+								delivery_charges: 40,
+								taxes: 5,
+								stock_unit_name: "1 Kit",
+								is_unlimited_stock: 0,
+								cart_count: 0,
+								taxable_amount: 0,
+							},
+						],
+						image_url:
+							"https://admin.chhayakart.com/storage/products/1693903930_9651.webp",
+					};
+					if (orderVal.sub_total > 999) {
+						if (!isUpwasKitAvailable()) {
+							console.log("xyz123");
+							AddProductToCart(upwasKitVal, 1);
+							setProductTriggered(!productTriggered);
+						}
+					} else {
+						DecrementProduct(upwasKitVal.product_id, upwasKitVal);
+						setProductTriggered(!productTriggered);
+					}
 					setOrderSummary(orderVal);
 					sub_total = subTotal;
 				}
@@ -590,12 +645,11 @@ const Checkout = ({ productTriggered = false }) => {
 						iscodAllowed = false;
 					}
 				}
-
-				delivery_charges +=
-					cart.cart.data.cart.length > 1
-						? (cart.cart.data.cart.length - 1) * 9
-						: 0;
 			}
+			delivery_charges +=
+				cart.cart.data.cart.length > 1
+					? (cart.cart.data.cart.length - 1) * 9
+					: 0;
 			let orderVal = {
 				product_variant_id: cart.checkout.product_variant_id,
 				quantity: cart.checkout.quantity,
@@ -633,6 +687,67 @@ const Checkout = ({ productTriggered = false }) => {
 						: Math.ceil(cart.checkout.sub_total + taxes + delivery_charges),
 				cod_allowed: iscodAllowed ? 1 : 0,
 			};
+
+			let upwasKitVal = {
+				id: 234,
+				product_id: 234,
+				name: "UpwasKit",
+				tax_id: 1,
+				brand_id: 0,
+				slug: "upwaskit",
+				category_id: 86,
+				indicator: null,
+				manufacturer: "chhayakart",
+				made_in: "India",
+				status: 1,
+				is_unlimited_stock: 0,
+				total_allowed_quantity: 10000,
+				tax_included_in_price: 1,
+				longitude: "78.4410784",
+				latitude: "17.3671541",
+				max_deliverable_distance: 100000000,
+				is_deliverable: true,
+				is_favorite: false,
+				product_variant_id: 225,
+				variants: [
+					{
+						id: 225,
+						type: "packet",
+						status: 1,
+						measurement: 0,
+						price: 0,
+						discounted_price: 0,
+						stock: 10000,
+						delivery_charges: 40,
+						taxes: 5,
+						stock_unit_name: "1 Kit",
+						is_unlimited_stock: 0,
+						cart_count: 0,
+						taxable_amount: 0,
+					},
+				],
+				image_url:
+					"https://admin.chhayakart.com/storage/products/1693903930_9651.webp",
+			};
+			if (orderVal.sub_total > 999) {
+				if (!isUpwasKitAvailable()) {
+					api
+						.addToCart(
+							cookies.get("jwt_token"),
+							upwasKitVal.product_id,
+							upwasKitVal.variants[0].id,
+							1
+						)
+						.then((response) => response.json())
+						.then((result) => {
+							if (result.status === 1) {
+								handleOrderSummary();
+							}
+						});
+				}
+			} else {
+				removefromCart(upwasKitVal);
+			}
 			setOrderSummary(orderVal);
 
 			if (sub_total <= 249 || parseInt(delivery_charges) < 1 || !iscodAllowed) {
@@ -642,6 +757,108 @@ const Checkout = ({ productTriggered = false }) => {
 			}
 		}
 	}, [cart]);
+
+	const removefromCart = async (product) => {
+		await api
+			.removeFromCart(
+				cookies.get("jwt_token"),
+				product.product_id,
+				product.product_variant_id
+			)
+			.then((response) => response.json())
+			.then(async (result) => {
+				if (result.status === 1) {
+					// toast.success(result.message);
+					await api
+						.getCart(
+							cookies.get("jwt_token"),
+							city.city.latitude,
+							city.city.longitude
+						)
+						.then((resp) => resp.json())
+						.then((res) => {
+							if (res.status === 1) {
+								dispatch({
+									type: ActionTypes.SET_CART,
+									payload: res,
+								});
+							} else dispatch({ type: ActionTypes.SET_CART, payload: null });
+						})
+						.catch((error) => console.log(error));
+					await api
+						.getCart(
+							cookies.get("jwt_token"),
+							city.city.latitude,
+							city.city.longitude,
+							1
+						)
+						.then((resp) => resp.json())
+						.then((res) => {
+							if (res.status === 1)
+								dispatch({
+									type: ActionTypes.SET_CART_CHECKOUT,
+									payload: res.data,
+								});
+						})
+						.catch((error) => console.log(error));
+				} else {
+					toast.error(result.message);
+				}
+			})
+			.catch((error) => console.log(error));
+	};
+
+	const isUpwasKitAvailable = () => {
+		if (cookies.get("jwt_token") === undefined) {
+			if (localStorage.getItem("cart")) {
+				const cartVal = JSON.parse(localStorage.getItem("cart"));
+				if (cartVal && cartVal.length > 0) {
+					let i = 0;
+					while (i < cartVal.length) {
+						if (parseInt(cartVal[i].product_id) === 234) {
+							return true;
+						}
+						i++;
+					}
+					return false;
+				}
+			}
+		} else if (cart.cart !== null && cart.checkout !== null) {
+			for (let i = 0; i < cart.cart.data.cart.length; i++) {
+				if (parseInt(cart.cart.data.cart[i].product_id) === 234) {
+					return true;
+				}
+			}
+			return false;
+		}
+		return false;
+	};
+
+	useEffect(() => {
+		if (isUserLoggedIn) {
+			const cartVal = JSON.parse(localStorage.getItem("cart"));
+			setIsLoader(true);
+			if (cartVal) {
+				for (let i = 0; i < cartVal.length; i++) {
+					api
+						.addToCart(
+							cookies.get("jwt_token"),
+							cartVal[i].product_id,
+							cartVal[i].product_variant_id,
+							cartVal[i].qty
+						)
+						.then((response) => response.json())
+						.then((result) => {
+							if (result.status === 1 && i === cartVal.length - 1) {
+								handleOrderSummary();
+							}
+						});
+				}
+			}
+		} else {
+			setIsLoader(false);
+		}
+	}, [isUserLoggedIn]);
 
 	useEffect(() => {
 		if (isUserLoggedIn) {

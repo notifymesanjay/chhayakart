@@ -149,3 +149,17 @@ export const DeleteProductFromCart = (product_id) => {
 	localStorage.setItem("cart", JSON.stringify(cart));
 	return 1;
 };
+
+export const checkUpwasKitAvailable = () => {
+	let cart = JSON.parse(localStorage.getItem("cart"));
+	let i =0;
+	if(cart){
+		while(i<cart.length){
+			if(parseInt(cart[i].product_id) === 234){
+				return true;
+			}
+			i++;
+		}
+	}
+	return false;
+}

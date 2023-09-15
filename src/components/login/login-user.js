@@ -25,6 +25,7 @@ const LoginUser = ({ isOpenModal, setIsOpenModal = () => {} }) => {
   };
 
   return (
+    <>
     <CkModal show={isOpenModal} onHide={closeLogin}>
       <Login
         checkboxSelected={checkboxSelected}
@@ -40,6 +41,7 @@ const LoginUser = ({ isOpenModal, setIsOpenModal = () => {} }) => {
         error={error}
       />
     </CkModal>
+    </>
   );
 };
 
