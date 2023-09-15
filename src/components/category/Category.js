@@ -7,12 +7,9 @@ import styles from "./category.module.scss";
 // import gana from "../gana.webp";
 import durgaSeason from "../durgaSeason.jpg";
 import DurgaSeasonD from "../DurgaSeasonD.jpg";
-import ganaD from "../ganaD.webp";
 import Banner from "../seasonBanner/bannerCarousel";
-import DurgaCopy from "../DurgaCopy.jpg";
 import ShirdiLadduimg from "../ShirdiLadduimg.jpg";
-import durgaD from "../durgaD.webp";
-import SatyanarayanKit from "../SatyanarayanKit.jpg";
+import Shradhakit from "../Shradhakit.jpg";
 const ShopByCategory = ({
 	categories = [],
 	setSelectedFilter = () => {},
@@ -138,10 +135,10 @@ const ShopByCategory = ({
 										{" "}
 										<img
 											className={styles.durgaAd}
-											src={SatyanarayanKit}
+											src={Shradhakit}
 											alt="Durga Offer"
 											onClick={() => {
-												navigate("/subCategory/98/70_SPECIAL%20PUJA%20KITS");
+												navigate("/product/236/shradha-bhojan-kit-4-items");
 											}}
 										/>
 									</div>
