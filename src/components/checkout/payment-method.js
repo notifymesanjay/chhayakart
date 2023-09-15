@@ -97,7 +97,7 @@ const PaymentMethod = ({
 			) : null}{" "}
 			<h1 className="below199">
 				{" "}
-				COD not available for order below ₹199 & Ganesha Idol Products
+				COD not available for order below ₹249 & Minimum order value is ₹136
 			</h1>
 			{setting.payment_setting.paystack_payment_method === "1" ? (
 				<div>

@@ -33,7 +33,6 @@ const OrderSummary = ({
 								<span>{parseFloat(cart.sub_total)}</span>
 							</div>
 						</div>
-
 						<div className="d-flex justify-content-between">
 							<span>GST</span>
 							<div className="d-flex align-items-center">
@@ -41,7 +40,6 @@ const OrderSummary = ({
 								<span>{parseFloat(cart.taxes)}</span>
 							</div>
 						</div>
-
 						{parseFloat(cart.sub_total) > 4999 && (
 							<div className="d-flex justify-content-between">
 								<span>Discount</span>
@@ -51,7 +49,6 @@ const OrderSummary = ({
 								</div>
 							</div>
 						)}
-
 						<div className="d-flex justify-content-between">
 							<span>Delivery Charges</span>
 							<div className="d-flex align-items-center">
@@ -61,7 +58,6 @@ const OrderSummary = ({
 								</span>
 							</div>
 						</div>
-
 						<div className="d-flex justify-content-between total">
 							<span>Total</span>
 							<div className="d-flex align-items-center total-amount">
@@ -69,8 +65,7 @@ const OrderSummary = ({
 								<span>{parseFloat(cart.total_amount)}</span>
 							</div>
 						</div>
-
-						{isUserLoggedIn && (
+						{isUserLoggedIn && cart.total_amount > 135 && (
 							<>
 								{loadingPlaceOrder ? (
 									<Loader screen="full" background="none" />
