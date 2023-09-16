@@ -29,7 +29,7 @@ const Footer = ({ setSelectedFilter = () => {} }) => {
 	useEffect(() => {
 		fetchCategory();
 	}, []);
-	
+
 	return (
 		<div className={styles.footerWrapper}>
 			<div className={styles.subFooter1}>
@@ -40,7 +40,144 @@ const Footer = ({ setSelectedFilter = () => {} }) => {
 			</div>
 			<div className="container">
 				<div className={styles.linksWrapper}>
+					<div className={styles.ParaWrapper}>
+						<p className={styles.head}>Get In Touch</p>
+						<p className={styles.links}>
+							Plot No. 21, ZP Colony,
+							<br />
+							Near Dutt Mandir Chowk, <br /> Deopur, Dhule 424005 <br />
+							<br />
+							Email:sales@Chhayakart.Com
+							<br />
+							<br />
+							+91 9420920320
+						</p>
+					</div>
 					<div>
+						<p className={styles.head}>Catogeries</p>
+						<p
+							className={styles.links}
+							onClick={() => {
+								navigate("/subCategory/96");
+								setSelectedFilter(0);
+							}}
+						>
+							Season Special
+						</p>
+						{/* <p
+							className={styles.links}
+							onClick={() => {
+								navigate("/subCategory/94");
+								setSelectedFilter(0);
+							}}
+						>
+							Papad & More
+						</p> */}
+						<p
+							className={styles.links}
+							onClick={() => {
+								navigate("/subCategory/97");
+								setSelectedFilter(0);
+							}}
+						>
+							Instant Food
+						</p>
+						<p
+							className={styles.links}
+							onClick={() => {
+								navigate("/subCategory/99");
+								setSelectedFilter(0);
+							}}
+						>
+							Millet Superfood
+						</p>
+
+						<p
+							className={styles.links}
+							onClick={() => {
+								navigate("/subCategory/104");
+								setSelectedFilter(0);
+							}}
+						>
+							Organic Foodgrain
+						</p>
+						<p
+							className={styles.links}
+							onClick={() => {
+								navigate("/subCategory/98");
+								setSelectedFilter(0);
+							}}
+						>
+							Puja & Prasad
+						</p>
+					</div>
+
+					<div>
+						<p className={styles.head}>Essentials </p>
+						<p
+							className={styles.links}
+							onClick={() => {
+								navigate("/subCategory/103");
+								setSelectedFilter(0);
+							}}
+						>
+							Cookies
+						</p>
+						<p
+							className={styles.links}
+							onClick={() => {
+								navigate("/subCategory/103/51_LADDU");
+								setSelectedFilter(0);
+							}}
+						>
+							Fitness Food
+						</p>
+
+						<p
+							className={styles.links}
+							onClick={() => {
+								navigate("/subCategory/106");
+								setSelectedFilter(0);
+							}}
+						>
+							Mom's Essential
+						</p>
+					</div>
+					<div>
+						<p className={styles.head}>Chatpata</p>
+
+						<p
+							className={styles.links}
+							onClick={() => {
+								navigate("/subCategory/100");
+								setSelectedFilter(0);
+							}}
+						>
+							Snacks & Namkeen
+						</p>
+
+						<p
+							className={styles.links}
+							onClick={() => {
+								navigate("/subCategory/102");
+								setSelectedFilter(0);
+							}}
+						>
+							Chutney & Masala
+						</p>
+						<p
+							className={styles.links}
+							onClick={() => {
+								navigate("/subCategory/101");
+								setSelectedFilter(0);
+							}}
+						>
+							Pickels
+						</p>
+					</div>
+
+					<div>
+						<p className={styles.head}>Quick Links </p>
 						<p
 							className={styles.links}
 							onClick={() => {
@@ -49,14 +186,7 @@ const Footer = ({ setSelectedFilter = () => {} }) => {
 						>
 							About Us
 						</p>
-						<p
-							className={styles.links}
-							onClick={() => {
-								navigate("/contact");
-							}}
-						>
-							Contact Us
-						</p>
+
 						<p
 							className={styles.links}
 							onClick={() => {
@@ -73,120 +203,13 @@ const Footer = ({ setSelectedFilter = () => {} }) => {
 						>
 							Chhayakart Policies
 						</p>
-					</div>
-					<div>
 						<p
 							className={styles.links}
 							onClick={() => {
-								navigate("/subCategory/96");
-								setSelectedFilter(0);
+								navigate("/return&refund");
 							}}
 						>
-							Season Special
-						</p>
-						<p
-							className={styles.links}
-							onClick={() => {
-								navigate("/subCategory/94");
-								setSelectedFilter(0);
-							}}
-						>
-							Papad & More
-						</p>
-						<p
-							className={styles.links}
-							onClick={() => {
-								navigate("/subCategory/97");
-								setSelectedFilter(0);
-							}}
-						>
-							Instant Food
-						</p>
-						<p
-							className={styles.links}
-							onClick={() => {
-								navigate("/subCategory/98");
-								setSelectedFilter(0);
-							}}
-						>
-							Puja & Prasad
-						</p>
-					</div>
-					<div>
-						<p
-							className={styles.links}
-							onClick={() => {
-								navigate("/subCategory/99");
-								setSelectedFilter(0);
-							}}
-						>
-							Millet Superfood
-						</p>
-						<p
-							className={styles.links}
-							onClick={() => {
-								navigate("/subCategory/100");
-								setSelectedFilter(0);
-							}}
-						>
-							Snacks & Namkeen
-						</p>
-						<p
-							className={styles.links}
-							onClick={() => {
-								navigate("/subCategory/101");
-								setSelectedFilter(0);
-							}}
-						>
-							Pickels
-						</p>
-						<p
-							className={styles.links}
-							onClick={() => {
-								navigate("/subCategory/102");
-								setSelectedFilter(0);
-							}}
-						>
-							Chutney & Masala
-						</p>
-					</div>
-
-					<div>
-						<p
-							className={styles.links}
-							onClick={() => {
-								navigate("/subCategory/103");
-								setSelectedFilter(0);
-							}}
-						>
-							Sweets
-						</p>
-						<p
-							className={styles.links}
-							onClick={() => {
-								navigate("/subCategory/104");
-								setSelectedFilter(0);
-							}}
-						>
-							Organic Foodgrain
-						</p>
-						<p
-							className={styles.links}
-							onClick={() => {
-								navigate("/subCategory/105");
-								setSelectedFilter(0);
-							}}
-						>
-							Household
-						</p>
-						<p
-							className={styles.links}
-							onClick={() => {
-								navigate("/subCategory/106");
-								setSelectedFilter(0);
-							}}
-						>
-							Mom's Essential
+							Return & Refund
 						</p>
 					</div>
 				</div>
