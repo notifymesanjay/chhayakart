@@ -1,13 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import { ActionTypes } from "../../model/action-type";
 import styles from "./new-footer.module.scss";
+import ChatOnWhatsapp from "../whatsappChatFeature";
+import {
+	IoLogoWhatsapp,
+	IoLogoFacebook,
+	IoLogoYoutube,
+	IoLogoInstagram,
+	IoLogoLinkedin,
+	IoLogoTwitter,
+} from "react-icons/io5";
 
 const Footer = ({ setSelectedFilter = () => {} }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const [url, setUrl] = useState("");
+
+	useEffect(() => {
+		const message = encodeURI(
+			window.location.href +
+				"\n I'm interested to know more about this product. Can you help?"
+		);
+
+		setUrl(
+			"https://api.whatsapp.com/send?phone=" +
+				"+919420920320" +
+				"&text=" +
+				message
+		);
+	}, []);
 
 	const fetchCategory = () => {
 		api
@@ -54,7 +78,7 @@ const Footer = ({ setSelectedFilter = () => {} }) => {
 						</p>
 					</div>
 					<div>
-						<p className={styles.head}>Catogeries</p>
+						<p className={styles.head}>Categories</p>
 						<p
 							className={styles.links}
 							onClick={() => {
@@ -213,6 +237,47 @@ const Footer = ({ setSelectedFilter = () => {} }) => {
 						</p>
 					</div>
 				</div>
+			</div>
+			<div className={styles.socialMediaWrapper}>
+				<a
+					id="whatsappChatIcon"
+					href={url}
+					styles=" text-decoration: none; color:grey;"
+				>
+					<IoLogoWhatsapp
+						className="lazyload"
+						size={30}
+						round={true}
+						alt="Chat With Chhayakart Support"
+					/>{" "}
+				</a>
+
+				<a
+					id="whatsappChatIcon"
+					href="https://www.facebook.com/profile.php?id=100092513980810&mibextid=9R9pXO"
+				>
+					{" "}
+					<IoLogoFacebook size={30} />
+				</a>
+				<a id="whatsappChatIcon" href="https://www.instagram.com/chhayakart/">
+					{" "}
+					<IoLogoInstagram size={30} />
+				</a>
+				<a
+					id="whatsappChatIcon"
+					href="https://in.linkedin.com/company/chhayakart"
+				>
+					<IoLogoLinkedin size={30} />
+				</a>
+				<a
+					id="whatsappChatIcon"
+					href="https://www.youtube.com/@chhayakart/videos"
+				>
+					<IoLogoYoutube size={30} />
+				</a>
+				<a id="whatsappChatIcon" href="https://twitter.com/chhayakart1">
+					<IoLogoTwitter size={30} />
+				</a>
 			</div>
 			<div className={styles.subFooter}>
 				<p className={styles.copyRight}>

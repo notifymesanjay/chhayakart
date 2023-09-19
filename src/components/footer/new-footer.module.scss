@@ -24,7 +24,8 @@
 	justify-content: space-around;
 	color: rgb(255, 255, 255);
 	font-size: 28px;
-	font-family: Arial;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
 }
 .links {
 	font-size: 14px;
@@ -43,6 +44,13 @@
 	border-top: 1px solid #000000;
 }
 
+.socialMediaWrapper {
+	margin: 35px;
+	display: flex;
+	gap: 20px;
+	justify-content: flex-start;
+	margin-left: 80px;
+}
 .copyRight {
 	margin-bottom: 0;
 	text-align: center;
