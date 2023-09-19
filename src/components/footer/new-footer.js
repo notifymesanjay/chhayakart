@@ -249,6 +249,7 @@ const Footer = ({ setSelectedFilter = () => {} }) => {
 						size={30}
 						round={true}
 						alt="Chat With Chhayakart Support"
+						fill="white"
 					/>{" "}
 				</a>
 
@@ -257,26 +258,26 @@ const Footer = ({ setSelectedFilter = () => {} }) => {
 					href="https://www.facebook.com/profile.php?id=100092513980810&mibextid=9R9pXO"
 				>
 					{" "}
-					<IoLogoFacebook size={30} />
+					<IoLogoFacebook size={30} fill="white" />
 				</a>
 				<a id="whatsappChatIcon" href="https://www.instagram.com/chhayakart/">
 					{" "}
-					<IoLogoInstagram size={30} />
+					<IoLogoInstagram size={30} fill="white" />
 				</a>
 				<a
 					id="whatsappChatIcon"
 					href="https://in.linkedin.com/company/chhayakart"
 				>
-					<IoLogoLinkedin size={30} />
+					<IoLogoLinkedin size={30} fill="white" />
 				</a>
 				<a
 					id="whatsappChatIcon"
 					href="https://www.youtube.com/@chhayakart/videos"
 				>
-					<IoLogoYoutube size={30} />
+					<IoLogoYoutube size={30} fill="white" />
 				</a>
 				<a id="whatsappChatIcon" href="https://twitter.com/chhayakart1">
-					<IoLogoTwitter size={30} />
+					<IoLogoTwitter size={30} fill="white" />
 				</a>
 			</div>
 			<div className={styles.subFooter}>
