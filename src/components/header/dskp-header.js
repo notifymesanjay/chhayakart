@@ -179,7 +179,7 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 							navigate("/subCategory/94");
 						}}
 					>
-						Shop By Catogery
+						categories
 					</p>
 					<p
 						className={styles.link}
