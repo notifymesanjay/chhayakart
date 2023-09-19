@@ -136,7 +136,6 @@ const ViewCart = ({ productTriggered, setProductTriggered = () => {} }) => {
         if (result.status === 1) {
           //popup commented
           //  toast.success(result.message)
-		  setProductTriggered(!productTriggered);
           await api
             .getCart(
               cookies.get("jwt_token"),
@@ -149,6 +148,7 @@ const ViewCart = ({ productTriggered, setProductTriggered = () => {} }) => {
 
               if (res.status === 1)
                 dispatch({ type: ActionTypes.SET_CART, payload: res });
+              setProductTriggered(!productTriggered);
             });
         } else {
           setisLoader(false);
@@ -177,7 +177,6 @@ const ViewCart = ({ productTriggered, setProductTriggered = () => {} }) => {
         if (result.status === 1) {
           //popup commented
           // toast.success(result.message);
-		  setProductTriggered(!productTriggered);
           await api
             .getCart(
               cookies.get("jwt_token"),
@@ -190,6 +189,7 @@ const ViewCart = ({ productTriggered, setProductTriggered = () => {} }) => {
               if (res.status === 1)
                 dispatch({ type: ActionTypes.SET_CART, payload: res });
               else dispatch({ type: ActionTypes.SET_CART, payload: null });
+              setProductTriggered(!productTriggered);
             })
             .catch((error) => {});
         } else {

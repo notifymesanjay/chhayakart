@@ -694,7 +694,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
                   </div>
 
                   <div className="button-container">
-                    {cookies.get("jwt_token") !== undefined && (
+                    {/* {cookies.get("jwt_token") !== undefined && (
                       <button
                         type="button"
                         className="view-cart"
@@ -705,7 +705,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
                       >
                         view cart
                       </button>
-                    )}
+                    )} */}
                     <button
                       type="button"
                       className="checkout"

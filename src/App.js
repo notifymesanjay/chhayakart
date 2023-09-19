@@ -146,7 +146,7 @@ function App() {
           <>
             <main id="main" className="main-app">
               <Routes>
-                <Route
+                {/* <Route
                   exact={true}
                   path="/cart"
                   element={
@@ -155,7 +155,7 @@ function App() {
                       setProductTriggered={setProductTriggered}
                     />
                   }
-                ></Route>
+                ></Route> */}
                 <Route
                   exact={true}
                   path="/checkout"
