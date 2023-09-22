@@ -99,45 +99,6 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 				link: "subCategory/",
 			},
 		],
-		,
-		[
-			{
-				id: 1,
-				image: JowarFlakes,
-				title: "JowarFlakes",
-				link: "subCategory/96",
-			},
-			{
-				id: 2,
-				image: bajraPuff,
-				title: "bajraPuff ",
-				link: "subCategory/96",
-			},
-			{
-				id: 3,
-				image: bajraBaked,
-				title: "bajraBaked",
-				link: "subCategory/96",
-			},
-			{
-				id: 4,
-				image: RagiPuffCheese,
-				title: "RagiPuffCheese",
-				link: "subCategory",
-			},
-			{
-				id: 5,
-				image: JowarBakedChivda,
-				title: "JowarBakedChivda ",
-				link: "subCategory/",
-			},
-			{
-				id: 6,
-				image: JowarPufftomato,
-				title: "JowarPufftomato",
-				link: "subCategory/",
-			},
-		],
 		[
 			{
 				id: 1,
@@ -332,7 +293,7 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 		<>
 			{subCategories.slice(0, 12).map((subCategory, index) => (
 				<div key={index}>
-					{1 && (
+					{index % 2 === 0 && (
 						<div
 							className={`${styles.BankBanner} ${
 								index === 0 && styles.hideBanner
@@ -349,19 +310,18 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 								autoPlay={true}
 								partialVisibilityGutter={false}
 							>
-								{dynamicBanners[index] &&
-									dynamicBanners[index].map((img) => (
-										<div key={img.id}>
-											<img
-												onClick={() => {
-													navigate(img.link);
-												}}
-												className={styles.banner}
-												src={img.image}
-												alt={img.title}
-											/>
-										</div>
-									))}
+								{dynamicBanners[index / 2].map((img) => (
+									<div key={img.id}>
+										<img
+											onClick={() => {
+												navigate(img.link);
+											}}
+											className={styles.banner}
+											src={img.image}
+											alt={img.title}
+										/>
+									</div>
+								))}
 							</ResponsiveCarousel>
 						</div>
 					)}
