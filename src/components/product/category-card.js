@@ -28,6 +28,35 @@ import GomutraTulsi from "../GomutraTulsi.jpg";
 import NimboliArk from "../NimboliArk.jpg";
 
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
+
+import AmbeHaladPickle from "/chayaKart/chhayakart/src/public/images/banners/AmbeHaladPickle.webp";
+import ApniEve from "/chayaKart/chhayakart/src/public/images/banners/ApniEve.webp";
+import BoiledMoong from "/chayaKart/chhayakart/src/public/images/banners/BoiledMoong.webp";
+import BoiledRAJMA from "/chayaKart/chhayakart/src/public/images/banners/BoiledRAJMA.webp";
+import Butterdamakhanigravy from "/chayaKart/chhayakart/src/public/images/banners/Butterdamakhanigravy.webp";
+import GarlicPickle from "/chayaKart/chhayakart/src/public/images/banners/GarlicPickle.webp";
+import GingerPickle from "/chayaKart/chhayakart/src/public/images/banners/GingerPickle.webp";
+import JowarBakedChivda from "/chayaKart/chhayakart/src/public/images/banners/JowarBakedChivda.webp";
+import JowarFlakes from "/chayaKart/chhayakart/src/public/images/banners/JowarFlakes.webp";
+import JowarPufftomato from "/chayaKart/chhayakart/src/public/images/banners/JowarPufftomato.webp";
+import TurmericPickle from "/chayaKart/chhayakart/src/public/images/banners/TurmericPickle.webp";
+import KadiPatta from "/chayaKart/chhayakart/src/public/images/banners/KadiPatta.webp";
+import KhichadiMultiMilletPremix from "/chayaKart/chhayakart/src/public/images/banners/KhichadiMultiMilletPremix.webp";
+import KhobraCoconutChutney from "/chayaKart/chhayakart/src/public/images/banners/KhobraCoconutChutney.webp";
+import MumbaiPavBhajiMasalaGravy from "/chayaKart/chhayakart/src/public/images/banners/MumbaiPavBhajiMasalaGravy.webp";
+import OrganicHathchadiBrownRice from "/chayaKart/chhayakart/src/public/images/banners/OrganicHathchadiBrownRice.webp";
+import PancakeMultiMilletPremix from "/chayaKart/chhayakart/src/public/images/banners/PancakeMultiMilletPremix.webp";
+import OrganicRupaliRice from "/chayaKart/chhayakart/src/public/images/banners/OrganicRupaliRice.webp";
+import PastaMultiMilletPremix from "/chayaKart/chhayakart/src/public/images/banners/PastaMultiMilletPremix.webp";
+import RagiDosaPremix from "/chayaKart/chhayakart/src/public/images/banners/RagiDosaPremix.webp";
+import RagiPuffCheese from "/chayaKart/chhayakart/src/public/images/banners/RagiPuffCheese.webp";
+import RagiRava from "/chayaKart/chhayakart/src/public/images/banners/RagiRava.webp";
+import TeelSesameSeedChutney from "/chayaKart/chhayakart/src/public/images/banners/TeelSesameSeedChutney.webp";
+import ShengdanPeanutChutney from "/chayaKart/chhayakart/src/public/images/banners/ShengdanPeanutChutney.webp";
+import bajraBaked from "/chayaKart/chhayakart/src/public/images/banners/bajraBaked.webp";
+import bajraPuff from "/chayaKart/chhayakart/src/public/images/banners/bajraPuff.webp";
+import boiledChole from "/chayaKart/chhayakart/src/public/images/banners/boiledChole.webp";
+import OrganicIndrayaniRice from "/chayaKart/chhayakart/src/public/images/banners/OrganicIndrayaniRice.webp";
 const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 	const navigate = useNavigate();
 	const { isSmScreen } = useResponsive();
@@ -35,142 +64,244 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 		[
 			{
 				id: 1,
-				image: SBI,
-				title: "banner1",
+				image: JowarFlakes,
+				title: "JowarFlakes",
 				link: "subCategory/96",
 			},
 			{
 				id: 2,
-				image: AU,
-				title: "banner2 ",
+				image: bajraPuff,
+				title: "bajraPuff ",
 				link: "subCategory/96",
 			},
 			{
 				id: 3,
-				image: INDUSIND,
-				title: "banner3",
+				image: bajraBaked,
+				title: "bajraBaked",
 				link: "subCategory/96",
 			},
-		],
-		[
-			{
-				id: 1,
-				image: shingadaLaddo,
-				title: "banner1",
-				link: "subCategory/96/23_UPWAS%20Food",
-			},
-			{
-				id: 2,
-				image: batata,
-				title: "banner2 ",
-				link: "subCategory/96/23_UPWAS%20Food",
-			},
-			{
-				id: 3,
-				image: Sabudanapremix,
-				title: "banner3",
-				link: "subCategory/96/23_UPWAS%20Food",
-			},
 			{
 				id: 4,
-				image: KahjurDryfruit,
-				title: "banner4",
-				link: "subCategory/96/23_UPWAS%20Food",
-			},
-		],
-		[
-			{
-				id: 1,
-				image: allOffers,
-				title: "banner1",
-				link: "/",
-			},
-			{
-				id: 2,
-				image: freeUpwasKit,
-				title: "banner2 ",
-				link: "/",
-			},
-			{
-				id: 3,
-				image: order4999,
-				title: "banner3",
-				link: "/",
-			},
-			{
-				id: 4,
-				image: order9999,
-				title: "banner4",
-				link: "/",
-			},
-		],
-		[
-			{
-				id: 3,
-				image: NimboliArk,
-				title: "NimboliArk",
-				link: "subCategory/98/29_PRASAD",
-			},
-			{
-				id: 4,
-				image: PoojaGomutr,
-				title: "PoojaGomutr ",
-				link: "subCategory/98/29_PRASAD",
+				image: RagiPuffCheese,
+				title: "RagiPuffCheese",
+				link: "subCategory",
 			},
 			{
 				id: 5,
-				image: PoojaRose,
-				title: "PoojaRose ",
-				link: "subCategory/98/29_PRASAD",
+				image: JowarBakedChivda,
+				title: "JowarBakedChivda ",
+				link: "subCategory/",
 			},
 			{
 				id: 6,
-				image: GomutraTulsi,
-				title: "GomutraTulsi ",
+				image: JowarPufftomato,
+				title: "JowarPufftomato",
+				link: "subCategory/",
+			},
+		],
+		,
+		[
+			{
+				id: 1,
+				image: JowarFlakes,
+				title: "JowarFlakes",
+				link: "subCategory/96",
+			},
+			{
+				id: 2,
+				image: bajraPuff,
+				title: "bajraPuff ",
+				link: "subCategory/96",
+			},
+			{
+				id: 3,
+				image: bajraBaked,
+				title: "bajraBaked",
+				link: "subCategory/96",
+			},
+			{
+				id: 4,
+				image: RagiPuffCheese,
+				title: "RagiPuffCheese",
+				link: "subCategory",
+			},
+			{
+				id: 5,
+				image: JowarBakedChivda,
+				title: "JowarBakedChivda ",
+				link: "subCategory/",
+			},
+			{
+				id: 6,
+				image: JowarPufftomato,
+				title: "JowarPufftomato",
+				link: "subCategory/",
+			},
+		],
+		[
+			{
+				id: 1,
+				image: TeelSesameSeedChutney,
+				title: "TeelSesameSeedChutney",
+				link: "subCategory/96/23_UPWAS%20Food",
+			},
+			{
+				id: 2,
+				image: KhobraCoconutChutney,
+				title: "KhobraCoconutChutney ",
+				link: "subCategory/96/23_UPWAS%20Food",
+			},
+			{
+				id: 3,
+				image: KadiPatta,
+				title: "KadiPatta",
+				link: "subCategory/96/23_UPWAS%20Food",
+			},
+			{
+				id: 4,
+				image: ShengdanPeanutChutney,
+				title: "ShengdanPeanutChutney",
+				link: "subCategory/96/23_UPWAS%20Food",
+			},
+		],
+		[
+			{
+				id: 1,
+				image: ApniEve,
+				title: "ApniEve",
+				link: "/",
+			},
+			{
+				id: 2,
+				image: boiledChole,
+				title: "boiledChole ",
+				link: "/",
+			},
+			{
+				id: 3,
+				image: Butterdamakhanigravy,
+				title: "Butterdamakhanigravy",
+				link: "/",
+			},
+			{
+				id: 4,
+				image: BoiledRAJMA,
+				title: "BoiledRAJMA",
+				link: "/",
+			},
+			{
+				id: 5,
+				image: MumbaiPavBhajiMasalaGravy,
+				title: "MumbaiPavBhajiMasalaGravy",
+				link: "subCategory",
+			},
+			{
+				id: 6,
+				image: BoiledMoong,
+				title: " BoiledMoong",
+				link: "subCategory/",
+			},
+		],
+		[
+			{
+				id: 1,
+				image: OrganicRupaliRice,
+				title: "OrganicRupaliRice",
+				link: "subCategory/98/29_PRASAD",
+			},
+			{
+				id: 2,
+				image: OrganicHathchadiBrownRice,
+				title: "OrganicHathchadiBrownRice ",
+				link: "subCategory/98/29_PRASAD",
+			},
+			{
+				id: 3,
+				image: OrganicIndrayaniRice,
+				title: "OrganicIndrayaniRice ",
 				link: "subCategory/98/29_PRASAD",
 			},
 		],
 		[
 			{
 				id: 1,
-				image: crunchyPatra,
-				title: "crunchyPatra",
+				image: KhichadiMultiMilletPremix,
+				title: "KhichadiMultiMilletPremix",
 				link: "subCategory/100/41_HOMEMADE%20DESI%20SNACK",
 			},
 			{
 				id: 2,
-				image: maharashtrianChakli,
-				title: "maharashtrianChakli ",
+				image: RagiRava,
+				title: "RagiRava ",
 				link: "subCategory/100/41_HOMEMADE%20DESI%20SNACK",
 			},
 			{
 				id: 3,
-				image: chatpataGahu,
-				title: "chatpataGahu",
+				image: PancakeMultiMilletPremix,
+				title: "PancakeMultiMilletPremix",
 				link: "subCategory/100/41_HOMEMADE%20DESI%20SNACK",
+			},
+			{
+				id: 4,
+				image: PastaMultiMilletPremix,
+				title: "PastaMultiMilletPremix",
+				link: "subCategory",
+			},
+			{
+				id: 5,
+				image: RagiDosaPremix,
+				title: " RagiDosaPremix",
+				link: "subCategory/",
 			},
 		],
 		[
 			{
 				id: 1,
-				image: ragiPapad,
-				title: "ragiPapad",
+				image: AmbeHaladPickle,
+				title: "AmbeHaladPickle",
 				link: "subCategory/94/31_PAPAD",
 			},
 			{
 				id: 2,
-				image: khurdai,
-				title: "khurdai ",
+				image: GarlicPickle,
+				title: "GarlicPickle ",
 				link: "subCategory/94/32_KURDAI",
 			},
 			{
 				id: 3,
-				image: vade,
-				title: "vade",
+				image: GingerPickle,
+				title: "GingerPickle",
 				link: "subCategory/94/82_VADE",
 			},
+			{
+				id: 4,
+				image: TurmericPickle,
+				title: "TurmericPickle",
+				link: "subCategory",
+			},
 		],
+		// [
+		// 	{
+		// 		id: 1,
+		// 		image: ,
+		// 		title: "",
+		// 		link: "subCategory",
+		// 	},
+		// 	{
+		// 		id: 2,
+		// 		image: ,
+		// 		title: " ",
+		// 		link: "subCategory/",
+		// 	},
+		// 	{
+		// 		id: 3,
+		// 		image: ,
+		// 		title: "",
+		// 		link: "subCategory/",
+		// 	},
+		// ],
 	];
+
 	const banners = [
 		{
 			id: 1,
@@ -201,7 +332,7 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 		<>
 			{subCategories.slice(0, 12).map((subCategory, index) => (
 				<div key={index}>
-					{index % 2 === 0 && (
+					{1 && (
 						<div
 							className={`${styles.BankBanner} ${
 								index === 0 && styles.hideBanner
@@ -218,18 +349,19 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 								autoPlay={true}
 								partialVisibilityGutter={false}
 							>
-								{dynamicBanners[index / 2].map((img) => (
-									<div key={img.id}>
-										<img
-											onClick={() => {
-												navigate(img.link);
-											}}
-											className={styles.banner}
-											src={img.image}
-											alt={img.title}
-										/>
-									</div>
-								))}
+								{dynamicBanners[index] &&
+									dynamicBanners[index].map((img) => (
+										<div key={img.id}>
+											<img
+												onClick={() => {
+													navigate(img.link);
+												}}
+												className={styles.banner}
+												src={img.image}
+												alt={img.title}
+											/>
+										</div>
+									))}
 							</ResponsiveCarousel>
 						</div>
 					)}
