@@ -661,6 +661,9 @@ const Checkout = ({ productTriggered = false }) => {
 							if (result.status === 1 && i === cartVal.length - 1) {
 								handleOrderSummary();
 							}
+							if(i === cartVal.length-1){
+								localStorage.removeItem('cart');
+							}
 						});
 				}
 			}
