@@ -64,39 +64,85 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 		[
 			{
 				id: 1,
+				image: SBI,
+				title: "banner1",
+				link: "subCategory/96",
+			},
+			{
+				id: 2,
+				image: AU,
+				title: "banner2 ",
+				link: "subCategory/96",
+			},
+			{
+				id: 3,
+				image: INDUSIND,
+				title: "banner3",
+				link: "subCategory/96",
+			},
+		],
+		[
+			{
+				id: 1,
 				image: JowarFlakes,
 				title: "JowarFlakes",
-				link: "subCategory/96",
+				link: "/subCategory/99/37_Millet%20Breakfast",
 			},
 			{
 				id: 2,
 				image: bajraPuff,
 				title: "bajraPuff ",
-				link: "subCategory/96",
+				link: "/subCategory/99/38_Millet%20Snacks",
 			},
 			{
 				id: 3,
 				image: bajraBaked,
 				title: "bajraBaked",
-				link: "subCategory/96",
+				link: "/subCategory/99/38_Millet%20Snacks",
 			},
 			{
 				id: 4,
 				image: RagiPuffCheese,
 				title: "RagiPuffCheese",
-				link: "subCategory",
+				link: "/subCategory/99/38_Millet%20Snacks",
 			},
 			{
 				id: 5,
 				image: JowarBakedChivda,
 				title: "JowarBakedChivda ",
-				link: "subCategory/",
+				link: "/subCategory/99/38_Millet%20Snacks",
 			},
 			{
 				id: 6,
 				image: JowarPufftomato,
 				title: "JowarPufftomato",
-				link: "subCategory/",
+				link: "/subCategory/99/38_Millet%20Snacks",
+			},
+		],
+		[
+			{
+				id: 1,
+				image: shingadaLaddo,
+				title: "banner1",
+				link: "subCategory/96/23_UPWAS%20Food",
+			},
+			{
+				id: 2,
+				image: batata,
+				title: "banner2 ",
+				link: "subCategory/96/23_UPWAS%20Food",
+			},
+			{
+				id: 3,
+				image: Sabudanapremix,
+				title: "banner3",
+				link: "subCategory/96/23_UPWAS%20Food",
+			},
+			{
+				id: 4,
+				image: KahjurDryfruit,
+				title: "banner4",
+				link: "subCategory/96/23_UPWAS%20Food",
 			},
 		],
 		[
@@ -104,25 +150,51 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 				id: 1,
 				image: TeelSesameSeedChutney,
 				title: "TeelSesameSeedChutney",
-				link: "subCategory/96/23_UPWAS%20Food",
+				link: "subCategory/102/49_CHUTNEY",
 			},
 			{
 				id: 2,
 				image: KhobraCoconutChutney,
 				title: "KhobraCoconutChutney ",
-				link: "subCategory/96/23_UPWAS%20Food",
+				link: "subCategory/102/49_CHUTNEY",
 			},
 			{
 				id: 3,
 				image: KadiPatta,
 				title: "KadiPatta",
-				link: "subCategory/96/23_UPWAS%20Food",
+				link: "subCategory/102/49_CHUTNEY",
 			},
 			{
 				id: 4,
 				image: ShengdanPeanutChutney,
 				title: "ShengdanPeanutChutney",
-				link: "subCategory/96/23_UPWAS%20Food",
+				link: "subCategory/102/49_CHUTNEY",
+			},
+		],
+		[
+			{
+				id: 1,
+				image: allOffers,
+				title: "banner1",
+				link: "/",
+			},
+			{
+				id: 2,
+				image: freeUpwasKit,
+				title: "banner2 ",
+				link: "/",
+			},
+			{
+				id: 3,
+				image: order4999,
+				title: "banner3",
+				link: "/",
+			},
+			{
+				id: 4,
+				image: order9999,
+				title: "banner4",
+				link: "/",
 			},
 		],
 		[
@@ -130,37 +202,63 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 				id: 1,
 				image: ApniEve,
 				title: "ApniEve",
-				link: "/",
+				link: "/subCategory/97/28_Ready%202%20Cook%20-%20GRAVY",
 			},
 			{
 				id: 2,
 				image: boiledChole,
 				title: "boiledChole ",
-				link: "/",
+				link: "/subCategory/97/27_Ready%202%20Cook%20-%20LENTIL",
 			},
 			{
 				id: 3,
 				image: Butterdamakhanigravy,
 				title: "Butterdamakhanigravy",
-				link: "/",
+				link: "/subCategory/97/28_Ready%202%20Cook%20-%20GRAVY",
 			},
 			{
 				id: 4,
 				image: BoiledRAJMA,
 				title: "BoiledRAJMA",
-				link: "/",
+				link: "/subCategory/97/27_Ready%202%20Cook%20-%20LENTIL",
 			},
 			{
 				id: 5,
 				image: MumbaiPavBhajiMasalaGravy,
 				title: "MumbaiPavBhajiMasalaGravy",
-				link: "subCategory",
+				link: "subCategory/97/28_Ready%202%20Cook%20-%20GRAVY",
 			},
 			{
 				id: 6,
 				image: BoiledMoong,
 				title: " BoiledMoong",
-				link: "subCategory/",
+				link: "subCategory/97/27_Ready%202%20Cook%20-%20LENTIL",
+			},
+		],
+		[
+			{
+				id: 3,
+				image: NimboliArk,
+				title: "NimboliArk",
+				link: "subCategory/98/29_PRASAD",
+			},
+			{
+				id: 4,
+				image: PoojaGomutr,
+				title: "PoojaGomutr ",
+				link: "subCategory/98/29_PRASAD",
+			},
+			{
+				id: 5,
+				image: PoojaRose,
+				title: "PoojaRose ",
+				link: "subCategory/98/29_PRASAD",
+			},
+			{
+				id: 6,
+				image: GomutraTulsi,
+				title: "GomutraTulsi ",
+				link: "subCategory/98/29_PRASAD",
 			},
 		],
 		[
@@ -168,19 +266,39 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 				id: 1,
 				image: OrganicRupaliRice,
 				title: "OrganicRupaliRice",
-				link: "subCategory/98/29_PRASAD",
+				link: "subCategory/104/56_RICE",
 			},
 			{
 				id: 2,
 				image: OrganicHathchadiBrownRice,
 				title: "OrganicHathchadiBrownRice ",
-				link: "subCategory/98/29_PRASAD",
+				link: "subCategory/104/56_RICE",
 			},
 			{
 				id: 3,
 				image: OrganicIndrayaniRice,
 				title: "OrganicIndrayaniRice ",
-				link: "subCategory/98/29_PRASAD",
+				link: "subCategory/104/56_RICE",
+			},
+		],
+		[
+			{
+				id: 1,
+				image: crunchyPatra,
+				title: "crunchyPatra",
+				link: "subCategory/100/41_HOMEMADE%20DESI%20SNACK",
+			},
+			{
+				id: 2,
+				image: maharashtrianChakli,
+				title: "maharashtrianChakli ",
+				link: "subCategory/100/41_HOMEMADE%20DESI%20SNACK",
+			},
+			{
+				id: 3,
+				image: chatpataGahu,
+				title: "chatpataGahu",
+				link: "subCategory/100/41_HOMEMADE%20DESI%20SNACK",
 			},
 		],
 		[
@@ -188,31 +306,51 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 				id: 1,
 				image: KhichadiMultiMilletPremix,
 				title: "KhichadiMultiMilletPremix",
-				link: "subCategory/100/41_HOMEMADE%20DESI%20SNACK",
+				link: "/subCategory/97/26_MILLET%20PREMIX",
 			},
 			{
 				id: 2,
 				image: RagiRava,
 				title: "RagiRava ",
-				link: "subCategory/100/41_HOMEMADE%20DESI%20SNACK",
+				link: "/subCategory/99",
 			},
 			{
 				id: 3,
 				image: PancakeMultiMilletPremix,
 				title: "PancakeMultiMilletPremix",
-				link: "subCategory/100/41_HOMEMADE%20DESI%20SNACK",
+				link: "/subCategory/97/26_MILLET%20PREMIX",
 			},
 			{
 				id: 4,
 				image: PastaMultiMilletPremix,
 				title: "PastaMultiMilletPremix",
-				link: "subCategory",
+				link: "/subCategory/97/26_MILLET%20PREMIX",
 			},
 			{
 				id: 5,
 				image: RagiDosaPremix,
 				title: " RagiDosaPremix",
-				link: "subCategory/",
+				link: "/subCategory/97/26_MILLET%20PREMIX",
+			},
+		],
+		[
+			{
+				id: 1,
+				image: ragiPapad,
+				title: "ragiPapad",
+				link: "subCategory/94/31_PAPAD",
+			},
+			{
+				id: 2,
+				image: khurdai,
+				title: "khurdai ",
+				link: "subCategory/94/32_KURDAI",
+			},
+			{
+				id: 3,
+				image: vade,
+				title: "vade",
+				link: "subCategory/94/82_VADE",
 			},
 		],
 		[
@@ -220,25 +358,25 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 				id: 1,
 				image: AmbeHaladPickle,
 				title: "AmbeHaladPickle",
-				link: "subCategory/94/31_PAPAD",
+				link: "subCategory/101/46_Special%20Pickle",
 			},
 			{
 				id: 2,
 				image: GarlicPickle,
 				title: "GarlicPickle ",
-				link: "subCategory/94/32_KURDAI",
+				link: "subCategory/101/46_Special%20Pickle",
 			},
 			{
 				id: 3,
 				image: GingerPickle,
 				title: "GingerPickle",
-				link: "subCategory/94/82_VADE",
+				link: "subCategory/101/46_Special%20Pickle",
 			},
 			{
 				id: 4,
 				image: TurmericPickle,
 				title: "TurmericPickle",
-				link: "subCategory",
+				link: "subCategory/101/46_Special%20Pickle",
 			},
 		],
 		// [
@@ -293,7 +431,7 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 		<>
 			{subCategories.slice(0, 12).map((subCategory, index) => (
 				<div key={index}>
-					{index % 2 === 0 && (
+					{1 && (
 						<div
 							className={`${styles.BankBanner} ${
 								index === 0 && styles.hideBanner
@@ -310,7 +448,7 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 								autoPlay={true}
 								partialVisibilityGutter={false}
 							>
-								{dynamicBanners[index / 2].map((img) => (
+								{dynamicBanners[index].map((img) => (
 									<div key={img.id}>
 										<img
 											onClick={() => {
@@ -387,7 +525,7 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 		<div className="container">
 			{subCategories.slice(0, 12).map((subCategory, index) => (
 				<div key={index}>
-					{index % 2 === 0 && (
+					{1 && (
 						<div
 							className={`${styles.BankBannerDesktop} ${
 								index === 0 && styles.hideBanner
@@ -404,7 +542,7 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 								autoPlay={true}
 								partialVisibilityGutter={false}
 							>
-								{dynamicBanners[index / 2].map((img) => (
+								{dynamicBanners[index].map((img) => (
 									<div key={img.id}>
 										<img
 											onClick={() => {
