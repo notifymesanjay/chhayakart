@@ -97,7 +97,8 @@ const PaymentMethod = ({
 			) : null}{" "}
 			<h1 className="below199">
 				{" "}
-				COD not available for order below ₹249 & Minimum order value is ₹136
+				COD not available for Navratri-Kit & order below ₹249 and minimum order
+				value for all purchases is ₹136.
 			</h1>
 			{setting.payment_setting.paystack_payment_method === "1" ? (
 				<div>
