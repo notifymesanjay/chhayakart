@@ -5,7 +5,7 @@ import { useResponsive } from "../shared/use-responsive";
 import Gaon from "../Gaon.png";
 import styles from "./category.module.scss";
 // import gana from "../gana.webp";
-import durgaSeason from "../durgaSeason.jpg";
+import durgaSeason from "../durgaSeasonNew.webp";
 import DurgaSeasonD from "../DurgaSeasonD.webp";
 import Banner from "../seasonBanner/bannerCarousel";
 import ShirdiLadduimg from "../ShirdiLadduimg.jpg";
