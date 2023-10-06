@@ -518,8 +518,8 @@ const DskpProductDetail = ({
           <hr />
 
 					<div className={styles.sellerName}>
-						<span className={styles.brandLabel}> Sold By</span>
-						<span className={styles.brandValue}> {productbrand.name}</span>
+						<span className={styles.brandLabel}>Sold By</span>
+						<span className={styles.brandValue}>{productdata?.seller_name}</span>
 					</div>
 					<hr />
 					{/* description starts here  */}
