@@ -7,6 +7,8 @@ import styles from "./category.module.scss";
 // import gana from "../gana.webp";
 import durgaSeason from "../durgaSeasonNew.webp";
 import DurgaSeasonD from "../DurgaSeasonD.webp";
+import DiwaliOffer from "../../public/images/home-page/DiwaliOffer.webp";
+import diwaliKit from "../../public/images/home-page/diwaliKit.webp";
 import Banner from "../seasonBanner/bannerCarousel";
 import ShirdiLadduimg from "../ShirdiLadduimg.jpg";
 import Shradhakit from "../Shradhakit.jpg";
@@ -31,10 +33,10 @@ const ShopByCategory = ({
 									<div className={styles.ganeshAddDesktop}>
 										<img
 											className={`${styles.ganeshAdDesktop} lazyload`}
-											data-src={DurgaSeasonD}
-											alt="Ganesh Icon"
+											data-src={DiwaliOffer}
+											alt="Diwali Offer"
 											onClick={() => {
-												navigate("/subCategory/98/70_SPECIAL%20PUJA%20KITS");
+												navigate("/subCategory/98/");
 											}}
 										/>
 									</div>
@@ -82,7 +84,7 @@ const ShopByCategory = ({
 								<div className={styles.ganeshAdd}>
 									<img
 										className={`${styles.ganeshAd} lazyload`}
-										data-src={durgaSeason}
+										data-src={DiwaliOffer}
 										alt="Ganesh Icon"
 										onClick={() => {
 											navigate("/subCategory/98/70_SPECIAL%20PUJA%20KITS");
@@ -135,10 +137,10 @@ const ShopByCategory = ({
 										{" "}
 										<img
 											className={styles.durgaAd}
-											src={Shradhakit}
+											src={diwaliKit}
 											alt="Durga Offer"
 											onClick={() => {
-												navigate("/product/236/shradha-bhojan-kit-4-items");
+												navigate("/product");
 											}}
 										/>
 									</div>
