@@ -4,14 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../shared/use-responsive";
 import Gaon from "../Gaon.png";
 import styles from "./category.module.scss";
-// import gana from "../gana.webp";
-import durgaSeason from "../durgaSeasonNew.webp";
-import DurgaSeasonD from "../DurgaSeasonD.webp";
 import DiwaliOffer from "../../public/images/home-page/DiwaliOffer.webp";
 import diwaliKit from "../../public/images/home-page/diwaliKit.webp";
 import Banner from "../seasonBanner/bannerCarousel";
 import ShirdiLadduimg from "../ShirdiLadduimg.jpg";
-import Shradhakit from "../Shradhakit.jpg";
+
 const ShopByCategory = ({
 	categories = [],
 	setSelectedFilter = () => {},
@@ -36,7 +33,7 @@ const ShopByCategory = ({
 											data-src={DiwaliOffer}
 											alt="Diwali Offer"
 											onClick={() => {
-												navigate("/subCategory/98/");
+												navigate("subCategory/96/23_DIWALI%20KITS");
 											}}
 										/>
 									</div>
@@ -87,7 +84,7 @@ const ShopByCategory = ({
 										data-src={DiwaliOffer}
 										alt="Ganesh Icon"
 										onClick={() => {
-											navigate("/subCategory/98/70_SPECIAL%20PUJA%20KITS");
+											navigate("/subCategory/96/23_DIWALI%20KITS");
 										}}
 									/>
 								</div>
@@ -140,7 +137,7 @@ const ShopByCategory = ({
 											src={diwaliKit}
 											alt="Durga Offer"
 											onClick={() => {
-												navigate("/product");
+												navigate("/subCategory/96/24_TRADITION");
 											}}
 										/>
 									</div>
