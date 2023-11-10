@@ -601,6 +601,8 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 														sub_ctg.image_url &&
 														sub_ctg.image_url.split(".webp")[0]
 													}_desktop.webp`}
+													// src= {`${
+													// 		sub_ctg.image_url}`}
 													alt="Catogery"
 												/>
 											</div>

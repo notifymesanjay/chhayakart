@@ -74,16 +74,31 @@ const ProductContainer = ({ setSelectedFilter = () => {} }) => {
 				}
 			}
 			const categoryList = shop.shop.category;
+			// if (categoryList.length > 0) {
+			// 	for (let i = 0; i < finalSectionList.length; i++) {
+			// 		for (let j = 0; j < finalSectionList[i].sub_category.length; j++) {
+			// 			for (let k = 0; k < categoryList.length; k++) {
+			// 				if (
+			// 					finalSectionList[i].sub_category[j].title.toLowerCase() ===
+			// 					categoryList[k].name.toLowerCase()
+			// 				) {
+			// 					finalSectionList[i].sub_category[j]["image_url"] =
+			// 						categoryList[k].image_url;
+			// 				}
+			// 			}
+			// 		}
+			// 	}
+			// }
+
 			if (categoryList.length > 0) {
 				for (let i = 0; i < finalSectionList.length; i++) {
-					for (let j = 0; j < finalSectionList[i].sub_category.length; j++) {
-						for (let k = 0; k < categoryList.length; k++) {
-							if (
-								finalSectionList[i].sub_category[j].title.toLowerCase() ===
-								categoryList[k].name.toLowerCase()
-							) {
-								finalSectionList[i].sub_category[j]["image_url"] =
-									categoryList[k].image_url;
+					for (let j = 0; j < categoryList.length; j++) {
+						if(finalSectionList[i].category_name.toLowerCase() === categoryList[j].name.toLowerCase()){
+							for(let k=0; k<finalSectionList[i].sub_category.length; k++){
+								let obj = categoryList[j].all_active_childs.find(x => x.name.toLowerCase() === finalSectionList[i].sub_category[k].title.toLowerCase());
+								if(obj !== undefined){
+									finalSectionList[i].sub_category[k]["image_url"] = obj["image_url"];
+								}
 							}
 						}
 					}
