@@ -259,3 +259,32 @@
 .ganeshCaurosel {
 	margin-top: 30px;
 }
+
+.deliverToWrapper {
+	.subHeader {
+		margin-top: 10px;
+		font-size: 25px;
+		font-weight: bold;
+	}
+	.descriptionTextCityDetails {
+		font-size: 20px;
+	}
+	.descriptionTextCityName{
+		margin-left: 5px;
+		color: #636363;
+	}
+	.descriptionTextDeliveryDateSection {
+		font-size: 20px;
+		font-weight: bold;
+	}
+	.descriptionTextDeliveryMessageSeparator {
+		color: #636363;
+		font-weight: 200;
+	}
+	.descriptionTextInStock {
+		color: rgba(56, 206, 116, 1);
+	}
+	.descriptionTextAcrossIndia{
+		font-size: 18px;
+	}
+}

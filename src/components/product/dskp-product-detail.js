@@ -516,6 +516,33 @@ const DskpProductDetail = ({
           </p>
 
           <hr />
+		  <div className={styles.deliverToWrapper}>
+		  <h2 className={styles.subHeader}>Deliver to</h2>
+		  <div>
+			<div className={styles.descriptionTextCityDetails}>
+				Pin 400020
+				<span className={styles.descriptionTextCityName}>Mumbai</span>
+			</div>
+			<div className={styles.descriptionTextDeliveryDateSection}><span className={styles.descriptionTextInStock}>In Stock </span><span className={styles.descriptionTextDeliveryMessageSeparator}>| </span>{function () {
+				const monthList = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+				const nth = (d) => {
+				  if (d > 3 && d < 21) return `${d}th`;
+				  switch (d % 10) {
+					case 1:  return `${d}st`;
+					case 2:  return `${d}nd`;
+					case 3:  return `${d}rd`;
+					default: return `${d}th`;
+				  }
+				};
+				let d1 = new Date(), d2 = new Date();
+				d1.setDate(d1.getDate()+4);
+				d2.setDate(d2.getDate()+5);
+				return `Delivery Between ${nth(d1.getDate())} ${(monthList[d1.getMonth()]).substring(0,3)} to ${nth(d2.getDate())} ${(monthList[d2.getMonth()]).substring(0,3)}`;
+			}()}</div>
+			<div className={styles.descriptionTextAcrossIndia}>(Delivery across India to your town in 7 to 8 days)</div>
+		  </div>
+		  </div>
+		  <hr/>
 
 					<div className={styles.sellerName}>
 						<span className={styles.brandLabel}>Sold By</span>
