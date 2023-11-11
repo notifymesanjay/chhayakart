@@ -4,10 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../shared/use-responsive";
 import Gaon from "../Gaon.png";
 import styles from "./category.module.scss";
-import DiwaliOffer from "../../public/images/home-page/DiwaliOffer.webp";
-import diwaliKit from "../../public/images/home-page/diwaliKit.webp";
+// import DiwaliOffer from "../../public/images/home-page/DiwaliOffer.webp";
+// import diwaliKit from "../../public/images/home-page/diwaliKit.webp";
 import Banner from "../seasonBanner/bannerCarousel";
-import ShirdiLadduimg from "../ShirdiLadduimg.jpg";
+// import ShirdiLadduimg from "../ShirdiLadduimg.jpg";
+import WinterSpecialLaddoo from "../WinterSpecialLaddoo.jpg";
+import UpwasKit from '../UpwasKit.jpg'
+import TulshiPujanKit from '../../public/images/home-page/TulshiPujanKit.jpg'
 
 const ShopByCategory = ({
 	categories = [],
@@ -30,10 +33,10 @@ const ShopByCategory = ({
 									<div className={styles.ganeshAddDesktop}>
 										<img
 											className={`${styles.ganeshAdDesktop} lazyload`}
-											data-src={DiwaliOffer}
-											alt="Diwali Offer"
+											data-src={TulshiPujanKit}
+											alt="Tulsi Pujan Kit"
 											onClick={() => {
-												navigate("subCategory/96/23_DIWALI%20KITS");
+												navigate("subCategory/96/24_TRADITION");
 											}}
 										/>
 									</div>
@@ -81,10 +84,10 @@ const ShopByCategory = ({
 								<div className={styles.ganeshAdd}>
 									<img
 										className={`${styles.ganeshAd} lazyload`}
-										data-src={DiwaliOffer}
-										alt="Ganesh Icon"
+										data-src={TulshiPujanKit}
+										alt="Tulsi Pujan Kit"
 										onClick={() => {
-											navigate("/subCategory/96/23_DIWALI%20KITS");
+											navigate("/subCategory/96/24_TRADITION");
 										}}
 									/>
 								</div>
@@ -123,10 +126,10 @@ const ShopByCategory = ({
 									<div>
 										<img
 											className={styles.durgaAd}
-											src={ShirdiLadduimg}
-											alt="Durga Offer"
+											src={WinterSpecialLaddoo}
+											alt="Winter Special Laddoo"
 											onClick={() => {
-												navigate("/subCategory/98/29_PRASAD");
+												navigate("/subCategory/103/51_LADDU");
 											}}
 										/>
 									</div>
@@ -134,10 +137,10 @@ const ShopByCategory = ({
 										{" "}
 										<img
 											className={styles.durgaAd}
-											src={diwaliKit}
-											alt="Durga Offer"
+											src={UpwasKit}
+											alt="Upwas Kit"
 											onClick={() => {
-												navigate("/subCategory/96/24_TRADITION");
+												navigate("/subCategory/96/87_UPWAS%20FOOD");
 											}}
 										/>
 									</div>
