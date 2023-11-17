@@ -27,10 +27,11 @@ const ShopByCategory = ({
 			<>
 				{shop.shop !== null && (
 					<>
-						{!isSmScreen ? (
+						{!isSmScreen ?
+						(
 							<div className="container">
 								<div className={styles.cardWrapper}>
-									<div className={styles.ganeshAddDesktop}>
+									{/* <div className={styles.ganeshAddDesktop}>
 										<img
 											className={`${styles.ganeshAdDesktop} lazyload`}
 											data-src={TulshiPujanKit}
@@ -39,7 +40,8 @@ const ShopByCategory = ({
 												navigate("subCategory/96/24_TRADITION");
 											}}
 										/>
-									</div>
+									</div> */}
+									<div className="my-2"></div>
 									<div className={styles.headerWrapper}>
 										<h1 className={styles.header}>SHOP BY CATEGORY</h1>
 									</div>
@@ -79,7 +81,8 @@ const ShopByCategory = ({
 									/>
 								</div> */}
 							</div>
-						) : (
+						) 
+						: (
 							<>
 								<div className={styles.ganeshAdd}>
 									<img
