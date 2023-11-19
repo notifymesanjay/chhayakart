@@ -219,7 +219,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 
 			{isSmScreen && (
 				<>
-					{Array.from(Array(counter)).map((item, idx) => (
+					{/* {Array.from(Array(counter)).map((item, idx) => (
 						<div className={styles.appWrapper} key={idx}>
 							<FontAwesomeIcon
 								onClick={handleRemoveDiv}
@@ -250,7 +250,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 								</div>
 							</div>
 						</div>
-					))}
+					))} */}
 				</>
 			)}
 			<div
