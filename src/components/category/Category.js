@@ -8,9 +8,9 @@ import styles from "./category.module.scss";
 // import diwaliKit from "../../public/images/home-page/diwaliKit.webp";
 import Banner from "../seasonBanner/bannerCarousel";
 // import ShirdiLadduimg from "../ShirdiLadduimg.jpg";
-import WinterSpecialLaddoo from "../WinterSpecialLaddoo.jpg";
+import BatataSabudanaChakali from "../BatataSabudanaChakali.webp";
 import UpwasKit from '../UpwasKit.jpg'
-import TulshiPujanKit from '../../public/images/home-page/TulshiPujanKit.jpg'
+import WinterSpecialLaddoo from '../../public/images/home-page/WinterSpecialLaddoo.jpg'
 
 const ShopByCategory = ({
 	categories = [],
@@ -87,10 +87,10 @@ const ShopByCategory = ({
 								<div className={styles.ganeshAdd}>
 									<img
 										className={`${styles.ganeshAd} lazyload`}
-										data-src={TulshiPujanKit}
-										alt="Tulsi Pujan Kit"
+										data-src={WinterSpecialLaddoo}
+										alt="Winter Special Laddoo"
 										onClick={() => {
-											navigate("/subCategory/96/24_TRADITION");
+											navigate("/subCategory/103/51_LADDU");
 										}}
 									/>
 								</div>
@@ -129,10 +129,10 @@ const ShopByCategory = ({
 									<div>
 										<img
 											className={styles.durgaAd}
-											src={WinterSpecialLaddoo}
-											alt="Winter Special Laddoo"
+											src={BatataSabudanaChakali}
+											alt="Batata Sabudana Chakali"
 											onClick={() => {
-												navigate("/subCategory/103/51_LADDU");
+												navigate("/subCategory/96/87_UPWAS%20FOOD");
 											}}
 										/>
 									</div>
