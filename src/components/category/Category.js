@@ -10,7 +10,7 @@ import Banner from "../seasonBanner/bannerCarousel";
 // import ShirdiLadduimg from "../ShirdiLadduimg.jpg";
 import BatataSabudanaChakali from "../BatataSabudanaChakali.webp";
 import UpwasKit from '../UpwasKit.jpg'
-import WinterSpecialLaddoo from '../../public/images/home-page/WinterSpecialLaddoo.jpg'
+import WinterSpecialLaddoo from '../../public/images/home-page/WinterSpecialLaddoo.webp'
 
 const ShopByCategory = ({
 	categories = [],
