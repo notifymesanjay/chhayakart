@@ -767,5 +767,18 @@ const api = {
 
 		return fetch(url, requestOptions);
 	},
+	trackOrder(token, trackingId){
+		var myHeaders = new Headers();
+		myHeaders.append(access_key_param, access_key);
+		myHeaders.append("Authorization", token_prefix + token);
+		var requestOptions = {
+			method: "GET",
+			headers: myHeaders,
+			redirect: "follow",
+		}	
+		var url = new URL(appUrl + appSubUrl + "/track_order")
+		url.searchParams.append("tracking_id", trackingId);
+		return fetch(url, requestOptions);
+	}
 };
 export default api;
