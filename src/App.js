@@ -36,6 +36,7 @@ import DskpFooter from "./components/footer/new-footer";
 import { useResponsive } from "./components/shared/use-responsive";
 import Success from "./components/checkout/Success";
 import Order from "./components/order/Order";
+import OrderNew from "./components/order/OrderNew";
 
 function App() {
   //initialize cookies
@@ -184,7 +185,8 @@ function App() {
                   element={<Wishlist />}
                 ></Route>
 
-                <Route exact={true} path="/orders" element={<Order />}></Route>
+                {/* <Route exact={true} path="/orders" element={<Order />}></Route> */}
+                <Route exact={true} path="/orders" element={<OrderNew />}></Route>
 
                 <Route
                   exact={true}

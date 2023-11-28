@@ -27,6 +27,7 @@ import {
 } from "../../utils/manageLocalStorage";
 import api from "../../api/api";
 import { RiLogoutCircleRFill } from "react-icons/ri";
+import OrderNew from "../order/OrderNew";
 
 const ProfileDashboard = () => {
 	//initialize Cookies
@@ -430,7 +431,7 @@ const ProfileDashboard = () => {
 									</>
 								) : null}
 
-								{orderClick ? <Order /> : null}
+								{orderClick ? <OrderNew /> : null}
 
 								{transactionClick ? <Transaction /> : null}
 
