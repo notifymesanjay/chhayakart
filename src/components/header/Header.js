@@ -356,30 +356,6 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 							</div>
 
 							<div className="d-flex col-md-3 w-auto order-3  justify-content-end align-items-center">
-								<button
-									type="button"
-									aria-label="notifications"
-									className="icon position-relative hide-mobile mx-sm-4"
-									onClick={() => {
-										if (cookies.get("jwt_token") === undefined) {
-											toast.error(
-												"OOPS! You have to login first to see notification!"
-											);
-										} else {
-											navigate("/notification");
-										}
-										navigate("/notification");
-									}}
-								>
-									<IoNotificationsOutline />
-									{totalNotification === null ? null : (
-										<span className="position-absolute start-100 translate-middle badge rounded-pill fs-5 ">
-											{totalNotification}
-											<span className="visually-hidden">unread messages</span>
-										</span>
-									)}
-								</button>
-
 								{city.city === null ||
 								cookies.get("jwt_token") === undefined ? (
 									<button
@@ -440,7 +416,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 									<button
 										aria-label="cart"
 										type="button"
-										className="icon mx-4 me-sm-5 position-relative"
+										className="icon mx-2 me-sm-5 position-relative"
 										data-bs-toggle="offcanvas"
 										data-bs-target="#cartoffcanvasExample"
 										aria-controls="cartoffcanvasExample"
@@ -455,6 +431,28 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 										) : null}
 									</button>
 								)}
+								<button
+									type="button"
+									aria-label="notifications"
+									className="icon position-relative ms-4 me-1"
+									onClick={() => {
+										if (cookies.get("jwt_token") === undefined) {
+											toast.error(
+												"OOPS! You have to login first to see notification!"
+											);
+										} else {
+											navigate("/notification");
+										}
+									}}
+								>
+									<IoNotificationsOutline />
+									{/* {totalNotification === null ? null : (
+										<span className="position-absolute start-100 translate-middle badge rounded-pill fs-5 ">
+											{totalNotification}
+											<span className="visually-hidden">unread messages</span>
+										</span>
+									)} */}
+								</button>
 
 								{user.status === "loading" ? (
 									<div className="hide-mobile-screen px-3">

@@ -6,6 +6,7 @@ import {
 	faStore,
 	faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { BsBoxSeam } from "react-icons/bs";
 import Menu from "./menu";
 import styles from "./mobile-menu.module.scss";
 import { useNavigate } from "react-router";
@@ -70,12 +71,19 @@ const menuItems = [
 		icon: <IoHeartOutline />,
 		link: "/wishlist",
 	},
+	// {
+	// 	id: 5,
+	// 	name: "Notifications",
+	// 	tagId: "notifications",
+	// 	icon: <IoNotificationsOutline />,
+	// 	link: "/notification",
+	// },
 	{
 		id: 5,
-		name: "Notifications",
-		tagId: "notifications",
-		icon: <IoNotificationsOutline />,
-		link: "/notification",
+		name: "My Orders",
+		tagId: "orders",
+		icon: <BsBoxSeam />,
+		link: "/orders",
 	},
 ];
 
@@ -98,7 +106,11 @@ const MobileMenu = ({ selectedMenu = 0 }) => {
 								menu.id !== 2 &&
 								menu.id !== 3
 							) {
-								toast.error("OOPS! You have to login first to see your cart!");
+								if(menu.id === 5){
+									toast.error("You have to login first to track your Orders !");
+								}else{
+									toast.error("OOPS! You have to login first to see your cart!");
+								}	
 							} else {
 								if (menu.id === 3) {
 									window.location.href = menu.link;
