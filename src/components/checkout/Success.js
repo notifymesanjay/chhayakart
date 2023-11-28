@@ -42,6 +42,7 @@ export default function Success({
 	);
 	const topPos = (element) =>
 		element ? element.getBoundingClientRect().top - 140 : 0;
+	const { isSmScreen } = useResponsive();
 
 	useEffect(() => {
 		const timeout = setTimeout(() => {
@@ -151,6 +152,7 @@ export default function Success({
 					<p
 						className={styles.transactionHistory}
 						onClick={() => {
+							isSmScreen ? navigate('/orders') :
 							navigate("/profile");
 						}}
 					>
