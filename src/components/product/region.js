@@ -43,13 +43,14 @@ const ShopByRegion = ({ regionList = [], setSelectedFilter = () => {} }) => {
 			if (categoryList.length > 0) {
 				for (let i = 0; i < finalSectionList.length; i++) {
 					for (let j = 0; j < finalSectionList[i].sub_category.length; j++) {
-						for (let k = 0; k < categoryList.length; k++) {
+						let regionObjChildren = categoryList.find((ele)=> ele.id === finalSectionList[i].category_id).all_active_childs;
+						for (let k = 0; k < regionObjChildren.length; k++) {
 							if (
 								finalSectionList[i].sub_category[j].title.toLowerCase() ===
-								categoryList[k].name.toLowerCase()
+								regionObjChildren[k].name.toLowerCase()
 							) {
 								finalSectionList[i].sub_category[j]["image_url"] =
-									categoryList[k].image_url;
+								regionObjChildren[k].image_url;
 							}
 						}
 					}
