@@ -86,8 +86,8 @@ const ShopByCategory = ({
 							<>
 								<div className={styles.ganeshAdd}>
 									<img
-										className={`${styles.ganeshAd} lazyload`}
-										data-src={WinterSpecialLaddoo}
+										className={`${styles.ganeshAd}`}
+										src={WinterSpecialLaddoo}
 										alt="Winter Special Laddoo"
 										onClick={() => {
 											navigate("/subCategory/103/51_LADDU");
