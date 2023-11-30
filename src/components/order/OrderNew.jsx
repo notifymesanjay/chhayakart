@@ -99,7 +99,7 @@ const OrderNew = () => {
             orders === null ? <Loader width="100%" height="350px"/> : 
 			<div className={`order-list px-2 ${isSmScreen ? 'order-list-mobile' : 'order-list-desktop'}`}>
 				{orders.map((order)=>
-					<div key={order.id} className='order-card d-flex flex-column py-3 my-3 border rounded-2 fs-2'>
+					<div key={order.id} className='order-card d-flex flex-column py-3 my-3 border rounded-2'>
 						<div className='order-top-section pb-2 d-flex flex-row border-bottom px-2'>
 							<div className='d-flex flex-column'>
 								<div>Order placed on: {new Date(order.created_at).toLocaleDateString("en-IN", {weekday: "short", day: "numeric", month: "short"})}</div>
@@ -113,7 +113,6 @@ const OrderNew = () => {
 							{
 								order.items.map((item, index)=> <OrderItem key={item.id} orderItem={item} onClickItem={(trackingId)=>{
 									getOrderStatus(trackingId, order);
-									// getOrderStatus(index, order);
 								}}/>)
 							}
 					</div>
@@ -129,7 +128,7 @@ const OrderNew = () => {
 					<div className='modal-dialog modal-dialog-centered'>
 						<div className='modal-content'>
 							<div className='d-flex justify-content-end mx-5'>
-								<button type='button' className='btn-close mb-5' data-bs-dismiss='modal' aria-label='Close'></button>
+								<button type='button' className='btn-close mb-5 fs-2' data-bs-dismiss='modal' aria-label='Close'></button>
 							</div>
 							<div>
 								{trackingLoaderFlag ? <Loader width={"200px"}/> : <TrackingModalContent trackingDetails={trackingDetails} trackingPercentStatus={trackingPercentStatus} cancelledOrder={trackingPercentStatus<0}/>}
