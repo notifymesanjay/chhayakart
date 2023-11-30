@@ -99,7 +99,7 @@ const OrderNew = () => {
             orders === null ? <Loader width="100%" height="350px"/> : 
 			<div className={`order-list px-2 ${isSmScreen ? 'py-2' : 'order-list-desktop'}`}>
 				{orders.map((order)=>
-					<div className='order-card d-flex flex-column py-3 my-3 border rounded-2'>
+					<div className='order-card d-flex flex-column py-3 my-3 border rounded-2 fs-4'>
 						<div className='order-top-section pb-2 d-flex flex-row border-bottom px-2'>
 							<div className='d-flex flex-column'>
 								<div>Order placed on: {new Date(order.created_at).toLocaleDateString("en-IN", {weekday: "short", day: "numeric", month: "short"})}</div>
