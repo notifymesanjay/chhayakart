@@ -1,0 +1,65 @@
+.success-page-section{
+    box-shadow: 0 .125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin: 0.25rem 0;
+    padding: 0 0.75rem;
+    background-color: white;
+}
+.success-page-section .text-level-1{
+    font-size: 2rem;
+    font-weight: 700;
+}
+.success-page-section .text-level-2{
+    font-size: 1.75rem;
+}
+.success-page-section .text-level-3{
+    font-size: 1.5rem;
+}
+.success-page-section .text-level-4{
+    font-size: 1.5rem;
+    color: grey;
+}
+.success-page-section .discount-line .discount-price-text{
+    color: green;
+}
+.discount-message-section{
+    background-color: rgba(0, 255, 0, 0.3);
+    padding: 1rem 0;
+}
+#burst-12 {
+    background: green;
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    text-align: center;
+  }
+  #burst-12:before,
+  #burst-12:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1.5rem;
+    width: 1.5rem;
+    background: green;
+  }
+  #burst-12:before {
+    transform: rotate(30deg);
+  }
+  #burst-12:after {
+    transform: rotate(60deg);
+  }
+  .success-page-section .discount-message-section .discount-inner-icon-div{
+    position: absolute;
+    height: 1.5rem;
+    width: 1.5rem;
+    line-height: 1.7rem;
+    vertical-align: middle;
+    align-content: center;
+  }
+  .success-page-section .discount-message-section .discount-inner-icon-div .discount-inner-icon{
+    height: 1rem;
+    width: 1rem;
+  }
+  .discount-inner-icon path{
+    fill: white;
+  }

@@ -17,6 +17,7 @@ import { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import SpecificSubCategory from "../specific-sub-category";
+import SuccessTopSection from "./SuccessTopSection";
 
 const totalVisible = 1;
 export default function Success({
@@ -120,35 +121,36 @@ export default function Success({
 
 	return (
 		<>
-			<div className={styles.cover}>
-				<img
+			{/* <div className={styles.cover}> */}
+				{/* <img
 					data-src={ynks}
 					className={`${styles.img} lazyload`}
 					alt="order placed thankyou visit again"
-				></img>
+				></img> */}
 				{/* <span>THANKS.... </span> */}
 				{/* <h1 className={styles.title}>YOUR RECENT ORDER WITH CHHAYAKART</h1> */}
-			</div>
+			{/* </div> */}
 			<div>
-				<div className={styles.transactionWrapper}>
+				{/* <div className={styles.transactionWrapper}> */}
 					{orders.length === 0 ? (
 						<Loader width="100%" height="350px" />
 					) : (
 						<>
 							{orders.slice(0, totalVisible).map((order, index) => (
-								<SuccessOrder
-									cardRef={inputRefs[index]}
-									order={order}
-									id={index}
-									show={cardToShow === index}
-									setCardToShow={setCardToShow}
-								/>
+								// <SuccessOrder
+								// 	cardRef={inputRefs[index]}
+								// 	order={order}
+								// 	id={index}
+								// 	show={cardToShow === index}
+								// 	setCardToShow={setCardToShow}
+								// />
+								<SuccessTopSection order={order} />
 							))}
 						</>
 					)}
-				</div>
+				{/* </div> */}
 				{/* <Order displayAll={false} setCategoryId={setCategoryId} /> */}
-				{orders.length > totalVisible && (
+				{/* {orders.length > totalVisible && (
 					<p
 						className={styles.transactionHistory}
 						onClick={() => {
@@ -160,7 +162,7 @@ export default function Success({
 						See Past Orders
 						<FontAwesomeIcon className={styles.arrowIcon} icon={faArrowRight} />
 					</p>
-				)}
+				)} */}
 			</div>
 
 			<div className="related-product-wrapper">
