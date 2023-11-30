@@ -13,6 +13,10 @@
     max-width: 70%;
     margin: 0 auto;
 }
+.order-list-mobile{
+    padding-bottom: 40px;
+    padding-top: 10px;
+}
 
 
 .steps {
