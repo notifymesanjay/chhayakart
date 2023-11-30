@@ -9,7 +9,7 @@ const TrackingModalContent = ({trackingDetails, trackingPercentStatus, cancelled
 	  };
 
     return(
-        <div class="container pb-5 mb-sm-4">
+        <div class="container pb-5 mb-sm-4 fs-5">
             {/* <!-- Details--> */}
             <div class="row mb-3 justify-content-center">
                 {trackingDetails != null ? <div class="col-sm-4 mb-2">

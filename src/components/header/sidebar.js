@@ -129,7 +129,7 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
 					ref={closeRef}
 					onClick={handleOrders}
 				>
-					Orders
+					My Orders
 				</li>
 				<li
 					className={styles.listItem}
