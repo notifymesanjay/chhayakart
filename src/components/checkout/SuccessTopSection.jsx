@@ -58,7 +58,7 @@ const SuccessTopSection = ({
                     <span className='pe-3'><FontAwesomeIcon icon={faPhoneVolume}/></span>
                     Help Centre
                 </div>
-                <div className='my-auto pe-3 fs-5'>
+                <div className='my-auto pe-3 fs-3'>
                     <FontAwesomeIcon icon={faAngleRight}></FontAwesomeIcon>
                 </div>
             </div> */}
@@ -66,17 +66,19 @@ const SuccessTopSection = ({
                 <div className='text-level-1 pt-4 pb-2'>
                     Product Details
                 </div>
+                <div className='fs-2'>
                 {
                     order.items.map((orderItem)=>{
-                        return <OrderItem orderItem={orderItem} showTrackButton={false}/>
+                        return <OrderItem key={orderItem.id} orderItem={orderItem} showTrackButton={false}/>
                     })
                 }
+                </div>
                 <hr className='mx-3'/>
-                <div className='text-level-1 pt-4 pb-3'>
+                <div className='text-level-1 pt-4 pb-4'>
                     Order Tracking
                 </div>
-                <div>
-                    <button className='border border-dark rounded-2 px-4 py-2 fs-5' onClick={() => {
+                <div className='pb-2'>
+                    <button className='text-level-3 border border-dark rounded-2 px-4 py-2' onClick={() => {
 							isMobile ? navigate('/orders') :
 							navigate("/profile");
 						}
@@ -101,7 +103,7 @@ const SuccessTopSection = ({
                         <div className='text-level-2 py-4'>
                             Download Invoice
                         </div>
-                        <div className='my-auto pe-3 fs-5'>
+                        <div className='my-auto pe-3 fs-1'>
                             <FontAwesomeIcon icon={faAngleRight}></FontAwesomeIcon>
                         </div>
                     </div>
@@ -153,11 +155,11 @@ const SuccessTopSection = ({
                             {order.final_total}</div>
                     </div>
                     {calculated_final_discount > 0 && <div className='discount-message-section d-flex justify-content-center rounded-2'>
-                        <div className='text-center' style={{width: '1.5rem'}}>
+                        <div className='text-center d-flex align-items-center' style={{width: '2.5rem'}}>
                             <div id='burst-12'></div>
-                            <div className='discount-inner-icon-div'><FontAwesomeIcon icon={faPercent} className='discount-inner-icon'/></div>
+                            <div className='discount-inner-icon-div d-flex align-items-center justify-content-center'><FontAwesomeIcon icon={faPercent} className='discount-inner-icon'/></div>
                         </div>
-                        <span className='ps-2'>
+                        <span className='ps-2 text-level-3'>
                         Yay! Your total discount is <FontAwesomeIcon icon={faIndianRupee}/>{calculated_final_discount}
                         </span>
                     </div>}
