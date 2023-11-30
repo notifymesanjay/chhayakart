@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useResponsive } from "../shared/use-responsive";
-const OrderItem = ({orderItem, onClickItem = (string) => {}}) => {
+const OrderItem = ({orderItem, showTrackButton = true, onClickItem = (string) => {}}) => {
     const {isSmScreen} = useResponsive();
     return (
     <button type='button' id={`track - ${orderItem.id}`} data-bs-toggle="modal" data-bs-target="#trackModal" value={orderItem.trackingId} onClick={(e)=>onClickItem(orderItem.tracking_id)}>
@@ -13,9 +13,9 @@ const OrderItem = ({orderItem, onClickItem = (string) => {}}) => {
                     <div className='my-1'>Size: {orderItem.unit}</div>
                     <div className='my-1'>Quantity: {orderItem.quantity}</div>
                 </div>
-                <div className='ms-auto me-2 align-self-center'>
+                {showTrackButton && <div className='ms-auto me-2 align-self-center'>
                     <span className='text-black-50'>Track</span> <FontAwesomeIcon icon={faAngleRight}/>
-                </div>
+                </div>}
             </div>
         </div>
     </button>
