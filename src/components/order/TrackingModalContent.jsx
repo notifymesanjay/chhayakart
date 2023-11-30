@@ -9,7 +9,7 @@ const TrackingModalContent = ({trackingDetails, trackingPercentStatus, cancelled
 	  };
 
     return(
-        <div class="container pb-5 mb-sm-4 fs-5">
+        <div class="container pb-5 mb-sm-4 fs-1">
             {/* <!-- Details--> */}
             <div class="row mb-3 justify-content-center">
                 {trackingDetails != null ? <div class="col-sm-4 mb-2">
@@ -68,7 +68,7 @@ const TrackingModalContent = ({trackingDetails, trackingPercentStatus, cancelled
                         Out for delivery
                         {
                             trackingDetails != null ? 
-                            <div className="small text-black-50">
+                            <div className="small text-black-50" style={{fontSize: '13px'}}>
                                 {
                                     trackingPercentStatus >= 75 ? function (){
                                         let outForDeliveryActivity = trackingDetails.shipment_track_activities.filter((ele)=>ele['sr-status'] == 17)[0];
