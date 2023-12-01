@@ -325,6 +325,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 										data-bs-toggle="offcanvas"
 										data-bs-target="#sidebaroffcanvasExample"
 										aria-controls="sidebaroffcanvasExample"
+										style={{marginLeft: '0'}}
 									>
 										<div className="button-menu">
 											<FiMenu />
@@ -332,14 +333,14 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 									</button>
 								</div>
 
-								<div className="siteBrandWrapper">
+								<div className="siteBrandWrapper" style={{flexBasis: '66%'}}>
 									<Link
 										to="/"
 										className="site-brand"
 										style={
 											curr_url.pathname === "/profile"
 												? { marginLeft: "4px" }
-												: null
+												: { marginLeft: "-8px" }
 										}
 									>
 										<img
@@ -419,6 +420,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 										data-bs-toggle="offcanvas"
 										data-bs-target="#cartoffcanvasExample"
 										aria-controls="cartoffcanvasExample"
+										style={{fontSize: '3.2rem'}}
 									>
 										<IoCartOutline />
 
@@ -434,6 +436,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 									type="button"
 									aria-label="notifications"
 									className="icon position-relative ms-4 me-1"
+									style={{fontSize: '3.2rem'}}
 									onClick={() => {
 										if (cookies.get("jwt_token") === undefined) {
 											toast.error(
