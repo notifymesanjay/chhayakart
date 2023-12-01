@@ -310,13 +310,12 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 				>
 					<div className="container">
 						<div className="d-flex row-reverse justify-content-lg-between justify-content-center">
-							<div className="d-flex w-auto align-items-center justify-content-start col-md-2 order-1 column-left ">
+							<div className="d-flex w-auto align-items-center justify-content-start col-md-2 order-1 column-left " style={{flexBasis: '75%'}}>
 								<div
 									className="header-buttons hide-desktop"
 									style={
-										curr_url.pathname === "/profile"
-											? { display: "none" }
-											: null
+										 { display: curr_url.pathname === "/profile"
+										 ? "none" : null, flexBasis: '33.33%' }
 									}
 								>
 									<button
@@ -355,7 +354,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 								</div>
 							</div>
 
-							<div className="d-flex col-md-3 w-auto order-3  justify-content-end align-items-center">
+							<div className="d-flex col-md-3 w-auto order-3  justify-content-end align-items-center" style={{flexBasis: '25%'}}>
 								{city.city === null ||
 								cookies.get("jwt_token") === undefined ? (
 									<button
