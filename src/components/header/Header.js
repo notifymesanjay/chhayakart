@@ -310,13 +310,12 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 				>
 					<div className="container">
 						<div className="d-flex row-reverse justify-content-lg-between justify-content-center">
-							<div className="d-flex w-auto align-items-center justify-content-start col-md-2 order-1 column-left ">
+							<div className="d-flex w-auto align-items-center justify-content-start col-md-2 order-1 column-left " style={{flexBasis: '75%'}}>
 								<div
 									className="header-buttons hide-desktop"
 									style={
-										curr_url.pathname === "/profile"
-											? { display: "none" }
-											: null
+										 { display: curr_url.pathname === "/profile"
+										 ? "none" : null, flexBasis: '33.33%' }
 									}
 								>
 									<button
@@ -326,6 +325,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 										data-bs-toggle="offcanvas"
 										data-bs-target="#sidebaroffcanvasExample"
 										aria-controls="sidebaroffcanvasExample"
+										style={{marginLeft: '0'}}
 									>
 										<div className="button-menu">
 											<FiMenu />
@@ -333,14 +333,14 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 									</button>
 								</div>
 
-								<div className="siteBrandWrapper">
+								<div className="siteBrandWrapper" style={{flexBasis: '66%'}}>
 									<Link
 										to="/"
 										className="site-brand"
 										style={
 											curr_url.pathname === "/profile"
 												? { marginLeft: "4px" }
-												: null
+												: { marginLeft: "-8px" }
 										}
 									>
 										<img
@@ -355,7 +355,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 								</div>
 							</div>
 
-							<div className="d-flex col-md-3 w-auto order-3  justify-content-end align-items-center">
+							<div className="d-flex col-md-3 w-auto order-3  justify-content-end align-items-center" style={{flexBasis: '25%'}}>
 								{city.city === null ||
 								cookies.get("jwt_token") === undefined ? (
 									<button
@@ -420,6 +420,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 										data-bs-toggle="offcanvas"
 										data-bs-target="#cartoffcanvasExample"
 										aria-controls="cartoffcanvasExample"
+										style={{fontSize: '3.2rem'}}
 									>
 										<IoCartOutline />
 
@@ -435,6 +436,7 @@ const Header = ({ productTriggered, setProductTriggered = () => {} }) => {
 									type="button"
 									aria-label="notifications"
 									className="icon position-relative ms-4 me-1"
+									style={{fontSize: '3.2rem'}}
 									onClick={() => {
 										if (cookies.get("jwt_token") === undefined) {
 											toast.error(
