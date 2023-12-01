@@ -48,7 +48,7 @@ const SuccessTopSection = ({
     }();
 
     return (
-        <div style={{backgroundColor: '#f1f1f1', width: isMobile ? null : '70%', margin: isMobile ? null : '0 auto'}}>
+        <div style={{backgroundColor: '#f1f1f1', width: isMobile ? null : '70%', margin: isMobile ? null : '0 auto', paddingTop: isMobile ? null : '70px'}}>
             <div className="success-page-section">
                 <div className="text-level-3 py-2">Order Id: {order.order_id}</div>
                 <div className="text-level-4 pb-2">Payment mode: <span className='text-black'> {order.payment_method !== 'COD' ? 'Onlene' : 'COD'}</span></div>
@@ -66,7 +66,7 @@ const SuccessTopSection = ({
                 <div className='text-level-1 pt-4 pb-2'>
                     Product Details
                 </div>
-                <div className='fs-2'>
+                <div className='fs-2 d-grid'>
                 {
                     order.items.map((orderItem)=>{
                         return <OrderItem key={orderItem.id} orderItem={orderItem} showTrackButton={false}/>
@@ -78,7 +78,7 @@ const SuccessTopSection = ({
                     Order Tracking
                 </div>
                 <div className='pb-2'>
-                    <button className='text-level-3 border border-dark rounded-2 px-4 py-2' onClick={() => {
+                    <button className='text-level-3 border border-dark rounded-2 px-5 py-2' onClick={() => {
 							isMobile ? navigate('/orders') :
 							navigate("/profile");
 						}
@@ -148,13 +148,13 @@ const SuccessTopSection = ({
                 </div>
                 <hr className='mx-3'/>
                 <div className='pe-3'>
-                    <div className='d-flex justify-content-between'>
+                    <div className='d-flex justify-content-between pb-2'>
                         <div className='text-level-2'>Order Total</div>
                         <div className='text-level-2'>
                             <span className='me-2'><FontAwesomeIcon icon={faIndianRupee}/></span>
                             {order.final_total}</div>
                     </div>
-                    {calculated_final_discount > 0 && <div className='discount-message-section d-flex justify-content-center rounded-2'>
+                    {calculated_final_discount > 0 && <div className='discount-message-section d-flex justify-content-center rounded-2 mb-2'>
                         <div className='text-center d-flex align-items-center' style={{width: '2.5rem'}}>
                             <div id='burst-12'></div>
                             <div className='discount-inner-icon-div d-flex align-items-center justify-content-center'><FontAwesomeIcon icon={faPercent} className='discount-inner-icon'/></div>
@@ -165,6 +165,23 @@ const SuccessTopSection = ({
                     </div>}
                 </div>
             </div>
+            <div className="success-page-section mt-2 py-5">
+                <div className='text-level-3 fw-bold pb-2'>
+                    Delivery Address
+                </div>
+                <div className='text-level-3'>
+                    {order.user_name}
+                    <br/>
+                    {order.address}
+                    <br/>
+                    {order.mobile}
+                </div>
+            </div>
+            {/* <div className="success-page-section mt-2 pb-4">
+                <div className='text-level-2 pt-4 pb-2'>
+                    Supplier 
+                </div>
+            </div> */}
             <div id="invoice">
 				<div
 					className="modal fade new-invoice"
