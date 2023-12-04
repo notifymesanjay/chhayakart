@@ -729,6 +729,14 @@ option {
 	align-items: end;
 	position: absolute;
 	z-index: 99;
+	right: 50px;
+}
+
+.carousel-container .HeartBtn {
+	top: 3px;
+	align-items: end;
+	position: absolute;
+	z-index: 99;
 	right: 10px;
 }
 
