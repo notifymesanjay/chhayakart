@@ -77,7 +77,8 @@ const ProductDetails = ({
 				city.city.id,
 				city.city.latitude,
 				city.city.longitude,
-				product
+				product,
+				cookies.get("jwt_token")
 			)
 			.then((response) => response.json())
 			.then((result) => {

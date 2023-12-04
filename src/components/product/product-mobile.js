@@ -21,7 +21,7 @@ import {
   DecrementProduct,
   IncrementProduct,
 } from "../../services/cartService";
-import { BsPlus, BsShare } from "react-icons/bs";
+import { BsPlus, BsShare, BsHeart, BsHeartFill } from "react-icons/bs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleDoubleRight,
@@ -59,6 +59,7 @@ const ProductMobile = ({
   const [isBulkOrder, setIsBulkOrder] = useState(false);
   const [selectQunatityClassName, setSelectQunatityClassName] = useState("");
   const user = useSelector((state) => state.user);
+  const [isFavorite, setIsFavorite] = useState(productdata.is_favorite);
   const handleClick = (event) => {
     alert(event);
     // setSelectedQuantity(event.target.id);
@@ -66,55 +67,57 @@ const ProductMobile = ({
 
   const trackingService = new TrackingService();
 
-  // //Add to favorite
-  // const addToFavorite = async (product_id) => {
-  // 	await api
-  // 		.addToFavotite(cookies.get("jwt_token"), product_id)
-  // 		.then((response) => response.json())
-  // 		.then(async (result) => {
-  // 			if (result.status === 1) {
-  // 				toast.success(result.message);
-  // 				await api
-  // 					.getFavorite(
-  // 						cookies.get("jwt_token"),
-  // 						city.city.latitude,
-  // 						city.city.longitude
-  // 					)
-  // 					.then((resp) => resp.json())
-  // 					.then((res) => {
-  // 						if (res.status === 1)
-  // 							dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
-  // 					});
-  // 			} else {
-  // 				toast.error(result.message);
-  // 			}
-  // 		});
-  // };
+  //Add to favorite
+  const addToFavorite = async (product_id) => {
+  	await api
+  		.addToFavotite(cookies.get("jwt_token"), product_id)
+  		.then((response) => response.json())
+  		.then(async (result) => {
+  			if (result.status === 1) {
+          setIsFavorite(true);
+  				toast.success(result.message);
+  				await api
+  					.getFavorite(
+  						cookies.get("jwt_token"),
+  						city.city.latitude,
+  						city.city.longitude
+  					)
+  					.then((resp) => resp.json())
+  					.then((res) => {
+  						if (res.status === 1)
+  							dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
+  					});
+  			} else {
+  				toast.error(result.message);
+  			}
+  		});
+  };
 
-  // const removefromFavorite = async (product_id) => {
-  // 	await api
-  // 		.removeFromFavorite(cookies.get("jwt_token"), product_id)
-  // 		.then((response) => response.json())
-  // 		.then(async (result) => {
-  // 			if (result.status === 1) {
-  // 				toast.success(result.message);
-  // 				await api
-  // 					.getFavorite(
-  // 						cookies.get("jwt_token"),
-  // 						city.city.latitude,
-  // 						city.city.longitude
-  // 					)
-  // 					.then((resp) => resp.json())
-  // 					.then((res) => {
-  // 						if (res.status === 1)
-  // 							dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
-  // 						else dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
-  // 					});
-  // 			} else {
-  // 				toast.error(result.message);
-  // 			}
-  // 		});
-  // };
+  const removefromFavorite = async (product_id) => {
+  	await api
+  		.removeFromFavorite(cookies.get("jwt_token"), product_id)
+  		.then((response) => response.json())
+  		.then(async (result) => {
+  			if (result.status === 1) {
+          setIsFavorite(false);
+  				toast.success(result.message);
+  				await api
+  					.getFavorite(
+  						cookies.get("jwt_token"),
+  						city.city.latitude,
+  						city.city.longitude
+  					)
+  					.then((resp) => resp.json())
+  					.then((res) => {
+  						if (res.status === 1)
+  							dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
+  						else dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
+  					});
+  			} else {
+  				toast.error(result.message);
+  			}
+  		});
+  };
 
   const DirectAddProductToCart = (qunatity) => {
     if (cookies.get("jwt_token") !== undefined) {
@@ -234,6 +237,33 @@ const ProductMobile = ({
             {" "}
             <BsShare size={30} />
           </button>
+        </div>
+        <div className="HeartBtn">
+          {
+           isFavorite ? 
+            <button onClick={()=> {
+              if (cookies.get("jwt_token") === undefined) {
+                toast.error(
+                  "OOPS! You have to login first to add to favorites!"
+                );
+              }else{
+                removefromFavorite(productdata.id);
+              }
+            }}> 
+              <BsHeartFill fill="green" size={30}/>
+            </button> : 
+            <button onClick={()=> {
+              if (cookies.get("jwt_token") === undefined) {
+                toast.error(
+                  "OOPS! You have to login first to add to favorites!"
+                );
+              }else{
+                addToFavorite(productdata.id);
+              }
+            }}>
+              <BsHeart size={30}/>
+            </button>
+          }
         </div>
         <div>
           <ResponsiveCarousel
