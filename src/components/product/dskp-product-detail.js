@@ -480,7 +480,7 @@ const DskpProductDetail = ({
 										}
 									}}
 								>
-									<BsHeartFill fill="green" />
+									<BsHeartFill fill="#f25cc5" />
 								</button>
 							) : (
 								<button

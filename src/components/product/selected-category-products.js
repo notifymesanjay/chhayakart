@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
 import { BiMinus } from "react-icons/bi";
-import { BsPlus } from "react-icons/bs";
+import { BsHeart, BsHeartFill, BsPlus } from "react-icons/bs";
 import styles from "./productlist.module.scss";
 import {
 	AddProductToCart,
@@ -37,6 +37,7 @@ const SelectedCategoryProducts = ({
 	const [isOpenBulk, setIsOpenBulk] = useState(false);
 	const [bulkVal, setBulkVal] = useState(0);
 	const trackingService = new TrackingService();
+	const favorite = useSelector((state) => state.favorite);
 
 	const addtoCart = async (product, product_variant_id, qty) => {
 		trackingService.trackCart(
@@ -300,6 +301,55 @@ const SelectedCategoryProducts = ({
 		));
 	};
 
+	//  Add to favorite
+	const addToFavorite = async () => {
+		await api
+			.addToFavotite(cookies.get("jwt_token"), product.id)
+			.then((response) => response.json())
+			.then(async (result) => {
+				if (result.status === 1) {
+					toast.success(result.message);
+					await api
+						.getFavorite(
+							cookies.get("jwt_token"),
+							city.city.latitude,
+							city.city.longitude
+						)
+						.then((resp) => resp.json())
+						.then((res) => {
+							if (res.status === 1)
+								dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
+						});
+				} else {
+					toast.error(result.message);
+				}
+			});
+	};
+	const removefromFavorite = async () => {
+		await api
+			.removeFromFavorite(cookies.get("jwt_token"), product.id)
+			.then((response) => response.json())
+			.then(async (result) => {
+				if (result.status === 1) {
+					toast.success(result.message);
+					await api
+						.getFavorite(
+							cookies.get("jwt_token"),
+							city.city.latitude,
+							city.city.longitude
+						)
+						.then((resp) => resp.json())
+						.then((res) => {
+							if (res.status === 1)
+								dispatch({ type: ActionTypes.SET_FAVORITE, payload: res });
+							else dispatch({ type: ActionTypes.SET_FAVORITE, payload: null });
+						});
+				} else {
+					toast.error(result.message);
+				}
+			});
+	};
+
 	useEffect(() => {
 		setIsProductAdded(false);
 	}, [product]);
@@ -457,6 +507,34 @@ const SelectedCategoryProducts = ({
 							)}
 						</>
 					)}
+					{
+						favorite.favorite &&
+						favorite.favorite.data.some(
+							(element) => element.id === product.id
+						) ? 
+						<button className={styles.wishlistBtn} onClick={() => {
+							if (cookies.get("jwt_token") !== undefined) {
+								removefromFavorite();
+							} else {
+								toast.error(
+									"OOps! You need to login first to add to favourites"
+								);
+							}
+						}}>
+							<BsHeartFill size={25} fill="#f25cc5"/>
+						</button> :
+						<button className={styles.wishlistBtn} onClick={() => {
+							if (cookies.get("jwt_token") !== undefined) {
+								addToFavorite();
+							} else {
+								toast.error(
+									"OOps! You need to login first to add to favourites"
+								);
+							}
+						}}>
+							<BsHeart size={25}/>
+						</button>
+					}
 				</div>
 			</div>
 		</div>
