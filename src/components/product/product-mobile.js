@@ -235,7 +235,7 @@ const ProductMobile = ({
             }}
           >
             {" "}
-            <BsShare size={30} />
+            <BsShare size={25} />
           </button>
         </div>
         <div className="HeartBtn">
@@ -250,7 +250,7 @@ const ProductMobile = ({
                 removefromFavorite(productdata.id);
               }
             }}> 
-              <BsHeartFill fill="green" size={30}/>
+              <BsHeartFill fill="#f25cc5" size={25}/>
             </button> : 
             <button onClick={()=> {
               if (cookies.get("jwt_token") === undefined) {
@@ -261,7 +261,7 @@ const ProductMobile = ({
                 addToFavorite(productdata.id);
               }
             }}>
-              <BsHeart size={30}/>
+              <BsHeart size={25}/>
             </button>
           }
         </div>

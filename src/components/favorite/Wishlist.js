@@ -21,8 +21,10 @@ import {
 	DecrementProduct,
 	IncrementProduct,
 } from "../../services/cartService";
+import WishlistItem from "./WishlistItem";
+import { useResponsive } from "../shared/use-responsive";
 
-const Wishlist = () => {
+const Wishlist = ({productTriggered, setProductTriggered}) => {
 	const closeCanvas = useRef();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -38,6 +40,7 @@ const Wishlist = () => {
   const [isLoader, setisLoader] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const user = useSelector((state) => state.user);
+  const { isSmScreen } = useResponsive();
   useEffect(() => {
     if (sizes.sizes === null || sizes.status === "loading") {
       if (city.city !== null && favorite.favorite !== null) {
@@ -318,7 +321,7 @@ const Wishlist = () => {
 										<span> product in this list</span>
 									</div>
 
-                  <table className="products-table table">
+                  {/* <table className="products-table table">
                     <thead>
                       <tr>
                         <th className="first-column">Product</th>
@@ -482,7 +485,23 @@ const Wishlist = () => {
                         </tr>
                       ))}
                     </tbody>
-                  </table>
+                  </table> */}
+                  <div className="d-grid" style={{gridTemplateColumns: isSmScreen ? '1fr 1fr' : '1fr 1fr 1fr 1fr'}}>
+                    {
+                      favorite.favorite.data.map((item, index)=> <WishlistItem key={item.id} productData={item} index={index} onClick={(e)=>{
+                        navigate(`/product/${item.id}/${
+                          item.slug.includes("/")
+                            ? item.slug.split("/")[0]
+                            : item.slug
+                        }			
+                        `);
+                        dispatch({
+                          type: ActionTypes.SET_SELECTED_PRODUCT,
+                          payload: item.id,
+                        });
+                      }} productTriggered={productTriggered} setProductTriggered={setProductTriggered}/>)
+                    }
+                  </div>
                 </div>
               </>
             )}

@@ -182,7 +182,7 @@ function App() {
                 <Route
                   exact={true}
                   path="/wishlist"
-                  element={<Wishlist />}
+                  element={<Wishlist productTriggered={productTriggered} setProductTriggered={setProductTriggered}/>}
                 ></Route>
 
                 {/* <Route exact={true} path="/orders" element={<Order />}></Route> */}
