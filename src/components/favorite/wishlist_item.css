@@ -1,0 +1,41 @@
+.product-name{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-weight: 500;
+    color: grey;
+    font-size: 15px;
+    text-overflow: ellipsis;
+    line-height: 1.5;
+    height: 100%; 
+}
+.price{
+    font-size: 16px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+}
+.addBtn{
+    background-color: pink;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    width: 100px;
+}
+.addedProduct{
+    display: inline-flex;
+    justify-content: space-between;
+    text-align: center;
+}
+.image-section{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.image-section .favorite-button{
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
