@@ -299,3 +299,45 @@
 	padding: 20px;
 	font-size: 1.555rem;
 }
+.discount-message-section{
+    background-color: rgba(0, 255, 0, 0.3);
+    padding: 1rem 0;
+}
+#burst-12 {
+    background: green;
+    width: 2.3rem;
+    height: 2.3rem;
+    position: absolute;
+    text-align: center;
+}
+#burst-12:before,
+#burst-12:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 2.3rem;
+	width: 2.3rem;
+	background: green;
+}
+#burst-12:before {
+	transform: rotate(30deg);
+}
+#burst-12:after {
+	transform: rotate(60deg);
+}
+.discount-message-section .discount-inner-icon-div{
+	position: absolute;
+	height: 2.3rem;
+	width: 2.3rem;
+	line-height: 2.5rem;
+	vertical-align: middle;
+	align-content: center;
+}
+.success-page-section .discount-message-section .discount-inner-icon-div .discount-inner-icon{
+	height: 1.7rem;
+	width: 1.7rem;
+}
+.discount-inner-icon path{
+	fill: white;
+}

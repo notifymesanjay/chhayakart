@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import Loader from "../loader/Loader";
 import "./checkout.css";
 import GuestLogin from "./guest-login";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faIndianRupee, faPercent } from '@fortawesome/free-solid-svg-icons';
+import {useSelector} from 'react-redux'
 
 const OrderSummary = ({
 	isUserLoggedIn,
@@ -14,6 +17,16 @@ const OrderSummary = ({
 	handlePlaceOrder = () => {},
 	loadingPlaceOrder,
 }) => {
+	const stateCart = useSelector((state) => state.cart);
+	let calculated_final_discount = function(){
+		let cartItems = stateCart.cart.data.cart;
+        let calculated_final_discount = cart.discount;
+        cartItems.forEach((cartItem)=>{
+            let disc = cartItem.price - cartItem.discounted_price;
+            calculated_final_discount += disc * cartItem.qty;
+        })
+        return calculated_final_discount;
+    }();
 	useEffect(() => {
 		console.log("xyze", isUserLoggedIn);
 	}, [isUserLoggedIn]);
@@ -65,6 +78,17 @@ const OrderSummary = ({
 								<span>{parseFloat(cart.total_amount)}</span>
 							</div>
 						</div>
+						{
+							calculated_final_discount > 0 && <div className='discount-message-section d-flex justify-content-center rounded-2 mb-2'>
+								<div className='text-center d-flex align-items-center' style={{width: '2.5rem'}}>
+									<div id='burst-12'></div>
+									<div className='discount-inner-icon-div d-flex align-items-center justify-content-center'><FontAwesomeIcon icon={faPercent} className='discount-inner-icon'/></div>
+								</div>
+								<span className='ps-2' style={{fontSize: '14px'}}>
+									Yay! Your total discount is <FontAwesomeIcon icon={faIndianRupee}/>{calculated_final_discount}
+								</span>
+								</div>
+						}
 						{isUserLoggedIn && cart.total_amount > 135 && (
 							<>
 								{loadingPlaceOrder ? (
