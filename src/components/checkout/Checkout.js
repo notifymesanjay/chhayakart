@@ -20,6 +20,7 @@ import "./checkout.css";
 import GuestLogin from "./guest-login";
 import { escapeSelector } from "jquery";
 import TrackingService from "../../services/trackingService";
+import { useResponsive } from "../shared/use-responsive";
 
 const stripePromise = loadStripe(
   "pk_test_51MKxDESEKxefYE6MZCHxEw4cFKiiLn2mV3Ek4Nx1UfcuNfE1Z6jgQrZrKpqTLju3n5SBjYJcwt1Jkw1bEoPXWRHB00XZ7D2f2F"
@@ -63,6 +64,7 @@ const Checkout = ({ productTriggered = false }) => {
     cookies.get("jwt_token")
   );
   const [isLoader, setIsLoader] = useState(false);
+  const { isSmScreen } = useResponsive();
 
   const fetchOrders = () => {
     if (cookies.get("jwt_token")) {
@@ -730,7 +732,7 @@ const Checkout = ({ productTriggered = false }) => {
           <Loader />
         ) : (
           <>
-            <div className="checkout-container container">
+            <div className="checkout-container container" style={{paddingTop: isSmScreen ? '0' : '50px'}}>
               {isUserLoggedIn ? (
                 <BillingAddress
                   setSelectedAddress={setSelectedAddress}
