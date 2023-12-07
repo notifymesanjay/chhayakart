@@ -565,9 +565,7 @@ const Checkout = ({ productTriggered = false }) => {
     var delivery_charges = 0;
     var iscodAllowed = true;
     var taxes = 0;
-    console.log("xyzq", cart);
     if (cart.checkout !== null) {
-      console.log("xyzr", cart);
       var sub_total = 0;
       sub_total = cart.checkout.sub_total;
       if (cart.cart != undefined && cart.cart.data != undefined) {

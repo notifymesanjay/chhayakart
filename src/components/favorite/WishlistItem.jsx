@@ -29,6 +29,9 @@ const WishlistItem = ({productData, index, onClick, productTriggered,
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
     const [isProductAdded, setIsProductAdded] = useState(()=>{
+		if(cart.cart === null){
+			return false;
+		}
         return cart.cart.data.cart.some((ele)=> ele.product_id === productData.id);
     });
     const [isOpenBulk, setIsOpenBulk] = useState(false);
@@ -486,7 +489,7 @@ const WishlistItem = ({productData, index, onClick, productTriggered,
 									<BsPlus />{" "}
 								</button>
 							</div>
-							{isOpenBulk && (
+							{/* {isOpenBulk && (
 								<BulkOrder
 									isOpenBulk={isOpenBulk}
 									setIsOpenBulk={setIsOpenBulk}
@@ -495,7 +498,7 @@ const WishlistItem = ({productData, index, onClick, productTriggered,
 									productVal={productVal}
 									index={index}
 								/>
-							)}
+							)} */}
 						</>
 					)}
         </div>
