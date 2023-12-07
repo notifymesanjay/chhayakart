@@ -710,18 +710,21 @@ const Checkout = ({ productTriggered = false }) => {
         {isOrderPlaced && (
           <OrderPlaced city={city} show={show} setShow={setShow} />
         )}
-        <div className="cover">
-          <img
-            data-src={coverImg}
-            className="img-fluid lazyload"
-            alt="cover"
-          ></img>
-          <div className="title">
-            {/* <h3>CHECKOUT TOTAL</h3> */}
-            <span>home / </span>
-            <span className="active">checkout</span>
-          </div>
-        </div>
+
+        {
+        // <div className="cover">
+        //   <img
+        //     data-src={coverImg}
+        //     className="img-fluid lazyload"
+        //     alt="cover"
+        //   ></img>
+        //   <div className="title">
+        //     {/* <h3>CHECKOUT TOTAL</h3> */}
+        //     <span>home / </span>
+        //     <span className="active">checkout</span>
+        //   </div>
+        // </div>
+        }
 
         {setting.payment_setting === null && isLoader ? (
           <Loader />

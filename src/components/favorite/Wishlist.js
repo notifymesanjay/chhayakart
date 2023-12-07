@@ -268,7 +268,7 @@ const Wishlist = ({productTriggered, setProductTriggered}) => {
 
 	return (
 		<section id="wishlist" className="wishlist">
-			<div className="cover">
+			{/* <div className="cover">
 				<img
 					data-src={coverImg}
 					className="img-fluid lazyload"
@@ -279,9 +279,9 @@ const Wishlist = ({productTriggered, setProductTriggered}) => {
 					<span>home / </span>
 					<span className="active">Wishlist</span>
 				</div>
-			</div>
+			</div> */}
 
-			<div className="view-cart-container container">
+			<div className="view-cart-container container" style={{paddingTop: isSmScreen ? '0' : '50px'}}>
 				{isfavoriteEmpty ? (
 					<div className="empty-cart">
 						<img
@@ -289,7 +289,7 @@ const Wishlist = ({productTriggered, setProductTriggered}) => {
 							className="lazyload"
 							alt="empty-cart"
 						></img>
-						<p>Your Cart is empty</p>
+						<p>Your Wishlist is empty</p>
 						<span>You have no items in your shopping cart.</span>
 						<span>Let's go buy something!</span>
 						<button
