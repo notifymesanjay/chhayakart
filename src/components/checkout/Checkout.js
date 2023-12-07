@@ -565,9 +565,7 @@ const Checkout = ({ productTriggered = false }) => {
     var delivery_charges = 0;
     var iscodAllowed = true;
     var taxes = 0;
-    console.log("xyzq", cart);
     if (cart.checkout !== null) {
-      console.log("xyzr", cart);
       var sub_total = 0;
       sub_total = cart.checkout.sub_total;
       if (cart.cart != undefined && cart.cart.data != undefined) {
@@ -712,18 +710,21 @@ const Checkout = ({ productTriggered = false }) => {
         {isOrderPlaced && (
           <OrderPlaced city={city} show={show} setShow={setShow} />
         )}
-        <div className="cover">
-          <img
-            data-src={coverImg}
-            className="img-fluid lazyload"
-            alt="cover"
-          ></img>
-          <div className="title">
-            {/* <h3>CHECKOUT TOTAL</h3> */}
-            <span>home / </span>
-            <span className="active">checkout</span>
-          </div>
-        </div>
+
+        {
+        // <div className="cover">
+        //   <img
+        //     data-src={coverImg}
+        //     className="img-fluid lazyload"
+        //     alt="cover"
+        //   ></img>
+        //   <div className="title">
+        //     {/* <h3>CHECKOUT TOTAL</h3> */}
+        //     <span>home / </span>
+        //     <span className="active">checkout</span>
+        //   </div>
+        // </div>
+        }
 
         {setting.payment_setting === null && isLoader ? (
           <Loader />

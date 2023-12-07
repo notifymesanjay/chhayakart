@@ -19,13 +19,16 @@ const OrderSummary = ({
 }) => {
 	const stateCart = useSelector((state) => state.cart);
 	let calculated_final_discount = function(){
-		let cartItems = stateCart.cart.data.cart;
-        let calculated_final_discount = cart.discount;
-        cartItems.forEach((cartItem)=>{
-            let disc = cartItem.price - cartItem.discounted_price;
-            calculated_final_discount += disc * cartItem.qty;
-        })
-        return calculated_final_discount;
+		if(stateCart.cart !== null){
+			let cartItems = stateCart.cart.data.cart;
+			let calculated_final_discount = cart.discount;
+			cartItems.forEach((cartItem)=>{
+				let disc = cartItem.price - cartItem.discounted_price;
+				calculated_final_discount += disc * cartItem.qty;
+			})
+			return calculated_final_discount;
+		}
+		return 0;
     }();
 	useEffect(() => {
 		console.log("xyze", isUserLoggedIn);
