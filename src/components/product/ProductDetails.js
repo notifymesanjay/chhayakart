@@ -273,6 +273,7 @@ const ProductDetails = ({
 				{!isSmScreen ? (
 					<DskpProductDetail
 						images={images}
+						videos={productdata.videos}
 						mainimage={mainimage}
 						productbrand={productbrand}
 						setmainimage={setmainimage}
@@ -289,6 +290,7 @@ const ProductDetails = ({
 						<div className="top-wrapper">
 							<ProductMobile
 								images={images}
+								videos={productdata.videos}
 								mainimage={mainimage}
 								productbrand={productbrand}
 								setmainimage={setmainimage}
