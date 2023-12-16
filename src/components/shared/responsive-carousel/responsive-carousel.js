@@ -16,6 +16,7 @@ const ResponsiveCarousel = ({
 	slidesToSlide = 1,
 	className = "",
 	defaultSlide,
+	afterChangeState = (any, ref) => {},
 	children,
 	...props
 }) => {
@@ -70,6 +71,9 @@ const ResponsiveCarousel = ({
 	return (
 		<Carousel
 			ref={carouselRef}
+			afterChange={(prevSlide, state)=>{
+				afterChangeState(state, carouselRef);
+			}}
 			arrows={
 				showArrows === undefined
 					? !isSmallScreen && carouselItems.length > items

@@ -28,6 +28,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleDoubleRight,
   faIndianRupee,
+  faPlayCircle
 } from "@fortawesome/free-solid-svg-icons";
 import { IoCartOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
@@ -35,6 +36,7 @@ import BulkOrder from "./bulk-order";
 
 const DskpProductDetail = ({
   images,
+  videos,
   mainimage = "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQ9V9HCp5iiSLSve8c-OsHCt_xBkp0Q4j-RrM-m1IIS9IOMb6nzs8gipQGg_TCe4mOsxTGXJ8l5vY02K4A",
   productbrand,
   setmainimage = () => {},
@@ -331,6 +333,15 @@ const DskpProductDetail = ({
     }
   };
 
+  function getId(url) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+
+    return (match && match[2].length === 11)
+      ? match[2]
+      : null;
+  }
+
 	return (
 		<>
 			<div className={styles.detailWrapper}>
@@ -353,13 +364,36 @@ const DskpProductDetail = ({
 								</div>
 							</div>
 						))}
+					{
+						videos.length > 0 && 
+						<div
+							className={styles.subImages}
+							onClick={() => {
+								setmainimage('video');
+							}}
+						>
+							<div className="d-flex justify-content-center align-items-center bg-black h-100">
+								<FontAwesomeIcon
+									icon={faPlayCircle}
+									className={styles.faPlayCircleIcon}
+									/>
+							</div>
+						</div>
+					}
 				</div>
 				<div className={styles.cardWrapper}>
+					{
+						mainimage === 'video' ? <div id="yt-embed-player" className="d-flex justify-content-center">
+						<iframe src={function(){
+							 let videoId = getId(videos[0]);
+							 return "https://www.youtube.com/embed/" + videoId;
+						}()} width={560} height={315} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+					  </div> : 
 					<img
 						src={mainimage}
 						className={styles.mainImage}
 						alt="main-product"
-					/>
+					/>}
 				</div>
 
         <div className={styles.bodyWrapper}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BiLink, BiMinus } from "react-icons/bi";
 import SpecificSubCategory from "../specific-sub-category";
 import {
@@ -36,6 +36,7 @@ import { IoCartOutline } from "react-icons/io5";
 
 const ProductMobile = ({
   images,
+  videos,
   mainimage,
   setmainimage = () => {},
   addtoCart = () => {},
@@ -64,6 +65,7 @@ const ProductMobile = ({
     alert(event);
     // setSelectedQuantity(event.target.id);
   };
+  const [isVideoVisible, setIsVideoVisible] = useState(false);
 
   const trackingService = new TrackingService();
 
@@ -210,11 +212,68 @@ const ProductMobile = ({
     }
   };
 
+  function getId(url) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+
+    return (match && match[2].length === 11)
+      ? match[2]
+      : null;
+  }
+
+  function getCarouselArrayItems(){
+  let arr = images.map((image, index) => (
+    <div key={index}>
+      <div
+        className={`sub-image border ${
+          mainimage === image ? "active" : ""
+        }`}
+      >
+        <img
+          data-src={image}
+          className="col-12 imgZoom lazyload "
+          alt="product"
+          onClick={() => {
+            setmainimage(image);
+          }}
+        ></img>
+      </div>
+    </div>
+    ));
+    if(videos.length > 0){
+      let videoId = getId(videos[0]);
+      let iFrameVideoUrl = "https://www.youtube.com/embed/" + videoId;
+      arr.push(
+      <div id="yt-embed-player" className="d-flex justify-content-center">
+        <iframe src={iFrameVideoUrl} width={560} height={315} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      );
+    }
+    return arr;
+  }
+
+
   return (
     <div className="row body-wrapper productDetailWrapper ">
       <div className="carousel-container">
+        <ResponsiveCarousel
+            items={5}
+            itemsInTablet={3}
+            infinite={true}
+            autoPlay={false}
+            autoPlaySpeed={4000}
+            showArrows={false}
+            showDots={true}
+            afterChangeState={(state, ref)=>{
+              let currSlide = state.currentSlide;
+              setIsVideoVisible(ref.current.listRef.current.children[currSlide].children[0].id === "yt-embed-player");
+            }}
+            className="carousel"
+          >
+            {getCarouselArrayItems()}
+        </ResponsiveCarousel>
         {/* sharebutton  */}
-        <div className="ShareBtn">
+        {!isVideoVisible && <div className="ShareBtn">
           <button
             type="button"
             onClick={() => {
@@ -237,8 +296,8 @@ const ProductMobile = ({
             {" "}
             <BsShare size={25} />
           </button>
-        </div>
-        <div className="HeartBtn">
+        </div>}
+        {!isVideoVisible && <div className="HeartBtn">
           {
            isFavorite ? 
             <button onClick={()=> {
@@ -264,38 +323,7 @@ const ProductMobile = ({
               <BsHeart size={25}/>
             </button>
           }
-        </div>
-        <div>
-          <ResponsiveCarousel
-            items={5}
-            itemsInTablet={3}
-            infinite={true}
-            autoPlay={false}
-            autoPlaySpeed={4000}
-            showArrows={false}
-            showDots={true}
-            className="carousel"
-          >
-            {images.map((image, index) => (
-              <div key={index}>
-                <div
-                  className={`sub-image border ${
-                    mainimage === image ? "active" : ""
-                  }`}
-                >
-                  <img
-                    data-src={image}
-                    className="col-12 imgZoom lazyload "
-                    alt="product"
-                    onClick={() => {
-                      setmainimage(image);
-                    }}
-                  ></img>
-                </div>
-              </div>
-            ))}
-          </ResponsiveCarousel>
-        </div>
+        </div>}
       </div>
 
       <div>
