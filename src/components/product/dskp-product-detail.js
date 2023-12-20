@@ -576,12 +576,12 @@ const DskpProductDetail = ({
 			<div className={styles.descriptionTextAcrossIndia}>(Delivery across India to your town in 7 to 8 days)</div>
 		  </div>
 		  </div>
-		  <hr/>
+		  {/* <hr/> */}
 
-					<div className={styles.sellerName}>
+					{/* <div className={styles.sellerName}>
 						<span className={styles.brandLabel}>Sold By</span>
 						<span className={styles.brandValue}>{productdata?.seller_name}</span>
-					</div>
+					</div> */}
 					<hr />
 					{/* description starts here  */}
 					<div className={styles.descriptionWrapper}>
@@ -605,6 +605,45 @@ const DskpProductDetail = ({
 						>
 							{viewMore.description ? "View More" : "View Less"}
 						</button>
+					</div>
+					{/* features starts here  */}
+					{ productdata.features && <hr />}
+					{ productdata.features &&
+					<div className={styles.featureWrapper}>
+						<h2 className={styles.subHeader}>Features & Details</h2>
+						<div
+							className={styles.featureBodyWrapper}
+							style={{
+								height: featureHeight.height,
+								overflow: featureHeight.overflow,
+							}}
+						>
+							<div
+								dangerouslySetInnerHTML={{ __html: productdata.features }}
+							></div>
+						</div>
+						<button
+							className={styles.viewMoreBtn}
+							onClick={() => {
+								expandDetails("feature");
+							}}
+						>
+							{viewMore.feature ? "View More" : "View Less"}
+						</button>
+					</div>
+					}
+					{/* return policy starts here  */}
+					<hr />
+					<div className={styles.returnWrapper}>
+						<h2 className={styles.subHeader}>Return Policy</h2>
+						<div
+							className={styles.returnBodyWrapper}
+						>
+							<div>
+								{ productdata.cancelable_status === 0 ? 'This Product is Non-Returnable' : 'This Product is returnable in 7 days' }
+							</div>
+							<Link to="/return&refund">Know More</Link>
+						</div>
 					</div>
 				</div>
 			</div>
