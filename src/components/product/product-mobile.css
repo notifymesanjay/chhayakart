@@ -824,6 +824,7 @@ option {
 		width: 100%;
 		height: fit-content;
 		font-size: 15px;
+		padding: 0;
 	}
 
 	.productDescriptionContianer,
@@ -1429,6 +1430,7 @@ option {
 }
 
 .deliverToWrapper {
+	padding: 5px 0;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	.subHeader {
@@ -1458,7 +1460,8 @@ option {
 	}
 }
 
-.descriptionWrapper, .featureWrapper, .returnWrapper{
+.descriptionWrapper, .featureWrapper, .returnWrapper,.soldByWrapper{
+	padding: 5px 0;
 	.subHeader{
 		font-size: 20px;
 		font-weight: bold;
@@ -1481,4 +1484,8 @@ option {
 }
 .returnWrapper .returnBodyWrapper a{
 	font-size: 13px;
+}
+.soldByWrapper .sellerName{
+	color: #f25cc5;
+	font-size: 18px;
 }

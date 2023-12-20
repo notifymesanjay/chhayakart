@@ -70,10 +70,6 @@ const ProductMobile = ({
 		height: "50px",
 		overflow: "hidden",
 	});
-	const [featureHeight, setFeatureHeight] = useState({
-		height: "50px",
-		overflow: "hidden",
-	});
 	const [viewMore, setViewMore] = useState({
 		description: true,
 		feature: true,
@@ -89,13 +85,6 @@ const ProductMobile = ({
         setDescriptionHeight({ height: "50px", overflow: "hidden" });
       }
       setViewMore((prev) => ({ ...prev, description: !viewMore.description }));
-    } else if (type === "feature") {
-      if (viewMore.feature) {
-        setFeatureHeight({ height: "100%", overflow: "auto" });
-      } else {
-        setFeatureHeight({ height: "50px", overflow: "hidden" });
-      }
-      setViewMore((prev) => ({ ...prev, feature: !viewMore.feature }));
     }
   };
 
@@ -468,6 +457,11 @@ const ProductMobile = ({
       <hr/>
       {/* //collapsiable buttons start */}
       <div className="productDetailsContainer">
+        <div className="soldByWrapper">
+          <h2 className="subHeader">Sold by</h2>
+          <div className="sellerName">{productdata?.seller_name}</div>
+        </div>
+        <hr/>
         <div className="descriptionWrapper">
           <h2 className="subHeader">Description</h2>
           <div className="innerBodyWrapper" style={{
@@ -490,20 +484,9 @@ const ProductMobile = ({
 
         {productdata.features && <div className="featureWrapper">
           <h2 className="subHeader">Features & Details</h2>
-          <div className="innerBodyWrapper" style={{
-								height: featureHeight.height,
-								overflow: featureHeight.overflow,
-							}}>
+          <div className="innerBodyWrapper">
             <div dangerouslySetInnerHTML={{ __html: productdata.features }}></div>
           </div>
-          <button
-							className="viewMoreBtn"
-							onClick={() => {
-								expandDetails("feature");
-							}}
-						>
-							{viewMore.feature ? "Show More" : "Show Less"}
-						</button>
         </div>}
 
         <hr />

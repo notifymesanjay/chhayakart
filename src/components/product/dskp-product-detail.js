@@ -62,10 +62,6 @@ const DskpProductDetail = ({
 		height: "50px",
 		overflow: "hidden",
 	});
-	const [featureHeight, setFeatureHeight] = useState({
-		height: "50px",
-		overflow: "hidden",
-	});
 	const [viewMore, setViewMore] = useState({
 		description: true,
 		feature: true,
@@ -324,12 +320,12 @@ const DskpProductDetail = ({
       }
       setViewMore((prev) => ({ ...prev, description: !viewMore.description }));
     } else if (type === "feature") {
-      if (viewMore.feature) {
-        setFeatureHeight({ height: "100%", overflow: "auto" });
-      } else {
-        setFeatureHeight({ height: "50px", overflow: "hidden" });
-      }
-      setViewMore((prev) => ({ ...prev, feature: !viewMore.feature }));
+    //   if (viewMore.feature) {
+    //     setFeatureHeight({ height: "100%", overflow: "auto" });
+    //   } else {
+    //     setFeatureHeight({ height: "50px", overflow: "hidden" });
+    //   }
+    //   setViewMore((prev) => ({ ...prev, feature: !viewMore.feature }));
     }
   };
 
@@ -576,12 +572,12 @@ const DskpProductDetail = ({
 			<div className={styles.descriptionTextAcrossIndia}>(Delivery across India to your town in 7 to 8 days)</div>
 		  </div>
 		  </div>
-		  {/* <hr/> */}
+		  <hr/>
 
-					{/* <div className={styles.sellerName}>
+					<div className={styles.sellerName}>
 						<span className={styles.brandLabel}>Sold By</span>
 						<span className={styles.brandValue}>{productdata?.seller_name}</span>
-					</div> */}
+					</div>
 					<hr />
 					{/* description starts here  */}
 					<div className={styles.descriptionWrapper}>
@@ -613,23 +609,11 @@ const DskpProductDetail = ({
 						<h2 className={styles.subHeader}>Features & Details</h2>
 						<div
 							className={styles.featureBodyWrapper}
-							style={{
-								height: featureHeight.height,
-								overflow: featureHeight.overflow,
-							}}
 						>
 							<div
 								dangerouslySetInnerHTML={{ __html: productdata.features }}
 							></div>
 						</div>
-						<button
-							className={styles.viewMoreBtn}
-							onClick={() => {
-								expandDetails("feature");
-							}}
-						>
-							{viewMore.feature ? "View More" : "View Less"}
-						</button>
 					</div>
 					}
 					{/* return policy starts here  */}
