@@ -823,6 +823,7 @@ option {
 	.productDetailsContainer {
 		width: 100%;
 		height: fit-content;
+		font-size: 15px;
 	}
 
 	.productDescriptionContianer,
@@ -1455,4 +1456,29 @@ option {
 	.descriptionTextAcrossIndia{
 		font-size: 13px;
 	}
+}
+
+.descriptionWrapper, .featureWrapper, .returnWrapper{
+	.subHeader{
+		font-size: 20px;
+		font-weight: bold;
+	}
+	.innerBodyWrapper{
+		margin-top: 10px;
+	}
+	.viewMoreBtn {
+		padding: 5px 10px;
+		border: 2px solid #f25cc5;
+		border-radius: 16px;
+		background-color: transparent;
+		color: #f25cc5;
+		font-size: 13px;
+		margin-top: 10px;
+	}
+}
+.descriptionWrapper .innerBodyWrapper ol {
+	list-style-position: inside;
+}
+.returnWrapper .returnBodyWrapper a{
+	font-size: 13px;
 }

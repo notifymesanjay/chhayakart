@@ -66,8 +66,38 @@ const ProductMobile = ({
     // setSelectedQuantity(event.target.id);
   };
   const [isVideoVisible, setIsVideoVisible] = useState(false);
+  const [descriptionHeight, setDescriptionHeight] = useState({
+		height: "50px",
+		overflow: "hidden",
+	});
+	const [featureHeight, setFeatureHeight] = useState({
+		height: "50px",
+		overflow: "hidden",
+	});
+	const [viewMore, setViewMore] = useState({
+		description: true,
+		feature: true,
+	});
 
   const trackingService = new TrackingService();
+
+  const expandDetails = (type = "") => {
+    if (type === "description") {
+      if (viewMore.description) {
+        setDescriptionHeight({ height: "100%", overflow: "auto" });
+      } else {
+        setDescriptionHeight({ height: "50px", overflow: "hidden" });
+      }
+      setViewMore((prev) => ({ ...prev, description: !viewMore.description }));
+    } else if (type === "feature") {
+      if (viewMore.feature) {
+        setFeatureHeight({ height: "100%", overflow: "auto" });
+      } else {
+        setFeatureHeight({ height: "50px", overflow: "hidden" });
+      }
+      setViewMore((prev) => ({ ...prev, feature: !viewMore.feature }));
+    }
+  };
 
   //Add to favorite
   const addToFavorite = async (product_id) => {
@@ -438,12 +468,67 @@ const ProductMobile = ({
       <hr/>
       {/* //collapsiable buttons start */}
       <div className="productDetailsContainer">
-        <div className="productDescriptionContianer" index="0">
+        <div className="descriptionWrapper">
+          <h2 className="subHeader">Description</h2>
+          <div className="innerBodyWrapper" style={{
+								height: descriptionHeight.height,
+								overflow: descriptionHeight.overflow,
+							}}>
+            <div dangerouslySetInnerHTML={{ __html: productdata.description }}></div>
+          </div>
+          <button
+							className="viewMoreBtn"
+							onClick={() => {
+								expandDetails("description");
+							}}
+						>
+							{viewMore.description ? "Show More" : "Show Less"}
+						</button>
+        </div>
+
+        {productdata.features && <hr/>}
+
+        {productdata.features && <div className="featureWrapper">
+          <h2 className="subHeader">Features & Details</h2>
+          <div className="innerBodyWrapper" style={{
+								height: featureHeight.height,
+								overflow: featureHeight.overflow,
+							}}>
+            <div dangerouslySetInnerHTML={{ __html: productdata.features }}></div>
+          </div>
+          <button
+							className="viewMoreBtn"
+							onClick={() => {
+								expandDetails("feature");
+							}}
+						>
+							{viewMore.feature ? "Show More" : "Show Less"}
+						</button>
+        </div>}
+
+        <hr />
+					<div className="returnWrapper">
+						<h2 className="subHeader">Return Policy</h2>
+						<div
+							className="returnBodyWrapper"
+						>
+							<div className="innerBodyWrapper">
+                <div>
+                  { productdata.cancelable_status === 0 ? 'This Product is Non-Returnable' : 'This Product is returnable in 7 days' }
+                </div>
+                <Link to="/return&refund">Know More</Link>
+              </div>
+						</div>
+					</div>
+
+        <hr />
+
+        {/* <div className="productDescriptionContianer" index="0">
           <CollapsibleButton
             title="Product Description"
             content={productdata.description}
           />
-        </div>
+        </div> */}
 
         {/* <div className="productFeaturesContianer" index="1">
 					<CollapsibleButton
