@@ -391,7 +391,7 @@ const WishlistItem = ({productData, index, onClick, productTriggered,
         </div>
         <hr className="mx-3" />
         <div className="product-name">{productData.name}</div>
-        <div className="product_varients_drop">
+        {productData.variants.length > 0 && <div className="product_varients_drop">
             {productData.variants.length > 1 ? (
                 <>
                     <select
@@ -445,8 +445,8 @@ const WishlistItem = ({productData, index, onClick, productTriggered,
                     </p>
                 </>
             )}
-        </div>
-        <div className="price my-2">
+        </div>}
+        {productData.variants.length > 0 && <div className="price my-2">
             <FaRupeeSign size={15}/>
             <span id={`price-wishlist${productData.id}`}>
                 {parseFloat(
@@ -455,8 +455,17 @@ const WishlistItem = ({productData, index, onClick, productTriggered,
                     : 0
                 )}
             </span>
-        </div>
-        <div className="d-flex justify-content-center py-2">
+        </div>}
+        {
+			productData.variants.length === 0 ? 
+			<div className='d-flex justify-content-center py-2'>
+				<div className='outOfStock' onClick={(e)=>{
+					e.stopPropagation();
+				}}>
+					Out of Stock
+				</div>
+			</div> :
+			<div className="d-flex justify-content-center py-2">
             { !isProductAdded ?
                 <button className="addBtn" onClick={(e)=>{
                 e.stopPropagation();
@@ -501,7 +510,7 @@ const WishlistItem = ({productData, index, onClick, productTriggered,
 							)} */}
 						</>
 					)}
-        </div>
+        </div>}
     </div>
 }
 

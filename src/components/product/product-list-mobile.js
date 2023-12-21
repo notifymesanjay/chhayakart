@@ -49,6 +49,7 @@ const ProductMobile = ({
 				<div className={styles.productCardWrapper}>
 					{productList.map((product, index) => (
 						<SelectedCategoryProducts
+							key={index}
 							product={product}
 							productTriggered={productTriggered}
 							setProductTriggered={setProductTriggered}

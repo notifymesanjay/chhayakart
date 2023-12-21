@@ -379,7 +379,7 @@ const api = {
 			redirect: "follow",
 		};
 
-		var params = { latitude: latitude, longitude: longitude };
+		var params = { latitude: latitude, longitude: longitude, limit: 30 };
 		var url = new URL(appUrl + appSubUrl + "/favorites");
 		for (let k in params) {
 			url.searchParams.append(k, params[k]);
