@@ -10,7 +10,8 @@ const AllCategoriesNew = () => {
     const sections = useSelector((state) => state.shop.shop.sections);
     let finalCategoryList = [];
     for(let i=0; i<category.length; i++){
-        if(category[i].has_active_child){
+        //Not taking Shop by region categories id=150
+        if(category[i].has_active_child && category[i].id !== 150){
             let all_active_childs = category[i].all_active_childs;
             for(let j=0; j<all_active_childs.length; j++){
                 for(let k=0; k<sections.length; k++){
