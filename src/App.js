@@ -37,6 +37,7 @@ import { useResponsive } from "./components/shared/use-responsive";
 import Success from "./components/checkout/Success";
 import Order from "./components/order/Order";
 import OrderNew from "./components/order/OrderNew";
+import AllCategoriesNew from "./components/category/AllCategoriesNew";
 
 function App() {
   //initialize cookies
@@ -202,6 +203,11 @@ function App() {
                   exact={true}
                   path="/categories"
                   element={<ShowAllCategories />}
+                ></Route>
+                <Route
+                  exact={true}
+                  path="/allcategories"
+                  element={<AllCategoriesNew />}
                 ></Route>
                 <Route
                   exact={true}

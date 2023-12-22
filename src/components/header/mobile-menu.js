@@ -48,7 +48,8 @@ const menuItems = [
 				alt="categories-icon"
 			/>
 		),
-		link: "/subCategory/94",
+		// link: "/subCategory/94",
+		link: "/allcategories"
 	},
 	{
 		id: 3,
