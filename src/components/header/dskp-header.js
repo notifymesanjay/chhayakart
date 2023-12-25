@@ -294,14 +294,14 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 										Chhaya Purse{" "}
 										<span className={styles.comingSoon}>( Coming Soon )</span>
 									</p>
-									<p className={styles.link}>
+									{/* <p className={styles.link}>
 										Share & Earn{" "}
 										<span className={styles.comingSoon}>( Coming Soon )</span>
 									</p>
 									<p className={styles.link}>
 										Donate{" "}
 										<span className={styles.comingSoon}>( Coming Soon )</span>
-									</p>
+									</p> */}
 									{user.status !== "loading" && (
 										<p className={styles.link} onClick={handleLogout}>
 											Logout
