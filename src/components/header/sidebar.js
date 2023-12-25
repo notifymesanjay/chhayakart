@@ -143,12 +143,12 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
 				<li className={`${styles.listItem} ${styles.disableItem}`}>
 					Chhaya Purse<span className={styles.comingSoon}>( Coming Soon )</span>
 				</li>
-				<li className={`${styles.listItem} ${styles.disableItem}`}>
+				{/* <li className={`${styles.listItem} ${styles.disableItem}`}>
 					Share & Earn<span className={styles.comingSoon}>( Coming Soon )</span>
 				</li>
 				<li className={`${styles.listItem} ${styles.disableItem}`}>
 					Donate<span className={styles.comingSoon}>( Coming Soon )</span>
-				</li>
+				</li> */}
 				<p
 					className={styles.subMenuHeader}
 					onClick={() => {
