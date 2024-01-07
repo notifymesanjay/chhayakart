@@ -1,7 +1,7 @@
 #footer {
   padding-top: 0px;
   font-size: 1.7rem;
-  background: var(--primary-color);
+  /* background: var(--primary-color); */
   position: relative;
   bottom: 0;
 }
@@ -77,6 +77,7 @@
 
 @media (max-width: 48rem) {
   #footer {
+    margin-top: 30px;
     margin-bottom: 35px;
   }
 }
@@ -84,4 +85,8 @@
 .copyright .company_name {
   color: var(--secondary-color);
   font-weight: 800;
+}
+
+#footer .ckWholesale img{
+  width: 100%;
 }

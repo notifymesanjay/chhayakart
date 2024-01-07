@@ -775,10 +775,61 @@ const api = {
 			method: "GET",
 			headers: myHeaders,
 			redirect: "follow",
-		}	
+		}
 		var url = new URL(appUrl + appSubUrl + "/track_order")
 		url.searchParams.append("tracking_id", trackingId);
 		return fetch(url, requestOptions);
-	}
+	},
+	addWholesaleStoreDetails(token, storeName, ownerName, address, mobile, productsInterestedIn){
+		var myHeaders = new Headers();
+		myHeaders.append(access_key_param, access_key);
+		myHeaders.append("Authorization", token_prefix + token);
+		var formData = new FormData();
+		formData.append("store_name", storeName);
+		formData.append("owner_name", ownerName);
+		formData.append("address", address);
+		formData.append("mobile", mobile);
+		formData.append("products_interested_in", productsInterestedIn);
+		var requestOptions = {
+			method: "POST",
+			headers: myHeaders,
+			body: formData,
+			redirect: "follow",
+		}
+		return fetch(appUrl + appSubUrl + "/wholesale/add_store", requestOptions);
+	},
+	getWholesaleCategories(token){
+		var myHeaders = new Headers();
+		myHeaders.append(access_key_param, access_key);
+		myHeaders.append("Authorization", token_prefix + token);
+		var requestOptions = {
+			method: "GET",
+			headers: myHeaders,
+			redirect: "follow",
+		}
+		return fetch(appUrl + appSubUrl + "/wholesale/categories", requestOptions);
+	},
+	getWholesaleProductsByCategory(token, categoryId){
+		var myHeaders = new Headers();
+		myHeaders.append(access_key_param, access_key);
+		myHeaders.append("Authorization", token_prefix + token);
+		var requestOptions = {
+			method: "GET",
+			headers: myHeaders,
+			redirect: "follow",
+		}
+		return fetch(appUrl + appSubUrl + `/wholesale/products/category/${categoryId}`, requestOptions);
+	},
+	getWholesaleProductDetailsById(token, productId){
+		var myHeaders = new Headers();
+		myHeaders.append(access_key_param, access_key);
+		myHeaders.append("Authorization", token_prefix + token);
+		var requestOptions = {
+			method: "GET",
+			headers: myHeaders,
+			redirect: "follow",
+		}
+		return fetch(appUrl + appSubUrl + `/wholesale/product/${productId}`, requestOptions);
+	},
 };
 export default api;

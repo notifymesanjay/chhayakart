@@ -11,6 +11,7 @@ import api from "../../api/api";
 import { ActionTypes } from "../../model/action-type";
 import Loader from "../loader/Loader";
 import Cookies from "universal-cookie";
+import CKWholesale from "../../public/images/ck-wholesale/CKWholesale.webp";
 
 export const Footer = () => {
 	const dispatch = useDispatch();
@@ -50,6 +51,20 @@ export const Footer = () => {
 
 	return (
 		<section id="footer">
+			<div className="ckWholesale">
+				<img src={CKWholesale} alt="CK Wholesale" onClick={event=> {
+					//Check if logged in
+					if(user.user != null){
+						if(user.user.hasRegisteredWholesaleStore){
+							navigate("/wholesale/categories");
+						}else{
+							navigate("/wholesale/add_store");
+						}
+					}else{
+						navigate("/wholesale/categories");
+					}
+				}}/>
+			</div>
 			<div className="copyright">
 				<div className="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
 					<p className="h2">

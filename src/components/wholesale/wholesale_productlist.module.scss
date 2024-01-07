@@ -1,0 +1,223 @@
+$color-green: #51bd88;
+
+.wholesaleCategoryName{
+    padding: 8px 5px;
+    h2{
+        font-weight: 600;
+        font-size: 20px;
+    }
+}
+
+.productListWrapper {
+    min-height: 100vh;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.16);
+    margin-top: 65px;
+}
+
+.productCardWrapper {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.cardWrapper {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    background-color: white;
+    padding: 10px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), inset 0 0 2px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.imageWrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #eeeff1;
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.productBody {
+    padding: 10px;
+    width: calc(100% - 106px);
+  
+    .productName {
+      color: #141a1f;
+      cursor: pointer;
+      display: block;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      // white-space: nowrap;
+      text-transform: capitalize;
+      width: 200px;
+    }
+  
+    .priceWrapper {
+      display: flex;
+      gap: 6px;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .wholesalePrice{
+      float: left;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      text-transform: capitalize;
+      margin-bottom: 0;
+    }
+
+    .packagingSize{
+        font-weight: 600;
+        font-size: 14px;
+        color: #adadad;
+    }
+  
+    .discountPrice {
+      color: $color-green !important;
+      float: left;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      text-transform: capitalize;
+      margin-bottom: 0;
+    }
+  
+    .rupeeIcon {
+      color: $color-green !important;
+      font-size: 12px;
+      margin-right: 2px;
+    }
+  
+    .actualPrice {
+      font-size: 12px;
+      color: #adadad !important;
+      text-decoration: line-through;
+  
+      .rupeeIcon {
+        font-size: 10px;
+      }
+    }
+  
+    .stockUnit {
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      margin-bottom: 0 !important;
+      margin-top: 3px !important;
+      color: #adadad !important;
+    }
+  
+    .precentage {
+      text-decoration: none;
+    }
+}
+
+@media only screen and (max-width: 980px) {
+    .productCard {
+      width: calc(50% - 12px);
+    }
+  }
+  
+  @media only screen and (max-width: 575px) {
+    .productCard {
+      width: 100%;
+    }
+    .productListWrapper {
+      margin-top: -2px;
+    }
+  }
+
+  @media only screen and (max-width: 575px) {
+    .productCardWrapper {
+      gap: 6px;
+    }
+  }
+
+
+  .detailsSection{
+    .productTitle {
+      font-size: 2.8rem;
+      display: flex;
+      text-align: left;
+      font-weight: 600;
+    }
+    .supplierName{
+      font-size: 15px;
+      color: grey;
+    }
+    .wholesalePrice{
+      font-size: 18px;
+      font-weight: 700;
+      color: black;
+    }
+    .minOrderQty{
+      font-size: 13px;
+      color: grey;
+    }
+  }
+
+.tableDetailsSection{
+  tr:nth-child(odd){
+    background-color: #ffffff;
+  }
+  td{
+    padding: 5px;
+  }
+}
+.wholesaleBtnSection{
+  margin: 10px 0 15px 0 !important;
+  .wholesaleCallBtn{
+    padding: 8px;
+    width: 40%;
+    border: 1px solid #f25cc5;
+    border-radius: 4px;
+    background-color: rgb(255, 255, 255);
+    font-size: 2rem;
+    margin-left: -2px;
+    margin-right: 3px;
+    font-weight: bold;
+    color: #f25cc5;
+    text-decoration: none;
+  }
+}
+.descriptionWrapper, .featureWrapper, .returnWrapper,.soldByWrapper{
+	padding: 5px 0;
+	.subHeader{
+		font-size: 20px;
+		font-weight: bold;
+	}
+	.innerBodyWrapper{
+		margin-top: 10px;
+	}
+	.viewMoreBtn {
+		padding: 5px 10px;
+		border: 2px solid #f25cc5;
+		border-radius: 16px;
+		background-color: transparent;
+		color: #f25cc5;
+		font-size: 13px;
+		margin-top: 10px;
+	}
+}
+.descriptionWrapper .innerBodyWrapper ol {
+	list-style-position: inside;
+}
+.productDetailsContainer {
+  width: 100%;
+  height: fit-content;
+  font-size: 15px;
+  padding: 0;
+}
