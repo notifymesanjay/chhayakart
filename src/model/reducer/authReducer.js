@@ -18,6 +18,14 @@ export const authReducer = (state = initialState, { type, payload }) => {
                 status:"loading",
                 user:null,
             }
+        case ActionTypes.SET_WHOLESALE_STORE_FLAG:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    hasRegisteredWholesaleStore: payload
+                }
+            }
         
         default:
             return state;

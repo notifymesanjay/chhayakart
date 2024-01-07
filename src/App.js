@@ -38,6 +38,10 @@ import Success from "./components/checkout/Success";
 import Order from "./components/order/Order";
 import OrderNew from "./components/order/OrderNew";
 import AllCategoriesNew from "./components/category/AllCategoriesNew";
+import AddStore from "./components/wholesale/AddStore";
+import Categories from "./components/wholesale/Categories";
+import WholesaleProductList from "./components/wholesale/WholesaleProductList";
+import WholesaleProductDetail from "./components/wholesale/WholesaleProductDetail";
 
 function App() {
   //initialize cookies
@@ -208,6 +212,26 @@ function App() {
                   exact={true}
                   path="/allcategories"
                   element={<AllCategoriesNew />}
+                ></Route>
+                <Route
+                  exact={true}
+                  path="/wholesale/add_store"
+                  element={<AddStore />}
+                ></Route>
+                <Route
+                  exact={true}
+                  path="/wholesale/categories"
+                  element={<Categories />}
+                ></Route>
+                <Route
+                  exact={true}
+                  path="/wholesale/products/category/:id"
+                  element={<WholesaleProductList />}
+                ></Route>
+                <Route
+                  exact={true}
+                  path="/wholesale/product/:id"
+                  element={<WholesaleProductDetail />}
                 ></Route>
                 <Route
                   exact={true}

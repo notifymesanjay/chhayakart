@@ -21,6 +21,7 @@ export const ActionTypes = {
     //Authentication
     SET_CURRENT_USER: "SET_CURRENT_USER",
     LOGOUT_AUTH: "LOGOUT_AUTH",
+    SET_WHOLESALE_STORE_FLAG: "SET_WHOLESALE_STORE_FLAG",
 
     //product sizes
     SET_PRODUCT_SIZES: "SET_PRODUCT_SIZES",
