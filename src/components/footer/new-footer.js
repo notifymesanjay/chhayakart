@@ -5,7 +5,6 @@ import api from "../../api/api";
 import { ActionTypes } from "../../model/action-type";
 import styles from "./new-footer.module.scss";
 import ChatOnWhatsapp from "../whatsappChatFeature";
-import CKWholesale from "../../public/images/ck-wholesale/CKWholesale.webp";
 import {
 	IoLogoWhatsapp,
 	IoLogoFacebook,
@@ -57,11 +56,6 @@ const Footer = ({ setSelectedFilter = () => {} }) => {
 
 	return (
 		<div className={styles.footerWrapper}>
-			<div className="d-flex justify-content-center bg-white">
-				<img src={CKWholesale} alt="CK Wholesale" style={{width: '60%'}} onClick={event=> {
-					navigate("/wholesale/categories");
-				}}/>
-			</div>
 			<div className={styles.subFooter1}>
 				<p className={styles.text}>
 					Chhayakart: Empowered Minds, Flourishing Enterprises: Cultivating
