@@ -8,11 +8,13 @@ import ShopByRegion from "./region";
 import "./product.css";
 import loan from "../loan.webp";
 import loanD from "../loanD.webp";
+import CKWholesale from "../../public/images/ck-wholesale/CKWholesale.jpg";
 
 const shopByRegionName = "SHOP BY REGION";
 
 const ProductContainer = ({ setSelectedFilter = () => {} }) => {
 	const shop = useSelector((state) => state.shop);
+	const user = useSelector((state) => state.user);
 	const { isSmScreen } = useResponsive();
 
 	const [categories, setCategories] = useState([]);
@@ -131,6 +133,23 @@ const ProductContainer = ({ setSelectedFilter = () => {} }) => {
 							<a href="https://api.earnow.in/l/qCZvfTst0l">
 								<img className="loan" src={loan} alt="loan" />
 							</a>
+						</div>
+					)}
+
+					{isSmScreen && (
+						<div className="wholesaleWrapper">
+							<img src={CKWholesale} alt="CK Wholesale" onClick={event=> {
+								//Check if logged in
+								if(user.user != null){
+									if(user.user.hasRegisteredWholesaleStore){
+										navigate("/wholesale/categories");
+									}else{
+										navigate("/wholesale/add_store");
+									}
+								}else{
+									navigate("/wholesale/categories");
+								}
+							}}/>
 						</div>
 					)}
 

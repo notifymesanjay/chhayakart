@@ -64,28 +64,28 @@ const AddStore = ()=>{
                 isUserLoggedIn ? 
             (<div>
                 <form className="d-flex flex-column align-items-center" onSubmit={addWholesaleStore}>
-                    <h1 className='py-4 display-2'>Add your store details</h1>
+                    <h1 className='py-4 display-2'>Register your store details</h1>
                     <div className="d-flex py-3">
-                        <div>Store name <i class="text-danger">*</i></div>
+                        <div>Store name <i className="text-danger">*</i></div>
                         <input type="text" className="ms-5" value={storeName} onChange={event => {
                             setStoreName(event.target.value);
                             }} required/>
                     </div>
                     <div className="py-3">
-                        Owner name <i class="text-danger">*</i>
+                        Owner name <i className="text-danger">*</i>
                         <input type="text" className="ms-5" value={ownerName} onChange={event => {
                             setOwnerName(event.target.value);
                         }} required/>
                     </div>
                     <div className="py-3">
-                        Address <i class="text-danger">*</i>
+                        Address <i className="text-danger">*</i>
                         <input type="text" className="ms-3" value={address} onChange={event => {
                             setAddress(event.target.value);
                         }} required/>
                     </div>
                     <div className="py-3">
-                        Mobile <i class="text-danger">*</i>
-                        <input type="text" className="ms-3" value={mobile} onChange={event => {
+                        Mobile <i className="text-danger">*</i>
+                        <input type="tel" pattern="[+]{0,1}[0-9]{10,12}" maxlength="12" className="ms-3" value={mobile} onChange={event => {
                             setMobile(event.target.value);
                         }} required/>
                     </div>
