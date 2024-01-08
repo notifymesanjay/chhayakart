@@ -780,7 +780,7 @@ const api = {
 		url.searchParams.append("tracking_id", trackingId);
 		return fetch(url, requestOptions);
 	},
-	addWholesaleStoreDetails(token, storeName, ownerName, address, mobile, productsInterestedIn){
+	addWholesaleStoreDetails(token, storeName, ownerName, address, addressLine2, city, state, pinCode, mobile, gstOrPan, registerAs, productsInterestedIn){
 		var myHeaders = new Headers();
 		myHeaders.append(access_key_param, access_key);
 		myHeaders.append("Authorization", token_prefix + token);
@@ -788,7 +788,15 @@ const api = {
 		formData.append("store_name", storeName);
 		formData.append("owner_name", ownerName);
 		formData.append("address", address);
+		if(addressLine2){
+			formData.append("address_line_2", addressLine2);
+		}
+		formData.append("city", city);
+		formData.append("state", state);
+		formData.append("pin_code", pinCode);
 		formData.append("mobile", mobile);
+		formData.append("gst_or_pan", gstOrPan);
+		formData.append("register_as", registerAs);
 		formData.append("products_interested_in", productsInterestedIn);
 		var requestOptions = {
 			method: "POST",
