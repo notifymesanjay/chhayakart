@@ -4,7 +4,7 @@ import Cookies from "universal-cookie";
 import Loader from '../loader/Loader';
 import ResponsiveCarousel from "../shared/responsive-carousel/responsive-carousel";
 import styles from "./wholesale_productlist.module.scss";
-import { IoCallOutline } from "react-icons/io5";
+import { IoCall, IoChatboxOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { faIndianRupeeSign } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,6 +26,7 @@ const WholesaleProductDetail = () => {
 		description: true,
 		feature: true,
 	});
+    const [whatsappUrl, setWhatsappUrl] = useState("");
     const expandDetails = (type = "") => {
         if (type === "description") {
           if (viewMore.description) {
@@ -42,11 +43,25 @@ const WholesaleProductDetail = () => {
         window.location = "/wholesale/add_store";
     }
 
+    useEffect(() => {
+		const message = encodeURI(
+			window.location.href +
+				"\n I'm interested to know more about this product. Can you help?"
+		);
+
+		setWhatsappUrl(
+			"https://api.whatsapp.com/send?phone=" +
+				"+919420920320" +
+				"&text=" +
+				message
+		);
+	}, []);
+
     function getCarouselArrayItems(){
         let arr = images.map((image, index) => (
           <div key={index}>
             <div
-              className={`sub-image border ${
+              className={`d-flex justify-content-center border ${
                 mainImage === image ? "active" : ""
               }`}
             >
@@ -87,7 +102,7 @@ const WholesaleProductDetail = () => {
         }
     }, [productId]);
     return(
-        <div style={{marginTop: isSmScreen ? '10px' : '70px'}}>
+        <div style={{marginTop: isSmScreen ? '10px' : '70px', marginBottom: isSmScreen ? '50px' : '30px'}}>
         {
             isLoading ? <Loader /> :
             <div className='container'>
@@ -121,7 +136,10 @@ const WholesaleProductDetail = () => {
                         </div>
                         <div className={styles.wholesaleBtnSection}>
                             <a href="tel:+919420920320" className={styles.wholesaleCallBtn}>
-                                <IoCallOutline/> Call Now
+                                <IoCall fill='#F25CC5' size={"16px"} className='me-2'/> Call Now
+                            </a>
+                            <a href={whatsappUrl} className={styles.bestPriceBtn}>
+                                <IoChatboxOutline stroke='#fff' size={"16px"} className='me-2'/> Get Best Price
                             </a>
                         </div>
                         <table className={styles.tableDetailsSection} style={{tableLayout: 'fixed', fontSize: isSmScreen ? '14px' : '16px'}}>
