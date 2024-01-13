@@ -178,19 +178,41 @@ $color-green: #51bd88;
   }
 }
 .wholesaleBtnSection{
+  width: 60% !important;
+  display: flex;
   margin: 10px 0 15px 0 !important;
-  .wholesaleCallBtn{
+  justify-content: space-between;
+  .wholesaleCallBtn, .bestPriceBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 8px;
-    width: 40%;
     border: 1px solid #f25cc5;
     border-radius: 4px;
-    background-color: rgb(255, 255, 255);
     font-size: 2rem;
-    margin-left: -2px;
-    margin-right: 3px;
     font-weight: bold;
-    color: #f25cc5;
     text-decoration: none;
+    border: 1px solid;
+    width: 49%;
+  }
+
+  .wholesaleCallBtn{
+    background-color: rgb(255, 255, 255);
+    color: #f25cc5;
+    border-radius: 20px 0 0 20px;
+  }
+
+  .bestPriceBtn{
+    background-color: #f25cc5;
+    color: white;
+    border-radius: 0 20px 20px 0;
+  }
+
+  @media screen and (max-width: 767px){
+    width: 100% !important;
+    .wholesaleCallBtn,.bestPriceBtn{
+      width: 48.5%;
+    }
   }
 }
 .descriptionWrapper, .featureWrapper, .returnWrapper,.soldByWrapper{
