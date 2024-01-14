@@ -69,6 +69,19 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 			});
 	};
 
+	const handleCkWholesale = () => {
+		//Check if logged in
+		if(user.status === "loading"){
+			toast.error("You have to login first to visit CK Wholesale!");
+		}else{
+			if(user.user.hasRegisteredWholesaleStore){
+				navigate("/wholesale/categories");
+			}else{
+				navigate("/wholesale/add_store");
+			}
+		}
+	}
+
 	const closeSignInMenu = () => {
 		setIsSignInDropDown(false);
 	};
@@ -293,6 +306,9 @@ const DskpHeader = ({ productTriggered, setProductTriggered = () => {} }) => {
 									<p className={styles.link}>
 										Chhaya Purse{" "}
 										<span className={styles.comingSoon}>( Coming Soon )</span>
+									</p>
+									<p className={styles.link} onClick={handleCkWholesale}>
+										CK Wholesale
 									</p>
 									{/* <p className={styles.link}>
 										Share & Earn{" "}

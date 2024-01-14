@@ -36,7 +36,7 @@ const Categories = () => {
     }, []);
 
     return (
-        isLoggedIn ? (<div style={{marginTop: isSmScreen ? '10px' : '70px', marginBottom: isSmScreen ? '50px' : '30px', fontSize: '17px'}}>
+        isLoggedIn ? (<div style={{marginTop: isSmScreen ? '10px' : '70px', marginBottom: isSmScreen ? '0' : '30px', fontSize: '17px'}}>
             {
                 isLoading ? 
                 <Loader /> 

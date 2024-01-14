@@ -6,6 +6,7 @@ import styles from "./get-app.module.scss";
 import CKWholesale from "../../public/images/ck-wholesale/CKWholesale.jpg";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const GetApp = () => {
 	const navigate = useNavigate();
@@ -36,14 +37,14 @@ const GetApp = () => {
 			<div className={`${styles.cardWrapper} justify-content-center`}>
 				<img src={CKWholesale} alt="CK Wholesale" style={{width: '60%'}} onClick={event=> {
 					//Check if logged in
-					if(user.user != null){
+					if(user.status === "loading"){
+						toast.error("You have to login first to visit CK Wholesale!");
+					}else{
 						if(user.user.hasRegisteredWholesaleStore){
 							navigate("/wholesale/categories");
 						}else{
 							navigate("/wholesale/add_store");
 						}
-					}else{
-						navigate("/wholesale/categories");
 					}
 				}}/>
 			</div>
