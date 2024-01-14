@@ -839,5 +839,20 @@ const api = {
 		}
 		return fetch(appUrl + appSubUrl + `/wholesale/product/${productId}`, requestOptions);
 	},
+	addWholesaleOrderItemTracking(token, productId, eventType){
+		var myHeaders = new Headers();
+		myHeaders.append(access_key_param, access_key);
+		myHeaders.append("Authorization", token_prefix + token);
+		var formData = new FormData();
+		formData.append("product_id", productId);
+		formData.append("event_type", eventType);
+		var requestOptions = {
+			method: "POST",
+			headers: myHeaders,
+			body: formData,
+			redirect: "follow",
+		}
+		return fetch(appUrl + appSubUrl + "/wholesale/tracking/add_order_item", requestOptions);
+	}
 };
 export default api;

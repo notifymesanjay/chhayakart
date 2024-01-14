@@ -78,6 +78,13 @@ const WholesaleProductDetail = () => {
           ));
           return arr;
         }
+    
+    function addOrderItemTracking(eventType){
+        //1 - Visit | 2 - Call now | 3 - Get best price
+        if(productId){
+            api.addWholesaleOrderItemTracking(cookies.get("jwt_token"), productId, eventType);
+        }
+    }
 
     useEffect(()=>{
         function getLastUrlSegment(url) {
@@ -99,6 +106,7 @@ const WholesaleProductDetail = () => {
                 }
                 setIsLoading(false);
             })
+            addOrderItemTracking(1);
         }
     }, [productId]);
     return(
@@ -135,10 +143,10 @@ const WholesaleProductDetail = () => {
                             <div className={styles.minOrderQty}>Minimum Order Quantity: {productData.minimum_order_quantity} {productData.unit.toUpperCase()}</div>
                         </div>
                         <div className={styles.wholesaleBtnSection}>
-                            <a href="tel:+919420920320" className={styles.wholesaleCallBtn}>
+                            <a href="tel:+919420920320" className={styles.wholesaleCallBtn} onClick={e=>addOrderItemTracking(2)}>
                                 <IoCall fill='#F25CC5' size={"16px"} className='me-2'/> Call Now
                             </a>
-                            <a href={whatsappUrl} className={styles.bestPriceBtn}>
+                            <a href={whatsappUrl} className={styles.bestPriceBtn} onClick={e=>addOrderItemTracking(3)}>
                                 <IoChatboxOutline stroke='#fff' size={"16px"} className='me-2'/> Get Best Price
                             </a>
                         </div>
