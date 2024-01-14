@@ -63,6 +63,19 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
 			navigate("/orders");
 		}
 	};
+
+	const handleCkWholesale = () => {
+		//Check if logged in
+		if(user.status === "loading"){
+			toast.error("You have to login first to visit CK Wholesale!");
+		}else{
+			if(user.user.hasRegisteredWholesaleStore){
+				navigate("/wholesale/categories");
+			}else{
+				navigate("/wholesale/add_store");
+			}
+		}
+	}
 	return (
 		<div>
 			<div className={styles.headerWrapper}>
@@ -142,6 +155,15 @@ const Sidebar = ({ setIsLogin = () => {}, closeRef }) => {
 				</li>
 				<li className={`${styles.listItem} ${styles.disableItem}`}>
 					Chhaya Purse<span className={styles.comingSoon}>( Coming Soon )</span>
+				</li>
+				<li
+					className={styles.listItem}
+					data-bs-dismiss="offcanvas"
+					aria-label="Close"
+					ref={closeRef}
+					onClick={handleCkWholesale}
+				>
+					CK Wholesale
 				</li>
 				{/* <li className={`${styles.listItem} ${styles.disableItem}`}>
 					Share & Earn<span className={styles.comingSoon}>( Coming Soon )</span>

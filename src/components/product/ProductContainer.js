@@ -9,6 +9,7 @@ import "./product.css";
 import loan from "../loan.webp";
 import loanD from "../loanD.webp";
 import CKWholesale from "../../public/images/ck-wholesale/CKWholesale.jpg";
+import { toast } from "react-toastify";
 
 const shopByRegionName = "SHOP BY REGION";
 
@@ -140,14 +141,14 @@ const ProductContainer = ({ setSelectedFilter = () => {} }) => {
 						<div className="wholesaleWrapper">
 							<img src={CKWholesale} alt="CK Wholesale" onClick={event=> {
 								//Check if logged in
-								if(user.user != null){
+								if(user.status === "loading"){
+									toast.error("You have to login first to visit CK Wholesale!");
+								}else{
 									if(user.user.hasRegisteredWholesaleStore){
 										navigate("/wholesale/categories");
 									}else{
 										navigate("/wholesale/add_store");
 									}
-								}else{
-									navigate("/wholesale/categories");
 								}
 							}}/>
 						</div>
