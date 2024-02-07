@@ -9,8 +9,11 @@ import styles from "./category.module.scss";
 import Banner from "../seasonBanner/bannerCarousel";
 // import ShirdiLadduimg from "../ShirdiLadduimg.jpg";
 import BatataSabudanaChakali from "../BatataSabudanaChakali.webp";
+import RoastedSnack from "../RoastedSnack.webp";
 import UpwasKit from '../UpwasKit.jpg'
+import CKWholesale from '../CKWholesale.webp'
 import WinterSpecialLaddoo from '../../public/images/home-page/WinterSpecialLaddoo.webp'
+import { toast } from "react-toastify";
 
 const ShopByCategory = ({
 	categories = [],
@@ -19,8 +22,22 @@ const ShopByCategory = ({
 }) => {
 	const navigate = useNavigate();
 	const { isSmScreen } = useResponsive();
+	const user = useSelector((state) => state.user);
 
 	const shop = useSelector((state) => state.shop);
+
+	const handleCkWholesale = () => {
+		//Check if logged in
+		if(user.status === "loading"){
+			toast.error("You have to login first to visit CK Wholesale!");
+		}else{
+			if(user.user.hasRegisteredWholesaleStore){
+				navigate("/wholesale/categories");
+			}else{
+				navigate("/wholesale/add_store");
+			}
+		}
+	}
 
 	return useMemo(
 		() => (
@@ -136,6 +153,18 @@ const ShopByCategory = ({
 											}}
 										/>
 									</div>
+									<div class="my-2">
+										{" "}
+										<img
+											className={styles.durgaAd}
+											style={{height: '100%'}}
+											src={RoastedSnack}
+											alt="Roasted Snack"
+											onClick={() => {
+												navigate("/subCategory/96/89_ROASTED%20SNACK");
+											}}
+										/>
+									</div>
 									<div className="durgaAdd">
 										{" "}
 										<img
@@ -145,6 +174,16 @@ const ShopByCategory = ({
 											onClick={() => {
 												navigate("/subCategory/96/87_UPWAS%20FOOD");
 											}}
+										/>
+									</div>
+									<div class="my-2">
+										{" "}
+										<img
+											className={styles.durgaAd}
+											style={{height: '100%'}}
+											src={CKWholesale}
+											alt="CK Wholesale"
+											onClick={handleCkWholesale}
 										/>
 									</div>
 									<div className={styles.seasonBanner}>
