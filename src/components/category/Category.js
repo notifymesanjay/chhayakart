@@ -8,11 +8,11 @@ import styles from "./category.module.scss";
 // import diwaliKit from "../../public/images/home-page/diwaliKit.webp";
 import Banner from "../seasonBanner/bannerCarousel";
 // import ShirdiLadduimg from "../ShirdiLadduimg.jpg";
-import BatataSabudanaChakali from "../BatataSabudanaChakali.webp";
+import PickleBanner from "../PickleBanner.jpg";
 import RoastedSnack from "../RoastedSnack.webp";
-import UpwasKit from '../UpwasKit.jpg'
+import ReadyToEat from '../ReadyToEat.jpg'
 import CKWholesale from '../CKWholesale.webp'
-import WinterSpecialLaddoo from '../../public/images/home-page/WinterSpecialLaddoo.webp'
+import PapadSpecial from '../../public/images/home-page/PapadSpecial.jpg'
 import { toast } from "react-toastify";
 
 const ShopByCategory = ({
@@ -104,10 +104,10 @@ const ShopByCategory = ({
 								<div className={styles.ganeshAdd}>
 									<img
 										className={`${styles.ganeshAd}`}
-										src={WinterSpecialLaddoo}
-										alt="Winter Special Laddoo"
+										src={PapadSpecial}
+										alt="Papad Special Banner"
 										onClick={() => {
-											navigate("/subCategory/103/51_LADDU");
+											navigate("/subCategory/94");
 										}}
 									/>
 								</div>
@@ -146,10 +146,10 @@ const ShopByCategory = ({
 									<div>
 										<img
 											className={styles.durgaAd}
-											src={BatataSabudanaChakali}
-											alt="Batata Sabudana Chakali"
+											src={PickleBanner}
+											alt="Pickle Banner"
 											onClick={() => {
-												navigate("/subCategory/96/87_UPWAS%20FOOD");
+												navigate("/subCategory/101");
 											}}
 										/>
 									</div>
@@ -169,10 +169,10 @@ const ShopByCategory = ({
 										{" "}
 										<img
 											className={styles.durgaAd}
-											src={UpwasKit}
-											alt="Upwas Kit"
+											src={ReadyToEat}
+											alt="Ready to Eat Banner"
 											onClick={() => {
-												navigate("/subCategory/96/87_UPWAS%20FOOD");
+												navigate("/subCategory/97");
 											}}
 										/>
 									</div>
