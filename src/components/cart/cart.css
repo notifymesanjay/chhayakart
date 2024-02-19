@@ -207,7 +207,7 @@
 	.left-wrapper
 	.product-details
 	.counter {
-	height: 20px;
+	height: 24px;
 	display: flex;
 	width: fit-content;
 	align-items: center;
@@ -224,7 +224,7 @@
 	.counter
 	button {
 	height: 100%;
-	width: 20px;
+	width: 24px;
 	font-size: 1.755rem;
 	background: var(--secondary-color);
 	border-radius: 3px;
@@ -238,7 +238,8 @@
 	.product-details
 	.counter
 	span {
-	font-size: 1.555rem;
+	/* font-size: 1.555rem; */
+	font-size: 2rem;
 	font-weight: 500;
 	padding: 0 12px;
 	color: var(--secondary-color);

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import "./cart.css";
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { FaRupeeSign } from "react-icons/fa";
+import { FaRupeeSign, FaTrash } from "react-icons/fa";
 import { BsPlus } from "react-icons/bs";
 import { BiMinus } from "react-icons/bi";
 import api from "../../api/api";
@@ -592,7 +592,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
                               handleDecrement(product, index);
                             }}
                           >
-                            <BiMinus fill="#fff" />
+                            <BiMinus fill="#fff" size="20" />
                           </button>
                           <span id={`input-cart-sidebar${index}`}>
                             {product.qty}
@@ -603,7 +603,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
                               handleIncrement(product, index);
                             }}
                           >
-                            <BsPlus fill="#fff" />
+                            <BsPlus fill="#fff" size="20" />
                           </button>
                         </div>
                       </div>
@@ -621,7 +621,7 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
                         </span>
                       </div>
 
-                      <button
+                      {/* <button
                         type="button"
                         className="remove-product"
                         onClick={() => {
@@ -629,7 +629,12 @@ const Cart = ({ productTriggered, setProductTriggered = () => {} }) => {
                         }}
                       >
                         delete
-                      </button>
+                      </button> */}
+                      <div style={{padding: '2px 5px'}}>
+                        <FaTrash size="20" fill="#d40909" onClick={() => {
+                          deleteProduct(product);
+                        }}/>
+                      </div>
                     </div>
                   </div>
                 ))}
