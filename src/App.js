@@ -345,10 +345,10 @@ function App() {
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
               >
-                <BsArrowUpSquareFill
+                {/* <BsArrowUpSquareFill
                   fontSize={"3rem"}
                   fill="var(--primary-color)"
-                />
+                /> */}
               </button>
             </main>
           </>
