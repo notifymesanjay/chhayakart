@@ -49,6 +49,10 @@
 	margin-left: -18px;
 }
 
+.cart-sidebar-container .cart-sidebar-header-discount h3{
+	font-weight: 800;
+}
+
 .cart-sidebar-container .cart-sidebar-header {
 	display: -webkit-box;
 	display: -ms-flexbox;
