@@ -144,7 +144,7 @@ const WholesaleProductDetail = () => {
                         </div>
                         <div className={styles.wholesaleBtnSection}>
                             <a href="tel:+919420920320" className={styles.wholesaleCallBtn} onClick={e=>addOrderItemTracking(2)}>
-                                <IoCall fill='#F25CC5' size={"16px"} className='me-2'/> Call Now
+                                <IoCall fill='#F27100' size={"16px"} className='me-2'/> Call Now
                             </a>
                             <a href={whatsappUrl} className={styles.bestPriceBtn} onClick={e=>addOrderItemTracking(3)}>
                                 <IoChatboxOutline stroke='#fff' size={"16px"} className='me-2'/> Get Best Price

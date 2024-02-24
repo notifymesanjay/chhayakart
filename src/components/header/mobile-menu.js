@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faHeart,
@@ -91,43 +91,46 @@ const menuItems = [
 const MobileMenu = ({ selectedMenu = 0 }) => {
 	const navigate = useNavigate();
 	const cookies = new Cookies();
+	const [selectedItem, setSelectedItem] = useState(1);
 
-	return useMemo(
-		() => (
-			<Menu className={styles.mobileMenu}>
-				{menuItems.map((menu) => (
-					<div
-						key={menu.id}
-						className={`${styles.menu}`}
-						id={menu.tagId}
-						onClick={() => {
-							if (
-								cookies.get("jwt_token") === undefined &&
-								menu.id !== 1 &&
-								menu.id !== 2 &&
-								menu.id !== 3
-							) {
-								if(menu.id === 5){
-									toast.error("You have to login first to track your Orders !");
-								}else{
-									toast.error("OOPS! You have to login first to see your cart!");
-								}	
-							} else {
-								if (menu.id === 3) {
-									window.location.href = menu.link;
-								}
-								navigate(menu.link);
-							}
-						}}
-					>
-						<span className={styles.menuIcon}>{menu.icon}</span>
-						<span className={styles.menuName}>{menu.name}</span>
-					</div>
-				))}
-			</Menu>
-		),
-		[selectedMenu, navigate]
-	);
+	return <Menu className={styles.mobileMenu}>
+	{menuItems.map((menu) => (
+		<div
+			key={menu.id}
+			className={`${styles.menu} ${selectedItem === menu.id ? styles.active : ''}`}
+			id={menu.tagId}
+			onClick={() => {
+				if (
+					cookies.get("jwt_token") === undefined &&
+					menu.id !== 1 &&
+					menu.id !== 2 &&
+					menu.id !== 3
+				) {
+					if(menu.id === 5){
+						toast.error("You have to login first to track your Orders !");
+					}else{
+						toast.error("OOPS! You have to login first to see your cart!");
+					}	
+				} else {
+					if (menu.id === 3) {
+						window.location.href = menu.link;
+					}
+					setSelectedItem(menu.id);
+					navigate(menu.link);
+				}
+			}}
+		>
+			<span className={`${styles.menuIcon} ${selectedItem === menu.id ? styles.iconActive : ''}`}>{menu.icon}</span>
+			<span className={`${styles.menuName} ${selectedItem === menu.id ? styles.textActive : ''}`}>{menu.name}</span>
+		</div>
+	))}
+</Menu>
+	// useMemo(
+	// 	() => (
+			
+		// ),
+		// [selectedMenu, navigate]
+	// );
 };
 
 export default MobileMenu;

@@ -28,6 +28,13 @@ $color-green: #51bd88;
   .menuName {
     display: block;
   }
+  .textActive{
+    color: #F27100;
+    font-weight: 700;
+  }
+  .iconActive{
+    filter: invert(45%) sepia(92%) saturate(1835%) hue-rotate(3deg) brightness(97%) contrast(102%);
+  }
 }
 
 .mobileIcon{
@@ -36,7 +43,7 @@ $color-green: #51bd88;
 }
 
 .menu.active {
-  color: $color-green;
+  color: #F27100;
   font-weight: 600;
 }
 

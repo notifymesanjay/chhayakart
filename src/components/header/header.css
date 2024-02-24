@@ -63,7 +63,7 @@
 }
 
 .site-header .header-main {
-	background-color: #f25cc5;
+	background-color: #F27100;
 	position: relative;
 	padding: 0px;
 	display: flex;
@@ -813,7 +813,7 @@
 		border-radius: 4px;
 	}
 	.site-header .header-main {
-		background-color: #f25cc5;
+		background-color: #F27100;
 	}
 
 	.siteBrandWrapper {

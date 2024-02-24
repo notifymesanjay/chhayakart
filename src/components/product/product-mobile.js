@@ -328,7 +328,7 @@ const ProductMobile = ({
                 removefromFavorite(productdata.id);
               }
             }}> 
-              <BsHeartFill fill="#f25cc5" size={25}/>
+              <BsHeartFill fill="#F27100" size={25}/>
             </button> : 
             <button onClick={()=> {
               if (cookies.get("jwt_token") === undefined) {
@@ -532,7 +532,7 @@ const ProductMobile = ({
 			<div className="addToCartStickerDiv">
 				{!isCart ? (
 					<button
-						color="#f25cc5"
+						color="#F27100"
 						id={`Add-to-cart-productdetail`}
 						className="add-to-cartActive"
 						onClick={() => DirectAddProductToCart(1)}

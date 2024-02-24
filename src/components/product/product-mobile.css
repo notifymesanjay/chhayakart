@@ -885,23 +885,23 @@ option {
 		width: 43%;
 		padding: 5px 3px;
 		text-align: center;
-		border: 1px solid #f25cc5;
+		border: 1px solid #F27100;
 		border-radius: 4px;
 		background-color: rgb(255, 255, 255);
 		font-size: 2rem;
 		margin-left: -2px;
 		margin-right: 3px;
 		font-weight: bold;
-		color: #f25cc5;
+		color: #F27100;
 	}
 	.viewCartSticker {
 		text-decoration: none;
 		font-size: 2rem;
 		margin-left: 3px;
-		background-color: #f25cc5;
+		background-color: #F27100;
 	}
 	.faCartShopping * {
-		color: #f25cc5;
+		color: #F27100;
 	}
 
 	.faAngleDoubleRight * {
@@ -1471,10 +1471,10 @@ option {
 	}
 	.viewMoreBtn {
 		padding: 5px 10px;
-		border: 2px solid #f25cc5;
+		border: 2px solid #F27100;
 		border-radius: 16px;
 		background-color: transparent;
-		color: #f25cc5;
+		color: #F27100;
 		font-size: 13px;
 		margin-top: 10px;
 	}
@@ -1486,6 +1486,6 @@ option {
 	font-size: 13px;
 }
 .soldByWrapper .sellerName{
-	color: #f25cc5;
+	color: #F27100;
 	font-size: 18px;
 }

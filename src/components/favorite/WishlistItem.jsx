@@ -372,7 +372,7 @@ const WishlistItem = ({productData, index, onClick, productTriggered,
                             );
                         }
                     }}>
-                        <BsHeartFill size={18} fill="#f25cc5"/>
+                        <BsHeartFill size={18} fill="#F27100"/>
                     </button> :
                     <button onClick={(e) => {
                         e.stopPropagation();

@@ -100,6 +100,7 @@ const SelectedCategoryProducts = ({
 				""
 			);
 			setIsProductAdded(true);
+			toast.success("Added to cart");
 			setProductVal(1);
 			addtoCart(
 				product,
@@ -124,6 +125,7 @@ const SelectedCategoryProducts = ({
 
 			const isAdded = AddProductToCart(product);
 			if (isAdded) {
+				toast.success("Added to cart");
 				setIsProductAdded(true);
 				setProductVal(1);
 				setProductTriggered(!productTriggered);
@@ -521,7 +523,7 @@ const SelectedCategoryProducts = ({
 								);
 							}
 						}}>
-							<BsHeartFill size={25} fill="#f25cc5"/>
+							<BsHeartFill size={25} fill="#F27100"/>
 						</button> :
 						<button className={styles.wishlistBtn} onClick={() => {
 							if (cookies.get("jwt_token") !== undefined) {

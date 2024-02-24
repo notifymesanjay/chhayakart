@@ -510,7 +510,7 @@ const DskpProductDetail = ({
 										}
 									}}
 								>
-									<BsHeartFill fill="#f25cc5" />
+									<BsHeartFill fill="#F27100" />
 								</button>
 							) : (
 								<button
@@ -636,7 +636,7 @@ const DskpProductDetail = ({
 				<div className={styles.viewCartSticker}>
 					{!isCart ? (
 						<button
-							color="#f25cc5"
+							color="#F27100"
 							id={`Add-to-cart-productdetail`}
 							className={styles.addToCartActive}
 							onClick={() => DirectAddProductToCart(1)}
