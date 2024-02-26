@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../shared/use-responsive";
-import Gaon from "../Gaon.png";
+import Gaon from "../Gaon.webp";
 import styles from "./category.module.scss";
 // import DiwaliOffer from "../../public/images/home-page/DiwaliOffer.webp";
 // import diwaliKit from "../../public/images/home-page/diwaliKit.webp";
