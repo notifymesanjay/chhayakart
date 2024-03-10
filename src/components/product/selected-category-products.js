@@ -357,21 +357,32 @@ const SelectedCategoryProducts = ({
 	}, [product]);
 
 	return (
-		<div className={`${styles.productCard} ${styles.cardWrapper}`} key={index}>
+		<div className={`${styles.productCard} ${styles.cardWrapper}`} key={index} onClick={() => {
+			navigate(`/product/${product.id}/${
+				product.slug.includes("/")
+					? product.slug.split("/")[0]
+					: product.slug
+			}			
+			`);
+			dispatch({
+				type: ActionTypes.SET_SELECTED_PRODUCT,
+				payload: product.id,
+			});
+		}}>
 			<div
 				className={styles.imageWrapper}
-				onClick={() => {
-					navigate(`/product/${product.id}/${
-						product.slug.includes("/")
-							? product.slug.split("/")[0]
-							: product.slug
-					}			
-					`);
-					dispatch({
-						type: ActionTypes.SET_SELECTED_PRODUCT,
-						payload: product.id,
-					});
-				}}
+				// onClick={() => {
+				// 	navigate(`/product/${product.id}/${
+				// 		product.slug.includes("/")
+				// 			? product.slug.split("/")[0]
+				// 			: product.slug
+				// 	}			
+				// 	`);
+				// 	dispatch({
+				// 		type: ActionTypes.SET_SELECTED_PRODUCT,
+				// 		payload: product.id,
+				// 	});
+				// }}
 			>
 				<img src={product.image_url} alt="" className={styles.productImg} />
 			</div>
@@ -467,7 +478,8 @@ const SelectedCategoryProducts = ({
 							type="button"
 							id={`Add-to-cart-section${index}`}
 							className={styles.addBtn}
-							onClick={() => {
+							onClick={(e) => {
+								e.stopPropagation();
 								handleAddToCart(product, index);
 							}}
 						>
@@ -481,7 +493,8 @@ const SelectedCategoryProducts = ({
 							>
 								<button
 									type="button"
-									onClick={() => {
+									onClick={(e) => {
+										e.stopPropagation();
 										handleDecrement(product, index);
 									}}
 								>
@@ -490,7 +503,8 @@ const SelectedCategoryProducts = ({
 								<span id={`input-section${index}`}>{productVal}</span>
 								<button
 									type="button"
-									onClick={() => {
+									onClick={(e) => {
+										e.stopPropagation();
 										handleIncrement(product, index);
 									}}
 								>
@@ -514,7 +528,8 @@ const SelectedCategoryProducts = ({
 						favorite.favorite.data.some(
 							(element) => element.id === product.id
 						) ? 
-						<button className={styles.wishlistBtn} onClick={() => {
+						<button className={styles.wishlistBtn} onClick={(e) => {
+							e.stopPropagation();
 							if (cookies.get("jwt_token") !== undefined) {
 								removefromFavorite();
 							} else {
@@ -525,7 +540,8 @@ const SelectedCategoryProducts = ({
 						}}>
 							<BsHeartFill size={25} fill="#F27100"/>
 						</button> :
-						<button className={styles.wishlistBtn} onClick={() => {
+						<button className={styles.wishlistBtn} onClick={(e) => {
+							e.stopPropagation();
 							if (cookies.get("jwt_token") !== undefined) {
 								addToFavorite();
 							} else {
