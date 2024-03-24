@@ -133,7 +133,8 @@
 	border-radius: 15px !important;
 	border: 2px solid #f1dbb1;
 	padding: 5px;
-	margin-top: 3px;
+	// margin-top: 3px;
+	margin: 10px 0;
 	.banner {
 		border-radius: 15px !important;
 		width: 100%;
@@ -160,6 +161,16 @@
 
 .hideBanner {
 	display: none;
+}
+
+.durgaAd {
+	// height: 170px;
+	height: auto;
+	width: 100%;
+	border-radius: 15px;
+	margin-bottom: 5px;
+	border: 1px solid rgb(236, 191, 92);
+	margin-top: 5px;
 }
 
 @media only screen and (max-width: 575px) {

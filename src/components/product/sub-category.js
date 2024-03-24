@@ -17,6 +17,8 @@ const SubCategory = ({
     if (title) var subCatrId = title.split("_")[0];
     if (subCatrId) {
       setSelectedFilter(parseInt(subCatrId));
+    }else{
+      setSelectedFilter(0);
     }
   }, []);
 

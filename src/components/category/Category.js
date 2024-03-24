@@ -8,11 +8,6 @@ import styles from "./category.module.scss";
 // import diwaliKit from "../../public/images/home-page/diwaliKit.webp";
 import Banner from "../seasonBanner/bannerCarousel";
 // import ShirdiLadduimg from "../ShirdiLadduimg.jpg";
-import PickleBanner from "../PickleBanner.jpg";
-import RoastedSnack from "../RoastedSnack.webp";
-import ReadyToEat from '../ReadyToEat.jpg'
-import CKWholesale from '../CKWholesale.webp'
-import PapadSpecial from '../../public/images/home-page/PapadSpecial.jpg'
 import { toast } from "react-toastify";
 
 const ShopByCategory = ({
@@ -25,6 +20,8 @@ const ShopByCategory = ({
 	const user = useSelector((state) => state.user);
 
 	const shop = useSelector((state) => state.shop);
+	let topBanners = shop.shop.top_banners;
+	let firstBanner = topBanners[0];
 
 	const handleCkWholesale = () => {
 		//Check if logged in
@@ -70,7 +67,7 @@ const ShopByCategory = ({
 													className={styles.imageWrapper}
 													onClick={() => {
 														navigate(`/subCategory/${ctg.id}`);
-														setSelectedFilter(0);
+														// setSelectedFilter(0);
 													}}
 												>
 													<img
@@ -100,17 +97,19 @@ const ShopByCategory = ({
 							</div>
 						) 
 						: (
-							<>
-								<div className={styles.ganeshAdd}>
+							<div>
+								{firstBanner && <div>
 									<img
-										className={`${styles.ganeshAd}`}
-										src={PapadSpecial}
-										alt="Papad Special Banner"
-										onClick={() => {
-											navigate("/subCategory/94");
+										className={styles.ganeshAd}
+										src={firstBanner.image_url}
+										alt={firstBanner.alt}
+										onClick={()=>{
+											if(firstBanner.navigate_url){
+												navigate(firstBanner.navigate_url);
+											}
 										}}
-									/>
-								</div>
+										/>
+								</div>}
 								<div className="container">
 									<div className={styles.cardWrapper}>
 										<div className={styles.headerWrapper}>
@@ -130,7 +129,7 @@ const ShopByCategory = ({
 														className={styles.imageWrapper}
 														onClick={() => {
 															navigate(`/subCategory/${ctg.id}`);
-															setSelectedFilter(0);
+															// setSelectedFilter(0);
 														}}
 													>
 														<img
@@ -143,54 +142,31 @@ const ShopByCategory = ({
 											))}
 										</div>
 									</div>
-									<div>
-										<img
-											className={styles.durgaAd}
-											src={PickleBanner}
-											alt="Pickle Banner"
-											onClick={() => {
-												navigate("/subCategory/101");
-											}}
-										/>
-									</div>
-									<div class="my-2">
-										{" "}
-										<img
-											className={styles.durgaAd}
-											style={{height: '100%'}}
-											src={RoastedSnack}
-											alt="Roasted Snack"
-											onClick={() => {
-												navigate("/subCategory/96/89_ROASTED%20SNACK");
-											}}
-										/>
-									</div>
-									<div className="durgaAdd">
-										{" "}
-										<img
-											className={styles.durgaAd}
-											src={ReadyToEat}
-											alt="Ready to Eat Banner"
-											onClick={() => {
-												navigate("/subCategory/97");
-											}}
-										/>
-									</div>
-									<div class="my-2">
-										{" "}
-										<img
-											className={styles.durgaAd}
-											style={{height: '100%'}}
-											src={CKWholesale}
-											alt="CK Wholesale"
-											onClick={handleCkWholesale}
-										/>
-									</div>
+									{
+										topBanners.map((ele, idx)=> idx===0 ? <div key={`empty_div${idx}`}></div> :
+											<div className="my-1" key={`banner${idx}`}>
+												<img
+													className={styles.durgaAd}
+													src={ele.image_url}
+													alt={ele.alt}
+													onClick={() => {
+														if(ele.type === 'wholesale'){
+															handleCkWholesale();
+														}else{
+															if(ele.navigate_url){
+																navigate(ele.navigate_url);
+															}
+														}
+													}}
+												/>
+											</div>
+										)
+									}
 									<div className={styles.seasonBanner}>
 										<Banner />
 									</div>
 								</div>
-							</>
+							</div>
 						)}
 					</>
 				)}

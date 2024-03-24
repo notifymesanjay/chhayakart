@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./category-card.module.scss";
 import { useHref, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useResponsive } from "../shared/use-responsive";
 import SBI from "../SBI.webp";
 import AU from "../AU.webp";
@@ -60,6 +61,8 @@ import OrganicIndrayaniRice from "../../public/images/banners/OrganicIndrayaniRi
 const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 	const navigate = useNavigate();
 	const { isSmScreen } = useResponsive();
+	const shop = useSelector((state) => state.shop);
+	const mix_with_slider_banners = shop.shop.mix_with_slider_banners;
 	const dynamicBanners = [
 		[
 			{
@@ -431,6 +434,18 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 		<>
 			{subCategories.slice(0, 12).map((subCategory, index) => (
 				<div key={index}>
+					{index > 0 && mix_with_slider_banners[(index-1) * 2] && <div className="my-1" key={`banner${(index-1) * 2}`}>
+						<img
+							className={styles.durgaAd}
+							src={mix_with_slider_banners[(index-1) * 2].image_url}
+							alt={mix_with_slider_banners[(index-1) * 2].alt}
+							onClick={() => {
+								if(mix_with_slider_banners[(index-1) * 2].navigate_url){
+									navigate(mix_with_slider_banners[(index-1) * 2].navigate_url);
+								}
+							}}
+						/>
+					</div>}
 					{1 && (
 						<div
 							className={`${styles.BankBanner} ${
@@ -463,6 +478,18 @@ const CategoryCard = ({ subCategories = [], setSelectedFilter = () => {} }) => {
 							</ResponsiveCarousel>
 						</div>
 					)}
+					{index > 0 && mix_with_slider_banners[(index-1) * 2 + 1] && <div className="my-1" key={`banner${(index-1) * 2 + 1}`}>
+						<img
+							className={styles.durgaAd}
+							src={mix_with_slider_banners[(index-1) * 2 + 1].image_url}
+							alt={mix_with_slider_banners[(index-1) * 2 + 1].alt}
+							onClick={() => {
+								if(mix_with_slider_banners[(index-1) * 2 + 1].navigate_url){
+									navigate(mix_with_slider_banners[(index-1) * 2 + 1].navigate_url);
+								}
+							}}
+						/>
+					</div>}
 					<div className={styles.homeCategoryWrapper} key={index}>
 						<div className={styles.headerWrapper}>
 							<h1 className={styles.header}>{subCategory.category_name}</h1>
